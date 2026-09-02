@@ -321,8 +321,10 @@ async function selectTrace(trace, { updateHash = true } = {}) {
   elements.content.hidden = false;
   elements.number.textContent = `Trace ${trace.trace_number}`;
   elements.model.textContent = trace.model;
+  elements.model.className = `model-badge ${modelBadgeClass(trace.model)}`;
   elements.task.textContent = `Task ${trace.task_id}`;
   elements.taskType.textContent = trace.task_type;
+  elements.taskType.className = `type-badge ${taskTypeBadgeClass(trace.task_type)}`;
   const summary = trace.summary || {};
   elements.actingTime.textContent = formatDuration(summary.acting_time_ms);
   elements.inputTokens.textContent = formatTokens(summary.input_tokens);

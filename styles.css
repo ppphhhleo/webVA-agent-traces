@@ -107,6 +107,13 @@ button, select { cursor: pointer; }
 .model-badge { color: var(--teal-dark); background: var(--teal-soft); border-color: #99c8bc; }
 .task-badge { color: #79571e; background: #f4e8cd; border-color: #d8bd83; }
 .type-badge { color: #5f4c78; background: #eee8f5; border-color: #c5b5d5; }
+.model-badge.model-gpt55 { color: #4b3f86; background: #e9e7f8; border-color: #bdb6e2; }
+.model-badge.model-gpt54 { color: #315e86; background: #e1edf6; border-color: #abc6da; }
+.model-badge.model-opus { color: #86452d; background: #f7e7dd; border-color: #dcb39e; }
+.model-badge.model-sonnet { color: #306449; background: #e1f0e7; border-color: #a9ceb8; }
+.type-badge.type-low { color: #175d56; background: #e1f1ed; border-color: #a7d0c7; }
+.type-badge.type-high { color: #56417c; background: #eee8f7; border-color: #c8bae0; }
+.type-badge.type-compound { color: #7b571d; background: #f5ead0; border-color: #ddc38a; }
 .trace-meta { display: flex; align-items: center; justify-content: flex-end; gap: 12px; margin-left: auto; }
 .trace-stats { display: flex; align-items: stretch; margin: 0; border: 1px solid var(--line); background: var(--surface); }
 .trace-stats div { min-width: 76px; padding: 6px 9px; }
@@ -140,7 +147,7 @@ button, select { cursor: pointer; }
 .screen-unavailable strong { color: white; font-family: var(--serif); font-size: 22px; }
 .screen-unavailable span { color: #aac2bd; }
 .action-cursor { position: absolute; width: 30px; height: 30px; border: 3px solid #e66543; border-radius: 50%; transform: translate(-50%, -50%); box-shadow: 0 0 0 9px rgba(230,101,67,.22); pointer-events: none; }
-.rounds-panel { background: #f0eee6; border-left: 1px solid var(--line); min-width: 0; height: 0; min-height: 100%; overflow: hidden; display: flex; flex-direction: column; }
+.rounds-panel { background: #f0eee6; border-left: 1px solid var(--line); min-width: 0; height: clamp(390px, 48vw, 540px); min-height: 0; overflow: hidden; display: flex; flex-direction: column; align-self: start; }
 .rounds-title { display: flex; justify-content: space-between; padding: 13px 13px 8px; text-transform: uppercase; letter-spacing: .14em; font-size: 9px; color: var(--muted); }
 .rounds-title b { font: 500 9px var(--mono); }
 .rounds-panel ol { flex: 1; min-height: 0; list-style: none; margin: 0; padding: 0 7px 12px; overflow-y: auto; overscroll-behavior: contain; scrollbar-gutter: stable; scrollbar-width: thin; scrollbar-color: var(--line-strong) transparent; }
