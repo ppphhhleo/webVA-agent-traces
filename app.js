@@ -87,6 +87,27 @@ function canonicalTaskType(value) {
   return labels[key] || (value ? text(value) : "Unspecified");
 }
 
+function modelBadgeClass(model) {
+  const value = canonicalModel(model);
+  if (value === "GPT-5.5") return "model-gpt55";
+  if (value === "GPT-5.4") return "model-gpt54";
+  if (value === "Claude Opus 4.8") return "model-opus";
+  if (value === "Claude Sonnet 5") return "model-sonnet";
+  return "model-other";
+}
+
+function taskTypeBadgeClass(taskType) {
+  const value = canonicalTaskType(taskType);
+  if (value === "Low-level") return "type-low";
+  if (value === "High-level") return "type-high";
+  if (value === "Compound") return "type-compound";
+  return "type-other";
+}
+
+function isUnfinished(trace) {
+  return trace.summary?.completion_status === "unfinished";
+}
+
 function formatDuration(milliseconds) {
   const value = Number(milliseconds);
   if (!Number.isFinite(value)) return "—";
@@ -246,7 +267,7 @@ function applyFilters() {
   const model = elements.modelFilter.value;
   const task = elements.taskFilter.value;
   state.filtered = state.catalog.filter((trace) => {
-    const haystack = [trace.trace_number, trace.trace_id, trace.task_id, `Task ${trace.task_id}`, trace.task_type, trace.task_prompt, trace.model, trace.final_answer]
+    const haystack = [trace.trace_number, trace.trace_id, trace.task_id, `Task ${trace.task_id}`, trace.task_type, trace.task_prompt, trace.model, trace.final_answer, trace.summary?.completion_status]
       .join(" ").toLowerCase();
     return (!query || haystack.includes(query)) && (!model || trace.model === model) && (!task || String(trace.task_id) === task);
   });
@@ -260,13 +281,19 @@ function renderCatalog() {
     : `${state.filtered.length} of ${state.catalog.length} traces`;
   elements.list.replaceChildren(...state.filtered.map((trace) => {
     const item = document.createElement("li");
-    item.className = `trace-item${state.selected?.trace_id === trace.trace_id ? " active" : ""}`;
+    const unfinished = isUnfinished(trace);
+    item.className = `trace-item${state.selected?.trace_id === trace.trace_id ? " active" : ""}${unfinished ? " unfinished" : ""}`;
     const button = document.createElement("button");
     button.type = "button";
     button.innerHTML = `
       <span class="item-number">${trace.trace_number}</span>
       <span class="item-copy">
-        <span class="item-meta"><span>Task ${trace.task_id}</span><span class="item-type">${escapeHtml(trace.task_type)}</span><span>${escapeHtml(trace.model)}</span></span>
+        <span class="item-meta">
+          <span class="item-task">Task ${trace.task_id}</span>
+          <span class="item-badge ${taskTypeBadgeClass(trace.task_type)}">${escapeHtml(trace.task_type)}</span>
+          <span class="item-badge ${modelBadgeClass(trace.model)}">${escapeHtml(trace.model)}</span>
+          ${unfinished ? '<span class="item-badge status-unfinished">Unfinished</span>' : ""}
+        </span>
         <strong>${escapeHtml(compact(trace.task_prompt || "Untitled task", 74))}</strong>
         <p>${escapeHtml(trace.trace_id)}</p>
       </span>`;
@@ -274,6 +301,7 @@ function renderCatalog() {
     item.append(button);
     return item;
   }));
+  requestAnimationFrame(() => elements.list.querySelector(".trace-item.active")?.scrollIntoView({ block: "nearest" }));
 }
 
 function escapeHtml(value) {

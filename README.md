@@ -16,6 +16,7 @@ The published collection contains only:
 - final answer
 - acting time and aggregate input/output token counts
 - manually checked answer score (when available)
+- normalized completion state (`completed` or `unfinished`)
 
 Automated evaluator commentary, costs, timestamps, provider credentials, seeds, trials, and source filesystem metadata are excluded before upload.
 
