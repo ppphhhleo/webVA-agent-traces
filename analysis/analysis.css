@@ -1,0 +1,91 @@
+:root {
+  --model-gpt55: #7655a6;
+  --model-gpt54: #2d72ad;
+  --model-opus: #c55d3d;
+  --model-sonnet: #278061;
+}
+
+.nav-current { color: var(--teal) !important; font-weight: 700; }
+.analysis-page { width: min(1440px, 100%); margin: 0 auto; padding: 52px clamp(22px, 5vw, 76px) 72px; }
+.analysis-hero { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 40px; align-items: end; margin-bottom: 30px; }
+.analysis-hero h1 { max-width: 760px; margin: 7px 0 10px; font: 600 clamp(42px, 6vw, 78px)/.96 var(--serif); letter-spacing: -.035em; }
+.hero-copy { max-width: 710px; margin: 0; color: var(--muted); font-size: 16px; line-height: 1.55; }
+.analysis-totals { display: grid; grid-template-columns: repeat(3, 115px); margin: 0; border: 1px solid var(--line-strong); background: var(--surface); }
+.analysis-totals div { padding: 13px 14px; }
+.analysis-totals div + div { border-left: 1px solid var(--line); }
+.analysis-totals dt { color: var(--muted); font-size: 8px; letter-spacing: .1em; text-transform: uppercase; }
+.analysis-totals dd { margin: 5px 0 0; font: 500 21px var(--mono); }
+
+.analysis-card, .summary-card { border: 1px solid var(--line-strong); background: var(--surface); }
+.chart-header { display: flex; align-items: end; justify-content: space-between; gap: 20px; padding: 20px 22px 15px; border-bottom: 1px solid var(--line); }
+.chart-header h2, .summary-card h2, .analysis-notes h2 { margin: 5px 0 0; font: 600 28px/1.05 var(--serif); }
+.task-filter-label { display: flex; flex-direction: column; gap: 5px; color: var(--muted); font-size: 8px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.task-filter-label select { min-width: 180px; border: 1px solid var(--line); background: var(--surface); padding: 8px 30px 8px 9px; color: var(--ink); font-size: 11px; }
+.model-legend { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px 22px; border-bottom: 1px solid var(--line); background: #f8f6ef; }
+.legend-toggle { display: inline-flex; align-items: center; gap: 7px; border: 1px solid var(--line-strong); background: var(--surface); padding: 7px 9px; color: var(--ink); font-size: 10px; font-weight: 700; transition: opacity .16s, background .16s; }
+.legend-toggle i { width: 10px; height: 10px; border-radius: 50%; background: var(--series-color); }
+.legend-toggle span { color: var(--muted); font: 9px var(--mono); }
+.legend-toggle[aria-pressed="false"] { opacity: .42; background: transparent; }
+.plot-shell { position: relative; min-height: 610px; }
+#scatterplot { display: block; width: 100%; height: 610px; overflow: visible; }
+.grid-line { stroke: #dfe5e1; stroke-width: 1; }
+.axis-line { stroke: #81938e; stroke-width: 1; }
+.tick-label { fill: var(--muted); font: 10px var(--mono); }
+.axis-label { fill: var(--ink); font: 600 12px var(--sans); letter-spacing: .01em; }
+.axis-hint { fill: var(--muted); font: 9px var(--sans); }
+.never-zone { fill: #f0eee6; }
+.never-divider { stroke: #a9bcb5; stroke-width: 1; stroke-dasharray: 4 4; }
+.trace-point { cursor: pointer; opacity: .76; stroke: var(--surface); stroke-width: 1.5; transition: opacity .14s, r .14s; }
+.trace-point:hover, .trace-point:focus { opacity: 1; stroke: var(--ink); stroke-width: 2; outline: none; }
+.plot-tooltip { position: absolute; z-index: 3; width: 260px; padding: 11px 12px; border: 1px solid var(--line-strong); background: #fffdf8; box-shadow: 5px 6px 0 rgba(20,42,44,.09); pointer-events: none; }
+.plot-tooltip strong { display: block; font-size: 12px; line-height: 1.35; }
+.plot-tooltip p { margin: 7px 0 0; color: var(--muted); font: 10px/1.55 var(--mono); }
+.plot-tooltip b { color: var(--ink); font-weight: 500; }
+.chart-description { margin: 0; padding: 13px 22px 16px; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; line-height: 1.5; }
+
+.analysis-notes { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 46px; padding: 42px 0 38px; }
+.note-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line-strong); }
+.note-grid article { padding: 16px 18px 0 0; }
+.note-grid article + article { padding-left: 18px; border-left: 1px solid var(--line); }
+.note-grid strong { font-size: 12px; }
+.note-grid p { margin: 7px 0 0; color: var(--muted); font-size: 12px; line-height: 1.55; }
+
+.summary-card header { padding: 20px 22px 14px; border-bottom: 1px solid var(--line); }
+.summary-table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 12px; }
+th, td { padding: 13px 16px; text-align: left; border-bottom: 1px solid var(--line); white-space: nowrap; }
+th { color: var(--muted); background: #f8f6ef; font-size: 8px; letter-spacing: .08em; text-transform: uppercase; }
+tbody tr:last-child td { border-bottom: 0; }
+.model-key { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; }
+.model-key i { width: 10px; height: 10px; border-radius: 50%; background: var(--series-color); }
+.metric-value { font-family: var(--mono); }
+
+.analysis-error { padding: 60px 24px; text-align: center; color: var(--danger); }
+
+@media (max-width: 900px) {
+  .analysis-page { padding-top: 36px; }
+  .analysis-hero { grid-template-columns: 1fr; align-items: start; }
+  .analysis-totals { width: 100%; grid-template-columns: repeat(3, 1fr); }
+  .analysis-notes { grid-template-columns: 1fr; gap: 22px; }
+}
+
+@media (max-width: 680px) {
+  .site-header { height: auto; min-height: 64px; padding-block: 10px; }
+  .site-nav { gap: 10px; }
+  .site-nav .github-link { display: none; }
+  .analysis-page { padding: 30px 12px 50px; }
+  .analysis-hero { gap: 24px; }
+  .analysis-hero h1 { font-size: 46px; }
+  .hero-copy { font-size: 14px; }
+  .analysis-totals { grid-template-columns: 1fr; }
+  .analysis-totals div + div { border-left: 0; border-top: 1px solid var(--line); }
+  .chart-header { align-items: stretch; flex-direction: column; }
+  .task-filter-label select { width: 100%; }
+  .model-legend { padding: 10px 12px; }
+  .legend-toggle { flex: 1 1 calc(50% - 8px); }
+  .plot-shell { min-height: 500px; }
+  #scatterplot { height: 500px; }
+  .note-grid { grid-template-columns: 1fr; }
+  .note-grid article { padding: 14px 0; }
+  .note-grid article + article { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); }
+}

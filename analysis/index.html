@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Cross-trace analysis of GUI and off-screen work in WebVA agent trajectories." />
+    <title>Work Mode Analysis · WebVA Agent Traces</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='29' fill='%23f5f2e9' stroke='%230e7c73' stroke-width='3'/%3E%3Ccircle cx='22' cy='23' r='5' fill='%230e7c73'/%3E%3Ccircle cx='43' cy='30' r='5' fill='%230e7c73'/%3E%3Ccircle cx='28' cy='44' r='5' fill='%230e7c73'/%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="analysis.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="site-header">
+        <a class="brand" href="../" aria-label="WebVA Agent Traces home">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span><strong>WebVA</strong><small>Agent Traces</small></span>
+        </a>
+        <nav class="site-nav" aria-label="Primary navigation">
+          <a class="nav-current" href="./" aria-current="page">Analysis</a>
+          <a href="../">Trace viewer</a>
+          <a class="github-link" href="https://github.com/ppphhhleo/webVA-agent-traces" target="_blank" rel="noreferrer">View source <span aria-hidden="true">↗</span></a>
+        </nav>
+      </header>
+
+      <main class="analysis-page">
+        <section class="analysis-hero">
+          <div>
+            <p class="eyebrow">Cross-trace analysis</p>
+            <h1>Where agents leave the screen</h1>
+            <p class="hero-copy">Compare how heavily each agent relies on off-screen tools—and how early that shift first appears in a trajectory.</p>
+          </div>
+          <dl class="analysis-totals" aria-label="Dataset summary">
+            <div><dt>Traces</dt><dd id="total-traces">—</dd></div>
+            <div><dt>Models</dt><dd id="total-models">—</dd></div>
+            <div><dt>Never off-screen</dt><dd id="never-count">—</dd></div>
+          </dl>
+        </section>
+
+        <section class="analysis-card" aria-labelledby="chart-title">
+          <header class="chart-header">
+            <div>
+              <p class="eyebrow">Trace-level distribution</p>
+              <h2 id="chart-title">Off-screen timing and reliance</h2>
+            </div>
+            <label class="task-filter-label">
+              <span>Task type</span>
+              <select id="task-type-filter"><option value="">All task types</option></select>
+            </label>
+          </header>
+
+          <div class="model-legend" id="model-legend" aria-label="Toggle model series"></div>
+
+          <div class="plot-shell">
+            <svg id="scatterplot" role="img" aria-labelledby="chart-title chart-description"></svg>
+            <div class="plot-tooltip" id="plot-tooltip" role="status" hidden></div>
+          </div>
+          <p class="chart-description" id="chart-description">Each point is one trace. Higher points use off-screen tools more often; points farther right first move off-screen later. The “Never” lane contains traces with no off-screen round.</p>
+        </section>
+
+        <section class="analysis-notes">
+          <div>
+            <p class="eyebrow">Metric definition</p>
+            <h2>A shared baseline across traces</h2>
+          </div>
+          <div class="note-grid">
+            <article><strong>Vertical axis</strong><p>Off-screen rounds ÷ (GUI + off-screen rounds). GUI share is the complement to 100%.</p></article>
+            <article><strong>Horizontal axis</strong><p>First off-screen round ÷ all rounds. Round 1 of a 30-round trace is 3.3%.</p></article>
+            <article><strong>Round classification</strong><p>Desktop actions, screenshots, and waits are GUI. Shell, Python, file, and browser-script work are off-screen.</p></article>
+          </div>
+        </section>
+
+        <section class="summary-card" aria-labelledby="summary-title">
+          <header><p class="eyebrow">Model summary</p><h2 id="summary-title">Typical work-mode patterns</h2></header>
+          <div class="summary-table-wrap">
+            <table>
+              <thead><tr><th>Model</th><th>Visible traces</th><th>Median off-screen share</th><th>Median first off-screen position</th><th>Never off-screen</th></tr></thead>
+              <tbody id="model-summary"></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script src="../config.js"></script>
+    <script src="analysis.js" type="module"></script>
+  </body>
+</html>

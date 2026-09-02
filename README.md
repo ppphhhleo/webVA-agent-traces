@@ -31,3 +31,18 @@ python3 -m http.server 8080
 Then open `http://127.0.0.1:8080`.
 
 The S3 data location is configured in `config.js`.
+
+## Cross-trace analysis
+
+The `/analysis/` route plots each public trace by:
+
+- off-screen share: off-screen rounds divided by GUI plus off-screen rounds
+- first off-screen position: the one-based first off-screen round divided by all model rounds
+
+Desktop screenshots and waits count as GUI; Shell, Python, file, and browser-script actions count as off-screen. Neutral rounds are excluded from the share. Traces without off-screen work appear in the chart's `Never` lane.
+
+The route reads a small derived dataset from `analysis/data.json`. Rebuild it after publishing new traces:
+
+```bash
+python3 scripts/build_analysis_data.py
+```

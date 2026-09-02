@@ -48,6 +48,9 @@ button, select { cursor: pointer; }
 .brand-mark i:nth-child(1) { left: 6px; top: 7px; }
 .brand-mark i:nth-child(2) { right: 5px; top: 11px; }
 .brand-mark i:nth-child(3) { left: 10px; bottom: 4px; }
+.site-nav { display: flex; align-items: center; gap: 18px; }
+.site-nav a { color: var(--ink); text-decoration: none; font-size: 13px; }
+.site-nav > a:not(.github-link):hover { color: var(--teal); }
 .github-link { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--line-strong); font-size: 13px; padding-bottom: 2px; }
 .github-link:hover { color: var(--teal); border-color: var(--teal); }
 
