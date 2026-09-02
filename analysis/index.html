@@ -44,7 +44,7 @@
           <header class="chart-header">
             <div>
               <p class="eyebrow">Trace-level distribution</p>
-              <h2 id="chart-title">Off-screen timing and reliance</h2>
+              <h2 id="chart-title">Off-screen reliance and delay</h2>
             </div>
             <label class="task-filter-label">
               <span>Task type</span>
@@ -58,7 +58,7 @@
             <svg id="scatterplot" role="img" aria-labelledby="chart-title chart-description"></svg>
             <div class="plot-tooltip" id="plot-tooltip" role="status" hidden></div>
           </div>
-          <p class="chart-description" id="chart-description">Each point is one trace. Higher points use off-screen tools more often; points farther right first move off-screen later. The “Never” lane contains traces with no off-screen round.</p>
+          <p class="chart-description" id="chart-description">Each point is one trace. Points farther right rely more on off-screen work; higher points delay that shift longer. Traces that never go off-screen are packed at the upper-left corner.</p>
         </section>
 
         <section class="analysis-notes">
@@ -67,8 +67,8 @@
             <h2>A shared baseline across traces</h2>
           </div>
           <div class="note-grid">
-            <article><strong>Vertical axis</strong><p>Off-screen rounds ÷ (GUI + off-screen rounds). GUI share is the complement to 100%.</p></article>
-            <article><strong>Horizontal axis</strong><p>First off-screen round ÷ all rounds. Round 1 of a 30-round trace is 3.3%.</p></article>
+            <article><strong>Vertical axis</strong><p>First off-screen round ÷ all rounds. Round 1 of a 30-round trace is 3.3%; never is positioned at 100%.</p></article>
+            <article><strong>Horizontal axis</strong><p>Off-screen rounds ÷ (GUI + off-screen rounds). GUI share is the complement to 100%.</p></article>
             <article><strong>Round classification</strong><p>Desktop actions, screenshots, and waits are GUI. Shell, Python, file, and browser-script work are off-screen.</p></article>
           </div>
         </section>

@@ -36,10 +36,10 @@ The S3 data location is configured in `config.js`.
 
 The `/analysis/` route plots each public trace by:
 
-- off-screen share: off-screen rounds divided by GUI plus off-screen rounds
-- first off-screen position: the one-based first off-screen round divided by all model rounds
+- horizontal axis: off-screen rounds divided by GUI plus off-screen rounds
+- vertical axis: the one-based first off-screen round divided by all model rounds
 
-Desktop screenshots and waits count as GUI; Shell, Python, file, and browser-script actions count as off-screen. Neutral rounds are excluded from the share. Traces without off-screen work appear in the chart's `Never` lane.
+Desktop screenshots and waits count as GUI; Shell, Python, file, and browser-script actions count as off-screen. Neutral rounds are excluded from the share. Traces without off-screen work are plotted at 0% off-screen share and 100% delay, with slight packing for visibility.
 
 The route reads a small derived dataset from `analysis/data.json`. Rebuild it after publishing new traces:
 

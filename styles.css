@@ -11,10 +11,10 @@
   --teal-soft: #dcece7;
   --ochre: #c58c34;
   --danger: #a64b3c;
-  --mode-gui: #356da8;
-  --mode-gui-soft: #e2edf8;
-  --mode-offscreen: #c1842f;
-  --mode-offscreen-soft: #f4e8cf;
+  --mode-gui: #c1842f;
+  --mode-gui-soft: #f4e8cf;
+  --mode-offscreen: #356da8;
+  --mode-offscreen-soft: #e2edf8;
   --mode-neutral: #cbd4d0;
   --sans: "DM Sans", sans-serif;
   --serif: "Newsreader", Georgia, serif;
@@ -164,8 +164,8 @@ button, select { cursor: pointer; }
 .round-link.active { background: var(--teal-soft); border-color: #8dc1b5; }
 .round-link.mode-gui { box-shadow: inset 3px 0 0 var(--mode-gui); }
 .round-link.mode-offscreen { box-shadow: inset 3px 0 0 var(--mode-offscreen); }
-.round-link.mode-gui.active { background: var(--mode-gui-soft); border-color: #96b7d7; }
-.round-link.mode-offscreen.active { background: var(--mode-offscreen-soft); border-color: #d2a45e; }
+.round-link.mode-gui.active { background: var(--mode-gui-soft); border-color: #d2a45e; }
+.round-link.mode-offscreen.active { background: var(--mode-offscreen-soft); border-color: #96b7d7; }
 .round-index { width: 26px; height: 26px; display: grid; place-items: center; border-radius: 50%; background: #dce4e0; color: var(--muted); font: 500 10px var(--mono); }
 .round-link.mode-gui .round-index { background: var(--mode-gui); color: white; }
 .round-link.mode-offscreen .round-index { background: var(--mode-offscreen); color: white; }

@@ -88,17 +88,10 @@ function renderChart() {
     : { top: 30, right: 62, bottom: 76, left: 76 };
   const plotWidth = width - margin.left - margin.right;
   const plotHeight = height - margin.top - margin.bottom;
-  const domainMax = 116;
-  const neverX = 110;
-  const x = (value) => margin.left + ((value ?? neverX) / domainMax) * plotWidth;
+  const x = (value) => margin.left + (value / 100) * plotWidth;
   const y = (value) => margin.top + plotHeight - (value / 100) * plotHeight;
   svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
   svg.replaceChildren();
-
-  const neverStart = x(102.5);
-  const neverEnd = x(domainMax);
-  svg.append(svgElement("rect", { class: "never-zone", x: neverStart, y: margin.top, width: neverEnd - neverStart, height: plotHeight }));
-  svg.append(svgElement("line", { class: "never-divider", x1: neverStart, x2: neverStart, y1: margin.top, y2: margin.top + plotHeight }));
 
   [0, 25, 50, 75, 100].forEach((tick) => {
     svg.append(svgElement("line", { class: "grid-line", x1: margin.left, x2: margin.left + plotWidth, y1: y(tick), y2: y(tick) }));
@@ -107,30 +100,27 @@ function renderChart() {
     svg.append(label);
   });
 
-  (mobile ? [0, 25, 50, 75] : [0, 25, 50, 75, 100]).forEach((tick) => {
+  [0, 25, 50, 75, 100].forEach((tick) => {
     const label = svgElement("text", { class: "tick-label", x: x(tick), y: margin.top + plotHeight + 23, "text-anchor": "middle" });
     label.textContent = `${tick}%`;
     svg.append(label);
   });
-  const neverLabel = svgElement("text", { class: "tick-label", x: x(neverX), y: margin.top + plotHeight + 23, "text-anchor": "middle" });
-  neverLabel.textContent = "Never";
-  svg.append(neverLabel);
 
   svg.append(svgElement("line", { class: "axis-line", x1: margin.left, x2: margin.left + plotWidth, y1: margin.top + plotHeight, y2: margin.top + plotHeight }));
   svg.append(svgElement("line", { class: "axis-line", x1: margin.left, x2: margin.left, y1: margin.top, y2: margin.top + plotHeight }));
 
   const xLabel = svgElement("text", { class: "axis-label", x: margin.left + plotWidth / 2, y: height - 21, "text-anchor": "middle" });
-  xLabel.textContent = "Position of first off-screen round (% of all rounds)";
+  xLabel.textContent = "Off-screen share of working rounds";
   svg.append(xLabel);
   const yLabel = svgElement("text", { class: "axis-label", transform: `translate(18 ${margin.top + plotHeight / 2}) rotate(-90)`, "text-anchor": "middle" });
-  yLabel.textContent = "Off-screen share of working rounds";
+  yLabel.textContent = "Off-screen delay (% of all rounds)";
   svg.append(yLabel);
 
-  const topHint = svgElement("text", { class: "axis-hint", x: margin.left + 6, y: margin.top + 14 });
-  topHint.textContent = "More off-screen work";
+  const topHint = svgElement("text", { class: "axis-hint", x: margin.left + plotWidth - 6, y: margin.top + 14, "text-anchor": "end" });
+  topHint.textContent = "Later shift · never at top";
   svg.append(topHint);
-  const bottomHint = svgElement("text", { class: "axis-hint", x: margin.left + 6, y: margin.top + plotHeight - 9 });
-  bottomHint.textContent = "More GUI work";
+  const bottomHint = svgElement("text", { class: "axis-hint", x: margin.left + plotWidth - 6, y: margin.top + plotHeight - 9, "text-anchor": "end" });
+  bottomHint.textContent = "Earlier shift";
   svg.append(bottomHint);
 
   const visibleModels = orderedModels(traces);
@@ -141,17 +131,17 @@ function renderChart() {
 
   traces.forEach((trace) => {
     const isNever = trace.first_offscreen_round === null;
-    let pointX = x(trace.first_offscreen_position_percent);
-    let pointY = y(trace.offscreen_percent);
+    let pointX = x(trace.offscreen_percent);
+    let pointY = y(trace.first_offscreen_position_percent ?? 100);
     if (isNever) {
       const modelIndex = visibleModels.indexOf(trace.model);
       const modelRows = neverByModel.get(trace.model) || [];
       const itemIndex = modelRows.indexOf(trace);
-      const groupWidth = (neverEnd - neverStart) / Math.max(1, visibleModels.length);
-      const groupCenter = neverStart + groupWidth * (modelIndex + .5);
-      const jitter = Math.min(3, groupWidth * .18);
+      const groupWidth = mobile ? 4 : 7;
+      const groupCenter = margin.left + 5 + groupWidth * modelIndex;
+      const jitter = mobile ? 1 : 1.5;
       pointX = groupCenter + ((itemIndex % 3) - 1) * jitter;
-      pointY = y(0) - 4 - Math.floor(itemIndex / 3) * (mobile ? 3.4 : 4.4);
+      pointY = margin.top + 4 + Math.floor(itemIndex / 3) * (mobile ? 3.4 : 4.4);
     }
     const point = svgElement("circle", {
       class: "trace-point",
@@ -162,7 +152,7 @@ function renderChart() {
       "data-never": isNever ? "true" : "false",
       tabindex: 0,
       role: "link",
-      "aria-label": `Trace ${trace.trace_number}, ${trace.model}, ${trace.offscreen_percent}% off-screen share`,
+      "aria-label": `Trace ${trace.trace_number}, ${trace.model}, ${trace.offscreen_percent}% off-screen share, ${trace.first_offscreen_position_percent ?? 100}% delay`,
     });
     point.addEventListener("pointerenter", (event) => showTooltip(event, trace));
     point.addEventListener("pointermove", (event) => showTooltip(event, trace));

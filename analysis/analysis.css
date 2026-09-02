@@ -33,8 +33,6 @@
 .tick-label { fill: var(--muted); font: 10px var(--mono); }
 .axis-label { fill: var(--ink); font: 600 12px var(--sans); letter-spacing: .01em; }
 .axis-hint { fill: var(--muted); font: 9px var(--sans); }
-.never-zone { fill: #f0eee6; }
-.never-divider { stroke: #a9bcb5; stroke-width: 1; stroke-dasharray: 4 4; }
 .trace-point { cursor: pointer; opacity: .76; stroke: var(--surface); stroke-width: 1.5; transition: opacity .14s, r .14s; }
 .trace-point:hover, .trace-point:focus { opacity: 1; stroke: var(--ink); stroke-width: 2; outline: none; }
 .plot-tooltip { position: absolute; z-index: 3; width: 260px; padding: 11px 12px; border: 1px solid var(--line-strong); background: #fffdf8; box-shadow: 5px 6px 0 rgba(20,42,44,.09); pointer-events: none; }
