@@ -72,10 +72,18 @@
                 <span class="task-badge" id="trace-task">Task —</span>
                 <span class="type-badge" id="trace-type">Task type</span>
               </div>
-              <button class="copy-id" id="copy-id" type="button" title="Copy trace ID">
-                <span id="trace-id">tr_…</span>
-                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2"></rect><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path></svg>
-              </button>
+              <div class="trace-meta">
+                <dl class="trace-stats" aria-label="Trace metrics">
+                  <div><dt>Acting time</dt><dd id="acting-time">—</dd></div>
+                  <div><dt>Input tokens</dt><dd id="input-tokens">—</dd></div>
+                  <div><dt>Output tokens</dt><dd id="output-tokens">—</dd></div>
+                  <div><dt>Check score</dt><dd id="check-score">—</dd></div>
+                </dl>
+                <button class="copy-id" id="copy-id" type="button" title="Copy trace ID">
+                  <span id="trace-id">tr_…</span>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2"></rect><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path></svg>
+                </button>
+              </div>
             </header>
 
             <div class="prompt-grid">
@@ -102,38 +110,40 @@
               </header>
 
               <div class="episode-grid">
-                <div class="screen-stage">
-                  <div class="screen-loading" id="screen-loading"><span></span>Loading screenshot…</div>
-                  <img id="screen-image" alt="Observed agent screen" />
-                  <div class="screen-unavailable" id="screen-unavailable" hidden>
-                    <strong>No screenshot for this round</strong>
-                    <span>The model output and action record are still available below.</span>
+                <div class="screen-column">
+                  <div class="screen-stage">
+                    <div class="screen-loading" id="screen-loading"><span></span>Loading screenshot…</div>
+                    <img id="screen-image" alt="Observed agent screen" />
+                    <div class="screen-unavailable" id="screen-unavailable" hidden>
+                      <strong>No screenshot for this round</strong>
+                      <span>The model output and action record are still available below.</span>
+                    </div>
+                    <span class="action-cursor" id="action-cursor" hidden></span>
                   </div>
-                  <span class="action-cursor" id="action-cursor" hidden></span>
+
+                  <div class="playback-bar">
+                    <div class="transport-controls">
+                      <button type="button" id="previous-round">← Prev</button>
+                      <button type="button" class="play-button" id="play-rounds"><span>▶</span> Play</button>
+                      <button type="button" id="next-round">Next →</button>
+                    </div>
+                    <label class="progress-control">
+                      <span class="sr-only">Replay round</span>
+                      <input class="round-slider" id="round-slider" type="range" min="0" max="0" value="0" />
+                    </label>
+                    <div class="speed-control" role="group" aria-label="Playback speed">
+                      <button type="button" data-speed="1600">0.5×</button>
+                      <button type="button" data-speed="850" class="active">1×</button>
+                      <button type="button" data-speed="425">2×</button>
+                      <button type="button" data-speed="210">4×</button>
+                    </div>
+                  </div>
                 </div>
 
                 <aside class="rounds-panel">
                   <div class="rounds-title"><span>Rounds</span><b id="round-total">— total</b></div>
                   <ol id="round-list"></ol>
                 </aside>
-              </div>
-
-              <div class="playback-bar">
-                <div class="transport-controls">
-                  <button type="button" id="previous-round">← Prev</button>
-                  <button type="button" class="play-button" id="play-rounds"><span>▶</span> Play</button>
-                  <button type="button" id="next-round">Next →</button>
-                </div>
-                <label class="progress-control">
-                  <span class="sr-only">Replay round</span>
-                  <input class="round-slider" id="round-slider" type="range" min="0" max="0" value="0" />
-                </label>
-                <div class="speed-control" role="group" aria-label="Playback speed">
-                  <button type="button" data-speed="1600">0.5×</button>
-                  <button type="button" data-speed="850" class="active">1×</button>
-                  <button type="button" data-speed="425">2×</button>
-                  <button type="button" data-speed="210">4×</button>
-                </div>
               </div>
 
               <div class="round-details">
@@ -148,6 +158,10 @@
                   </div>
                   <h3 id="action-name">—</h3>
                   <pre id="action-details"></pre>
+                  <div class="execution-output-block">
+                    <p class="eyebrow">Execution output</p>
+                    <pre id="execution-output">—</pre>
+                  </div>
                 </section>
               </div>
 

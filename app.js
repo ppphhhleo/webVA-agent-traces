@@ -26,6 +26,10 @@ const elements = {
   model: $("#trace-model"),
   task: $("#trace-task"),
   taskType: $("#trace-type"),
+  actingTime: $("#acting-time"),
+  inputTokens: $("#input-tokens"),
+  outputTokens: $("#output-tokens"),
+  checkScore: $("#check-score"),
   traceId: $("#trace-id"),
   copyId: $("#copy-id"),
   prompt: $("#task-prompt"),
@@ -42,6 +46,7 @@ const elements = {
   rationale: $("#round-rationale"),
   actionName: $("#action-name"),
   actionDetails: $("#action-details"),
+  executionOutput: $("#execution-output"),
   executionStatus: $("#execution-status"),
   rawOutput: $("#raw-output"),
   finalAnswer: $("#final-answer"),
@@ -80,6 +85,26 @@ function canonicalTaskType(value) {
   const key = text(value, "").trim().toLowerCase().replace(/[\s_]+/g, "-");
   const labels = { "low-level": "Low-level", "high-level": "High-level", compound: "Compound" };
   return labels[key] || (value ? text(value) : "Unspecified");
+}
+
+function formatDuration(milliseconds) {
+  const value = Number(milliseconds);
+  if (!Number.isFinite(value)) return "—";
+  if (value < 60_000) return `${(value / 1000).toFixed(1)}s`;
+  const minutes = Math.floor(value / 60_000);
+  const seconds = Math.round((value % 60_000) / 1000);
+  return `${minutes}m ${seconds}s`;
+}
+
+function formatTokens(tokens) {
+  const value = Number(tokens);
+  if (!Number.isFinite(value)) return "—";
+  return value >= 1000 ? `${(value / 1000).toFixed(1)}k` : value.toLocaleString();
+}
+
+function formatScore(score) {
+  const value = Number(score);
+  return Number.isFinite(value) ? `${value.toFixed(value % 1 ? 1 : 0)} / 1` : "Not scored";
 }
 
 function actionType(action) {
@@ -158,10 +183,41 @@ function rawRoundOutput(round) {
   for (const execution of round.executions) {
     const data = execution.data || {};
     const heading = `${data.tool_name || execution.event_type}${data.ok === false ? " · error" : ""}`;
-    const output = data.output || data.error || data.message || "No textual output.";
+    const output = data.error || data.output || data.message || "No textual output.";
     parts.push(`${heading.toUpperCase()}\n${text(output)}`);
   }
   return parts.join("\n\n") || "No raw textual output recorded for this round.";
+}
+
+function formatFieldValue(value) {
+  if (typeof value === "string") return value;
+  return JSON.stringify(value, null, 2);
+}
+
+function formattedActions(actions) {
+  if (!actions.length) return "No structured action was requested.";
+  return actions.map((action, index) => {
+    if (!action || typeof action !== "object") return `${index + 1}. ${text(action)}`;
+    const label = `${index + 1}. ${displayAction(actionType(action))}`;
+    const fields = Object.entries(action).filter(([key]) => !["type", "action", "name"].includes(key));
+    if (!fields.length) return label;
+    const body = fields.map(([key, value]) => {
+      const formatted = formatFieldValue(value);
+      return formatted.includes("\n") ? `${key}:\n${formatted}` : `${key}: ${formatted}`;
+    }).join("\n\n");
+    return `${label}\n\n${body}`;
+  }).join("\n\n────────────────────────\n\n");
+}
+
+function formattedExecutionOutput(round) {
+  if (!round.executions.length) return "No execution output was recorded for this round.";
+  return round.executions.map((execution, index) => {
+    const data = execution.data || {};
+    const failed = data.ok === false || Boolean(data.error);
+    const label = data.tool_name ? displayAction(data.tool_name) : displayAction(execution.event_type);
+    const value = data.error || data.output || data.message || "No textual output was returned.";
+    return `${index + 1}. ${label} · ${failed ? "Error" : "Completed"}\n\n${formatFieldValue(value)}`;
+  }).join("\n\n────────────────────────\n\n");
 }
 
 function cursorPoint(actions) {
@@ -239,6 +295,11 @@ async function selectTrace(trace, { updateHash = true } = {}) {
   elements.model.textContent = trace.model;
   elements.task.textContent = `Task ${trace.task_id}`;
   elements.taskType.textContent = trace.task_type;
+  const summary = trace.summary || {};
+  elements.actingTime.textContent = formatDuration(summary.acting_time_ms);
+  elements.inputTokens.textContent = formatTokens(summary.input_tokens);
+  elements.outputTokens.textContent = formatTokens(summary.output_tokens);
+  elements.checkScore.textContent = formatScore(summary.check_answer_score);
   elements.traceId.textContent = trace.trace_id;
   elements.prompt.textContent = trace.task_prompt || "Loading task prompt…";
   elements.systemPrompt.textContent = "Loading…";
@@ -331,9 +392,8 @@ function renderRound(index) {
   elements.roundError.hidden = !hasError;
   elements.rationale.textContent = text(round.rationale, "No rationale recorded.");
   elements.actionName.textContent = round.title;
-  elements.actionDetails.textContent = round.actions.length
-    ? round.actions.map((action, i) => `${i + 1}. ${displayAction(actionType(action))}\n${JSON.stringify(action, null, 2)}`).join("\n\n")
-    : "No structured action was requested.";
+  elements.actionDetails.textContent = formattedActions(round.actions);
+  elements.executionOutput.textContent = formattedExecutionOutput(round);
   elements.executionStatus.textContent = hasError ? "Error recorded" : "Recorded";
   elements.executionStatus.classList.toggle("error", hasError);
   elements.rawOutput.textContent = rawRoundOutput(round);

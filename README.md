@@ -14,8 +14,10 @@ The published collection contains only:
 - screenshots
 - normalized model and tool outputs
 - final answer
+- acting time and aggregate input/output token counts
+- manually checked answer score (when available)
 
-Evaluation results, scores, token counts, costs, timestamps, provider credentials, seeds, trials, and source filesystem metadata are excluded before upload.
+Automated evaluator commentary, costs, timestamps, provider credentials, seeds, trials, and source filesystem metadata are excluded before upload.
 
 ## Local preview
 
