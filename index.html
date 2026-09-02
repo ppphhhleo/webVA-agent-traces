@@ -21,7 +21,6 @@
             <small>Agent Traces</small>
           </span>
         </a>
-        <div class="header-note">Public trace collection · screenshots, prompts, and model outputs</div>
         <a class="github-link" href="https://github.com/ppphhhleo/webVA-agent-traces" target="_blank" rel="noreferrer">View source <span aria-hidden="true">↗</span></a>
       </header>
 
@@ -127,7 +126,12 @@
                       <button type="button" id="next-round">Next →</button>
                     </div>
                     <label class="progress-control">
-                      <span class="sr-only">Replay round</span>
+                      <span class="mode-summary" aria-label="Working mode ratio" title="GUI includes clicks, typing, scrolling, dragging, and pointer movement. Off-screen includes Shell, Python, and file operations. Neutral observation rounds are excluded from the ratio.">
+                        <span class="mode-stat mode-gui"><i></i><b id="gui-ratio">GUI —</b></span>
+                        <span class="mode-stat mode-offscreen"><i></i><b id="offscreen-ratio">Off-screen —</b></span>
+                        <span class="neutral-stat" id="neutral-rounds" hidden></span>
+                      </span>
+                      <span class="sr-only">Replay round. Track colors indicate GUI versus off-screen work.</span>
                       <input class="round-slider" id="round-slider" type="range" min="0" max="0" value="0" />
                     </label>
                     <div class="speed-control" role="group" aria-label="Playback speed">

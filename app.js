@@ -54,8 +54,22 @@ const elements = {
   next: $("#next-round"),
   play: $("#play-rounds"),
   slider: $("#round-slider"),
+  guiRatio: $("#gui-ratio"),
+  offscreenRatio: $("#offscreen-ratio"),
+  neutralRounds: $("#neutral-rounds"),
   toast: $("#toast"),
 };
+
+const GUI_ACTION_TYPES = new Set([
+  "click", "left_click", "right_click", "double_click", "triple_click",
+  "desktop_click", "desktop_double_click", "desktop_triple_click", "desktop_right_click",
+  "move", "desktop_move", "drag", "desktop_drag", "scroll", "desktop_scroll",
+  "type", "desktop_type", "keypress", "desktop_keypress", "hotkey", "desktop_hotkey",
+]);
+const OFFSCREEN_ACTION_TYPES = new Set([
+  "shell", "desktop_shell", "run_python", "desktop_python", "run_shell",
+  "write_file", "read_file", "browser_script", "run_javascript",
+]);
 
 function text(value, fallback = "—") {
   if (value === null || value === undefined || value === "") return fallback;
@@ -161,6 +175,40 @@ function executionEvents(events, step) {
 
 function roundHasError(round) {
   return round.executions.some((event) => event.data?.ok === false || Boolean(event.data?.error));
+}
+
+function roundWorkMode(round) {
+  const types = round.actions.map((action) => String(actionType(action)).toLowerCase());
+  if (types.some((type) => OFFSCREEN_ACTION_TYPES.has(type))) return "offscreen";
+  if (types.some((type) => GUI_ACTION_TYPES.has(type))) return "gui";
+  return "neutral";
+}
+
+function renderWorkModeSummary() {
+  const modes = state.rounds.map(roundWorkMode);
+  const gui = modes.filter((mode) => mode === "gui").length;
+  const offscreen = modes.filter((mode) => mode === "offscreen").length;
+  const neutral = modes.length - gui - offscreen;
+  const working = gui + offscreen;
+  const guiPercent = working ? Math.round((gui / working) * 100) : 0;
+  const offscreenPercent = working ? 100 - guiPercent : 0;
+  elements.guiRatio.textContent = `GUI ${gui} · ${guiPercent}%`;
+  elements.offscreenRatio.textContent = `Off-screen ${offscreen} · ${offscreenPercent}%`;
+  elements.neutralRounds.textContent = `${neutral} neutral`;
+  elements.neutralRounds.hidden = neutral === 0;
+
+  const colors = { gui: "var(--mode-gui)", offscreen: "var(--mode-offscreen)", neutral: "var(--mode-neutral)" };
+  if (!modes.length) {
+    elements.slider.style.setProperty("--mode-gradient", "var(--mode-neutral)");
+    return;
+  }
+  const size = 100 / modes.length;
+  const stops = modes.flatMap((mode, index) => {
+    const start = (index * size).toFixed(4);
+    const end = ((index + 1) * size).toFixed(4);
+    return [`${colors[mode]} ${start}%`, `${colors[mode]} ${end}%`];
+  });
+  elements.slider.style.setProperty("--mode-gradient", `linear-gradient(to right, ${stops.join(", ")})`);
 }
 
 function screenshotUrl(artifactPath, trajectoryUrl) {
@@ -316,6 +364,10 @@ async function selectTrace(trace, { updateHash = true } = {}) {
   state.trajectory = null;
   state.rounds = [];
   state.roundIndex = 0;
+  elements.guiRatio.textContent = "GUI —";
+  elements.offscreenRatio.textContent = "Off-screen —";
+  elements.neutralRounds.hidden = true;
+  elements.slider.style.setProperty("--mode-gradient", "var(--mode-neutral)");
   renderCatalog();
   elements.empty.hidden = true;
   elements.content.hidden = false;
@@ -354,6 +406,7 @@ async function selectTrace(trace, { updateHash = true } = {}) {
     elements.systemPrompt.textContent = systemPrompt(trajectory);
     elements.slider.max = Math.max(0, state.rounds.length - 1);
     elements.roundTotal.textContent = `${state.rounds.length} total`;
+    renderWorkModeSummary();
     renderRoundList();
     renderRound(0);
   } catch (error) {
@@ -372,9 +425,11 @@ function renderRoundList() {
     const item = document.createElement("li");
     const button = document.createElement("button");
     button.type = "button";
-    button.className = `round-link${index === state.roundIndex ? " active" : ""}`;
+    const mode = roundWorkMode(round);
+    button.className = `round-link mode-${mode}${index === state.roundIndex ? " active" : ""}`;
     const error = roundHasError(round);
-    button.innerHTML = `<span class="round-index">${index + 1}</span><span class="round-copy"><span class="round-title-line"><strong>${escapeHtml(round.title)}</strong>${error ? '<em class="round-error">Error</em>' : ""}</span><span>${escapeHtml(compact(round.rationale, 54))}</span></span>`;
+    const modeLabel = mode === "gui" ? "GUI" : mode === "offscreen" ? "Off-screen" : "";
+    button.innerHTML = `<span class="round-index">${index + 1}</span><span class="round-copy"><span class="round-title-line"><strong>${escapeHtml(round.title)}</strong>${modeLabel ? `<em class="mode-label ${mode}">${modeLabel}</em>` : ""}${error ? '<em class="round-error">Error</em>' : ""}</span><span>${escapeHtml(compact(round.rationale, 54))}</span></span>`;
     button.addEventListener("click", () => renderRound(index));
     item.append(button);
     return item;
