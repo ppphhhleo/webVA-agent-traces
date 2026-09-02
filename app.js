@@ -25,12 +25,14 @@ const elements = {
   number: $("#trace-number"),
   model: $("#trace-model"),
   task: $("#trace-task"),
+  taskType: $("#trace-type"),
   traceId: $("#trace-id"),
   copyId: $("#copy-id"),
   prompt: $("#task-prompt"),
   systemPrompt: $("#system-prompt"),
   roundPosition: $("#round-position"),
   roundTitle: $("#round-title"),
+  roundError: $("#round-error-badge"),
   roundTotal: $("#round-total"),
   roundList: $("#round-list"),
   image: $("#screen-image"),
@@ -58,6 +60,26 @@ function text(value, fallback = "—") {
 function compact(value, length = 92) {
   const normalized = text(value, "").replace(/\s+/g, " ").trim();
   return normalized.length > length ? `${normalized.slice(0, length - 1)}…` : normalized;
+}
+
+function canonicalModel(value) {
+  const source = text(value, "Unknown model").trim();
+  const key = source.toLowerCase().replace(/[\s_-]+/g, "");
+  const labels = {
+    gpt54: "GPT-5.4",
+    gpt55: "GPT-5.5",
+    opus48: "Claude Opus 4.8",
+    claudeopus48: "Claude Opus 4.8",
+    sonnet5: "Claude Sonnet 5",
+    claudesonnet5: "Claude Sonnet 5",
+  };
+  return labels[key] || source;
+}
+
+function canonicalTaskType(value) {
+  const key = text(value, "").trim().toLowerCase().replace(/[\s_]+/g, "-");
+  const labels = { "low-level": "Low-level", "high-level": "High-level", compound: "Compound" };
+  return labels[key] || (value ? text(value) : "Unspecified");
 }
 
 function actionType(action) {
@@ -89,6 +111,10 @@ function executionEvents(events, step) {
   return events.filter((event) =>
     event.step_index === step && ["tool_call", "browser_action", "action"].includes(event.event_type)
   );
+}
+
+function roundHasError(round) {
+  return round.executions.some((event) => event.data?.ok === false || Boolean(event.data?.error));
 }
 
 function screenshotUrl(artifactPath, trajectoryUrl) {
@@ -164,7 +190,7 @@ function applyFilters() {
   const model = elements.modelFilter.value;
   const task = elements.taskFilter.value;
   state.filtered = state.catalog.filter((trace) => {
-    const haystack = [trace.trace_number, trace.trace_id, trace.task_id, `Task ${trace.task_id}`, trace.task_prompt, trace.model, trace.final_answer]
+    const haystack = [trace.trace_number, trace.trace_id, trace.task_id, `Task ${trace.task_id}`, trace.task_type, trace.task_prompt, trace.model, trace.final_answer]
       .join(" ").toLowerCase();
     return (!query || haystack.includes(query)) && (!model || trace.model === model) && (!task || String(trace.task_id) === task);
   });
@@ -184,7 +210,7 @@ function renderCatalog() {
     button.innerHTML = `
       <span class="item-number">${trace.trace_number}</span>
       <span class="item-copy">
-        <span class="item-meta"><span>Task ${trace.task_id}</span><span>·</span><span>${escapeHtml(trace.model)}</span></span>
+        <span class="item-meta"><span>Task ${trace.task_id}</span><span class="item-type">${escapeHtml(trace.task_type)}</span><span>${escapeHtml(trace.model)}</span></span>
         <strong>${escapeHtml(compact(trace.task_prompt || "Untitled task", 74))}</strong>
         <p>${escapeHtml(trace.trace_id)}</p>
       </span>`;
@@ -212,11 +238,14 @@ async function selectTrace(trace, { updateHash = true } = {}) {
   elements.number.textContent = `Trace ${trace.trace_number}`;
   elements.model.textContent = trace.model;
   elements.task.textContent = `Task ${trace.task_id}`;
+  elements.taskType.textContent = trace.task_type;
   elements.traceId.textContent = trace.trace_id;
   elements.prompt.textContent = trace.task_prompt || "Loading task prompt…";
   elements.systemPrompt.textContent = "Loading…";
   elements.roundPosition.textContent = "Loading replay";
   elements.roundTitle.textContent = "Preparing trace…";
+  elements.roundError.hidden = true;
+  elements.executionStatus.classList.remove("error");
   elements.finalAnswer.textContent = trace.final_answer || "No final answer recorded.";
   elements.roundList.replaceChildren();
   showImage(null);
@@ -239,6 +268,7 @@ async function selectTrace(trace, { updateHash = true } = {}) {
   } catch (error) {
     elements.roundPosition.textContent = "Replay unavailable";
     elements.roundTitle.textContent = "Could not load this trace";
+    elements.roundError.hidden = true;
     elements.rationale.textContent = error.message;
     elements.actionName.textContent = "Check S3 access and CORS";
     elements.actionDetails.textContent = "The catalog loaded, but the selected trajectory JSON could not be fetched.";
@@ -252,7 +282,8 @@ function renderRoundList() {
     const button = document.createElement("button");
     button.type = "button";
     button.className = `round-link${index === state.roundIndex ? " active" : ""}`;
-    button.innerHTML = `<span class="round-index">${index + 1}</span><span class="round-copy"><strong>${escapeHtml(round.title)}</strong><span>${escapeHtml(compact(round.rationale, 54))}</span></span>`;
+    const error = roundHasError(round);
+    button.innerHTML = `<span class="round-index">${index + 1}</span><span class="round-copy"><span class="round-title-line"><strong>${escapeHtml(round.title)}</strong>${error ? '<em class="round-error">Error</em>' : ""}</span><span>${escapeHtml(compact(round.rationale, 54))}</span></span>`;
     button.addEventListener("click", () => renderRound(index));
     item.append(button);
     return item;
@@ -296,13 +327,15 @@ function renderRound(index) {
   const round = state.rounds[state.roundIndex];
   elements.roundPosition.textContent = `Round ${state.roundIndex + 1} of ${state.rounds.length}`;
   elements.roundTitle.textContent = round.title;
+  const hasError = roundHasError(round);
+  elements.roundError.hidden = !hasError;
   elements.rationale.textContent = text(round.rationale, "No rationale recorded.");
   elements.actionName.textContent = round.title;
   elements.actionDetails.textContent = round.actions.length
     ? round.actions.map((action, i) => `${i + 1}. ${displayAction(actionType(action))}\n${JSON.stringify(action, null, 2)}`).join("\n\n")
     : "No structured action was requested.";
-  elements.executionStatus.textContent = round.executions.some((event) => event.data?.ok === false) ? "Error recorded" : "Recorded";
-  elements.executionStatus.style.color = round.executions.some((event) => event.data?.ok === false) ? "var(--danger)" : "";
+  elements.executionStatus.textContent = hasError ? "Error recorded" : "Recorded";
+  elements.executionStatus.classList.toggle("error", hasError);
   elements.rawOutput.textContent = rawRoundOutput(round);
   elements.slider.value = state.roundIndex;
   elements.previous.disabled = state.roundIndex === 0;
@@ -335,7 +368,13 @@ async function loadCatalog() {
     const response = await fetch(new URL("catalog.json", DATA_BASE));
     if (!response.ok) throw new Error(`Catalog request failed (${response.status})`);
     const payload = await response.json();
-    state.catalog = [...(payload.traces || [])].sort((a, b) => Number(a.trace_number) - Number(b.trace_number));
+    state.catalog = [...(payload.traces || [])]
+      .map((trace) => ({
+        ...trace,
+        model: canonicalModel(trace.model),
+        task_type: canonicalTaskType(trace.task_type),
+      }))
+      .sort((a, b) => Number(a.trace_number) - Number(b.trace_number));
     state.filtered = state.catalog;
     populateFilters();
     renderCatalog();

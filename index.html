@@ -70,6 +70,7 @@
                 <span class="number-badge" id="trace-number">Trace —</span>
                 <span class="model-badge" id="trace-model">Model</span>
                 <span class="task-badge" id="trace-task">Task —</span>
+                <span class="type-badge" id="trace-type">Task type</span>
               </div>
               <button class="copy-id" id="copy-id" type="button" title="Copy trace ID">
                 <span id="trace-id">tr_…</span>
@@ -92,7 +93,10 @@
               <header class="episode-header">
                 <div>
                   <p class="eyebrow" id="round-position">Round — of —</p>
-                  <h2 id="round-title">Observed screen</h2>
+                  <div class="round-heading-row">
+                    <h2 id="round-title">Observed screen</h2>
+                    <span class="round-error-badge" id="round-error-badge" hidden>Error</span>
+                  </div>
                 </div>
                 <span class="episode-context">Observed screen · rationale · requested action</span>
               </header>
@@ -115,10 +119,15 @@
               </div>
 
               <div class="playback-bar">
-                <button type="button" id="previous-round">← Prev</button>
-                <button type="button" class="play-button" id="play-rounds"><span>▶</span> Play</button>
-                <button type="button" id="next-round">Next →</button>
-                <input id="round-slider" type="range" min="0" max="0" value="0" aria-label="Replay round" />
+                <div class="transport-controls">
+                  <button type="button" id="previous-round">← Prev</button>
+                  <button type="button" class="play-button" id="play-rounds"><span>▶</span> Play</button>
+                  <button type="button" id="next-round">Next →</button>
+                </div>
+                <label class="progress-control">
+                  <span class="sr-only">Replay round</span>
+                  <input class="round-slider" id="round-slider" type="range" min="0" max="0" value="0" />
+                </label>
                 <div class="speed-control" role="group" aria-label="Playback speed">
                   <button type="button" data-speed="1600">0.5×</button>
                   <button type="button" data-speed="850" class="active">1×</button>

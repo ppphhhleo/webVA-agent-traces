@@ -9,7 +9,7 @@ The repository contains only the static viewer. Sanitized trajectory JSON and sc
 The published collection contains only:
 
 - offline trace number and stable trace ID
-- task ID and task/system prompts
+- task ID, task type, and task/system prompts
 - model name
 - screenshots
 - normalized model and tool outputs
