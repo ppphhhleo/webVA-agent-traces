@@ -105,6 +105,11 @@
                     <span class="round-error-badge" id="round-error-badge" hidden>Error</span>
                   </div>
                 </div>
+                <span class="mode-summary" aria-label="Working mode ratio" title="GUI includes screenshots, waits, clicks, typing, scrolling, dragging, and pointer movement. Off-screen includes Shell, Python, and file operations. Final-answer and other non-work rounds are excluded from the ratio.">
+                  <span class="mode-stat mode-gui"><i></i><b id="gui-ratio">GUI —</b></span>
+                  <span class="mode-stat mode-offscreen"><i></i><b id="offscreen-ratio">Off-screen —</b></span>
+                  <span class="neutral-stat" id="neutral-rounds" hidden></span>
+                </span>
               </header>
 
               <div class="episode-grid">
@@ -126,11 +131,6 @@
                       <button type="button" id="next-round">Next →</button>
                     </div>
                     <label class="progress-control">
-                      <span class="mode-summary" aria-label="Working mode ratio" title="GUI includes clicks, typing, scrolling, dragging, and pointer movement. Off-screen includes Shell, Python, and file operations. Neutral observation rounds are excluded from the ratio.">
-                        <span class="mode-stat mode-gui"><i></i><b id="gui-ratio">GUI —</b></span>
-                        <span class="mode-stat mode-offscreen"><i></i><b id="offscreen-ratio">Off-screen —</b></span>
-                        <span class="neutral-stat" id="neutral-rounds" hidden></span>
-                      </span>
                       <span class="sr-only">Replay round. Track colors indicate GUI versus off-screen work.</span>
                       <input class="round-slider" id="round-slider" type="range" min="0" max="0" value="0" />
                     </label>

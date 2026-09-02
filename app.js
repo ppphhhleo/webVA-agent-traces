@@ -65,6 +65,7 @@ const GUI_ACTION_TYPES = new Set([
   "desktop_click", "desktop_double_click", "desktop_triple_click", "desktop_right_click",
   "move", "desktop_move", "drag", "desktop_drag", "scroll", "desktop_scroll",
   "type", "desktop_type", "keypress", "desktop_keypress", "hotkey", "desktop_hotkey",
+  "desktop_wait", "desktop_screenshot",
 ]);
 const OFFSCREEN_ACTION_TYPES = new Set([
   "shell", "desktop_shell", "run_python", "desktop_python", "run_shell",
@@ -428,8 +429,7 @@ function renderRoundList() {
     const mode = roundWorkMode(round);
     button.className = `round-link mode-${mode}${index === state.roundIndex ? " active" : ""}`;
     const error = roundHasError(round);
-    const modeLabel = mode === "gui" ? "GUI" : mode === "offscreen" ? "Off-screen" : "";
-    button.innerHTML = `<span class="round-index">${index + 1}</span><span class="round-copy"><span class="round-title-line"><strong>${escapeHtml(round.title)}</strong>${modeLabel ? `<em class="mode-label ${mode}">${modeLabel}</em>` : ""}${error ? '<em class="round-error">Error</em>' : ""}</span><span>${escapeHtml(compact(round.rationale, 54))}</span></span>`;
+    button.innerHTML = `<span class="round-index">${index + 1}</span><span class="round-copy"><span class="round-title-line"><strong>${escapeHtml(round.title)}</strong>${error ? '<em class="round-error">Error</em>' : ""}</span><span>${escapeHtml(compact(round.rationale, 54))}</span></span>`;
     button.addEventListener("click", () => renderRound(index));
     item.append(button);
     return item;
