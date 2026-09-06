@@ -61,3 +61,14 @@ python3 scripts/build_gaia_public.py \
   --viewer-root /path/to/gaia_viewer \
   --output-dir /path/to/public-gaia
 ```
+
+The same sample can be materialized with its full gated benchmark content for authenticated review only:
+
+```bash
+python3 scripts/build_gaia_private.py \
+  --source-root /path/to/ohindex_gaia_targetmodels \
+  --viewer-root /path/to/gaia_viewer \
+  --output-dir /path/to/private-gaia-full
+```
+
+The private export adds prompts, answers, reasoning, tool arguments and observations, source identifiers, and available screenshots. Never place it under the publicly readable `data/` prefix.
