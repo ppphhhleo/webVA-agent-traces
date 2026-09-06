@@ -43,6 +43,15 @@ function formatDetail(value) {
   if (value === null || value === undefined || value === "") return "Not recorded.";
   return typeof value === "string" ? value : JSON.stringify(value, null, 2);
 }
+function reviewLabel(key) {
+  const labels = {
+    procedure: "Procedure",
+    behavior: "Behavioral interpretation",
+    flag_check: "Flag assessment",
+    flag_disagreements: "Flag disagreement",
+  };
+  return labels[key] || String(key).replaceAll("_", " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
+}
 function actionHasError(action) { return Boolean(action?.has_error || action?.error); }
 function roundTitle(round) {
   const actions = (round.actions || []).map((action) => actionLabel(action.type)).join(" → ");
@@ -156,7 +165,7 @@ function renderPrivateTraceContent(trace) {
   elements.privateTaskText.textContent = trace.task_prompt || "Task prompt not recorded.";
   elements.privateAttachment.hidden = !trace.attachment_name;
   elements.privateAttachment.textContent = trace.attachment_name ? `Attachment: ${trace.attachment_name}` : "";
-  elements.privateReviewText.textContent = formatDetail(trace.review);
+  renderReviewNotes(trace.review);
   const answers = trace.answers || {};
   elements.taskOutcome.replaceChildren();
   const outcome = document.createElement("div");
@@ -179,6 +188,37 @@ function renderPrivateTraceContent(trace) {
     const body = document.createElement("pre"); body.textContent = normalized;
     block.append(heading, body); elements.taskOutcome.append(block);
   }
+}
+
+function renderReviewNotes(review) {
+  elements.privateReviewText.replaceChildren();
+  const entries = review && typeof review === "object" && !Array.isArray(review)
+    ? Object.entries(review)
+    : [["note", review]];
+  const factKeys = new Set(["flag_check", "confidence", "verification"]);
+  const facts = entries.filter(([key, value]) => factKeys.has(key) && value !== null && value !== undefined && value !== "");
+  if (facts.length) {
+    const factStrip = document.createElement("dl"); factStrip.className = "review-facts";
+    facts.forEach(([key, value]) => {
+      const item = document.createElement("div");
+      const label = document.createElement("dt"); label.textContent = reviewLabel(key);
+      const body = document.createElement("dd"); body.textContent = formatDetail(value);
+      item.append(label, body); factStrip.append(item);
+    });
+    elements.privateReviewText.append(factStrip);
+  }
+  let narrativeIndex = 0;
+  entries.filter(([key]) => !factKeys.has(key)).forEach(([key, value]) => {
+    if (value === null || value === undefined || value === "") return;
+    narrativeIndex += 1;
+    const article = document.createElement("article"); article.className = `review-note review-${key}`;
+    const marker = document.createElement("span"); marker.className = "review-note-index"; marker.textContent = String(narrativeIndex).padStart(2, "0");
+    const copy = document.createElement("div");
+    const label = document.createElement("strong"); label.textContent = reviewLabel(key);
+    const body = document.createElement("p"); body.textContent = formatDetail(value);
+    copy.append(label, body); article.append(marker, copy); elements.privateReviewText.append(article);
+  });
+  if (!elements.privateReviewText.children.length) elements.privateReviewText.textContent = "No review notes recorded.";
 }
 
 function renderModeSummary() {

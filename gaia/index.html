@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="../styles.css" />
-    <link rel="stylesheet" href="gaia.css" />
+    <link rel="stylesheet" href="gaia.css?v=20260907" />
   </head>
   <body>
     <div class="app-shell">
@@ -147,8 +147,11 @@
                     <small id="withheld-answer-note">Final answer withheld from the public sample.</small>
                   </section>
                   <section class="private-review" id="private-review" hidden>
-                    <p class="eyebrow">Review notes</p>
-                    <pre id="private-review-text"></pre>
+                    <div class="review-heading">
+                      <p class="eyebrow">Review notes</p>
+                      <span>Analyst summary</span>
+                    </div>
+                    <div class="review-notes" id="private-review-text"></div>
                   </section>
                 </aside>
               </div>
@@ -159,6 +162,6 @@
     </div>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
     <script src="../config.js"></script>
-    <script src="gaia.js" type="module"></script>
+    <script src="gaia.js?v=20260907" type="module"></script>
   </body>
 </html>
