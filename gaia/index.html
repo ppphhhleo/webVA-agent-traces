@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="A redacted public sample of agent trajectories on GAIA." />
+    <title>GAIA Sample · Agent Traces</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='29' fill='%23f5f2e9' stroke='%230e7c73' stroke-width='3'/%3E%3Ccircle cx='22' cy='23' r='5' fill='%230e7c73'/%3E%3Ccircle cx='43' cy='30' r='5' fill='%230e7c73'/%3E%3Ccircle cx='28' cy='44' r='5' fill='%230e7c73'/%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="gaia.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="site-header">
+        <a class="brand" href="../" aria-label="Agent Traces home">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span><strong>WebVA</strong><small>Agent Traces</small></span>
+        </a>
+        <nav class="site-nav" aria-label="Primary navigation">
+          <a href="../">Trace viewer</a>
+          <a href="../analysis/">Analysis</a>
+          <a class="nav-current" href="./" aria-current="page">GAIA</a>
+          <a class="github-link" href="https://github.com/ppphhhleo/webVA-agent-traces" target="_blank" rel="noreferrer">View source <span aria-hidden="true">↗</span></a>
+        </nav>
+      </header>
+
+      <main class="workspace gaia-workspace">
+        <aside class="catalog-panel" aria-label="GAIA trace catalog">
+          <div class="catalog-heading">
+            <div><p class="eyebrow">GAIA sample</p><h1>Trace index</h1></div>
+            <span class="trace-count" id="trace-count">—</span>
+          </div>
+          <p class="catalog-intro" id="sample-note">Loading paired sample…</p>
+
+          <label class="search-field">
+            <span class="sr-only">Search traces</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg>
+            <input id="search" type="search" placeholder="Trace or model…" autocomplete="off" />
+          </label>
+
+          <div class="filter-row gaia-filters">
+            <label><span>Model</span><select id="model-filter"><option value="">All models</option></select></label>
+            <label><span>Level</span><select id="level-filter"><option value="">All levels</option></select></label>
+            <label><span>Outcome</span><select id="outcome-filter"><option value="">All outcomes</option><option value="success">Successful</option><option value="unsuccessful">Unsuccessful</option></select></label>
+          </div>
+
+          <div class="catalog-status" id="catalog-status">Loading trace catalog…</div>
+          <ol class="trace-list" id="trace-list" aria-live="polite"></ol>
+        </aside>
+
+        <section class="viewer-panel" aria-live="polite">
+          <div class="viewer-empty" id="viewer-empty">
+            <span class="empty-orbit" aria-hidden="true"><i></i></span>
+            <p class="eyebrow">GAIA trajectory sample</p>
+            <h2>Select a trace</h2>
+            <p>Compare action sequences across four models without publishing protected benchmark questions or answers.</p>
+          </div>
+
+          <div class="viewer-content" id="viewer-content" hidden>
+            <header class="trace-header">
+              <div class="trace-identifiers">
+                <span class="number-badge" id="task-number">Task —</span>
+                <span class="model-badge" id="trace-model">Model</span>
+                <span class="level-badge" id="trace-level">Level —</span>
+                <span class="attachment-badge" id="trace-attachment" hidden>Attachment</span>
+                <span class="outcome-badge" id="trace-outcome">Outcome</span>
+              </div>
+              <div class="trace-meta">
+                <dl class="trace-stats" aria-label="Trace metrics">
+                  <div><dt>Rounds</dt><dd id="round-count">—</dd></div>
+                  <div><dt>Input tokens</dt><dd id="input-tokens">—</dd></div>
+                  <div><dt>Output tokens</dt><dd id="output-tokens">—</dd></div>
+                  <div><dt>Score</dt><dd id="trace-score">—</dd></div>
+                </dl>
+                <button class="copy-id" id="copy-id" type="button" title="Copy public trace ID"><span id="trace-id">gaia-…</span></button>
+              </div>
+            </header>
+
+            <section class="redaction-note">
+              <div><p class="eyebrow">Public-view safeguard</p><strong>Benchmark content withheld</strong></div>
+              <p>Question text, answers, reasoning, tool arguments, observations, and screenshots are not published. This view exposes only action structure and aggregate metrics.</p>
+            </section>
+
+            <div class="episode-card gaia-episode">
+              <header class="episode-header">
+                <div><p class="eyebrow" id="round-position">Round — of —</p><h2 id="round-title">Action sequence</h2></div>
+                <span class="mode-summary" aria-label="Work-mode legend">
+                  <span class="mode-summary-title">Work mode</span>
+                  <span class="mode-stat mode-gui"><i></i><b id="onscreen-ratio">On-screen —</b></span>
+                  <span class="mode-stat mode-offscreen"><i></i><b id="offscreen-ratio">Off-screen —</b></span>
+                  <span class="mode-stat mode-neutral"><i></i><b id="neutral-count">Neutral —</b></span>
+                </span>
+              </header>
+
+              <div class="gaia-replay-grid">
+                <div class="gaia-main">
+                  <section class="action-stage" id="action-stage"></section>
+                  <div class="playback-bar gaia-playback">
+                    <div class="transport-controls">
+                      <button type="button" id="previous-round">← Prev</button>
+                      <button type="button" class="play-button" id="play-rounds"><span>▶</span> Play</button>
+                      <button type="button" id="next-round">Next →</button>
+                    </div>
+                    <label class="progress-control"><span class="sr-only">Replay round</span><input class="round-slider" id="round-slider" type="range" min="0" max="0" value="0" /></label>
+                    <div class="speed-control" role="group" aria-label="Playback speed">
+                      <button type="button" data-speed="1500">0.5×</button><button type="button" data-speed="800" class="active">1×</button><button type="button" data-speed="400">2×</button>
+                    </div>
+                  </div>
+                  <section class="trace-overview">
+                    <div><p class="eyebrow">Round classification</p><h3 id="round-mode">—</h3><p id="round-explanation">—</p></div>
+                    <dl><div><dt>Source step</dt><dd id="source-step">—</dd></div><div><dt>Actions</dt><dd id="action-count">—</dd></div><div><dt>Errors</dt><dd id="error-count">—</dd></div></dl>
+                  </section>
+                </div>
+
+                <aside class="replay-sidebar gaia-sidebar">
+                  <div class="rounds-panel"><div class="rounds-title"><span>Rounds</span><b id="round-total">— total</b></div><ol id="round-list"></ol></div>
+                  <section class="final-answer sidebar-final-answer">
+                    <p class="eyebrow">Task outcome</p>
+                    <div id="task-outcome"></div>
+                    <small>Final answer withheld from the public sample.</small>
+                  </section>
+                </aside>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="../config.js"></script>
+    <script src="gaia.js" type="module"></script>
+  </body>
+</html>

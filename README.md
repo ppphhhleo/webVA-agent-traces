@@ -46,3 +46,18 @@ The route reads a small derived dataset from `analysis/data.json`. Rebuild it af
 ```bash
 python3 scripts/build_analysis_data.py
 ```
+
+## GAIA sample
+
+The `/gaia/` route displays a paired sample of 30 GAIA tasks across four models. The same task sample is used for every model and is stratified by GAIA difficulty level.
+
+To respect the benchmark's redistribution constraints, the public files contain only opaque task numbers, levels, attachment presence, outcomes, token totals, and normalized action structure. Questions, answers, reasoning, tool arguments and observations, source identifiers, and screenshots are withheld. The complete source bundle remains private.
+
+Build the sanitized data on the machine that holds the private archive:
+
+```bash
+python3 scripts/build_gaia_public.py \
+  --source-root /path/to/ohindex_gaia_targetmodels \
+  --viewer-root /path/to/gaia_viewer \
+  --output-dir /path/to/public-gaia
+```
