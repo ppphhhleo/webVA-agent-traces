@@ -27,6 +27,12 @@
         </nav>
       </header>
 
+      <div class="private-mode-banner" id="private-mode-banner" hidden>
+        <strong>Private research review</strong>
+        <span>Gated GAIA benchmark content · do not redistribute</span>
+        <a href="https://huggingface.co/datasets/gaia-benchmark/GAIA" target="_blank" rel="noreferrer">Official source ↗</a>
+      </div>
+
       <main class="workspace gaia-workspace">
         <aside class="catalog-panel" aria-label="GAIA trace catalog">
           <div class="catalog-heading">
@@ -79,12 +85,18 @@
               </div>
             </header>
 
-            <section class="redaction-note">
+            <section class="redaction-note" id="redaction-note">
               <div><p class="eyebrow">Public-view safeguard</p><strong>Benchmark content withheld</strong></div>
               <p>Question text, answers, reasoning, tool arguments, observations, and screenshots are not published. This view exposes only action structure and aggregate metrics. Access the gated source through the <a href="https://huggingface.co/datasets/gaia-benchmark/GAIA" target="_blank" rel="noreferrer">official GAIA dataset page ↗</a>.</p>
             </section>
 
             <p class="level-guide"><strong>Difficulty:</strong> L1 comparatively direct tool use · L2 more involved multi-step work · L3 the strongest jump in reasoning and tool coordination.</p>
+
+            <section class="private-task-prompt" id="private-task-prompt" hidden>
+              <p class="eyebrow">Task prompt</p>
+              <p id="private-task-text"></p>
+              <p class="attachment-line" id="private-attachment-line" hidden></p>
+            </section>
 
             <div class="episode-card gaia-episode">
               <header class="episode-header">
@@ -115,6 +127,16 @@
                     <div><p class="eyebrow">Round classification</p><h3 id="round-mode">—</h3><p id="round-explanation">—</p></div>
                     <dl><div><dt>Source step</dt><dd id="source-step">—</dd></div><div><dt>Actions</dt><dd id="action-count">—</dd></div><div><dt>Errors</dt><dd id="error-count">—</dd></div></dl>
                   </section>
+                  <section class="private-round-content" id="private-round-content" hidden>
+                    <div class="private-reasoning">
+                      <p class="eyebrow">Reasoning and messages</p>
+                      <div id="private-reasoning-body"></div>
+                    </div>
+                    <div class="private-tool-details">
+                      <p class="eyebrow">Tool details and observations</p>
+                      <div id="private-tool-body"></div>
+                    </div>
+                  </section>
                 </div>
 
                 <aside class="replay-sidebar gaia-sidebar">
@@ -122,7 +144,11 @@
                   <section class="final-answer sidebar-final-answer">
                     <p class="eyebrow">Task outcome</p>
                     <div id="task-outcome"></div>
-                    <small>Final answer withheld from the public sample.</small>
+                    <small id="withheld-answer-note">Final answer withheld from the public sample.</small>
+                  </section>
+                  <section class="private-review" id="private-review" hidden>
+                    <p class="eyebrow">Review notes</p>
+                    <pre id="private-review-text"></pre>
                   </section>
                 </aside>
               </div>
