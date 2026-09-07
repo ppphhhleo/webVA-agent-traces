@@ -47,6 +47,21 @@ The route reads a small derived dataset from `analysis/data.json`. Rebuild it af
 python3 scripts/build_analysis_data.py
 ```
 
+## Behavior annotations
+
+Researcher-coded behaviors are stored separately from immutable trajectories as one
+trace-linked JSON dataset. Each annotation retains its theme, code, original round
+reference, normalized round numbers, and source spreadsheet row. Rebuild it from the
+trial-one coding sheet with:
+
+```bash
+python3 scripts/build_behavior_annotations.py /path/to/Trace\ Coding.xlsx
+```
+
+Publish the generated file at
+`data/annotations/agent_behaviors_trial1.json`. Updating annotations does not modify
+the original trajectory JSON or screenshots.
+
 ## GAIA sample
 
 The `/gaia/` route displays a paired sample of 30 GAIA tasks across four models. The same task sample is used for every model and is stratified by GAIA difficulty level.
