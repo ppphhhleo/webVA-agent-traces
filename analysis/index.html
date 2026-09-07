@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="../styles.css" />
-    <link rel="stylesheet" href="analysis.css?v=18" />
+    <link rel="stylesheet" href="analysis.css?v=19" />
   </head>
   <body>
     <div class="app-shell">
@@ -141,10 +141,10 @@
             <svg id="evidence-plot" role="img" aria-labelledby="evidence-title evidence-description"></svg>
             <div class="plot-tooltip evidence-tooltip" id="evidence-tooltip" role="status" hidden></div>
           </div>
-          <p class="chart-description" id="evidence-description">Each small point is one coded trial-one trace and opens that trace when selected. Horizontal position is the share of working rounds performed on screen; answer-only traces with no working actions appear at 100% visible by convention. Points are deterministically jittered within their evidence band to reveal overlap, while model means and confidence regions use the unjittered values. Color and marker shape redundantly encode each model using a colorblind-safe palette. Evidence categories form a descriptive ordered scale—not an answer-correctness score. Select a model label or mean point to focus its traces.</p>
+          <p class="chart-description" id="evidence-description">Each small point is one coded trial-one trace and opens that trace when selected. Horizontal position is the share of working rounds performed on screen; answer-only traces with no working actions appear at 100% visible by convention. Points receive deterministic, density-aware jitter within their evidence band to reveal overlap, while model means and confidence regions use the unjittered values. Color encodes each model using a colorblind-safe palette. Evidence categories form a descriptive ordered scale—not an answer-correctness score. Select a model label or mean point to focus its traces.</p>
         </section>
 
-        <section class="analysis-card distribution-card" aria-labelledby="chart-title">
+        <section class="analysis-card distribution-card" aria-labelledby="chart-title" hidden>
           <header class="chart-header">
             <div>
               <p class="eyebrow">Trace-level detail</p>
@@ -162,7 +162,7 @@
           <p class="chart-description" id="chart-description">Each point is one trace. Points farther right rely more on off-screen work; higher points delay that shift longer. Traces that never go off-screen are packed at the upper-left corner.</p>
         </section>
 
-        <section class="analysis-notes">
+        <section class="analysis-notes" hidden>
           <div>
             <p class="eyebrow">Metric definition</p>
             <h2>A shared baseline across traces</h2>
@@ -177,6 +177,6 @@
       </main>
     </div>
     <script src="../config.js"></script>
-    <script src="analysis.js?v=18" type="module"></script>
+    <script src="analysis.js?v=19" type="module"></script>
   </body>
 </html>

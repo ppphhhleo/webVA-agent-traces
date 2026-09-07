@@ -27,13 +27,6 @@ const HANDLING_COLORS = {
   "Unresolved / abandoned": "#666666",
 };
 
-const MODEL_MARKERS = {
-  "GPT-5.4": "circle",
-  "GPT-5.5": "square",
-  "Claude Opus 4.8": "triangle",
-  "Claude Sonnet 5": "diamond",
-};
-
 const state = { traces: [], friction: null, evidence: null, evidenceModel: "", activeModels: new Set(), taskType: "" };
 const svg = document.querySelector("#scatterplot");
 const tooltip = document.querySelector("#plot-tooltip");
@@ -58,26 +51,12 @@ const formatTokens = (value) => value === null ? "—" : Math.round(value).toLoc
 
 const percent = (value) => value === null || value === undefined ? "Never" : `${value.toFixed(1)}%`;
 const colorFor = (model) => MODEL_COLORS[model] || "#687777";
-const markerFor = (model) => MODEL_MARKERS[model] || "circle";
 const orderedModels = (traces) => [...new Set(traces.map((trace) => trace.model))]
   .sort((a, b) => MODEL_ORDER.indexOf(a) - MODEL_ORDER.indexOf(b));
 const svgElement = (name, attributes = {}) => {
   const node = document.createElementNS("http://www.w3.org/2000/svg", name);
   Object.entries(attributes).forEach(([key, value]) => node.setAttribute(key, value));
   return node;
-};
-const svgModelMarker = (model, cx, cy, radius, attributes = {}) => {
-  const marker = markerFor(model);
-  if (marker === "square") {
-    return svgElement("rect", { x: cx - radius, y: cy - radius, width: radius * 2, height: radius * 2, rx: radius * 0.12, ...attributes });
-  }
-  if (marker === "triangle") {
-    return svgElement("path", { d: `M ${cx} ${cy - radius * 1.2} L ${cx + radius * 1.08} ${cy + radius * 0.78} L ${cx - radius * 1.08} ${cy + radius * 0.78} Z`, ...attributes });
-  }
-  if (marker === "diamond") {
-    return svgElement("path", { d: `M ${cx} ${cy - radius * 1.3} L ${cx + radius} ${cy} L ${cx} ${cy + radius * 1.3} L ${cx - radius} ${cy} Z`, ...attributes });
-  }
-  return svgElement("circle", { cx, cy, r: radius, ...attributes });
 };
 const clamp = (value, lower, upper) => Math.max(lower, Math.min(upper, value));
 const stableHash = (value) => [...value].reduce((hash, character) => ((hash * 31) + character.charCodeAt(0)) >>> 0, 2166136261);
@@ -581,7 +560,7 @@ function renderEvidenceLegend() {
     item.dataset.muted = state.evidenceModel && state.evidenceModel !== model ? "true" : "false";
     item.title = state.evidenceModel === model ? "Show all models" : `Focus ${model}`;
     const count = state.evidence.traces.filter((trace) => trace.model === model).length;
-    item.innerHTML = `<i class="marker-${markerFor(model)}"></i><b>${model}</b><small>n=${count}</small>`;
+    item.innerHTML = `<i></i><b>${model}</b><small>n=${count}</small>`;
     item.addEventListener("click", () => {
       state.evidenceModel = state.evidenceModel === model ? "" : model;
       renderEvidenceLegend();
@@ -731,6 +710,12 @@ function renderEvidencePlot() {
 
   const plotted = svgElement("g", { "clip-path": "url(#evidence-plot-clip)" });
   const models = orderedModels(records);
+  const densityNeighbors = new Map(records.map((trace) => [
+    trace.trace_id,
+    records
+      .filter((candidate) => candidate.evidence_level === trace.evidence_level && Math.abs(candidate.gui_percent - trace.gui_percent) <= 4)
+      .sort((a, b) => stableHash(a.trace_id) - stableHash(b.trace_id)),
+  ]));
   const drawOrder = state.evidenceModel
     ? [...models.filter((model) => model !== state.evidenceModel), state.evidenceModel]
     : models;
@@ -754,10 +739,14 @@ function renderEvidencePlot() {
     const hash = stableHash(trace.trace_id);
     const xUnit = ((hash % 1001) / 1000) - 0.5;
     const ySeed = (Math.floor(hash / 1001) % 1001) / 1000;
-    const xSpread = mobile ? 30 : 58;
-    let jitterX = xUnit * xSpread;
-    if (trace.gui_percent <= 1) jitterX = Math.abs(xUnit) * xSpread;
-    if (trace.gui_percent >= 99) jitterX = -Math.abs(xUnit) * xSpread;
+    const neighbors = densityNeighbors.get(trace.trace_id) || [trace];
+    const density = neighbors.length;
+    const densityBoost = clamp((density - 3) / 15, 0, 1);
+    const xSpread = (mobile ? 34 : 64) + densityBoost * (mobile ? 42 : 100);
+    const rank = neighbors.length > 1 ? neighbors.findIndex((candidate) => candidate.trace_id === trace.trace_id) / (neighbors.length - 1) : xUnit + 0.5;
+    let jitterX = (rank - 0.5) * xSpread;
+    if (trace.gui_percent <= 1) jitterX = rank * xSpread;
+    if (trace.gui_percent >= 99) jitterX = -rank * xSpread;
     const ySpread = bandStep * 0.96;
     let jitterY = (ySeed - 0.5) * ySpread;
     if (trace.evidence_level === 0) jitterY = -ySeed * ySpread * 0.5;
@@ -766,8 +755,11 @@ function renderEvidencePlot() {
     const focused = state.evidenceModel === trace.model;
     const pointX = clamp(x(trace.gui_percent) + jitterX, margin.left + 5, margin.left + plotWidth - 5);
     const pointY = clamp(y(trace.evidence_level) + jitterY, margin.top + 5, margin.top + plotHeight - 5);
-    const point = svgModelMarker(trace.model, pointX, pointY, mobile ? 3.8 : 4.8, {
+    const point = svgElement("circle", {
       class: `evidence-trace-point${focused ? " is-focused" : ""}${muted ? " is-muted" : ""}`,
+      cx: pointX,
+      cy: pointY,
+      r: mobile ? 3.8 : 4.8,
       fill: colorFor(trace.model),
       tabindex: 0,
       role: "link",
@@ -792,9 +784,11 @@ function renderEvidencePlot() {
     const modelRecords = records.filter((trace) => trace.model === model);
     const averageVisibility = mean(modelRecords.map((trace) => trace.gui_percent));
     const averageEvidence = mean(modelRecords.map((trace) => trace.evidence_level));
-    const meanRadius = state.evidenceModel === model ? (mobile ? 8 : 11) : (mobile ? 7 : 9);
-    const point = svgModelMarker(model, x(averageVisibility), y(averageEvidence), meanRadius, {
+    const point = svgElement("circle", {
       class: `evidence-model-mean${state.evidenceModel === model ? " is-focused" : ""}${state.evidenceModel && state.evidenceModel !== model ? " is-muted" : ""}`,
+      cx: x(averageVisibility),
+      cy: y(averageEvidence),
+      r: state.evidenceModel === model ? (mobile ? 8 : 11) : (mobile ? 7 : 9),
       fill: colorFor(model),
       tabindex: 0,
       role: "button",

@@ -151,11 +151,7 @@
 .evidence-header-note { max-width: 340px; margin: 0; color: var(--muted); font-size: 10px; line-height: 1.5; text-align: right; }
 .evidence-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 9px 16px; padding: 11px 22px; border-bottom: 1px solid var(--line); background: #f8f6ef; }
 .evidence-model-key { display: inline-flex; align-items: center; gap: 6px; border: 1px solid transparent; background: transparent; padding: 5px 7px; color: var(--ink); font: inherit; font-size: 9px; cursor: pointer; transition: opacity .16s, background .16s, border-color .16s; }
-.evidence-model-key > i { width: 10px; height: 10px; flex: 0 0 auto; background: var(--series-color); }
-.marker-circle { border-radius: 50%; }
-.marker-square { border-radius: 1px; }
-.marker-triangle { clip-path: polygon(50% 0, 100% 100%, 0 100%); }
-.marker-diamond { clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); }
+.evidence-model-key > i { width: 10px; height: 10px; flex: 0 0 auto; border-radius: 50%; background: var(--series-color); }
 .evidence-model-key b { font-weight: 700; }
 .evidence-model-key small { color: var(--muted); font: 7px var(--mono); }
 .evidence-model-key:hover, .evidence-model-key:focus-visible, .evidence-model-key[aria-pressed="true"] { border-color: var(--series-color); background: var(--surface); outline: none; }
@@ -177,11 +173,11 @@
 .evidence-confidence { opacity: .2; stroke-width: 2; stroke-dasharray: 5 3; pointer-events: none; transition: opacity .18s; }
 .evidence-confidence.is-focused { opacity: .34; stroke-width: 2; }
 .evidence-confidence.is-muted { opacity: .035; }
-.evidence-trace-point { cursor: pointer; opacity: .72; stroke: var(--surface); stroke-width: 1; transition: opacity .14s, stroke-width .14s; }
+.evidence-trace-point { cursor: pointer; opacity: .72; stroke: var(--surface); stroke-width: 1; transition: opacity .14s, r .14s, stroke-width .14s; }
 .evidence-trace-point.is-focused { opacity: .92; }
 .evidence-trace-point.is-muted { opacity: .09; }
 .evidence-trace-point:hover, .evidence-trace-point:focus { opacity: 1; stroke: var(--ink); stroke-width: 2; outline: none; }
-.evidence-model-mean { opacity: 1; stroke: var(--surface); stroke-width: 3; filter: drop-shadow(0 0 1px rgba(20,42,44,.8)); cursor: pointer; outline: none; transition: opacity .16s, stroke-width .16s; }
+.evidence-model-mean { opacity: 1; stroke: var(--surface); stroke-width: 3; filter: drop-shadow(0 0 1px rgba(20,42,44,.8)); cursor: pointer; outline: none; transition: opacity .16s, r .16s, stroke-width .16s; }
 .evidence-model-mean.is-muted { opacity: .18; }
 .evidence-model-mean:hover, .evidence-model-mean:focus { stroke: var(--ink); stroke-width: 2; }
 .evidence-tooltip { width: 270px; }
