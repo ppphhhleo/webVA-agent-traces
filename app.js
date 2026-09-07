@@ -187,6 +187,19 @@ function roundWorkMode(round) {
   return "neutral";
 }
 
+function isFinalAnswerRound(round) {
+  return round.actions.some((action) => String(actionType(action)).toLowerCase() === "final_answer")
+    || round.title.trim().toLowerCase() === "final answer";
+}
+
+function compressedTimelineStop(ratio, terminalWidth = 6) {
+  if (ratio <= 0) return "0%";
+  if (ratio >= 1) return `calc(100% - ${terminalWidth}px)`;
+  const percentage = (ratio * 100).toFixed(4);
+  const offset = (ratio * terminalWidth).toFixed(4);
+  return `calc(${percentage}% - ${offset}px)`;
+}
+
 function renderWorkModeSummary() {
   const modes = state.rounds.map(roundWorkMode);
   const gui = modes.filter((mode) => mode === "gui").length;
@@ -199,7 +212,12 @@ function renderWorkModeSummary() {
     ? `GUI ${gui} · ${guiPercent}%`
     : "Answer only · 100% visible";
   elements.offscreenRatio.textContent = `Off-screen ${offscreen} · ${offscreenPercent}%`;
-  elements.neutralRounds.textContent = `${neutral} neutral`;
+  const finalAnswers = state.rounds.filter(isFinalAnswerRound).length;
+  const otherNeutral = Math.max(0, neutral - finalAnswers);
+  elements.neutralRounds.textContent = [
+    finalAnswers ? `${finalAnswers} final` : "",
+    otherNeutral ? `${otherNeutral} neutral` : "",
+  ].filter(Boolean).join(" · ");
   elements.neutralRounds.hidden = neutral === 0;
 
   const colors = { gui: "var(--mode-gui)", offscreen: "var(--mode-offscreen)", neutral: "var(--mode-neutral)" };
@@ -207,6 +225,19 @@ function renderWorkModeSummary() {
     elements.slider.style.setProperty("--mode-gradient", "var(--mode-neutral)");
     return;
   }
+  const terminalIsFinal = isFinalAnswerRound(state.rounds.at(-1));
+  if (terminalIsFinal && modes.length > 1) {
+    const timelineModes = modes.slice(0, -1);
+    const stops = timelineModes.flatMap((mode, index) => {
+      const start = compressedTimelineStop(index / timelineModes.length);
+      const end = compressedTimelineStop((index + 1) / timelineModes.length);
+      return [`${colors[mode]} ${start}`, `${colors[mode]} ${end}`];
+    });
+    stops.push(`${colors.neutral} calc(100% - 6px)`, `${colors.neutral} 100%`);
+    elements.slider.style.setProperty("--mode-gradient", `linear-gradient(to right, ${stops.join(", ")})`);
+    return;
+  }
+
   const size = 100 / modes.length;
   const stops = modes.flatMap((mode, index) => {
     const start = (index * size).toFixed(4);
