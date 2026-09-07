@@ -11,10 +11,10 @@ const FRICTION_COLORS = {
   "Repetition loop": "#3f8db8",
 };
 const RESPONSE_COLORS = {
-  "Stayed on screen": "#2f7d50",
+  "Retry / recover in GUI": "#2f7d50",
   "Moved off screen": "#62419a",
-  "Overlooked change": "#b44b43",
-  "Abandoned unresolved": "#68706d",
+  "Continued without repair": "#b44b43",
+  "Stopped without resolution": "#68706d",
 };
 const LANDING_COLORS = {
   "Grounded visual evidence": "#2f7d50",
@@ -25,17 +25,15 @@ const LANDING_COLORS = {
   "Fabricated evidence": "#ad2630",
   "No answer": "#68706d",
 };
-const FRICTION_EXAMPLES = {
-  "Stayed on screen": "tr_a7380becde97fcab",
-  "Moved off screen": "tr_ac4c7be1bca52b35",
-  "Overlooked change": "tr_8c9eccf85eb1f0eb",
-  "Abandoned unresolved": "tr_475d111272ead831",
-};
-const FRICTION_EXAMPLE_NOTES = {
-  "Stayed on screen": "A failed first interaction is corrected in round 2 and yields a visually grounded answer—a compact example of GUI self-recovery.",
-  "Moved off screen": "After a click-versus-drag error, the agent switches to Python and a remembered dataset URL—a clear GUI-to-code retreat.",
-  "Overlooked change": "The agent opens a filter instead of sorting, overlooks the changed state, and later asserts an unsupported ranking—a clear overlooked-error chain.",
-  "Abandoned unresolved": "The agent repeatedly re-aims at an unresponsive target through rounds 34–92, then fabricates the comparison—an extreme unresolved loop.",
+const PATHWAY_COLORS = {
+  "GUI recovery": "#2f7d50",
+  "GUI retry → code verification": "#277f85",
+  "Off-screen work → GUI verification": "#277f85",
+  "GUI ↔ code retries → code resolution": "#62419a",
+  "Code resolution after GUI friction": "#62419a",
+  "Off-screen attempt, unresolved": "#8b668b",
+  "Continued without repair": "#b44b43",
+  "Stopped without resolution": "#68706d",
 };
 
 const state = { traces: [], friction: null, activeModels: new Set(), taskType: "" };
@@ -306,8 +304,9 @@ function renderSwitchDelayChart() {
 function frictionColor(stage, label, episodes = []) {
   if (stage === "friction") return FRICTION_COLORS[label] || "#687777";
   if (stage === "response") return RESPONSE_COLORS[label] || "#687777";
+  if (stage === "pathway") return PATHWAY_COLORS[label] || "#687777";
   if (stage === "landing") return LANDING_COLORS[label] || "#687777";
-  const response = episodes.find((episode) => episode.mechanism === label)?.response;
+  const response = episodes.find((episode) => episode.pathway === label)?.response;
   return RESPONSE_COLORS[response] || "#687777";
 }
 
@@ -329,22 +328,26 @@ function renderFrictionSummary() {
   const data = state.friction;
   if (!data) return;
   const total = data.counts.episodes;
-  const offscreen = data.counts.moved_off_screen;
-  const unseen = data.counts.invisible_or_unrepaired;
+  const offscreen = data.counts.used_offscreen;
+  const continued = data.counts.continued_without_repair;
+  const stopped = data.counts.stopped_without_resolution;
+  const unresolved = continued + stopped;
   document.querySelector("#friction-episodes").textContent = total;
   document.querySelector("#friction-offscreen").textContent = `${offscreen} · ${(offscreen / total * 100).toFixed(0)}%`;
-  document.querySelector("#friction-unseen").textContent = `${unseen} · ${(unseen / total * 100).toFixed(0)}%`;
-  document.querySelector("#friction-callout").innerHTML = `<strong>Visible recovery is only one exit.</strong>
-    Of ${total} coded episodes, ${offscreen} move into off-screen work; another ${unseen - offscreen} overlook the interface change or end without repair.`;
+  document.querySelector("#friction-unseen").textContent = `${unresolved} · ${(unresolved / total * 100).toFixed(0)}%`;
+  document.querySelector("#friction-callout").innerHTML = `<strong>One friction episode can cross channels more than once.</strong>
+    Of ${total} coded episodes, ${offscreen} use off-screen work somewhere in the handling path; ${continued} continue under an unrepaired interface state, while ${stopped} stop without resolving it.`;
 
   const examples = document.querySelector("#friction-examples");
-  examples.replaceChildren(...Object.entries(FRICTION_EXAMPLES).map(([response, traceId]) => {
-    const episode = data.episodes.find((item) => item.response === response && item.trace_id === traceId);
+  examples.replaceChildren(...(data.case_studies || []).map((example) => {
     const link = document.createElement("a");
-    link.href = `../#trace=${encodeURIComponent(traceId)}`;
-    link.style.setProperty("--path-color", RESPONSE_COLORS[response]);
-    link.innerHTML = `<i></i><span>${response}</span><code>${traceId}</code><p>${FRICTION_EXAMPLE_NOTES[response]}</p>`;
-    link.title = episode ? `${episode.friction} → ${episode.mechanism} → ${episode.landing}` : response;
+    link.href = `../#trace=${encodeURIComponent(example.trace_id)}`;
+    const episode = data.episodes.find((item) => item.trace_id === example.trace_id);
+    link.style.setProperty("--path-color", PATHWAY_COLORS[episode?.pathway] || "#68706d");
+    const steps = example.steps.map((step) => `<span class="path-step path-${step.kind}"><b>${step.rounds}</b>${step.label}</span>`).join("");
+    link.innerHTML = `<div class="example-heading"><i></i><span>${example.label}</span><code>${example.trace_id}</code></div>
+      <p>${example.summary}</p><div class="path-steps">${steps}</div><strong>${example.why}</strong>`;
+    link.title = episode ? `${episode.friction} → ${episode.pathway} → ${episode.landing}` : example.label;
     return link;
   }));
 }
@@ -358,8 +361,8 @@ function renderFrictionAlluvial() {
   const bottom = 26;
   const plotHeight = height - top - bottom;
   const nodeWidth = 12;
-  const stageKeys = ["friction", "response", "mechanism", "landing"];
-  const stageTitles = ["GUI friction", "First response", "Mechanism", "Evidence landing"];
+  const stageKeys = ["friction", "response", "pathway", "landing"];
+  const stageTitles = ["GUI friction", "First response", "Resolution pathway", "Evidence landing"];
   const stageX = [164, 430, 742, 1050];
   const nodeMap = new Map();
   const stages = {};
@@ -411,7 +414,7 @@ function renderFrictionAlluvial() {
   });
 
   const episodeLookup = new Map(data.episodes.map((episode) => [episode.episode_id, episode]));
-  const pairs = [["friction", "response"], ["response", "mechanism"], ["mechanism", "landing"]];
+  const pairs = [["friction", "response"], ["response", "pathway"], ["pathway", "landing"]];
   pairs.forEach(([sourceStage, targetStage]) => {
     const links = data.links
       .filter((link) => link.source_stage === sourceStage && link.target_stage === targetStage)
@@ -489,7 +492,7 @@ async function init() {
   try {
     const [response, frictionResponse] = await Promise.all([
       fetch("data.json?v=3"),
-      fetch("friction_flow.json?v=1"),
+      fetch("friction_flow.json?v=2"),
     ]);
     if (!response.ok) throw new Error(`Analysis data request failed (${response.status})`);
     if (!frictionResponse.ok) throw new Error(`Friction data request failed (${frictionResponse.status})`);

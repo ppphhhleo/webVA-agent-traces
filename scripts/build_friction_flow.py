@@ -17,15 +17,15 @@ FRICTION_LABELS = {
 }
 
 RESPONSE_CODES = {
-    "GUI self-correction": ("Stayed on screen", "Self-recovery"),
-    "On-screen interaction bypass": ("Stayed on screen", "On-screen bypass"),
-    "Cycling input routes": ("Stayed on screen", "Alternative input route"),
-    "Overlooked interface change": ("Overlooked change", "No repair / assumed state"),
+    "GUI self-correction": ("Retry / recover in GUI", "Self-recovery"),
+    "On-screen interaction bypass": ("Retry / recover in GUI", "On-screen bypass"),
+    "Cycling input routes": ("Retry / recover in GUI", "Alternative input route"),
+    "Overlooked interface change": ("Continued without repair", "No repair / assumed state"),
     "Code augmentation of visual": ("Moved off screen", "Code augmentation"),
     "Code retreat after GUI friction": ("Moved off screen", None),
     "Parallel code excursion": ("Moved off screen", None),
-    "Forced return to GUI": ("Stayed on screen", "Forced return to GUI"),
-    "Visual reconciliation return": ("Stayed on screen", "Visual reconciliation"),
+    "Forced return to GUI": ("Retry / recover in GUI", "Forced return to GUI"),
+    "Visual reconciliation return": ("Retry / recover in GUI", "Visual reconciliation"),
 }
 
 OFFSCREEN_MECHANISMS = {
@@ -55,28 +55,20 @@ LANDING_PRIORITY = list(LANDING_LABELS)
 STAGE_ORDERS = {
     "friction": ["Misgrounded manipulation", "Repetition loop"],
     "response": [
-        "Stayed on screen",
+        "Retry / recover in GUI",
         "Moved off screen",
-        "Overlooked change",
-        "Abandoned unresolved",
+        "Continued without repair",
+        "Stopped without resolution",
     ],
-    "mechanism": [
-        "Self-recovery",
-        "Persistent retry / re-aim",
-        "Alternative input route",
-        "On-screen bypass",
-        "Forced return to GUI",
-        "Visual reconciliation",
-        "Code augmentation",
-        "App inspection",
-        "Search / fetch",
-        "In-code analysis",
-        "Prior knowledge / known source",
-        "Code debugging / environment",
-        "Stalled engineering",
-        "Direct code retreat",
-        "No repair / assumed state",
-        "No repair / task ended",
+    "pathway": [
+        "GUI recovery",
+        "GUI retry → code verification",
+        "Off-screen work → GUI verification",
+        "GUI ↔ code retries → code resolution",
+        "Code resolution after GUI friction",
+        "Off-screen attempt, unresolved",
+        "Continued without repair",
+        "Stopped without resolution",
     ],
     "landing": [
         "Grounded visual evidence",
@@ -88,6 +80,67 @@ STAGE_ORDERS = {
         "No answer",
     ],
 }
+
+
+# These overrides preserve order that a single mechanism label cannot express.
+# They are grounded in the raw trace rounds and intentionally affect only this
+# derived visualization, not the source behavioral-coding file.
+EPISODE_OVERRIDES = {
+    "tr_aee13c5d7b73c83c": {
+        "response": "Retry / recover in GUI",
+        "pathway": "GUI retry → code verification",
+        "landing": "Combined visual + computed",
+    },
+    "tr_032e2887ac4891f6": {
+        "response": "Moved off screen",
+        "pathway": "GUI ↔ code retries → code resolution",
+        "landing": "Computed evidence",
+    },
+    "tr_730f0dfa05bca83d": {
+        "response": "Moved off screen",
+        "pathway": "Code resolution after GUI friction",
+        "landing": "Computed evidence",
+    },
+}
+
+
+CASE_STUDIES = [
+    {
+        "trace_id": "tr_aee13c5d7b73c83c",
+        "label": "Visual repair, computed verification",
+        "summary": "The agent probes the web API, returns to the GUI, retries the attribution view, then uses code to verify the visually constructed result.",
+        "why": "Code corroborates the GUI work; it is not the repair itself.",
+        "steps": [
+            {"rounds": "R7–20", "label": "API probing", "kind": "context"},
+            {"rounds": "R21–57", "label": "GUI return + retry", "kind": "gui"},
+            {"rounds": "R63", "label": "Code verification", "kind": "offscreen"},
+            {"rounds": "R67", "label": "Combined evidence", "kind": "landing"},
+        ],
+    },
+    {
+        "trace_id": "tr_032e2887ac4891f6",
+        "label": "Repeated channel switching",
+        "summary": "The agent retries sorting, searches locally in shell, returns to the GUI, then finds the remote data file and computes the answer.",
+        "why": "The friction produces multiple exits and re-entries, not one switch.",
+        "steps": [
+            {"rounds": "R1–6", "label": "GUI retry", "kind": "gui"},
+            {"rounds": "R7–18", "label": "Shell detour", "kind": "offscreen"},
+            {"rounds": "R19–26", "label": "GUI retry", "kind": "gui"},
+            {"rounds": "R27–30", "label": "Code resolution", "kind": "offscreen"},
+        ],
+    },
+    {
+        "trace_id": "tr_730f0dfa05bca83d",
+        "label": "Computed resolution",
+        "summary": "After GUI filtering fails, the first API script errors; a corrected script directly queries and computes the newest Asian event.",
+        "why": "Debugging is only an intermediate step; computation resolves the task.",
+        "steps": [
+            {"rounds": "R8–12", "label": "GUI failure", "kind": "gui"},
+            {"rounds": "R13", "label": "Code error", "kind": "offscreen"},
+            {"rounds": "R14–15", "label": "Code resolution", "kind": "offscreen"},
+        ],
+    },
+]
 
 
 def round_values(annotation: dict[str, Any]) -> list[int]:
@@ -151,7 +204,7 @@ def classify_response(
 ) -> tuple[str, str, dict[str, Any] | None, int | None]:
     first, response_round = response_candidate(annotations, friction)
     if first is None:
-        return "Abandoned unresolved", "No repair / task ended", None, None
+        return "Stopped without resolution", "No repair / task ended", None, None
 
     if first["code"] in RESPONSE_CODES:
         response, mechanism = RESPONSE_CODES[first["code"]]
@@ -181,18 +234,63 @@ def classify_response(
         )
 
     if first["code"] == "Visual inspection and construction":
-        return "Stayed on screen", "Persistent retry / re-aim", first, response_round
+        return "Retry / recover in GUI", "Persistent retry / re-aim", first, response_round
 
     if first["code"] in {"Grounded in-app visual evidence", "Computed and visually established evidence"}:
-        return "Stayed on screen", "Persistent retry / re-aim", first, response_round
+        return "Retry / recover in GUI", "Persistent retry / re-aim", first, response_round
     if first["code"] == "Computed evidence":
         return "Moved off screen", "In-code analysis", first, response_round
-    return "Abandoned unresolved", "No repair / task ended", first, response_round
+    return "Stopped without resolution", "No repair / task ended", first, response_round
+
+
+def classify_pathway(
+    annotations: list[dict[str, Any]],
+    friction: dict[str, Any],
+    response: str,
+    mechanism: str,
+    landing: str,
+) -> str:
+    """Classify the ordered handling path rather than a single tool mechanism."""
+    friction_start = min(round_values(friction))
+    later = [
+        annotation
+        for annotation in annotations
+        if first_round_at_or_after(annotation, friction_start) is not None
+    ]
+    later_codes = {annotation["code"] for annotation in later}
+    later_themes = {annotation["theme"] for annotation in later}
+
+    if response == "Continued without repair":
+        return "Continued without repair"
+    if response == "Stopped without resolution":
+        return "Stopped without resolution"
+
+    used_offscreen = "Working off the screen" in later_themes or any(
+        code in {
+            "Code augmentation of visual",
+            "Code retreat after GUI friction",
+            "Parallel code excursion",
+        }
+        for code in later_codes
+    )
+    returned_to_gui = bool(
+        later_codes & {"Forced return to GUI", "Visual reconciliation return"}
+    )
+
+    if landing == "No answer":
+        return "Off-screen attempt, unresolved" if used_offscreen else "Stopped without resolution"
+    if mechanism == "Code augmentation" or "Code augmentation of visual" in later_codes:
+        return "GUI retry → code verification"
+    if returned_to_gui and used_offscreen:
+        return "Off-screen work → GUI verification"
+    if response == "Moved off screen":
+        return "Code resolution after GUI friction"
+    return "GUI recovery"
 
 
 def aggregate_links(episodes: list[dict[str, Any]]) -> list[dict[str, Any]]:
     edges: dict[tuple[str, str, str, str], list[dict[str, Any]]] = defaultdict(list)
-    stage_pairs = (("friction", "response"), ("response", "mechanism"), ("mechanism", "landing"))
+    stage_pairs = (("friction", "response"), ("response", "pathway"), ("pathway", "landing"))
     for episode in episodes:
         for source_stage, target_stage in stage_pairs:
             edges[(source_stage, episode[source_stage], target_stage, episode[target_stage])].append(episode)
@@ -239,6 +337,12 @@ def main() -> None:
                 continue
             rounds = round_values(friction)
             response, mechanism, response_annotation, response_round = classify_response(annotations, friction)
+            landing = delivery_landing(annotations, min(rounds))
+            pathway = classify_pathway(annotations, friction, response, mechanism, landing)
+            override = EPISODE_OVERRIDES.get(trace_id, {})
+            response = override.get("response", response)
+            pathway = override.get("pathway", pathway)
+            landing = override.get("landing", landing)
             episodes.append({
                 "episode_id": friction["annotation_id"],
                 "trace_id": trace_id,
@@ -255,8 +359,9 @@ def main() -> None:
                 "response": response,
                 "response_round": response_round,
                 "response_annotation_id": response_annotation["annotation_id"] if response_annotation else None,
-                "mechanism": mechanism,
-                "landing": delivery_landing(annotations, min(rounds)),
+                "first_mechanism": mechanism,
+                "pathway": pathway,
+                "landing": landing,
             })
     episodes.sort(key=lambda episode: (episode["trace_number"], episode["friction_start_round"], episode["episode_id"]))
 
@@ -264,12 +369,15 @@ def main() -> None:
         stage: dict(Counter(episode[stage] for episode in episodes))
         for stage in STAGE_ORDERS
     }
-    invisible_or_unrepaired = sum(
-        episode["response"] != "Stayed on screen" for episode in episodes
+    used_offscreen = sum(
+        "code" in episode["pathway"].lower() or "off-screen" in episode["pathway"].lower()
+        for episode in episodes
     )
+    continued_without_repair = stage_counts["response"].get("Continued without repair", 0)
+    stopped_without_resolution = stage_counts["response"].get("Stopped without resolution", 0)
     output = {
-        "schema_version": "1.0",
-        "classifier_version": "gui-friction-flow-v1",
+        "schema_version": "2.0",
+        "classifier_version": "gui-friction-flow-v2-ordered-pathways",
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "source": {
             "dataset": source.get("dataset"),
@@ -279,20 +387,23 @@ def main() -> None:
         },
         "method": {
             "unit": "Each coded GUI-friction annotation is one episode; annotations are not merged across rows.",
-            "response": "The first explicit switching, GUI-repair, overlooked-change, or off-screen annotation at or after friction onset. If none exists, the first visual or delivery annotation after the final friction round is used.",
-            "mechanism": "The response annotation, or the first accompanying off-screen-work annotation for a channel switch.",
+            "response": "The first explicit GUI retry, channel switch, overlooked change, or stop associated with the coded friction episode.",
+            "pathway": "An ordered handling category that separates GUI recovery, code verification, code resolution, channel re-entry, continued work without repair, and stopping unresolved. Documented trace-level overrides preserve multi-stage paths that one annotation cannot express.",
             "landing": "The trace's coded delivery-evidence category after friction begins, resolved to one mutually exclusive category by documented priority.",
+            "scope": "Pre-friction work is excluded from aggregate flow classification but may be shown as context in representative trace timelines.",
         },
         "counts": {
             "episodes": len(episodes),
             "traces": len({episode["trace_id"] for episode in episodes}),
-            "moved_off_screen": stage_counts["response"].get("Moved off screen", 0),
-            "invisible_or_unrepaired": invisible_or_unrepaired,
+            "used_offscreen": used_offscreen,
+            "continued_without_repair": continued_without_repair,
+            "stopped_without_resolution": stopped_without_resolution,
         },
         "stage_orders": STAGE_ORDERS,
         "stage_counts": stage_counts,
         "links": aggregate_links(episodes),
         "episodes": episodes,
+        "case_studies": CASE_STUDIES,
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(output, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")

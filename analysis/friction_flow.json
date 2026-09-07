@@ -1,7 +1,7 @@
 {
-  "schema_version": "1.0",
-  "classifier_version": "gui-friction-flow-v1",
-  "generated_at": "2026-09-07T17:07:39.394746+00:00",
+  "schema_version": "2.0",
+  "classifier_version": "gui-friction-flow-v2-ordered-pathways",
+  "generated_at": "2026-09-07T18:07:01.274136+00:00",
   "source": {
     "dataset": "webva-agent-behaviors-trial1",
     "workbook_filename": "Trace Coding (1).xlsx",
@@ -10,15 +10,17 @@
   },
   "method": {
     "unit": "Each coded GUI-friction annotation is one episode; annotations are not merged across rows.",
-    "response": "The first explicit switching, GUI-repair, overlooked-change, or off-screen annotation at or after friction onset. If none exists, the first visual or delivery annotation after the final friction round is used.",
-    "mechanism": "The response annotation, or the first accompanying off-screen-work annotation for a channel switch.",
-    "landing": "The trace's coded delivery-evidence category after friction begins, resolved to one mutually exclusive category by documented priority."
+    "response": "The first explicit GUI retry, channel switch, overlooked change, or stop associated with the coded friction episode.",
+    "pathway": "An ordered handling category that separates GUI recovery, code verification, code resolution, channel re-entry, continued work without repair, and stopping unresolved. Documented trace-level overrides preserve multi-stage paths that one annotation cannot express.",
+    "landing": "The trace's coded delivery-evidence category after friction begins, resolved to one mutually exclusive category by documented priority.",
+    "scope": "Pre-friction work is excluded from aggregate flow classification but may be shown as context in representative trace timelines."
   },
   "counts": {
     "episodes": 46,
     "traces": 43,
-    "moved_off_screen": 22,
-    "invisible_or_unrepaired": 30
+    "used_offscreen": 25,
+    "continued_without_repair": 6,
+    "stopped_without_resolution": 2
   },
   "stage_orders": {
     "friction": [
@@ -26,28 +28,20 @@
       "Repetition loop"
     ],
     "response": [
-      "Stayed on screen",
+      "Retry / recover in GUI",
       "Moved off screen",
-      "Overlooked change",
-      "Abandoned unresolved"
+      "Continued without repair",
+      "Stopped without resolution"
     ],
-    "mechanism": [
-      "Self-recovery",
-      "Persistent retry / re-aim",
-      "Alternative input route",
-      "On-screen bypass",
-      "Forced return to GUI",
-      "Visual reconciliation",
-      "Code augmentation",
-      "App inspection",
-      "Search / fetch",
-      "In-code analysis",
-      "Prior knowledge / known source",
-      "Code debugging / environment",
-      "Stalled engineering",
-      "Direct code retreat",
-      "No repair / assumed state",
-      "No repair / task ended"
+    "pathway": [
+      "GUI recovery",
+      "GUI retry → code verification",
+      "Off-screen work → GUI verification",
+      "GUI ↔ code retries → code resolution",
+      "Code resolution after GUI friction",
+      "Off-screen attempt, unresolved",
+      "Continued without repair",
+      "Stopped without resolution"
     ],
     "landing": [
       "Grounded visual evidence",
@@ -65,32 +59,29 @@
       "Repetition loop": 22
     },
     "response": {
-      "Moved off screen": 22,
-      "Stayed on screen": 16,
-      "Overlooked change": 6,
-      "Abandoned unresolved": 2
+      "Moved off screen": 21,
+      "Retry / recover in GUI": 17,
+      "Continued without repair": 6,
+      "Stopped without resolution": 2
     },
-    "mechanism": {
-      "Prior knowledge / known source": 10,
-      "Persistent retry / re-aim": 7,
-      "Self-recovery": 6,
-      "No repair / assumed state": 6,
-      "Alternative input route": 1,
-      "Code debugging / environment": 2,
-      "Search / fetch": 5,
-      "Code augmentation": 1,
-      "App inspection": 4,
-      "No repair / task ended": 2,
-      "On-screen bypass": 2
+    "pathway": {
+      "Code resolution after GUI friction": 18,
+      "GUI recovery": 11,
+      "GUI retry → code verification": 3,
+      "Continued without repair": 6,
+      "GUI ↔ code retries → code resolution": 1,
+      "Stopped without resolution": 4,
+      "Off-screen attempt, unresolved": 2,
+      "Off-screen work → GUI verification": 1
     },
     "landing": {
-      "Computed evidence": 11,
+      "Computed evidence": 12,
       "Grounded visual evidence": 12,
       "Prior-knowledge answer": 3,
       "Combined visual + computed": 2,
       "Misgrounded evidence": 6,
       "Fabricated evidence": 7,
-      "No answer": 5
+      "No answer": 4
     }
   },
   "links": [
@@ -129,51 +120,75 @@
     {
       "source_stage": "response",
       "source": "Moved off screen",
-      "target_stage": "mechanism",
-      "target": "Prior knowledge / known source",
-      "count": 10,
+      "target_stage": "pathway",
+      "target": "Code resolution after GUI friction",
+      "count": 18,
       "episode_ids": [
         "agent-trial1-0001",
         "agent-trial1-0071",
+        "agent-trial1-0084",
+        "agent-trial1-0138",
+        "agent-trial1-0170",
+        "agent-trial1-0238",
+        "agent-trial1-0332",
+        "agent-trial1-0348",
         "agent-trial1-0362",
         "agent-trial1-0365",
+        "agent-trial1-0370",
         "agent-trial1-0371",
         "agent-trial1-0372",
+        "agent-trial1-0383",
         "agent-trial1-0398",
         "agent-trial1-0437",
-        "agent-trial1-0447",
+        "agent-trial1-0164",
         "agent-trial1-0378"
       ],
       "trace_ids": [
+        "tr_039f43821b0f2f35",
+        "tr_126e517fd31a4dde",
         "tr_3447f5c6d501a5a4",
         "tr_35c872b883119134",
+        "tr_39e15a5ef7804383",
         "tr_49d24650e3c488c3",
+        "tr_4b80c170362e99e7",
         "tr_4cdf0ebde8f08ada",
-        "tr_7aa582985ead8650",
+        "tr_730f0dfa05bca83d",
         "tr_7c11ca9aff93a83f",
+        "tr_885beba33a3c2e3f",
         "tr_a55ab1ce7cdb2d18",
         "tr_ac4c7be1bca52b35",
-        "tr_e877c6dd4fe7347d"
+        "tr_bd1a27e1312b9301",
+        "tr_cbac1d76d92a9f97",
+        "tr_e877c6dd4fe7347d",
+        "tr_fad8e689ae102d64"
       ]
     },
     {
-      "source_stage": "mechanism",
-      "source": "Prior knowledge / known source",
+      "source_stage": "pathway",
+      "source": "Code resolution after GUI friction",
       "target_stage": "landing",
       "target": "Computed evidence",
-      "count": 5,
+      "count": 9,
       "episode_ids": [
         "agent-trial1-0001",
         "agent-trial1-0071",
+        "agent-trial1-0170",
+        "agent-trial1-0238",
         "agent-trial1-0362",
         "agent-trial1-0365",
-        "agent-trial1-0398"
+        "agent-trial1-0370",
+        "agent-trial1-0398",
+        "agent-trial1-0164"
       ],
       "trace_ids": [
+        "tr_126e517fd31a4dde",
         "tr_3447f5c6d501a5a4",
+        "tr_4b80c170362e99e7",
+        "tr_730f0dfa05bca83d",
         "tr_7c11ca9aff93a83f",
         "tr_a55ab1ce7cdb2d18",
         "tr_ac4c7be1bca52b35",
+        "tr_cbac1d76d92a9f97",
         "tr_e877c6dd4fe7347d"
       ]
     },
@@ -181,12 +196,13 @@
       "source_stage": "friction",
       "source": "Repetition loop",
       "target_stage": "response",
-      "target": "Stayed on screen",
-      "count": 8,
+      "target": "Retry / recover in GUI",
+      "count": 9,
       "episode_ids": [
         "agent-trial1-0008",
         "agent-trial1-0061",
         "agent-trial1-0063",
+        "agent-trial1-0128",
         "agent-trial1-0268",
         "agent-trial1-0286",
         "agent-trial1-0305",
@@ -200,57 +216,80 @@
         "tr_3c23536d65984f39",
         "tr_68db8fddec7d6d1e",
         "tr_a5ec55d9d9dd841a",
+        "tr_aee13c5d7b73c83c",
         "tr_b0a508fafc316fe3",
         "tr_d48b4d6689e0d88f"
       ]
     },
     {
       "source_stage": "response",
-      "source": "Stayed on screen",
-      "target_stage": "mechanism",
-      "target": "Persistent retry / re-aim",
-      "count": 7,
+      "source": "Retry / recover in GUI",
+      "target_stage": "pathway",
+      "target": "GUI recovery",
+      "count": 11,
       "episode_ids": [
         "agent-trial1-0008",
+        "agent-trial1-0061",
         "agent-trial1-0063",
-        "agent-trial1-0268",
-        "agent-trial1-0282",
-        "agent-trial1-0286",
+        "agent-trial1-0305",
+        "agent-trial1-0313",
         "agent-trial1-0376",
-        "agent-trial1-0407"
+        "agent-trial1-0404",
+        "agent-trial1-0407",
+        "agent-trial1-0410",
+        "agent-trial1-0442",
+        "agent-trial1-0295"
       ],
       "trace_ids": [
+        "tr_0b6828de68d7c046",
         "tr_2b0ed9cbfbd05f3e",
+        "tr_37a7791fdefa35a0",
+        "tr_3be0d211d6381dbe",
         "tr_3c23536d65984f39",
+        "tr_68db8fddec7d6d1e",
         "tr_9124c71db680598e",
-        "tr_a5ec55d9d9dd841a",
+        "tr_a7380becde97fcab",
         "tr_b0a508fafc316fe3",
-        "tr_d48b4d6689e0d88f",
-        "tr_e046ad274f5a69fd"
+        "tr_b5008604260f71fe",
+        "tr_f0a7933d57ea12b1"
       ]
     },
     {
-      "source_stage": "mechanism",
-      "source": "Persistent retry / re-aim",
+      "source_stage": "pathway",
+      "source": "GUI recovery",
       "target_stage": "landing",
       "target": "Grounded visual evidence",
-      "count": 3,
+      "count": 10,
       "episode_ids": [
         "agent-trial1-0008",
+        "agent-trial1-0061",
         "agent-trial1-0063",
-        "agent-trial1-0407"
+        "agent-trial1-0305",
+        "agent-trial1-0313",
+        "agent-trial1-0404",
+        "agent-trial1-0407",
+        "agent-trial1-0410",
+        "agent-trial1-0442",
+        "agent-trial1-0295"
       ],
       "trace_ids": [
+        "tr_0b6828de68d7c046",
+        "tr_37a7791fdefa35a0",
+        "tr_3be0d211d6381dbe",
         "tr_3c23536d65984f39",
+        "tr_68db8fddec7d6d1e",
         "tr_9124c71db680598e",
-        "tr_b0a508fafc316fe3"
+        "tr_a7380becde97fcab",
+        "tr_b0a508fafc316fe3",
+        "tr_b5008604260f71fe",
+        "tr_f0a7933d57ea12b1"
       ]
     },
     {
       "source_stage": "friction",
       "source": "Misgrounded manipulation",
       "target_stage": "response",
-      "target": "Stayed on screen",
+      "target": "Retry / recover in GUI",
       "count": 8,
       "episode_ids": [
         "agent-trial1-0010",
@@ -274,29 +313,23 @@
     },
     {
       "source_stage": "response",
-      "source": "Stayed on screen",
-      "target_stage": "mechanism",
-      "target": "Self-recovery",
-      "count": 6,
+      "source": "Retry / recover in GUI",
+      "target_stage": "pathway",
+      "target": "GUI retry → code verification",
+      "count": 3,
       "episode_ids": [
         "agent-trial1-0010",
         "agent-trial1-0011",
-        "agent-trial1-0305",
-        "agent-trial1-0404",
-        "agent-trial1-0410",
-        "agent-trial1-0442"
+        "agent-trial1-0128"
       ],
       "trace_ids": [
-        "tr_0b6828de68d7c046",
         "tr_2dd72d9ed7dbeb1a",
-        "tr_68db8fddec7d6d1e",
-        "tr_a7380becde97fcab",
-        "tr_f0a7933d57ea12b1"
+        "tr_aee13c5d7b73c83c"
       ]
     },
     {
-      "source_stage": "mechanism",
-      "source": "Self-recovery",
+      "source_stage": "pathway",
+      "source": "GUI retry → code verification",
       "target_stage": "landing",
       "target": "Computed evidence",
       "count": 2,
@@ -312,7 +345,7 @@
       "source_stage": "friction",
       "source": "Misgrounded manipulation",
       "target_stage": "response",
-      "target": "Overlooked change",
+      "target": "Continued without repair",
       "count": 5,
       "episode_ids": [
         "agent-trial1-0034",
@@ -331,9 +364,9 @@
     },
     {
       "source_stage": "response",
-      "source": "Overlooked change",
-      "target_stage": "mechanism",
-      "target": "No repair / assumed state",
+      "source": "Continued without repair",
+      "target_stage": "pathway",
+      "target": "Continued without repair",
       "count": 6,
       "episode_ids": [
         "agent-trial1-0034",
@@ -353,8 +386,8 @@
       ]
     },
     {
-      "source_stage": "mechanism",
-      "source": "No repair / assumed state",
+      "source_stage": "pathway",
+      "source": "Continued without repair",
       "target_stage": "landing",
       "target": "Grounded visual evidence",
       "count": 1,
@@ -366,40 +399,13 @@
       ]
     },
     {
-      "source_stage": "response",
-      "source": "Stayed on screen",
-      "target_stage": "mechanism",
-      "target": "Alternative input route",
-      "count": 1,
-      "episode_ids": [
-        "agent-trial1-0061"
-      ],
-      "trace_ids": [
-        "tr_3be0d211d6381dbe"
-      ]
-    },
-    {
-      "source_stage": "mechanism",
-      "source": "Alternative input route",
-      "target_stage": "landing",
-      "target": "Grounded visual evidence",
-      "count": 1,
-      "episode_ids": [
-        "agent-trial1-0061"
-      ],
-      "trace_ids": [
-        "tr_3be0d211d6381dbe"
-      ]
-    },
-    {
       "source_stage": "friction",
       "source": "Repetition loop",
       "target_stage": "response",
       "target": "Moved off screen",
-      "count": 11,
+      "count": 10,
       "episode_ids": [
         "agent-trial1-0078",
-        "agent-trial1-0128",
         "agent-trial1-0138",
         "agent-trial1-0170",
         "agent-trial1-0238",
@@ -416,7 +422,6 @@
         "tr_39e15a5ef7804383",
         "tr_4b80c170362e99e7",
         "tr_7aa582985ead8650",
-        "tr_aee13c5d7b73c83c",
         "tr_bd1a27e1312b9301",
         "tr_cbac1d76d92a9f97",
         "tr_d48b4d6689e0d88f",
@@ -427,21 +432,19 @@
     {
       "source_stage": "response",
       "source": "Moved off screen",
-      "target_stage": "mechanism",
-      "target": "Code debugging / environment",
-      "count": 2,
+      "target_stage": "pathway",
+      "target": "GUI ↔ code retries → code resolution",
+      "count": 1,
       "episode_ids": [
-        "agent-trial1-0078",
-        "agent-trial1-0370"
+        "agent-trial1-0078"
       ],
       "trace_ids": [
-        "tr_032e2887ac4891f6",
-        "tr_730f0dfa05bca83d"
+        "tr_032e2887ac4891f6"
       ]
     },
     {
-      "source_stage": "mechanism",
-      "source": "Code debugging / environment",
+      "source_stage": "pathway",
+      "source": "GUI ↔ code retries → code resolution",
       "target_stage": "landing",
       "target": "Computed evidence",
       "count": 1,
@@ -453,29 +456,8 @@
       ]
     },
     {
-      "source_stage": "response",
-      "source": "Moved off screen",
-      "target_stage": "mechanism",
-      "target": "Search / fetch",
-      "count": 5,
-      "episode_ids": [
-        "agent-trial1-0084",
-        "agent-trial1-0283",
-        "agent-trial1-0332",
-        "agent-trial1-0348",
-        "agent-trial1-0383"
-      ],
-      "trace_ids": [
-        "tr_039f43821b0f2f35",
-        "tr_39e15a5ef7804383",
-        "tr_885beba33a3c2e3f",
-        "tr_bd1a27e1312b9301",
-        "tr_d48b4d6689e0d88f"
-      ]
-    },
-    {
-      "source_stage": "mechanism",
-      "source": "Search / fetch",
+      "source_stage": "pathway",
+      "source": "Code resolution after GUI friction",
       "target_stage": "landing",
       "target": "Prior-knowledge answer",
       "count": 2,
@@ -489,21 +471,8 @@
       ]
     },
     {
-      "source_stage": "response",
-      "source": "Moved off screen",
-      "target_stage": "mechanism",
-      "target": "Code augmentation",
-      "count": 1,
-      "episode_ids": [
-        "agent-trial1-0128"
-      ],
-      "trace_ids": [
-        "tr_aee13c5d7b73c83c"
-      ]
-    },
-    {
-      "source_stage": "mechanism",
-      "source": "Code augmentation",
+      "source_stage": "pathway",
+      "source": "GUI retry → code verification",
       "target_stage": "landing",
       "target": "Combined visual + computed",
       "count": 1,
@@ -515,27 +484,8 @@
       ]
     },
     {
-      "source_stage": "response",
-      "source": "Moved off screen",
-      "target_stage": "mechanism",
-      "target": "App inspection",
-      "count": 4,
-      "episode_ids": [
-        "agent-trial1-0138",
-        "agent-trial1-0170",
-        "agent-trial1-0238",
-        "agent-trial1-0164"
-      ],
-      "trace_ids": [
-        "tr_126e517fd31a4dde",
-        "tr_4b80c170362e99e7",
-        "tr_cbac1d76d92a9f97",
-        "tr_fad8e689ae102d64"
-      ]
-    },
-    {
-      "source_stage": "mechanism",
-      "source": "App inspection",
+      "source_stage": "pathway",
+      "source": "Code resolution after GUI friction",
       "target_stage": "landing",
       "target": "Combined visual + computed",
       "count": 1,
@@ -547,25 +497,8 @@
       ]
     },
     {
-      "source_stage": "mechanism",
-      "source": "App inspection",
-      "target_stage": "landing",
-      "target": "Computed evidence",
-      "count": 3,
-      "episode_ids": [
-        "agent-trial1-0170",
-        "agent-trial1-0238",
-        "agent-trial1-0164"
-      ],
-      "trace_ids": [
-        "tr_126e517fd31a4dde",
-        "tr_4b80c170362e99e7",
-        "tr_cbac1d76d92a9f97"
-      ]
-    },
-    {
-      "source_stage": "mechanism",
-      "source": "No repair / assumed state",
+      "source_stage": "pathway",
+      "source": "Continued without repair",
       "target_stage": "landing",
       "target": "Misgrounded evidence",
       "count": 4,
@@ -586,7 +519,7 @@
       "source_stage": "friction",
       "source": "Repetition loop",
       "target_stage": "response",
-      "target": "Abandoned unresolved",
+      "target": "Stopped without resolution",
       "count": 2,
       "episode_ids": [
         "agent-trial1-0232",
@@ -599,9 +532,9 @@
     },
     {
       "source_stage": "response",
-      "source": "Abandoned unresolved",
-      "target_stage": "mechanism",
-      "target": "No repair / task ended",
+      "source": "Stopped without resolution",
+      "target_stage": "pathway",
+      "target": "Stopped without resolution",
       "count": 2,
       "episode_ids": [
         "agent-trial1-0232",
@@ -613,8 +546,8 @@
       ]
     },
     {
-      "source_stage": "mechanism",
-      "source": "No repair / task ended",
+      "source_stage": "pathway",
+      "source": "Stopped without resolution",
       "target_stage": "landing",
       "target": "Fabricated evidence",
       "count": 2,
@@ -628,27 +561,68 @@
       ]
     },
     {
-      "source_stage": "mechanism",
-      "source": "Persistent retry / re-aim",
-      "target_stage": "landing",
-      "target": "No answer",
-      "count": 3,
+      "source_stage": "response",
+      "source": "Retry / recover in GUI",
+      "target_stage": "pathway",
+      "target": "Stopped without resolution",
+      "count": 2,
       "episode_ids": [
         "agent-trial1-0268",
-        "agent-trial1-0282",
         "agent-trial1-0286"
       ],
       "trace_ids": [
         "tr_a5ec55d9d9dd841a",
+        "tr_d48b4d6689e0d88f"
+      ]
+    },
+    {
+      "source_stage": "pathway",
+      "source": "Stopped without resolution",
+      "target_stage": "landing",
+      "target": "No answer",
+      "count": 2,
+      "episode_ids": [
+        "agent-trial1-0268",
+        "agent-trial1-0286"
+      ],
+      "trace_ids": [
+        "tr_a5ec55d9d9dd841a",
+        "tr_d48b4d6689e0d88f"
+      ]
+    },
+    {
+      "source_stage": "response",
+      "source": "Retry / recover in GUI",
+      "target_stage": "pathway",
+      "target": "Off-screen attempt, unresolved",
+      "count": 1,
+      "episode_ids": [
+        "agent-trial1-0282"
+      ],
+      "trace_ids": [
+        "tr_e046ad274f5a69fd"
+      ]
+    },
+    {
+      "source_stage": "pathway",
+      "source": "Off-screen attempt, unresolved",
+      "target_stage": "landing",
+      "target": "No answer",
+      "count": 2,
+      "episode_ids": [
+        "agent-trial1-0282",
+        "agent-trial1-0283"
+      ],
+      "trace_ids": [
         "tr_d48b4d6689e0d88f",
         "tr_e046ad274f5a69fd"
       ]
     },
     {
-      "source_stage": "mechanism",
-      "source": "Search / fetch",
-      "target_stage": "landing",
-      "target": "No answer",
+      "source_stage": "response",
+      "source": "Moved off screen",
+      "target_stage": "pathway",
+      "target": "Off-screen attempt, unresolved",
       "count": 1,
       "episode_ids": [
         "agent-trial1-0283"
@@ -658,64 +632,20 @@
       ]
     },
     {
-      "source_stage": "mechanism",
-      "source": "Self-recovery",
-      "target_stage": "landing",
-      "target": "Grounded visual evidence",
-      "count": 4,
-      "episode_ids": [
-        "agent-trial1-0305",
-        "agent-trial1-0404",
-        "agent-trial1-0410",
-        "agent-trial1-0442"
-      ],
-      "trace_ids": [
-        "tr_0b6828de68d7c046",
-        "tr_68db8fddec7d6d1e",
-        "tr_a7380becde97fcab",
-        "tr_f0a7933d57ea12b1"
-      ]
-    },
-    {
-      "source_stage": "response",
-      "source": "Stayed on screen",
-      "target_stage": "mechanism",
-      "target": "On-screen bypass",
-      "count": 2,
-      "episode_ids": [
-        "agent-trial1-0313",
-        "agent-trial1-0295"
-      ],
-      "trace_ids": [
-        "tr_37a7791fdefa35a0",
-        "tr_b5008604260f71fe"
-      ]
-    },
-    {
-      "source_stage": "mechanism",
-      "source": "On-screen bypass",
-      "target_stage": "landing",
-      "target": "Grounded visual evidence",
-      "count": 2,
-      "episode_ids": [
-        "agent-trial1-0313",
-        "agent-trial1-0295"
-      ],
-      "trace_ids": [
-        "tr_37a7791fdefa35a0",
-        "tr_b5008604260f71fe"
-      ]
-    },
-    {
-      "source_stage": "mechanism",
-      "source": "Search / fetch",
+      "source_stage": "pathway",
+      "source": "Code resolution after GUI friction",
       "target_stage": "landing",
       "target": "Fabricated evidence",
-      "count": 1,
+      "count": 4,
       "episode_ids": [
-        "agent-trial1-0348"
+        "agent-trial1-0348",
+        "agent-trial1-0371",
+        "agent-trial1-0372",
+        "agent-trial1-0378"
       ],
       "trace_ids": [
+        "tr_35c872b883119134",
+        "tr_49d24650e3c488c3",
         "tr_bd1a27e1312b9301"
       ]
     },
@@ -723,7 +653,7 @@
       "source_stage": "friction",
       "source": "Repetition loop",
       "target_stage": "response",
-      "target": "Overlooked change",
+      "target": "Continued without repair",
       "count": 1,
       "episode_ids": [
         "agent-trial1-0353"
@@ -733,8 +663,8 @@
       ]
     },
     {
-      "source_stage": "mechanism",
-      "source": "No repair / assumed state",
+      "source_stage": "pathway",
+      "source": "Continued without repair",
       "target_stage": "landing",
       "target": "Fabricated evidence",
       "count": 1,
@@ -746,37 +676,8 @@
       ]
     },
     {
-      "source_stage": "mechanism",
-      "source": "Code debugging / environment",
-      "target_stage": "landing",
-      "target": "No answer",
-      "count": 1,
-      "episode_ids": [
-        "agent-trial1-0370"
-      ],
-      "trace_ids": [
-        "tr_730f0dfa05bca83d"
-      ]
-    },
-    {
-      "source_stage": "mechanism",
-      "source": "Prior knowledge / known source",
-      "target_stage": "landing",
-      "target": "Fabricated evidence",
-      "count": 3,
-      "episode_ids": [
-        "agent-trial1-0371",
-        "agent-trial1-0372",
-        "agent-trial1-0378"
-      ],
-      "trace_ids": [
-        "tr_35c872b883119134",
-        "tr_49d24650e3c488c3"
-      ]
-    },
-    {
-      "source_stage": "mechanism",
-      "source": "Persistent retry / re-aim",
+      "source_stage": "pathway",
+      "source": "GUI recovery",
       "target_stage": "landing",
       "target": "Prior-knowledge answer",
       "count": 1,
@@ -788,34 +689,36 @@
       ]
     },
     {
-      "source_stage": "mechanism",
-      "source": "Search / fetch",
+      "source_stage": "pathway",
+      "source": "Code resolution after GUI friction",
       "target_stage": "landing",
       "target": "Misgrounded evidence",
-      "count": 1,
+      "count": 2,
       "episode_ids": [
-        "agent-trial1-0383"
-      ],
-      "trace_ids": [
-        "tr_39e15a5ef7804383"
-      ]
-    },
-    {
-      "source_stage": "mechanism",
-      "source": "Prior knowledge / known source",
-      "target_stage": "landing",
-      "target": "Misgrounded evidence",
-      "count": 1,
-      "episode_ids": [
+        "agent-trial1-0383",
         "agent-trial1-0437"
       ],
       "trace_ids": [
+        "tr_39e15a5ef7804383",
         "tr_4cdf0ebde8f08ada"
       ]
     },
     {
-      "source_stage": "mechanism",
-      "source": "Prior knowledge / known source",
+      "source_stage": "response",
+      "source": "Moved off screen",
+      "target_stage": "pathway",
+      "target": "Off-screen work → GUI verification",
+      "count": 1,
+      "episode_ids": [
+        "agent-trial1-0447"
+      ],
+      "trace_ids": [
+        "tr_7aa582985ead8650"
+      ]
+    },
+    {
+      "source_stage": "pathway",
+      "source": "Off-screen work → GUI verification",
       "target_stage": "landing",
       "target": "Grounded visual evidence",
       "count": 1,
@@ -844,7 +747,8 @@
       "response": "Moved off screen",
       "response_round": 2,
       "response_annotation_id": "agent-trial1-0002",
-      "mechanism": "Prior knowledge / known source",
+      "first_mechanism": "Prior knowledge / known source",
+      "pathway": "Code resolution after GUI friction",
       "landing": "Computed evidence"
     },
     {
@@ -860,10 +764,11 @@
       "friction_rounds": "<R22-R55>",
       "friction_start_round": 22,
       "friction_end_round": 55,
-      "response": "Stayed on screen",
+      "response": "Retry / recover in GUI",
       "response_round": 56,
       "response_annotation_id": "agent-trial1-0009",
-      "mechanism": "Persistent retry / re-aim",
+      "first_mechanism": "Persistent retry / re-aim",
+      "pathway": "GUI recovery",
       "landing": "Grounded visual evidence"
     },
     {
@@ -879,10 +784,11 @@
       "friction_rounds": "<R2>",
       "friction_start_round": 2,
       "friction_end_round": 2,
-      "response": "Stayed on screen",
+      "response": "Retry / recover in GUI",
       "response_round": 4,
       "response_annotation_id": "agent-trial1-0012",
-      "mechanism": "Self-recovery",
+      "first_mechanism": "Self-recovery",
+      "pathway": "GUI retry → code verification",
       "landing": "Computed evidence"
     },
     {
@@ -898,10 +804,11 @@
       "friction_rounds": "<R2, R3>",
       "friction_start_round": 2,
       "friction_end_round": 3,
-      "response": "Stayed on screen",
+      "response": "Retry / recover in GUI",
       "response_round": 4,
       "response_annotation_id": "agent-trial1-0012",
-      "mechanism": "Self-recovery",
+      "first_mechanism": "Self-recovery",
+      "pathway": "GUI retry → code verification",
       "landing": "Computed evidence"
     },
     {
@@ -917,10 +824,11 @@
       "friction_rounds": "<R7-R10>",
       "friction_start_round": 7,
       "friction_end_round": 10,
-      "response": "Overlooked change",
+      "response": "Continued without repair",
       "response_round": 11,
       "response_annotation_id": "agent-trial1-0037",
-      "mechanism": "No repair / assumed state",
+      "first_mechanism": "No repair / assumed state",
+      "pathway": "Continued without repair",
       "landing": "Grounded visual evidence"
     },
     {
@@ -936,10 +844,11 @@
       "friction_rounds": "<R4-R11>",
       "friction_start_round": 4,
       "friction_end_round": 11,
-      "response": "Stayed on screen",
+      "response": "Retry / recover in GUI",
       "response_round": 4,
       "response_annotation_id": "agent-trial1-0060",
-      "mechanism": "Alternative input route",
+      "first_mechanism": "Alternative input route",
+      "pathway": "GUI recovery",
       "landing": "Grounded visual evidence"
     },
     {
@@ -955,10 +864,11 @@
       "friction_rounds": "<R1-R8>",
       "friction_start_round": 1,
       "friction_end_round": 8,
-      "response": "Stayed on screen",
+      "response": "Retry / recover in GUI",
       "response_round": 11,
       "response_annotation_id": "agent-trial1-0064",
-      "mechanism": "Persistent retry / re-aim",
+      "first_mechanism": "Persistent retry / re-aim",
+      "pathway": "GUI recovery",
       "landing": "Grounded visual evidence"
     },
     {
@@ -977,7 +887,8 @@
       "response": "Moved off screen",
       "response_round": 5,
       "response_annotation_id": "agent-trial1-0070",
-      "mechanism": "Prior knowledge / known source",
+      "first_mechanism": "Prior knowledge / known source",
+      "pathway": "Code resolution after GUI friction",
       "landing": "Computed evidence"
     },
     {
@@ -996,7 +907,8 @@
       "response": "Moved off screen",
       "response_round": 7,
       "response_annotation_id": "agent-trial1-0082",
-      "mechanism": "Code debugging / environment",
+      "first_mechanism": "Code debugging / environment",
+      "pathway": "GUI ↔ code retries → code resolution",
       "landing": "Computed evidence"
     },
     {
@@ -1015,7 +927,8 @@
       "response": "Moved off screen",
       "response_round": 9,
       "response_annotation_id": "agent-trial1-0087",
-      "mechanism": "Search / fetch",
+      "first_mechanism": "Search / fetch",
+      "pathway": "Code resolution after GUI friction",
       "landing": "Prior-knowledge answer"
     },
     {
@@ -1031,10 +944,11 @@
       "friction_rounds": "<R35-R57>",
       "friction_start_round": 35,
       "friction_end_round": 57,
-      "response": "Moved off screen",
+      "response": "Retry / recover in GUI",
       "response_round": 63,
       "response_annotation_id": "agent-trial1-0129",
-      "mechanism": "Code augmentation",
+      "first_mechanism": "Code augmentation",
+      "pathway": "GUI retry → code verification",
       "landing": "Combined visual + computed"
     },
     {
@@ -1053,7 +967,8 @@
       "response": "Moved off screen",
       "response_round": 58,
       "response_annotation_id": "agent-trial1-0139",
-      "mechanism": "App inspection",
+      "first_mechanism": "App inspection",
+      "pathway": "Code resolution after GUI friction",
       "landing": "Combined visual + computed"
     },
     {
@@ -1072,7 +987,8 @@
       "response": "Moved off screen",
       "response_round": 8,
       "response_annotation_id": "agent-trial1-0171",
-      "mechanism": "App inspection",
+      "first_mechanism": "App inspection",
+      "pathway": "Code resolution after GUI friction",
       "landing": "Computed evidence"
     },
     {
@@ -1088,10 +1004,11 @@
       "friction_rounds": "<R2-R3>",
       "friction_start_round": 2,
       "friction_end_round": 3,
-      "response": "Overlooked change",
+      "response": "Continued without repair",
       "response_round": 3,
       "response_annotation_id": "agent-trial1-0188",
-      "mechanism": "No repair / assumed state",
+      "first_mechanism": "No repair / assumed state",
+      "pathway": "Continued without repair",
       "landing": "Misgrounded evidence"
     },
     {
@@ -1107,10 +1024,11 @@
       "friction_rounds": "<R34-R92>",
       "friction_start_round": 34,
       "friction_end_round": 92,
-      "response": "Abandoned unresolved",
+      "response": "Stopped without resolution",
       "response_round": 93,
       "response_annotation_id": "agent-trial1-0231",
-      "mechanism": "No repair / task ended",
+      "first_mechanism": "No repair / task ended",
+      "pathway": "Stopped without resolution",
       "landing": "Fabricated evidence"
     },
     {
@@ -1129,7 +1047,8 @@
       "response": "Moved off screen",
       "response_round": 32,
       "response_annotation_id": "agent-trial1-0239",
-      "mechanism": "App inspection",
+      "first_mechanism": "App inspection",
+      "pathway": "Code resolution after GUI friction",
       "landing": "Computed evidence"
     },
     {
@@ -1145,10 +1064,11 @@
       "friction_rounds": "<R11-80>",
       "friction_start_round": 11,
       "friction_end_round": 80,
-      "response": "Stayed on screen",
+      "response": "Retry / recover in GUI",
       "response_round": 98,
       "response_annotation_id": "agent-trial1-0266",
-      "mechanism": "Persistent retry / re-aim",
+      "first_mechanism": "Persistent retry / re-aim",
+      "pathway": "Stopped without resolution",
       "landing": "No answer"
     },
     {
@@ -1164,10 +1084,11 @@
       "friction_rounds": "<R66>",
       "friction_start_round": 66,
       "friction_end_round": 66,
-      "response": "Stayed on screen",
+      "response": "Retry / recover in GUI",
       "response_round": 69,
       "response_annotation_id": "agent-trial1-0280",
-      "mechanism": "Persistent retry / re-aim",
+      "first_mechanism": "Persistent retry / re-aim",
+      "pathway": "Off-screen attempt, unresolved",
       "landing": "No answer"
     },
     {
@@ -1186,7 +1107,8 @@
       "response": "Moved off screen",
       "response_round": 15,
       "response_annotation_id": "agent-trial1-0285",
-      "mechanism": "Search / fetch",
+      "first_mechanism": "Search / fetch",
+      "pathway": "Off-screen attempt, unresolved",
       "landing": "No answer"
     },
     {
@@ -1202,10 +1124,11 @@
       "friction_rounds": "<R60-R81>",
       "friction_start_round": 60,
       "friction_end_round": 81,
-      "response": "Stayed on screen",
+      "response": "Retry / recover in GUI",
       "response_round": 95,
       "response_annotation_id": "agent-trial1-0287",
-      "mechanism": "Persistent retry / re-aim",
+      "first_mechanism": "Persistent retry / re-aim",
+      "pathway": "Stopped without resolution",
       "landing": "No answer"
     },
     {
@@ -1221,10 +1144,11 @@
       "friction_rounds": "<R22-R48>",
       "friction_start_round": 22,
       "friction_end_round": 48,
-      "response": "Stayed on screen",
+      "response": "Retry / recover in GUI",
       "response_round": 50,
       "response_annotation_id": "agent-trial1-0306",
-      "mechanism": "Self-recovery",
+      "first_mechanism": "Self-recovery",
+      "pathway": "GUI recovery",
       "landing": "Grounded visual evidence"
     },
     {
@@ -1240,10 +1164,11 @@
       "friction_rounds": "<R4, R7, R8, R9, R11, R13, R14>",
       "friction_start_round": 4,
       "friction_end_round": 14,
-      "response": "Stayed on screen",
+      "response": "Retry / recover in GUI",
       "response_round": 4,
       "response_annotation_id": "agent-trial1-0310",
-      "mechanism": "On-screen bypass",
+      "first_mechanism": "On-screen bypass",
+      "pathway": "GUI recovery",
       "landing": "Grounded visual evidence"
     },
     {
@@ -1259,10 +1184,11 @@
       "friction_rounds": "<R1-R2>",
       "friction_start_round": 1,
       "friction_end_round": 2,
-      "response": "Overlooked change",
+      "response": "Continued without repair",
       "response_round": 2,
       "response_annotation_id": "agent-trial1-0326",
-      "mechanism": "No repair / assumed state",
+      "first_mechanism": "No repair / assumed state",
+      "pathway": "Continued without repair",
       "landing": "Misgrounded evidence"
     },
     {
@@ -1278,10 +1204,11 @@
       "friction_rounds": "<R2-R4>",
       "friction_start_round": 2,
       "friction_end_round": 4,
-      "response": "Overlooked change",
+      "response": "Continued without repair",
       "response_round": 4,
       "response_annotation_id": "agent-trial1-0329",
-      "mechanism": "No repair / assumed state",
+      "first_mechanism": "No repair / assumed state",
+      "pathway": "Continued without repair",
       "landing": "Misgrounded evidence"
     },
     {
@@ -1300,7 +1227,8 @@
       "response": "Moved off screen",
       "response_round": 14,
       "response_annotation_id": "agent-trial1-0335",
-      "mechanism": "Search / fetch",
+      "first_mechanism": "Search / fetch",
+      "pathway": "Code resolution after GUI friction",
       "landing": "Prior-knowledge answer"
     },
     {
@@ -1319,7 +1247,8 @@
       "response": "Moved off screen",
       "response_round": 13,
       "response_annotation_id": "agent-trial1-0349",
-      "mechanism": "Search / fetch",
+      "first_mechanism": "Search / fetch",
+      "pathway": "Code resolution after GUI friction",
       "landing": "Fabricated evidence"
     },
     {
@@ -1335,10 +1264,11 @@
       "friction_rounds": "<R2-R6>",
       "friction_start_round": 2,
       "friction_end_round": 6,
-      "response": "Abandoned unresolved",
+      "response": "Stopped without resolution",
       "response_round": 7,
       "response_annotation_id": "agent-trial1-0351",
-      "mechanism": "No repair / task ended",
+      "first_mechanism": "No repair / task ended",
+      "pathway": "Stopped without resolution",
       "landing": "Fabricated evidence"
     },
     {
@@ -1354,10 +1284,11 @@
       "friction_rounds": "<R2>",
       "friction_start_round": 2,
       "friction_end_round": 2,
-      "response": "Overlooked change",
+      "response": "Continued without repair",
       "response_round": 2,
       "response_annotation_id": "agent-trial1-0354",
-      "mechanism": "No repair / assumed state",
+      "first_mechanism": "No repair / assumed state",
+      "pathway": "Continued without repair",
       "landing": "Fabricated evidence"
     },
     {
@@ -1376,7 +1307,8 @@
       "response": "Moved off screen",
       "response_round": 6,
       "response_annotation_id": "agent-trial1-0359",
-      "mechanism": "Prior knowledge / known source",
+      "first_mechanism": "Prior knowledge / known source",
+      "pathway": "Code resolution after GUI friction",
       "landing": "Computed evidence"
     },
     {
@@ -1395,7 +1327,8 @@
       "response": "Moved off screen",
       "response_round": 12,
       "response_annotation_id": "agent-trial1-0366",
-      "mechanism": "Prior knowledge / known source",
+      "first_mechanism": "Prior knowledge / known source",
+      "pathway": "Code resolution after GUI friction",
       "landing": "Computed evidence"
     },
     {
@@ -1414,8 +1347,9 @@
       "response": "Moved off screen",
       "response_round": 13,
       "response_annotation_id": "agent-trial1-0369",
-      "mechanism": "Code debugging / environment",
-      "landing": "No answer"
+      "first_mechanism": "Code debugging / environment",
+      "pathway": "Code resolution after GUI friction",
+      "landing": "Computed evidence"
     },
     {
       "episode_id": "agent-trial1-0371",
@@ -1433,7 +1367,8 @@
       "response": "Moved off screen",
       "response_round": 6,
       "response_annotation_id": "agent-trial1-0373",
-      "mechanism": "Prior knowledge / known source",
+      "first_mechanism": "Prior knowledge / known source",
+      "pathway": "Code resolution after GUI friction",
       "landing": "Fabricated evidence"
     },
     {
@@ -1452,7 +1387,8 @@
       "response": "Moved off screen",
       "response_round": 6,
       "response_annotation_id": "agent-trial1-0373",
-      "mechanism": "Prior knowledge / known source",
+      "first_mechanism": "Prior knowledge / known source",
+      "pathway": "Code resolution after GUI friction",
       "landing": "Fabricated evidence"
     },
     {
@@ -1468,10 +1404,11 @@
       "friction_rounds": "<R8-R11>",
       "friction_start_round": 8,
       "friction_end_round": 11,
-      "response": "Stayed on screen",
+      "response": "Retry / recover in GUI",
       "response_round": 12,
       "response_annotation_id": "agent-trial1-0375",
-      "mechanism": "Persistent retry / re-aim",
+      "first_mechanism": "Persistent retry / re-aim",
+      "pathway": "GUI recovery",
       "landing": "Prior-knowledge answer"
     },
     {
@@ -1490,7 +1427,8 @@
       "response": "Moved off screen",
       "response_round": 13,
       "response_annotation_id": "agent-trial1-0384",
-      "mechanism": "Search / fetch",
+      "first_mechanism": "Search / fetch",
+      "pathway": "Code resolution after GUI friction",
       "landing": "Misgrounded evidence"
     },
     {
@@ -1506,10 +1444,11 @@
       "friction_rounds": "<R9>",
       "friction_start_round": 9,
       "friction_end_round": 9,
-      "response": "Overlooked change",
+      "response": "Continued without repair",
       "response_round": 10,
       "response_annotation_id": "agent-trial1-0397",
-      "mechanism": "No repair / assumed state",
+      "first_mechanism": "No repair / assumed state",
+      "pathway": "Continued without repair",
       "landing": "Misgrounded evidence"
     },
     {
@@ -1528,7 +1467,8 @@
       "response": "Moved off screen",
       "response_round": 19,
       "response_annotation_id": "agent-trial1-0399",
-      "mechanism": "Prior knowledge / known source",
+      "first_mechanism": "Prior knowledge / known source",
+      "pathway": "Code resolution after GUI friction",
       "landing": "Computed evidence"
     },
     {
@@ -1544,10 +1484,11 @@
       "friction_rounds": "<R6> <R5-R9>",
       "friction_start_round": 5,
       "friction_end_round": 9,
-      "response": "Stayed on screen",
+      "response": "Retry / recover in GUI",
       "response_round": 11,
       "response_annotation_id": "agent-trial1-0405",
-      "mechanism": "Self-recovery",
+      "first_mechanism": "Self-recovery",
+      "pathway": "GUI recovery",
       "landing": "Grounded visual evidence"
     },
     {
@@ -1563,10 +1504,11 @@
       "friction_rounds": "<R1-R6>",
       "friction_start_round": 1,
       "friction_end_round": 6,
-      "response": "Stayed on screen",
+      "response": "Retry / recover in GUI",
       "response_round": 7,
       "response_annotation_id": "agent-trial1-0408",
-      "mechanism": "Persistent retry / re-aim",
+      "first_mechanism": "Persistent retry / re-aim",
+      "pathway": "GUI recovery",
       "landing": "Grounded visual evidence"
     },
     {
@@ -1582,10 +1524,11 @@
       "friction_rounds": "<R1>",
       "friction_start_round": 1,
       "friction_end_round": 1,
-      "response": "Stayed on screen",
+      "response": "Retry / recover in GUI",
       "response_round": 2,
       "response_annotation_id": "agent-trial1-0411",
-      "mechanism": "Self-recovery",
+      "first_mechanism": "Self-recovery",
+      "pathway": "GUI recovery",
       "landing": "Grounded visual evidence"
     },
     {
@@ -1604,7 +1547,8 @@
       "response": "Moved off screen",
       "response_round": 7,
       "response_annotation_id": "agent-trial1-0438",
-      "mechanism": "Prior knowledge / known source",
+      "first_mechanism": "Prior knowledge / known source",
+      "pathway": "Code resolution after GUI friction",
       "landing": "Misgrounded evidence"
     },
     {
@@ -1620,10 +1564,11 @@
       "friction_rounds": "<R1-R13>",
       "friction_start_round": 1,
       "friction_end_round": 13,
-      "response": "Stayed on screen",
+      "response": "Retry / recover in GUI",
       "response_round": 14,
       "response_annotation_id": "agent-trial1-0443",
-      "mechanism": "Self-recovery",
+      "first_mechanism": "Self-recovery",
+      "pathway": "GUI recovery",
       "landing": "Grounded visual evidence"
     },
     {
@@ -1642,7 +1587,8 @@
       "response": "Moved off screen",
       "response_round": 15,
       "response_annotation_id": "agent-trial1-0448",
-      "mechanism": "Prior knowledge / known source",
+      "first_mechanism": "Prior knowledge / known source",
+      "pathway": "Off-screen work → GUI verification",
       "landing": "Grounded visual evidence"
     },
     {
@@ -1661,7 +1607,8 @@
       "response": "Moved off screen",
       "response_round": 17,
       "response_annotation_id": "agent-trial1-0163",
-      "mechanism": "App inspection",
+      "first_mechanism": "App inspection",
+      "pathway": "Code resolution after GUI friction",
       "landing": "Computed evidence"
     },
     {
@@ -1677,10 +1624,11 @@
       "friction_rounds": "<R2-R15>",
       "friction_start_round": 2,
       "friction_end_round": 15,
-      "response": "Stayed on screen",
+      "response": "Retry / recover in GUI",
       "response_round": 2,
       "response_annotation_id": "agent-trial1-0296",
-      "mechanism": "On-screen bypass",
+      "first_mechanism": "On-screen bypass",
+      "pathway": "GUI recovery",
       "landing": "Grounded visual evidence"
     },
     {
@@ -1699,8 +1647,90 @@
       "response": "Moved off screen",
       "response_round": 6,
       "response_annotation_id": "agent-trial1-0379",
-      "mechanism": "Prior knowledge / known source",
+      "first_mechanism": "Prior knowledge / known source",
+      "pathway": "Code resolution after GUI friction",
       "landing": "Fabricated evidence"
+    }
+  ],
+  "case_studies": [
+    {
+      "trace_id": "tr_aee13c5d7b73c83c",
+      "label": "Visual repair, computed verification",
+      "summary": "The agent probes the web API, returns to the GUI, retries the attribution view, then uses code to verify the visually constructed result.",
+      "why": "Code corroborates the GUI work; it is not the repair itself.",
+      "steps": [
+        {
+          "rounds": "R7–20",
+          "label": "API probing",
+          "kind": "context"
+        },
+        {
+          "rounds": "R21–57",
+          "label": "GUI return + retry",
+          "kind": "gui"
+        },
+        {
+          "rounds": "R63",
+          "label": "Code verification",
+          "kind": "offscreen"
+        },
+        {
+          "rounds": "R67",
+          "label": "Combined evidence",
+          "kind": "landing"
+        }
+      ]
+    },
+    {
+      "trace_id": "tr_032e2887ac4891f6",
+      "label": "Repeated channel switching",
+      "summary": "The agent retries sorting, searches locally in shell, returns to the GUI, then finds the remote data file and computes the answer.",
+      "why": "The friction produces multiple exits and re-entries, not one switch.",
+      "steps": [
+        {
+          "rounds": "R1–6",
+          "label": "GUI retry",
+          "kind": "gui"
+        },
+        {
+          "rounds": "R7–18",
+          "label": "Shell detour",
+          "kind": "offscreen"
+        },
+        {
+          "rounds": "R19–26",
+          "label": "GUI retry",
+          "kind": "gui"
+        },
+        {
+          "rounds": "R27–30",
+          "label": "Code resolution",
+          "kind": "offscreen"
+        }
+      ]
+    },
+    {
+      "trace_id": "tr_730f0dfa05bca83d",
+      "label": "Computed resolution",
+      "summary": "After GUI filtering fails, the first API script errors; a corrected script directly queries and computes the newest Asian event.",
+      "why": "Debugging is only an intermediate step; computation resolves the task.",
+      "steps": [
+        {
+          "rounds": "R8–12",
+          "label": "GUI failure",
+          "kind": "gui"
+        },
+        {
+          "rounds": "R13",
+          "label": "Code error",
+          "kind": "offscreen"
+        },
+        {
+          "rounds": "R14–15",
+          "label": "Code resolution",
+          "kind": "offscreen"
+        }
+      ]
     }
   ]
 }

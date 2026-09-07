@@ -65,15 +65,17 @@ the original trajectory JSON or screenshots.
 The GUI-friction alluvial on `/analysis/` is a reproducible derivative of that
 annotation file. It treats each coded ineffective/misgrounded or repeated GUI
 manipulation annotation as one episode and follows it through the first coded
-response, mechanism, and eventual evidence landing:
+response, ordered resolution pathway, and eventual evidence landing. This keeps
+GUI recovery, code verification, code resolution, and unresolved endings distinct:
 
 ```bash
 python3 scripts/build_friction_flow.py
 ```
 
-This writes `analysis/friction_flow.json`, including episode-level provenance and
-the aggregated links used by the visualization. The flow is a descriptive coded
-sequence, not a causal estimate.
+This writes `analysis/friction_flow.json`, including episode-level provenance,
+documented multi-stage case timelines, and the aggregated links used by the
+visualization. Earlier actions may appear as context in a case timeline but are not
+treated as consequences of later friction. The flow is descriptive, not causal.
 
 ## GAIA sample
 

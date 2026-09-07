@@ -127,13 +127,23 @@
 .alluvial-tooltip strong { display: block; font-size: 11px; line-height: 1.4; }
 .alluvial-tooltip p { margin: 6px 0 0; color: var(--muted); font: 9px/1.55 var(--mono); overflow-wrap: anywhere; }
 .alluvial-tooltip b { color: var(--ink); font-weight: 500; }
-.friction-examples { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line); }
-.friction-examples a { display: grid; grid-template-columns: 9px minmax(0, 1fr); gap: 3px 7px; align-items: center; min-width: 0; padding: 10px 13px; color: var(--ink); text-decoration: none; }
+.friction-examples { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line); }
+.friction-examples a { display: block; min-width: 0; padding: 13px 15px 15px; color: var(--ink); text-decoration: none; }
 .friction-examples a + a { border-left: 1px solid var(--line); }
-.friction-examples i { grid-row: 1 / span 3; align-self: start; margin-top: 2px; width: 9px; height: 9px; border-radius: 50%; background: var(--path-color); }
+.example-heading { display: grid; grid-template-columns: 9px minmax(0, 1fr) auto; gap: 7px; align-items: center; }
+.friction-examples i { width: 9px; height: 9px; border-radius: 50%; background: var(--path-color); }
 .friction-examples span { font-size: 9px; font-weight: 700; }
 .friction-examples code { min-width: 0; overflow: hidden; color: var(--muted); font: 7px var(--mono); text-overflow: ellipsis; white-space: nowrap; }
-.friction-examples p { grid-column: 2; margin: 3px 0 0; color: var(--muted); font-size: 9px; line-height: 1.45; }
+.friction-examples p { margin: 9px 0; color: var(--muted); font-size: 9px; line-height: 1.5; }
+.friction-examples > a > strong { display: block; margin-top: 9px; color: var(--ink); font-size: 8px; line-height: 1.45; }
+.path-steps { display: flex; align-items: stretch; gap: 12px; overflow-x: auto; padding: 2px 0; }
+.path-step { position: relative; flex: 1 0 74px; min-width: 0; padding: 6px 7px; border-top: 3px solid var(--path-color); background: #f4f2eb; color: var(--ink); font: 500 7px/1.35 var(--sans); }
+.path-step + .path-step::before { position: absolute; left: -10px; top: 8px; color: var(--muted); content: "→"; font: 700 8px var(--mono); }
+.path-step b { display: block; margin-bottom: 2px; color: var(--muted); font: 500 6.5px var(--mono); }
+.path-context { --path-color: #a4aaa6; }
+.path-gui { --path-color: var(--mode-on); }
+.path-offscreen { --path-color: var(--mode-off); }
+.path-landing { --path-color: var(--teal); }
 .friction-examples a:hover { background: #f8f6ef; }
 
 .analysis-notes { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 46px; padding: 42px 0 38px; }
@@ -169,9 +179,8 @@ tbody tr:last-child td { border-bottom: 0; }
   .signature-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .signature-grid article:nth-child(odd) { border-left: 0; }
   .signature-grid article:nth-child(n + 3) { border-top-width: 4px; }
-  .friction-examples { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .friction-examples a:nth-child(odd) { border-left: 0; }
-  .friction-examples a:nth-child(n + 3) { border-top: 1px solid var(--line); }
+  .friction-examples { grid-template-columns: 1fr; }
+  .friction-examples a + a { border-left: 0; border-top: 1px solid var(--line); }
 }
 
 @media (max-width: 900px) {
@@ -190,6 +199,8 @@ tbody tr:last-child td { border-bottom: 0; }
   .signature-discussion > header > p:last-child { max-width: 560px; text-align: left; }
   .signature-grid { grid-template-columns: 1fr; }
   .signature-grid article + article { border-left: 0; }
+  .friction-examples { grid-template-columns: 1fr; }
+  .friction-examples a + a { border-left: 0; border-top: 1px solid var(--line); }
   .friction-header { align-items: stretch; }
   .friction-totals { width: 100%; }
 }
