@@ -62,10 +62,12 @@ STAGE_ORDERS = {
     ],
     "pathway": [
         "GUI recovery",
+        "Failed code attempt → GUI recovery",
         "GUI retry → code verification",
         "Off-screen work → GUI verification",
-        "GUI ↔ code retries → code resolution",
+        "GUI ↔ code attempts → code resolution",
         "Code resolution after GUI friction",
+        "GUI repetition + failed code → fabrication",
         "Off-screen attempt, unresolved",
         "Continued without repair",
         "Stopped without resolution",
@@ -93,13 +95,26 @@ EPISODE_OVERRIDES = {
     },
     "tr_032e2887ac4891f6": {
         "response": "Moved off screen",
-        "pathway": "GUI ↔ code retries → code resolution",
+        "first_mechanism": "Alternating GUI and code attempts",
+        "pathway": "GUI ↔ code attempts → code resolution",
         "landing": "Computed evidence",
     },
     "tr_730f0dfa05bca83d": {
         "response": "Moved off screen",
         "pathway": "Code resolution after GUI friction",
         "landing": "Computed evidence",
+    },
+    "tr_7aa582985ead8650": {
+        "response": "Moved off screen",
+        "first_mechanism": "Failed code attempt",
+        "pathway": "Failed code attempt → GUI recovery",
+        "landing": "Grounded visual evidence",
+    },
+    "tr_bd1a27e1312b9301": {
+        "response": "Moved off screen",
+        "first_mechanism": "Failed code/image inspection",
+        "pathway": "GUI repetition + failed code → fabrication",
+        "landing": "Fabricated evidence",
     },
 }
 
@@ -119,7 +134,7 @@ CASE_STUDIES = [
     },
     {
         "trace_id": "tr_032e2887ac4891f6",
-        "label": "Repeated channel switching",
+        "label": "GUI ↔ code attempts, code resolution",
         "summary": "The agent retries sorting, searches locally in shell, returns to the GUI, then finds the remote data file and computes the answer.",
         "why": "The friction produces multiple exits and re-entries, not one switch.",
         "steps": [
@@ -127,6 +142,31 @@ CASE_STUDIES = [
             {"rounds": "R7–18", "label": "Shell detour", "kind": "offscreen"},
             {"rounds": "R19–26", "label": "GUI retry", "kind": "gui"},
             {"rounds": "R27–30", "label": "Code resolution", "kind": "offscreen"},
+        ],
+    },
+    {
+        "trace_id": "tr_7aa582985ead8650",
+        "label": "Failed code, successful GUI retry",
+        "summary": "After repeated dropdown failures, the agent tries a dataset URL in Python; the request returns 404, so it returns to the GUI and successfully constructs the age chart.",
+        "why": "The code attempt fails; the subsequent GUI recovery resolves the task.",
+        "steps": [
+            {"rounds": "R1–14", "label": "GUI repetition", "kind": "gui"},
+            {"rounds": "R15", "label": "Failed code", "kind": "offscreen"},
+            {"rounds": "R16–20", "label": "GUI recovery", "kind": "gui"},
+            {"rounds": "R21", "label": "Visual answer", "kind": "landing"},
+        ],
+    },
+    {
+        "trace_id": "tr_bd1a27e1312b9301",
+        "label": "Repetition and failed code, then fabrication",
+        "summary": "The agent repeatedly hovers and clicks the suspected outlier and makes several unsuccessful code-based image checks without identifying the country from either channel.",
+        "why": "Neither GUI nor code resolves the evidence gap before the unsupported final claim.",
+        "steps": [
+            {"rounds": "R1–12", "label": "GUI repetition", "kind": "gui"},
+            {"rounds": "R13", "label": "Failed code", "kind": "offscreen"},
+            {"rounds": "R14–33", "label": "GUI repetition + code checks", "kind": "context"},
+            {"rounds": "R34–37", "label": "Failed code inspection", "kind": "offscreen"},
+            {"rounds": "R38–39", "label": "Retry → fabricated answer", "kind": "landing"},
         ],
     },
     {
@@ -341,6 +381,7 @@ def main() -> None:
             pathway = classify_pathway(annotations, friction, response, mechanism, landing)
             override = EPISODE_OVERRIDES.get(trace_id, {})
             response = override.get("response", response)
+            mechanism = override.get("first_mechanism", mechanism)
             pathway = override.get("pathway", pathway)
             landing = override.get("landing", landing)
             episodes.append({

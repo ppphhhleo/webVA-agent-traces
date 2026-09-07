@@ -1,7 +1,7 @@
 {
   "schema_version": "2.0",
   "classifier_version": "gui-friction-flow-v2-ordered-pathways",
-  "generated_at": "2026-09-07T18:23:26.537606+00:00",
+  "generated_at": "2026-09-07T18:43:52.370018+00:00",
   "source": {
     "dataset": "webva-agent-behaviors-trial1",
     "workbook_filename": "Trace Coding (1).xlsx",
@@ -35,10 +35,12 @@
     ],
     "pathway": [
       "GUI recovery",
+      "Failed code attempt → GUI recovery",
       "GUI retry → code verification",
       "Off-screen work → GUI verification",
-      "GUI ↔ code retries → code resolution",
+      "GUI ↔ code attempts → code resolution",
       "Code resolution after GUI friction",
+      "GUI repetition + failed code → fabrication",
       "Off-screen attempt, unresolved",
       "Continued without repair",
       "Stopped without resolution"
@@ -65,14 +67,15 @@
       "Stopped without resolution": 2
     },
     "pathway": {
-      "Code resolution after GUI friction": 18,
+      "Code resolution after GUI friction": 17,
       "GUI recovery": 11,
       "GUI retry → code verification": 3,
       "Continued without repair": 6,
-      "GUI ↔ code retries → code resolution": 1,
+      "GUI ↔ code attempts → code resolution": 1,
       "Stopped without resolution": 4,
       "Off-screen attempt, unresolved": 2,
-      "Off-screen work → GUI verification": 1
+      "GUI repetition + failed code → fabrication": 1,
+      "Failed code attempt → GUI recovery": 1
     },
     "landing": {
       "Computed evidence": 12,
@@ -122,7 +125,7 @@
       "source": "Moved off screen",
       "target_stage": "pathway",
       "target": "Code resolution after GUI friction",
-      "count": 18,
+      "count": 17,
       "episode_ids": [
         "agent-trial1-0001",
         "agent-trial1-0072",
@@ -131,7 +134,6 @@
         "agent-trial1-0172",
         "agent-trial1-0240",
         "agent-trial1-0334",
-        "agent-trial1-0350",
         "agent-trial1-0364",
         "agent-trial1-0367",
         "agent-trial1-0372",
@@ -157,7 +159,6 @@
         "tr_885beba33a3c2e3f",
         "tr_a55ab1ce7cdb2d18",
         "tr_ac4c7be1bca52b35",
-        "tr_bd1a27e1312b9301",
         "tr_cbac1d76d92a9f97",
         "tr_e877c6dd4fe7347d",
         "tr_fad8e689ae102d64"
@@ -433,7 +434,7 @@
       "source_stage": "response",
       "source": "Moved off screen",
       "target_stage": "pathway",
-      "target": "GUI ↔ code retries → code resolution",
+      "target": "GUI ↔ code attempts → code resolution",
       "count": 1,
       "episode_ids": [
         "agent-trial1-0079"
@@ -444,7 +445,7 @@
     },
     {
       "source_stage": "pathway",
-      "source": "GUI ↔ code retries → code resolution",
+      "source": "GUI ↔ code attempts → code resolution",
       "target_stage": "landing",
       "target": "Computed evidence",
       "count": 1,
@@ -632,20 +633,28 @@
       ]
     },
     {
-      "source_stage": "pathway",
-      "source": "Code resolution after GUI friction",
-      "target_stage": "landing",
-      "target": "Fabricated evidence",
-      "count": 4,
+      "source_stage": "response",
+      "source": "Moved off screen",
+      "target_stage": "pathway",
+      "target": "GUI repetition + failed code → fabrication",
+      "count": 1,
       "episode_ids": [
-        "agent-trial1-0350",
-        "agent-trial1-0374",
-        "agent-trial1-0375",
-        "agent-trial1-0381"
+        "agent-trial1-0350"
       ],
       "trace_ids": [
-        "tr_35c872b883119134",
-        "tr_49d24650e3c488c3",
+        "tr_bd1a27e1312b9301"
+      ]
+    },
+    {
+      "source_stage": "pathway",
+      "source": "GUI repetition + failed code → fabrication",
+      "target_stage": "landing",
+      "target": "Fabricated evidence",
+      "count": 1,
+      "episode_ids": [
+        "agent-trial1-0350"
+      ],
+      "trace_ids": [
         "tr_bd1a27e1312b9301"
       ]
     },
@@ -673,6 +682,22 @@
       ],
       "trace_ids": [
         "tr_fbb54f964cd904f6"
+      ]
+    },
+    {
+      "source_stage": "pathway",
+      "source": "Code resolution after GUI friction",
+      "target_stage": "landing",
+      "target": "Fabricated evidence",
+      "count": 3,
+      "episode_ids": [
+        "agent-trial1-0374",
+        "agent-trial1-0375",
+        "agent-trial1-0381"
+      ],
+      "trace_ids": [
+        "tr_35c872b883119134",
+        "tr_49d24650e3c488c3"
       ]
     },
     {
@@ -707,7 +732,7 @@
       "source_stage": "response",
       "source": "Moved off screen",
       "target_stage": "pathway",
-      "target": "Off-screen work → GUI verification",
+      "target": "Failed code attempt → GUI recovery",
       "count": 1,
       "episode_ids": [
         "agent-trial1-0450"
@@ -718,7 +743,7 @@
     },
     {
       "source_stage": "pathway",
-      "source": "Off-screen work → GUI verification",
+      "source": "Failed code attempt → GUI recovery",
       "target_stage": "landing",
       "target": "Grounded visual evidence",
       "count": 1,
@@ -907,8 +932,8 @@
       "response": "Moved off screen",
       "response_round": 7,
       "response_annotation_id": "agent-trial1-0083",
-      "first_mechanism": "Code debugging / environment",
-      "pathway": "GUI ↔ code retries → code resolution",
+      "first_mechanism": "Alternating GUI and code attempts",
+      "pathway": "GUI ↔ code attempts → code resolution",
       "landing": "Computed evidence"
     },
     {
@@ -1247,8 +1272,8 @@
       "response": "Moved off screen",
       "response_round": 13,
       "response_annotation_id": "agent-trial1-0351",
-      "first_mechanism": "Search / fetch",
-      "pathway": "Code resolution after GUI friction",
+      "first_mechanism": "Failed code/image inspection",
+      "pathway": "GUI repetition + failed code → fabrication",
       "landing": "Fabricated evidence"
     },
     {
@@ -1587,8 +1612,8 @@
       "response": "Moved off screen",
       "response_round": 15,
       "response_annotation_id": "agent-trial1-0451",
-      "first_mechanism": "Prior knowledge / known source",
-      "pathway": "Off-screen work → GUI verification",
+      "first_mechanism": "Failed code attempt",
+      "pathway": "Failed code attempt → GUI recovery",
       "landing": "Grounded visual evidence"
     },
     {
@@ -1683,7 +1708,7 @@
     },
     {
       "trace_id": "tr_032e2887ac4891f6",
-      "label": "Repeated channel switching",
+      "label": "GUI ↔ code attempts, code resolution",
       "summary": "The agent retries sorting, searches locally in shell, returns to the GUI, then finds the remote data file and computes the answer.",
       "why": "The friction produces multiple exits and re-entries, not one switch.",
       "steps": [
@@ -1706,6 +1731,67 @@
           "rounds": "R27–30",
           "label": "Code resolution",
           "kind": "offscreen"
+        }
+      ]
+    },
+    {
+      "trace_id": "tr_7aa582985ead8650",
+      "label": "Failed code, successful GUI retry",
+      "summary": "After repeated dropdown failures, the agent tries a dataset URL in Python; the request returns 404, so it returns to the GUI and successfully constructs the age chart.",
+      "why": "The code attempt fails; the subsequent GUI recovery resolves the task.",
+      "steps": [
+        {
+          "rounds": "R1–14",
+          "label": "GUI repetition",
+          "kind": "gui"
+        },
+        {
+          "rounds": "R15",
+          "label": "Failed code",
+          "kind": "offscreen"
+        },
+        {
+          "rounds": "R16–20",
+          "label": "GUI recovery",
+          "kind": "gui"
+        },
+        {
+          "rounds": "R21",
+          "label": "Visual answer",
+          "kind": "landing"
+        }
+      ]
+    },
+    {
+      "trace_id": "tr_bd1a27e1312b9301",
+      "label": "Repetition and failed code, then fabrication",
+      "summary": "The agent repeatedly hovers and clicks the suspected outlier and makes several unsuccessful code-based image checks without identifying the country from either channel.",
+      "why": "Neither GUI nor code resolves the evidence gap before the unsupported final claim.",
+      "steps": [
+        {
+          "rounds": "R1–12",
+          "label": "GUI repetition",
+          "kind": "gui"
+        },
+        {
+          "rounds": "R13",
+          "label": "Failed code",
+          "kind": "offscreen"
+        },
+        {
+          "rounds": "R14–33",
+          "label": "GUI repetition + code checks",
+          "kind": "context"
+        },
+        {
+          "rounds": "R34–37",
+          "label": "Failed code inspection",
+          "kind": "offscreen"
+        },
+        {
+          "rounds": "R38–39",
+          "label": "Retry → fabricated answer",
+          "kind": "landing"
         }
       ]
     },

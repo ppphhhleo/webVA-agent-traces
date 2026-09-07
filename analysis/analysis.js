@@ -27,10 +27,12 @@ const LANDING_COLORS = {
 };
 const PATHWAY_COLORS = {
   "GUI recovery": "#2f7d50",
+  "Failed code attempt → GUI recovery": "#4d8a55",
   "GUI retry → code verification": "#277f85",
   "Off-screen work → GUI verification": "#277f85",
-  "GUI ↔ code retries → code resolution": "#62419a",
+  "GUI ↔ code attempts → code resolution": "#62419a",
   "Code resolution after GUI friction": "#62419a",
+  "GUI repetition + failed code → fabrication": "#9d3a40",
   "Off-screen attempt, unresolved": "#8b668b",
   "Continued without repair": "#b44b43",
   "Stopped without resolution": "#68706d",

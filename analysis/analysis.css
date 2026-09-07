@@ -130,6 +130,8 @@
 .friction-examples { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line); }
 .friction-examples a { display: block; min-width: 0; padding: 13px 15px 15px; color: var(--ink); text-decoration: none; }
 .friction-examples a + a { border-left: 1px solid var(--line); }
+.friction-examples a:nth-child(n + 4) { border-top: 1px solid var(--line); }
+.friction-examples a:nth-child(3n + 1) { border-left: 0; }
 .example-heading { display: grid; grid-template-columns: 9px minmax(0, 1fr) auto; gap: 7px; align-items: center; }
 .friction-examples i { width: 9px; height: 9px; border-radius: 50%; background: var(--path-color); }
 .friction-examples span { font-size: 9px; font-weight: 700; }
