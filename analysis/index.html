@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="../styles.css" />
-    <link rel="stylesheet" href="analysis.css?v=15" />
+    <link rel="stylesheet" href="analysis.css?v=16" />
   </head>
   <body>
     <div class="app-shell">
@@ -128,6 +128,22 @@
           <p class="chart-description" id="friction-description">Widths count coded friction episodes, not unique traces. Five handling families keep the aggregate flow readable; detailed ordered pathways still distinguish code verification, code resolution, GUI recovery, and failed attempts in the hover descriptions and trace timelines. Hover a ribbon or node to inspect the underlying paths and trace IDs.</p>
         </section>
 
+        <section class="analysis-card evidence-card" aria-labelledby="evidence-title">
+          <header class="chart-header">
+            <div>
+              <p class="eyebrow">Trace-level evidence</p>
+              <h2 id="evidence-title">Evidence faithfulness and action visibility</h2>
+            </div>
+            <p class="evidence-header-note">More visible work does not necessarily produce more faithful evidence.</p>
+          </header>
+          <div class="evidence-legend" id="evidence-legend" aria-label="Evidence chart legend"></div>
+          <div class="evidence-plot-shell">
+            <svg id="evidence-plot" role="img" aria-labelledby="evidence-title evidence-description"></svg>
+            <div class="plot-tooltip evidence-tooltip" id="evidence-tooltip" role="status" hidden></div>
+          </div>
+          <p class="chart-description" id="evidence-description">Each small point is one of the 120 coded trial-one traces and opens that trace when selected. Horizontal position is the share of working rounds performed on screen. Evidence categories form a descriptive ordered scale—not an answer-correctness score. Large points show model means; translucent regions show 95% confidence regions of those means.</p>
+        </section>
+
         <section class="analysis-card distribution-card" aria-labelledby="chart-title">
           <header class="chart-header">
             <div>
@@ -161,6 +177,6 @@
       </main>
     </div>
     <script src="../config.js"></script>
-    <script src="analysis.js?v=14" type="module"></script>
+    <script src="analysis.js?v=15" type="module"></script>
   </body>
 </html>

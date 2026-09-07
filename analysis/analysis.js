@@ -27,7 +27,7 @@ const HANDLING_COLORS = {
   "Unresolved / abandoned": "#68706d",
 };
 
-const state = { traces: [], friction: null, activeModels: new Set(), taskType: "" };
+const state = { traces: [], friction: null, evidence: null, activeModels: new Set(), taskType: "" };
 const svg = document.querySelector("#scatterplot");
 const tooltip = document.querySelector("#plot-tooltip");
 const legend = document.querySelector("#model-legend");
@@ -37,6 +37,9 @@ const workShareChart = document.querySelector("#work-share-chart");
 const switchDelayChart = document.querySelector("#switch-delay-chart");
 const frictionSvg = document.querySelector("#friction-alluvial");
 const alluvialTooltip = document.querySelector("#alluvial-tooltip");
+const evidenceSvg = document.querySelector("#evidence-plot");
+const evidenceTooltip = document.querySelector("#evidence-tooltip");
+const evidenceLegend = document.querySelector("#evidence-legend");
 
 const mean = (values) => values.length ? values.reduce((sum, value) => sum + value, 0) / values.length : null;
 const numeric = (values) => values.filter((value) => Number.isFinite(value));
@@ -54,6 +57,23 @@ const svgElement = (name, attributes = {}) => {
   const node = document.createElementNS("http://www.w3.org/2000/svg", name);
   Object.entries(attributes).forEach(([key, value]) => node.setAttribute(key, value));
   return node;
+};
+const clamp = (value, lower, upper) => Math.max(lower, Math.min(upper, value));
+const stableHash = (value) => [...value].reduce((hash, character) => ((hash * 31) + character.charCodeAt(0)) >>> 0, 2166136261);
+const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (character) => ({
+  "&": "&amp;",
+  "<": "&lt;",
+  ">": "&gt;",
+  '"': "&quot;",
+  "'": "&#39;",
+})[character]);
+const positionRelativeTooltip = (event, element, tooltipWidth = 284) => {
+  const shell = element.parentElement.getBoundingClientRect();
+  const target = event.currentTarget?.getBoundingClientRect();
+  const clientX = Number.isFinite(event.clientX) ? event.clientX : target.left + target.width / 2;
+  const clientY = Number.isFinite(event.clientY) ? event.clientY : target.top + target.height / 2;
+  element.style.left = `${clamp(clientX - shell.left + 14, 8, shell.width - tooltipWidth)}px`;
+  element.style.top = `${Math.max(8, clientY - shell.top - 35)}px`;
 };
 
 function visibleTraces() {
@@ -489,17 +509,245 @@ function renderFrictionAlluvial() {
   });
 }
 
+function renderEvidenceLegend() {
+  if (!state.evidence || !evidenceLegend) return;
+  const models = orderedModels(state.evidence.traces);
+  evidenceLegend.replaceChildren(...models.map((model) => {
+    const item = document.createElement("span");
+    item.className = "evidence-model-key";
+    item.style.setProperty("--series-color", colorFor(model));
+    const count = state.evidence.traces.filter((trace) => trace.model === model).length;
+    item.innerHTML = `<i></i><b>${model}</b><small>n=${count}</small>`;
+    return item;
+  }));
+  const marks = document.createElement("span");
+  marks.className = "evidence-mark-key";
+  marks.innerHTML = `<span><i class="mark-trace"></i>Trace</span><span><i class="mark-mean"></i>Model mean</span><span><i class="mark-region"></i>95% confidence region</span>`;
+  evidenceLegend.append(marks);
+}
+
+function showEvidenceTooltip(event, trace) {
+  const rounds = trace.evidence_rounds.length ? trace.evidence_rounds.join(", ") : "None";
+  const score = Number.isFinite(trace.task_score) ? trace.task_score.toFixed(1) : "Unscored";
+  evidenceTooltip.innerHTML = `<strong>Trace ${trace.trace_number} · ${escapeHtml(trace.app || "WebVA")} task ${trace.task_id}</strong>
+    <p><b>${escapeHtml(trace.model)}</b> · ${escapeHtml(trace.task_type)}<br><code>${escapeHtml(trace.trace_id)}</code><br>
+    Evidence: <b>${escapeHtml(trace.evidence_category)}</b><br>
+    Evidence round: <b>${escapeHtml(rounds)}</b><br>
+    On-screen share: <b>${trace.gui_percent.toFixed(1)}%</b><br>
+    Off-screen share: <b>${trace.offscreen_percent.toFixed(1)}%</b><br>
+    Task score: <b>${score}</b> · ${escapeHtml(trace.completion_status)}</p>`;
+  evidenceTooltip.hidden = false;
+  positionRelativeTooltip(event, evidenceTooltip);
+}
+
+function confidenceEllipse(records, xScale, yScale) {
+  if (records.length < 2) return null;
+  const points = records.map((trace) => [xScale(trace.gui_percent), yScale(trace.evidence_level)]);
+  const centerX = mean(points.map(([x]) => x));
+  const centerY = mean(points.map(([, y]) => y));
+  const denominator = records.length - 1;
+  const covarianceX = points.reduce((sum, [x]) => sum + (x - centerX) ** 2, 0) / denominator / records.length;
+  const covarianceY = points.reduce((sum, [, y]) => sum + (y - centerY) ** 2, 0) / denominator / records.length;
+  const covarianceXY = points.reduce((sum, [x, y]) => sum + (x - centerX) * (y - centerY), 0) / denominator / records.length;
+  const root = Math.sqrt((covarianceX - covarianceY) ** 2 + 4 * covarianceXY ** 2);
+  const eigenMajor = Math.max(0, (covarianceX + covarianceY + root) / 2);
+  const eigenMinor = Math.max(0, (covarianceX + covarianceY - root) / 2);
+  const confidenceScale = Math.sqrt(5.991);
+  return {
+    centerX,
+    centerY,
+    radiusX: Math.sqrt(eigenMajor) * confidenceScale,
+    radiusY: Math.sqrt(eigenMinor) * confidenceScale,
+    angle: Math.atan2(2 * covarianceXY, covarianceX - covarianceY) * 90 / Math.PI,
+  };
+}
+
+function renderEvidencePlot() {
+  if (!state.evidence || !evidenceSvg) return;
+  const records = state.evidence.traces;
+  const order = state.evidence.evidence_order;
+  const width = Math.max(340, evidenceSvg.clientWidth || 1000);
+  const height = evidenceSvg.clientHeight || 620;
+  const mobile = width < 680;
+  const margin = mobile
+    ? { top: 35, right: 20, bottom: 82, left: 120 }
+    : { top: 38, right: 48, bottom: 86, left: 220 };
+  const plotWidth = width - margin.left - margin.right;
+  const plotHeight = height - margin.top - margin.bottom;
+  const x = (value) => margin.left + (value / 100) * plotWidth;
+  const y = (level) => margin.top + plotHeight - (level / (order.length - 1)) * plotHeight;
+  const mobileLabels = {
+    "No delivered evidence": "No evidence",
+    "Computed + visual evidence": "Computed + visual",
+    "Grounded visual evidence": "Grounded visual",
+    "Visual + prior knowledge": "Visual + prior",
+    "Prior knowledge only": "Prior only",
+  };
+  evidenceSvg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+  evidenceSvg.replaceChildren();
+
+  const defs = svgElement("defs");
+  const clip = svgElement("clipPath", { id: "evidence-plot-clip" });
+  clip.append(svgElement("rect", { x: margin.left, y: margin.top, width: plotWidth, height: plotHeight }));
+  defs.append(clip);
+  evidenceSvg.append(defs);
+
+  const bandStep = plotHeight / (order.length - 1);
+  order.forEach((label, level) => {
+    const center = y(level);
+    const bandTop = Math.max(margin.top, center - bandStep / 2);
+    const bandBottom = Math.min(margin.top + plotHeight, center + bandStep / 2);
+    if (level % 2 === 1) {
+      evidenceSvg.append(svgElement("rect", {
+        class: "evidence-band",
+        x: margin.left,
+        y: bandTop,
+        width: plotWidth,
+        height: bandBottom - bandTop,
+      }));
+    }
+    evidenceSvg.append(svgElement("line", {
+      class: "grid-line",
+      x1: margin.left,
+      x2: margin.left + plotWidth,
+      y1: center,
+      y2: center,
+    }));
+    const tick = svgElement("text", {
+      class: "evidence-tick-label",
+      x: margin.left - 13,
+      y: center + 4,
+      "text-anchor": "end",
+    });
+    tick.textContent = mobile ? (mobileLabels[label] || label) : label;
+    evidenceSvg.append(tick);
+  });
+
+  [0, 25, 50, 75, 100].forEach((tick) => {
+    const tickX = x(tick);
+    evidenceSvg.append(svgElement("line", {
+      class: tick === 50 ? "evidence-midline" : "evidence-vertical-grid",
+      x1: tickX,
+      x2: tickX,
+      y1: margin.top,
+      y2: margin.top + plotHeight,
+    }));
+    const label = svgElement("text", {
+      class: "tick-label",
+      x: tickX,
+      y: margin.top + plotHeight + 25,
+      "text-anchor": "middle",
+    });
+    label.textContent = `${tick}%`;
+    evidenceSvg.append(label);
+  });
+  evidenceSvg.append(svgElement("line", { class: "axis-line", x1: margin.left, x2: margin.left + plotWidth, y1: margin.top + plotHeight, y2: margin.top + plotHeight }));
+  evidenceSvg.append(svgElement("line", { class: "axis-line", x1: margin.left, x2: margin.left, y1: margin.top, y2: margin.top + plotHeight }));
+
+  const direction = svgElement("text", { class: "evidence-direction", x: margin.left, y: margin.top - 15 });
+  direction.textContent = "↑ More faithful evidence";
+  evidenceSvg.append(direction);
+  const xLabel = svgElement("text", { class: "axis-label", x: margin.left + plotWidth / 2, y: height - 21, "text-anchor": "middle" });
+  xLabel.textContent = "Action visibility · share of working rounds on screen";
+  evidenceSvg.append(xLabel);
+  const offscreenHint = svgElement("text", { class: "axis-hint", x: margin.left, y: height - 48, "text-anchor": "start" });
+  offscreenHint.textContent = "All work off screen";
+  evidenceSvg.append(offscreenHint);
+  const onscreenHint = svgElement("text", { class: "axis-hint", x: margin.left + plotWidth, y: height - 48, "text-anchor": "end" });
+  onscreenHint.textContent = "All work on screen";
+  evidenceSvg.append(onscreenHint);
+
+  const plotted = svgElement("g", { "clip-path": "url(#evidence-plot-clip)" });
+  const models = orderedModels(records);
+  models.forEach((model) => {
+    const modelRecords = records.filter((trace) => trace.model === model);
+    const region = confidenceEllipse(modelRecords, x, y);
+    if (!region) return;
+    plotted.append(svgElement("ellipse", {
+      class: "evidence-confidence",
+      cx: region.centerX,
+      cy: region.centerY,
+      rx: region.radiusX,
+      ry: region.radiusY,
+      fill: colorFor(model),
+      stroke: colorFor(model),
+      transform: `rotate(${region.angle} ${region.centerX} ${region.centerY})`,
+    }));
+  });
+
+  records.forEach((trace) => {
+    const hash = stableHash(trace.trace_id);
+    const jitterX = (((hash % 101) / 100) - 0.5) * (mobile ? 5 : 8);
+    const jitterY = ((((Math.floor(hash / 101)) % 101) / 100) - 0.5) * (mobile ? 8 : 12);
+    const point = svgElement("circle", {
+      class: "evidence-trace-point",
+      cx: clamp(x(trace.gui_percent) + jitterX, margin.left + 4, margin.left + plotWidth - 4),
+      cy: clamp(y(trace.evidence_level) + jitterY, margin.top + 4, margin.top + plotHeight - 4),
+      r: mobile ? 3.5 : 4.5,
+      fill: colorFor(trace.model),
+      tabindex: 0,
+      role: "link",
+      "aria-label": `Trace ${trace.trace_number}, ${trace.model}, ${trace.evidence_category}, ${trace.gui_percent}% on screen`,
+    });
+    point.addEventListener("pointerenter", (event) => showEvidenceTooltip(event, trace));
+    point.addEventListener("pointermove", (event) => showEvidenceTooltip(event, trace));
+    point.addEventListener("pointerleave", () => { evidenceTooltip.hidden = true; });
+    point.addEventListener("focus", (event) => showEvidenceTooltip(event, trace));
+    point.addEventListener("blur", () => { evidenceTooltip.hidden = true; });
+    point.addEventListener("click", () => { window.location.href = `../#trace=${encodeURIComponent(trace.trace_id)}`; });
+    point.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        window.location.href = `../#trace=${encodeURIComponent(trace.trace_id)}`;
+      }
+    });
+    plotted.append(point);
+  });
+
+  models.forEach((model) => {
+    const modelRecords = records.filter((trace) => trace.model === model);
+    const averageVisibility = mean(modelRecords.map((trace) => trace.gui_percent));
+    const averageEvidence = mean(modelRecords.map((trace) => trace.evidence_level));
+    const point = svgElement("circle", {
+      class: "evidence-model-mean",
+      cx: x(averageVisibility),
+      cy: y(averageEvidence),
+      r: mobile ? 7 : 9,
+      fill: colorFor(model),
+      tabindex: 0,
+      role: "img",
+      "aria-label": `${model} mean, ${averageVisibility.toFixed(1)}% on screen`,
+    });
+    const showMean = (event) => {
+      const nearest = order[Math.round(averageEvidence)];
+      evidenceTooltip.innerHTML = `<strong>${model} · model mean</strong><p>${modelRecords.length} traces<br>On-screen share: <b>${averageVisibility.toFixed(1)}%</b><br>Mean evidence level: <b>${averageEvidence.toFixed(1)} of ${order.length - 1}</b><br>Nearest category: <b>${nearest}</b></p>`;
+      evidenceTooltip.hidden = false;
+      positionRelativeTooltip(event, evidenceTooltip);
+    };
+    point.addEventListener("pointerenter", showMean);
+    point.addEventListener("pointermove", showMean);
+    point.addEventListener("pointerleave", () => { evidenceTooltip.hidden = true; });
+    point.addEventListener("focus", showMean);
+    point.addEventListener("blur", () => { evidenceTooltip.hidden = true; });
+    plotted.append(point);
+  });
+  evidenceSvg.append(plotted);
+}
+
 async function init() {
   try {
-    const [response, frictionResponse] = await Promise.all([
+    const [response, frictionResponse, evidenceResponse] = await Promise.all([
       fetch("data.json?v=3"),
       fetch("friction_flow.json?v=4"),
+      fetch("evidence_visibility.json?v=1"),
     ]);
     if (!response.ok) throw new Error(`Analysis data request failed (${response.status})`);
     if (!frictionResponse.ok) throw new Error(`Friction data request failed (${frictionResponse.status})`);
-    const [data, frictionData] = await Promise.all([response.json(), frictionResponse.json()]);
+    if (!evidenceResponse.ok) throw new Error(`Evidence data request failed (${evidenceResponse.status})`);
+    const [data, frictionData, evidenceData] = await Promise.all([response.json(), frictionResponse.json(), evidenceResponse.json()]);
     state.traces = data.traces || [];
     state.friction = frictionData;
+    state.evidence = evidenceData;
     state.activeModels = new Set(state.traces.map((trace) => trace.model));
     const taskTypes = [...new Set(state.traces.map((trace) => trace.task_type).filter(Boolean))].sort();
     taskTypes.forEach((type) => taskFilter.add(new Option(type, type)));
@@ -512,12 +760,15 @@ async function init() {
     renderSwitchDelayChart();
     renderFrictionSummary();
     renderFrictionAlluvial();
+    renderEvidenceLegend();
+    renderEvidencePlot();
     renderChart();
     taskFilter.addEventListener("change", () => {
       state.taskType = taskFilter.value;
       renderChart();
     });
     new ResizeObserver(renderChart).observe(svg);
+    new ResizeObserver(renderEvidencePlot).observe(evidenceSvg);
   } catch (error) {
     document.querySelector(".analysis-card").innerHTML = `<div class="analysis-error"><strong>Could not load analysis data.</strong><p>${error.message}</p></div>`;
   }

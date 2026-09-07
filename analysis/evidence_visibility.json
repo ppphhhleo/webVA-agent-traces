@@ -1,0 +1,2323 @@
+{
+  "schema_version": "1.0",
+  "classifier_version": "evidence-visibility-v1",
+  "generated_at": "2026-09-07T19:40:35.432555+00:00",
+  "count": 120,
+  "cohort": {
+    "name": "coded-agent-traces-trial-one",
+    "selection": "The 120 unique traces in the behavioral-coding trace index.",
+    "supplemented_metrics": [
+      "tr_b5008604260f71fe"
+    ],
+    "note": "Metrics for coded replacement traces absent from the first-entry analysis cohort are derived from their public trajectories."
+  },
+  "evidence_order": [
+    "No delivered evidence",
+    "Fabricated evidence",
+    "Misgrounded evidence",
+    "Prior knowledge only",
+    "Computed evidence",
+    "Visual + prior knowledge",
+    "Grounded visual evidence",
+    "Computed + visual evidence"
+  ],
+  "category_counts": {
+    "Computed evidence": 38,
+    "Grounded visual evidence": 41,
+    "Computed + visual evidence": 10,
+    "Misgrounded evidence": 7,
+    "Fabricated evidence": 9,
+    "Prior knowledge only": 3,
+    "Visual + prior knowledge": 7,
+    "No delivered evidence": 5
+  },
+  "method": {
+    "visibility": "GUI rounds divided by GUI plus off-screen working rounds; neutral rounds are excluded.",
+    "evidence": "One mutually exclusive delivery-evidence category is derived from the coded delivery annotations. Traces with both visual and prior-knowledge codes form a combined category.",
+    "vertical_scale": "The evidence categories form an explicit descriptive ordinal scale from no delivered evidence to combined computed and visual evidence. It is not an answer-correctness score.",
+    "aggregation": "Large dots are model means. Translucent ellipses are 95% bivariate confidence regions for the model mean, computed from unjittered trace positions."
+  },
+  "traces": [
+    {
+      "trace_number": 1,
+      "trace_id": "tr_ac4c7be1bca52b35",
+      "task_id": 3,
+      "task_type": "Low-level",
+      "task_prompt": "What is the average acceleration of the cars?",
+      "model": "Claude Opus 4.8",
+      "app": "Data Voyager",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 50.0,
+      "offscreen_percent": 50.0,
+      "evidence_category": "Computed evidence",
+      "evidence_level": 4,
+      "evidence_percent": 57.14,
+      "evidence_rounds": [
+        "<R3>"
+      ]
+    },
+    {
+      "trace_number": 3,
+      "trace_id": "tr_a7be0c9c92ff78ac",
+      "task_id": 1,
+      "task_type": "Low-level",
+      "task_prompt": "Using Leiden clustering, how many cell groups (clusters) does the UMAP show?",
+      "model": "Claude Opus 4.8",
+      "app": "Vitessce",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Grounded visual evidence",
+      "evidence_level": 6,
+      "evidence_percent": 85.71,
+      "evidence_rounds": [
+        "<R2>"
+      ]
+    },
+    {
+      "trace_number": 5,
+      "trace_id": "tr_40ab688d94cb2045",
+      "task_id": 13,
+      "task_type": "Compound",
+      "task_prompt": "Using k-means clustering, which cluster has the most cells, and how many?",
+      "model": "Claude Opus 4.8",
+      "app": "Vitessce",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Grounded visual evidence",
+      "evidence_level": 6,
+      "evidence_percent": 85.71,
+      "evidence_rounds": [
+        "<R4>"
+      ]
+    },
+    {
+      "trace_number": 6,
+      "trace_id": "tr_3c23536d65984f39",
+      "task_id": 21,
+      "task_type": "High-level",
+      "task_prompt": "What differences do you observe between the Leiden and k-means groupings, and which one better separates the cells into distinct areas of the tissue?",
+      "model": "Claude Opus 4.8",
+      "app": "Vitessce",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Grounded visual evidence",
+      "evidence_level": 6,
+      "evidence_percent": 85.71,
+      "evidence_rounds": [
+        "<R56>"
+      ]
+    },
+    {
+      "trace_number": 7,
+      "trace_id": "tr_2dd72d9ed7dbeb1a",
+      "task_id": 28,
+      "task_type": "High-level",
+      "task_prompt": "Build charts and describe the characteristics of eight-cylinder cars relative to other cylinder counts in this dataset.",
+      "model": "Claude Opus 4.8",
+      "app": "Data Voyager",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 60.0,
+      "offscreen_percent": 40.0,
+      "evidence_category": "Computed evidence",
+      "evidence_level": 4,
+      "evidence_percent": 57.14,
+      "evidence_rounds": [
+        "<R8>"
+      ]
+    },
+    {
+      "trace_number": 8,
+      "trace_id": "tr_c953e1cb79849f1f",
+      "task_id": 25,
+      "task_type": "High-level",
+      "task_prompt": "In the movies dataset, are there aspects of a film that go with commercial success? Which ones?",
+      "model": "Claude Opus 4.8",
+      "app": "Data Voyager",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 27.27,
+      "offscreen_percent": 72.73,
+      "evidence_category": "Computed evidence",
+      "evidence_level": 4,
+      "evidence_percent": 57.14,
+      "evidence_rounds": [
+        "<R11>"
+      ]
+    },
+    {
+      "trace_number": 9,
+      "trace_id": "tr_539c364497999a06",
+      "task_id": 16,
+      "task_type": "Compound",
+      "task_prompt": "What is the most fuel-efficient European car with 4 cylinders and horsepower above 100?",
+      "model": "Claude Opus 4.8",
+      "app": "Data Voyager",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 0.0,
+      "offscreen_percent": 100.0,
+      "evidence_category": "Computed evidence",
+      "evidence_level": 4,
+      "evidence_percent": 57.14,
+      "evidence_rounds": [
+        "<R3>"
+      ]
+    },
+    {
+      "trace_number": 10,
+      "trace_id": "tr_e3f1abb78ee36f23",
+      "task_id": 15,
+      "task_type": "Compound",
+      "task_prompt": "Are there exceptions to the relationship between horsepower and weight? Report that car's horsepower and weight.",
+      "model": "Claude Opus 4.8",
+      "app": "Data Voyager",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 0.0,
+      "offscreen_percent": 100.0,
+      "evidence_category": "Computed evidence",
+      "evidence_level": 4,
+      "evidence_percent": 57.14,
+      "evidence_rounds": [
+        "<R3>"
+      ]
+    },
+    {
+      "trace_number": 11,
+      "trace_id": "tr_3c3fb09334433e2a",
+      "task_id": 19,
+      "task_type": "Compound",
+      "task_prompt": "Among right-footed players, who scored the most goals?",
+      "model": "Claude Opus 4.8",
+      "app": "LineUp",
+      "completion_status": "completed",
+      "task_score": 0.5,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Grounded visual evidence",
+      "evidence_level": 6,
+      "evidence_percent": 85.71,
+      "evidence_rounds": [
+        "<R7>"
+      ]
+    },
+    {
+      "trace_number": 12,
+      "trace_id": "tr_3bfc101effde2330",
+      "task_id": 5,
+      "task_type": "Low-level",
+      "task_prompt": "Rank the players by games played — what is the sorted order of the top 5?",
+      "model": "Claude Opus 4.8",
+      "app": "LineUp",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 63.16,
+      "offscreen_percent": 36.84,
+      "evidence_category": "Grounded visual evidence",
+      "evidence_level": 6,
+      "evidence_percent": 85.71,
+      "evidence_rounds": [
+        "<R20>"
+      ]
+    },
+    {
+      "trace_number": 14,
+      "trace_id": "tr_a8085bfd2330aa30",
+      "task_id": 14,
+      "task_type": "Compound",
+      "task_prompt": "Which player scored the most goals in a single year — name the player, the year, and how many goals?",
+      "model": "Claude Opus 4.8",
+      "app": "LineUp",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 0.0,
+      "offscreen_percent": 100.0,
+      "evidence_category": "Computed evidence",
+      "evidence_level": 4,
+      "evidence_percent": 57.14,
+      "evidence_rounds": [
+        "<R27>"
+      ]
+    },
+    {
+      "trace_number": 15,
+      "trace_id": "tr_559ab5f1574f9a72",
+      "task_id": 27,
+      "task_type": "High-level",
+      "task_prompt": "What characterizes the Gentoo penguins compared to the other species?",
+      "model": "Claude Opus 4.8",
+      "app": "LIT",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 78.57,
+      "offscreen_percent": 21.43,
+      "evidence_category": "Grounded visual evidence",
+      "evidence_level": 6,
+      "evidence_percent": 85.71,
+      "evidence_rounds": [
+        "<R15>"
+      ]
+    },
+    {
+      "trace_number": 16,
+      "trace_id": "tr_0bb407ad9e4b61c4",
+      "task_id": 30,
+      "task_type": "High-level",
+      "task_prompt": "For the entire dataset of penguins, which feature matters most to the model's prediction of species overall?",
+      "model": "Claude Opus 4.8",
+      "app": "LIT",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Computed + visual evidence",
+      "evidence_level": 7,
+      "evidence_percent": 100.0,
+      "evidence_rounds": [
+        "<R12>"
+      ]
+    },
+    {
+      "trace_number": 17,
+      "trace_id": "tr_b5f382ee733ecc82",
+      "task_id": 20,
+      "task_type": "Compound",
+      "task_prompt": "For the penguin with the largest body mass, which feature contributes most to its predicted class according to SHAP?",
+      "model": "Claude Opus 4.8",
+      "app": "LIT",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Computed + visual evidence",
+      "evidence_level": 7,
+      "evidence_percent": 100.0,
+      "evidence_rounds": [
+        "<R13>"
+      ]
+    },
+    {
+      "trace_number": 18,
+      "trace_id": "tr_16accedd47386226",
+      "task_id": 2,
+      "task_type": "Low-level",
+      "task_prompt": "Which datapoints have a culmen depth of 15.9 mm and a flipper length between 220 and 250 mm? Report how many there are and their indexes.",
+      "model": "Claude Opus 4.8",
+      "app": "LIT",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 61.11,
+      "offscreen_percent": 38.89,
+      "evidence_category": "Computed + visual evidence",
+      "evidence_level": 7,
+      "evidence_percent": 100.0,
+      "evidence_rounds": [
+        "<R19>"
+      ]
+    },
+    {
+      "trace_number": 19,
+      "trace_id": "tr_3be0d211d6381dbe",
+      "task_id": 23,
+      "task_type": "High-level",
+      "task_prompt": "How did the relationship between income and life expectancy change between 1950 and 2025?",
+      "model": "Claude Opus 4.8",
+      "app": "Gapminder",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Grounded visual evidence",
+      "evidence_level": 6,
+      "evidence_percent": 85.71,
+      "evidence_rounds": [
+        "<R18>"
+      ]
+    },
+    {
+      "trace_number": 21,
+      "trace_id": "tr_b0a508fafc316fe3",
+      "task_id": 24,
+      "task_type": "High-level",
+      "task_prompt": "How did child mortality change across the world over time?",
+      "model": "Claude Opus 4.8",
+      "app": "Gapminder",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Grounded visual evidence",
+      "evidence_level": 6,
+      "evidence_percent": 85.71,
+      "evidence_rounds": [
+        "<R13>"
+      ]
+    },
+    {
+      "trace_number": 22,
+      "trace_id": "tr_e475da9cd36670b4",
+      "task_id": 6,
+      "task_type": "Low-level",
+      "task_prompt": "What is the range of life expectancy across countries in 2025?",
+      "model": "Claude Opus 4.8",
+      "app": "Gapminder",
+      "completion_status": "completed",
+      "task_score": 0.5,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Misgrounded evidence",
+      "evidence_level": 2,
+      "evidence_percent": 28.57,
+      "evidence_rounds": [
+        "<R12>"
+      ]
+    },
+    {
+      "trace_number": 23,
+      "trace_id": "tr_6803ce072cf0a6e8",
+      "task_id": 8,
+      "task_type": "Low-level",
+      "task_prompt": "In 2025, which country stands out as an exception to the pattern that higher average daily income goes with higher life expectancy?",
+      "model": "Claude Opus 4.8",
+      "app": "Gapminder",
+      "completion_status": "completed",
+      "task_score": 0.5,
+      "gui_percent": 97.22,
+      "offscreen_percent": 2.78,
+      "evidence_category": "Fabricated evidence",
+      "evidence_level": 1,
+      "evidence_percent": 14.29,
+      "evidence_rounds": [
+        "<R70>"
+      ]
+    },
+    {
+      "trace_number": 24,
+      "trace_id": "tr_3447f5c6d501a5a4",
+      "task_id": 12,
+      "task_type": "Compound",
+      "task_prompt": "Using the \"30 Days, Significant Worldwide\" feed, where is the largest-magnitude earthquake located?",
+      "model": "Claude Opus 4.8",
+      "app": "USGS",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 80.0,
+      "offscreen_percent": 20.0,
+      "evidence_category": "Computed evidence",
+      "evidence_level": 4,
+      "evidence_percent": 57.14,
+      "evidence_rounds": [
+        "<R6>"
+      ]
+    },
+    {
+      "trace_number": 25,
+      "trace_id": "tr_c9b584cfff41280d",
+      "task_id": 11,
+      "task_type": "Compound",
+      "task_prompt": "Locate the newest earthquake that occurred in Asia and report its country.",
+      "model": "Claude Opus 4.8",
+      "app": "USGS",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Grounded visual evidence",
+      "evidence_level": 6,
+      "evidence_percent": 85.71,
+      "evidence_rounds": [
+        "<R2>"
+      ]
+    },
+    {
+      "trace_number": 26,
+      "trace_id": "tr_814ba872207e2c28",
+      "task_id": 17,
+      "task_type": "Compound",
+      "task_prompt": "In the past 30 days, how many earthquakes of magnitude 4.5 or greater occurred worldwide?",
+      "model": "Claude Opus 4.8",
+      "app": "USGS",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 0.0,
+      "offscreen_percent": 100.0,
+      "evidence_category": "Computed evidence",
+      "evidence_level": 4,
+      "evidence_percent": 57.14,
+      "evidence_rounds": [
+        "<R2>"
+      ]
+    },
+    {
+      "trace_number": 27,
+      "trace_id": "tr_032e2887ac4891f6",
+      "task_id": 4,
+      "task_type": "Low-level",
+      "task_prompt": "What is the most expensive wine?",
+      "model": "Claude Opus 4.8",
+      "app": "Embedding Atlas",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 41.38,
+      "offscreen_percent": 58.62,
+      "evidence_category": "Computed evidence",
+      "evidence_level": 4,
+      "evidence_percent": 57.14,
+      "evidence_rounds": [
+        "<R30>"
+      ]
+    },
+    {
+      "trace_number": 29,
+      "trace_id": "tr_885beba33a3c2e3f",
+      "task_id": 26,
+      "task_type": "High-level",
+      "task_prompt": "What characterizes the wines rated above 95 points?",
+      "model": "Claude Opus 4.8",
+      "app": "Embedding Atlas",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 19.72,
+      "offscreen_percent": 80.28,
+      "evidence_category": "Prior knowledge only",
+      "evidence_level": 3,
+      "evidence_percent": 42.86,
+      "evidence_rounds": [
+        "<R72>"
+      ]
+    },
+    {
+      "trace_number": 30,
+      "trace_id": "tr_fd65c5f7af3e71d8",
+      "task_id": 3,
+      "task_type": "Low-level",
+      "task_prompt": "Are there exceptions to the relationship between horsepower and weight? Report that car's horsepower and weight.",
+      "model": "Claude Sonnet 5",
+      "app": "Data Voyager",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 42.86,
+      "offscreen_percent": 57.14,
+      "evidence_category": "Computed + visual evidence",
+      "evidence_level": 7,
+      "evidence_percent": 100.0,
+      "evidence_rounds": [
+        "<R8>"
+      ]
+    },
+    {
+      "trace_number": 32,
+      "trace_id": "tr_f7f8851f19d11756",
+      "task_id": 17,
+      "task_type": "Compound",
+      "task_prompt": "In the past 30 days, how many significant earthquakes worldwide?",
+      "model": "GPT-5.5",
+      "app": "USGS",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 0.0,
+      "offscreen_percent": 100.0,
+      "evidence_category": "Computed evidence",
+      "evidence_level": 4,
+      "evidence_percent": 57.14,
+      "evidence_rounds": [
+        "<R2>"
+      ]
+    },
+    {
+      "trace_number": 33,
+      "trace_id": "tr_8119c52b23a94544",
+      "task_id": 12,
+      "task_type": "Compound",
+      "task_prompt": "Using the \"30 Days, Significant Worldwide\" feed, where is the largest-magnitude earthquake located?",
+      "model": "GPT-5.5",
+      "app": "USGS",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 0.0,
+      "offscreen_percent": 100.0,
+      "evidence_category": "Computed evidence",
+      "evidence_level": 4,
+      "evidence_percent": 57.14,
+      "evidence_rounds": [
+        "<R2>"
+      ]
+    },
+    {
+      "trace_number": 34,
+      "trace_id": "tr_c8297f0c95771362",
+      "task_id": 11,
+      "task_type": "Compound",
+      "task_prompt": "Locate the newest earthquake that occurred in Asia and report its country.",
+      "model": "GPT-5.5",
+      "app": "USGS",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Grounded visual evidence",
+      "evidence_level": 6,
+      "evidence_percent": 85.71,
+      "evidence_rounds": [
+        "<R2>"
+      ]
+    },
+    {
+      "trace_number": 35,
+      "trace_id": "tr_4cba4ccbef88813c",
+      "task_id": 21,
+      "task_type": "High-level",
+      "task_prompt": "What differences do you observe between the Leiden and k-means groupings, and which one better separates the cells into distinct areas of the tissue?",
+      "model": "GPT-5.5",
+      "app": "Vitessce",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Grounded visual evidence",
+      "evidence_level": 6,
+      "evidence_percent": 85.71,
+      "evidence_rounds": [
+        "<R21>"
+      ]
+    },
+    {
+      "trace_number": 36,
+      "trace_id": "tr_ffe6a5f45156ee81",
+      "task_id": 13,
+      "task_type": "Compound",
+      "task_prompt": "Using k-means clustering, which cluster has the most cells, and how many?",
+      "model": "GPT-5.5",
+      "app": "Vitessce",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 10.34,
+      "offscreen_percent": 89.66,
+      "evidence_category": "Computed evidence",
+      "evidence_level": 4,
+      "evidence_percent": 57.14,
+      "evidence_rounds": [
+        "<R30>"
+      ]
+    },
+    {
+      "trace_number": 37,
+      "trace_id": "tr_3026243f442f2aa6",
+      "task_id": 1,
+      "task_type": "Low-level",
+      "task_prompt": "Using Leiden clustering, how many cell groups (clusters) does the UMAP show?",
+      "model": "GPT-5.5",
+      "app": "Vitessce",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Grounded visual evidence",
+      "evidence_level": 6,
+      "evidence_percent": 85.71,
+      "evidence_rounds": [
+        "<R4>"
+      ]
+    },
+    {
+      "trace_number": 38,
+      "trace_id": "tr_a3777fe6da07a803",
+      "task_id": 28,
+      "task_type": "High-level",
+      "task_prompt": "Use the interface to Build charts and describe the characteristics of eight-cylinder cars relative to other cylinder counts in this dataset.",
+      "model": "GPT-5.5",
+      "app": "Data Voyager",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 60.0,
+      "offscreen_percent": 40.0,
+      "evidence_category": "Computed + visual evidence",
+      "evidence_level": 7,
+      "evidence_percent": 100.0,
+      "evidence_rounds": [
+        "<R6>"
+      ]
+    },
+    {
+      "trace_number": 40,
+      "trace_id": "tr_50a5166a8e508cdd",
+      "task_id": 15,
+      "task_type": "Compound",
+      "task_prompt": "Are there exceptions to the relationship between horsepower and weight? Report that car's horsepower and weight.",
+      "model": "GPT-5.5",
+      "app": "Data Voyager",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 0.0,
+      "offscreen_percent": 100.0,
+      "evidence_category": "Computed evidence",
+      "evidence_level": 4,
+      "evidence_percent": 57.14,
+      "evidence_rounds": [
+        "<R3>"
+      ]
+    },
+    {
+      "trace_number": 41,
+      "trace_id": "tr_60830a9a3117a211",
+      "task_id": 3,
+      "task_type": "Low-level",
+      "task_prompt": "What is the average acceleration of the cars?",
+      "model": "GPT-5.5",
+      "app": "Data Voyager",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 0.0,
+      "offscreen_percent": 100.0,
+      "evidence_category": "Computed evidence",
+      "evidence_level": 4,
+      "evidence_percent": 57.14,
+      "evidence_rounds": [
+        "<R2>"
+      ]
+    },
+    {
+      "trace_number": 42,
+      "trace_id": "tr_9fbe71ed6f648c0d",
+      "task_id": 25,
+      "task_type": "High-level",
+      "task_prompt": "In the movies dataset, are there aspects of a film that go with commercial success? Which ones?",
+      "model": "GPT-5.5",
+      "app": "Data Voyager",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 0.0,
+      "offscreen_percent": 100.0,
+      "evidence_category": "Computed evidence",
+      "evidence_level": 4,
+      "evidence_percent": 57.14,
+      "evidence_rounds": [
+        "<R7>"
+      ]
+    },
+    {
+      "trace_number": 43,
+      "trace_id": "tr_08d0b1a13111af92",
+      "task_id": 16,
+      "task_type": "Compound",
+      "task_prompt": "What is the most fuel-efficient European car with 4 cylinders and horsepower above 100?",
+      "model": "GPT-5.5",
+      "app": "Data Voyager",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 0.0,
+      "offscreen_percent": 100.0,
+      "evidence_category": "Computed evidence",
+      "evidence_level": 4,
+      "evidence_percent": 57.14,
+      "evidence_rounds": [
+        "<R2>"
+      ]
+    },
+    {
+      "trace_number": 46,
+      "trace_id": "tr_aee13c5d7b73c83c",
+      "task_id": 30,
+      "task_type": "High-level",
+      "task_prompt": "For the entire dataset of penguins, which feature matters most to the model's prediction of species overall?",
+      "model": "GPT-5.5",
+      "app": "LIT",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 46.97,
+      "offscreen_percent": 53.03,
+      "evidence_category": "Computed + visual evidence",
+      "evidence_level": 7,
+      "evidence_percent": 100.0,
+      "evidence_rounds": [
+        "<R67>"
+      ]
+    },
+    {
+      "trace_number": 47,
+      "trace_id": "tr_0099f8b69133a168",
+      "task_id": 2,
+      "task_type": "Low-level",
+      "task_prompt": "Which datapoints have a culmen depth of 15.9 mm and a flipper length between 220 and 250 mm? Report how many there are and their indexes.",
+      "model": "GPT-5.5",
+      "app": "LIT",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 0.0,
+      "offscreen_percent": 100.0,
+      "evidence_category": "Computed evidence",
+      "evidence_level": 4,
+      "evidence_percent": 57.14,
+      "evidence_rounds": [
+        "<R8>"
+      ]
+    },
+    {
+      "trace_number": 48,
+      "trace_id": "tr_fad8e689ae102d64",
+      "task_id": 20,
+      "task_type": "Compound",
+      "task_prompt": "For the penguin with the largest body mass, which feature contributes most to its predicted class according to SHAP?",
+      "model": "GPT-5.5",
+      "app": "LIT",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 27.42,
+      "offscreen_percent": 72.58,
+      "evidence_category": "Computed + visual evidence",
+      "evidence_level": 7,
+      "evidence_percent": 100.0,
+      "evidence_rounds": [
+        "<R63>"
+      ]
+    },
+    {
+      "trace_number": 49,
+      "trace_id": "tr_b8b7bf7c193501ec",
+      "task_id": 27,
+      "task_type": "High-level",
+      "task_prompt": "What characterizes the Gentoo penguins compared to the other species?",
+      "model": "GPT-5.5",
+      "app": "LIT",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 0.0,
+      "offscreen_percent": 100.0,
+      "evidence_category": "Computed evidence",
+      "evidence_level": 4,
+      "evidence_percent": 57.14,
+      "evidence_rounds": [
+        "<R3>"
+      ]
+    },
+    {
+      "trace_number": 50,
+      "trace_id": "tr_424243bfa9d320a5",
+      "task_id": 6,
+      "task_type": "Low-level",
+      "task_prompt": "What is the range of life expectancy across countries in 2025?",
+      "model": "GPT-5.5",
+      "app": "Gapminder",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 0.0,
+      "offscreen_percent": 100.0,
+      "evidence_category": "Computed evidence",
+      "evidence_level": 4,
+      "evidence_percent": 57.14,
+      "evidence_rounds": [
+        "<R31>"
+      ]
+    },
+    {
+      "trace_number": 52,
+      "trace_id": "tr_bd7cd7736f823563",
+      "task_id": 24,
+      "task_type": "High-level",
+      "task_prompt": "How did child mortality change across the world over time?",
+      "model": "GPT-5.5",
+      "app": "Gapminder",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Visual + prior knowledge",
+      "evidence_level": 5,
+      "evidence_percent": 71.43,
+      "evidence_rounds": [
+        "<R7>"
+      ]
+    },
+    {
+      "trace_number": 53,
+      "trace_id": "tr_f3a03cfe80f59a1a",
+      "task_id": 23,
+      "task_type": "High-level",
+      "task_prompt": "How did the relationship between income and life expectancy change between 1950 and 2025?",
+      "model": "GPT-5.5",
+      "app": "Gapminder",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Grounded visual evidence",
+      "evidence_level": 6,
+      "evidence_percent": 85.71,
+      "evidence_rounds": [
+        "<R5>"
+      ]
+    },
+    {
+      "trace_number": 54,
+      "trace_id": "tr_ac736c74cc47e0c9",
+      "task_id": 8,
+      "task_type": "Low-level",
+      "task_prompt": "In 2025, which country stands out as an exception to the pattern that higher average daily income goes with higher life expectancy?",
+      "model": "GPT-5.5",
+      "app": "Gapminder",
+      "completion_status": "completed",
+      "task_score": 0.5,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Grounded visual evidence",
+      "evidence_level": 6,
+      "evidence_percent": 85.71,
+      "evidence_rounds": [
+        "<R2>"
+      ]
+    },
+    {
+      "trace_number": 55,
+      "trace_id": "tr_d11cf1beb88aa522",
+      "task_id": 7,
+      "task_type": "Low-level",
+      "task_prompt": "Grouping ages into ten-year ranges starting from 0 (0–10, 10–20, 20–30, …), which age range contains the most people aboard?",
+      "model": "GPT-5.5",
+      "app": "SandDance",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 0.0,
+      "offscreen_percent": 100.0,
+      "evidence_category": "Computed evidence",
+      "evidence_level": 4,
+      "evidence_percent": 57.14,
+      "evidence_rounds": [
+        "<R5>"
+      ]
+    },
+    {
+      "trace_number": 56,
+      "trace_id": "tr_50031503ee71c99e",
+      "task_id": 18,
+      "task_type": "Compound",
+      "task_prompt": "Among passengers aged 50–60, which class had the lowest survival rate, and what was it?",
+      "model": "GPT-5.5",
+      "app": "SandDance",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 0.0,
+      "offscreen_percent": 100.0,
+      "evidence_category": "Computed evidence",
+      "evidence_level": 4,
+      "evidence_percent": 57.14,
+      "evidence_rounds": [
+        "<R5>"
+      ]
+    },
+    {
+      "trace_number": 57,
+      "trace_id": "tr_126e517fd31a4dde",
+      "task_id": 29,
+      "task_type": "High-level",
+      "task_prompt": "How did the crew aboard differ from the passengers?",
+      "model": "GPT-5.5",
+      "app": "SandDance",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 55.56,
+      "offscreen_percent": 44.44,
+      "evidence_category": "Computed evidence",
+      "evidence_level": 4,
+      "evidence_percent": 57.14,
+      "evidence_rounds": [
+        "<R10>"
+      ]
+    },
+    {
+      "trace_number": 58,
+      "trace_id": "tr_41a81129f60ea35a",
+      "task_id": 19,
+      "task_type": "Compound",
+      "task_prompt": "Among right-footed players, who scored the most goals?",
+      "model": "GPT-5.5",
+      "app": "LineUp",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 0.0,
+      "offscreen_percent": 100.0,
+      "evidence_category": "Computed evidence",
+      "evidence_level": 4,
+      "evidence_percent": 57.14,
+      "evidence_rounds": [
+        "<R19>"
+      ]
+    },
+    {
+      "trace_number": 59,
+      "trace_id": "tr_759cc42b6b434d91",
+      "task_id": 14,
+      "task_type": "Compound",
+      "task_prompt": "Which player scored the most goals in a single year — name the player, the year, and how many goals?",
+      "model": "GPT-5.5",
+      "app": "LineUp",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 0.0,
+      "offscreen_percent": 100.0,
+      "evidence_category": "Computed evidence",
+      "evidence_level": 4,
+      "evidence_percent": 57.14,
+      "evidence_rounds": [
+        "<R38>"
+      ]
+    },
+    {
+      "trace_number": 60,
+      "trace_id": "tr_8c9eccf85eb1f0eb",
+      "task_id": 5,
+      "task_type": "Low-level",
+      "task_prompt": "Rank the players by games played — what is the sorted order of the top 5?",
+      "model": "GPT-5.5",
+      "app": "LineUp",
+      "completion_status": "completed",
+      "task_score": 0,
+      "gui_percent": 28.57,
+      "offscreen_percent": 71.43,
+      "evidence_category": "Misgrounded evidence",
+      "evidence_level": 2,
+      "evidence_percent": 28.57,
+      "evidence_rounds": [
+        "<R15>"
+      ]
+    },
+    {
+      "trace_number": 61,
+      "trace_id": "tr_ac3f0215dbe38eb7",
+      "task_id": 28,
+      "task_type": "High-level",
+      "task_prompt": "Use the interface to Build charts and describe the characteristics of eight-cylinder cars relative to other cylinder counts in this dataset.",
+      "model": "Claude Sonnet 5",
+      "app": "Data Voyager",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 81.25,
+      "offscreen_percent": 18.75,
+      "evidence_category": "Computed + visual evidence",
+      "evidence_level": 7,
+      "evidence_percent": 100.0,
+      "evidence_rounds": [
+        "<R17>"
+      ]
+    },
+    {
+      "trace_number": 62,
+      "trace_id": "tr_7904595feed41b41",
+      "task_id": 25,
+      "task_type": "High-level",
+      "task_prompt": "In the movies dataset, are there aspects of a film that go with commercial success? Which ones?",
+      "model": "Claude Sonnet 5",
+      "app": "Data Voyager",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 91.67,
+      "offscreen_percent": 8.33,
+      "evidence_category": "Grounded visual evidence",
+      "evidence_level": 6,
+      "evidence_percent": 85.71,
+      "evidence_rounds": [
+        "<R37>"
+      ]
+    },
+    {
+      "trace_number": 63,
+      "trace_id": "tr_ce7b3538097404fb",
+      "task_id": 16,
+      "task_type": "Compound",
+      "task_prompt": "What is the most fuel-efficient European car with 4 cylinders and horsepower above 100?",
+      "model": "Claude Sonnet 5",
+      "app": "Data Voyager",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 0.0,
+      "offscreen_percent": 100.0,
+      "evidence_category": "Computed evidence",
+      "evidence_level": 4,
+      "evidence_percent": 57.14,
+      "evidence_rounds": [
+        "<R6>"
+      ]
+    },
+    {
+      "trace_number": 65,
+      "trace_id": "tr_d0e704f93fc0f6c7",
+      "task_id": 19,
+      "task_type": "Compound",
+      "task_prompt": "Among right-footed players, who scored the most goals?",
+      "model": "Claude Sonnet 5",
+      "app": "LineUp",
+      "completion_status": "completed",
+      "task_score": 0.5,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Grounded visual evidence",
+      "evidence_level": 6,
+      "evidence_percent": 85.71,
+      "evidence_rounds": [
+        "<R40>"
+      ]
+    },
+    {
+      "trace_number": 66,
+      "trace_id": "tr_4c29dca0e244dc14",
+      "task_id": 14,
+      "task_type": "Compound",
+      "task_prompt": "Which player scored the most goals in a single year — name the player, the year, and how many goals?",
+      "model": "Claude Sonnet 5",
+      "app": "LineUp",
+      "completion_status": "unfinished",
+      "task_score": 0,
+      "gui_percent": 47.0,
+      "offscreen_percent": 53.0,
+      "evidence_category": "No delivered evidence",
+      "evidence_level": 0,
+      "evidence_percent": 0.0,
+      "evidence_rounds": [
+        "<R100>"
+      ]
+    },
+    {
+      "trace_number": 67,
+      "trace_id": "tr_6b35986a0b52b1fe",
+      "task_id": 5,
+      "task_type": "Low-level",
+      "task_prompt": "Rank the players by games played — what is the sorted order of the top 5?",
+      "model": "Claude Sonnet 5",
+      "app": "LineUp",
+      "completion_status": "unfinished",
+      "task_score": 0,
+      "gui_percent": 92.0,
+      "offscreen_percent": 8.0,
+      "evidence_category": "No delivered evidence",
+      "evidence_level": 0,
+      "evidence_percent": 0.0,
+      "evidence_rounds": [
+        "<R100>"
+      ]
+    },
+    {
+      "trace_number": 68,
+      "trace_id": "tr_475d111272ead831",
+      "task_id": 21,
+      "task_type": "High-level",
+      "task_prompt": "What differences do you observe between the Leiden and k-means groupings, and which one better separates the cells into distinct areas of the tissue?",
+      "model": "Claude Sonnet 5",
+      "app": "Vitessce",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Fabricated evidence",
+      "evidence_level": 1,
+      "evidence_percent": 14.29,
+      "evidence_rounds": [
+        "<R93>"
+      ]
+    },
+    {
+      "trace_number": 69,
+      "trace_id": "tr_06cf4feabb320796",
+      "task_id": 13,
+      "task_type": "Compound",
+      "task_prompt": "Using k-means clustering, which cluster has the most cells, and how many?",
+      "model": "Claude Sonnet 5",
+      "app": "Vitessce",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Grounded visual evidence",
+      "evidence_level": 6,
+      "evidence_percent": 85.71,
+      "evidence_rounds": [
+        "<R8>"
+      ]
+    },
+    {
+      "trace_number": 70,
+      "trace_id": "tr_e8a9324bf7bab655",
+      "task_id": 1,
+      "task_type": "Low-level",
+      "task_prompt": "Using Leiden clustering, how many cell groups (clusters) does the UMAP show?",
+      "model": "Claude Sonnet 5",
+      "app": "Vitessce",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Grounded visual evidence",
+      "evidence_level": 6,
+      "evidence_percent": 85.71,
+      "evidence_rounds": [
+        "<R8>"
+      ]
+    },
+    {
+      "trace_number": 71,
+      "trace_id": "tr_4b80c170362e99e7",
+      "task_id": 29,
+      "task_type": "High-level",
+      "task_prompt": "How did the crew aboard differ from the passengers?",
+      "model": "Claude Sonnet 5",
+      "app": "SandDance",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 78.05,
+      "offscreen_percent": 21.95,
+      "evidence_category": "Computed evidence",
+      "evidence_level": 4,
+      "evidence_percent": 57.14,
+      "evidence_rounds": [
+        "<R42>"
+      ]
+    },
+    {
+      "trace_number": 72,
+      "trace_id": "tr_5f08e2b6f350e453",
+      "task_id": 22,
+      "task_type": "High-level",
+      "task_prompt": "Which factors best distinguish the people who survived from those who did not?",
+      "model": "Claude Sonnet 5",
+      "app": "SandDance",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 90.91,
+      "offscreen_percent": 9.09,
+      "evidence_category": "Fabricated evidence",
+      "evidence_level": 1,
+      "evidence_percent": 14.29,
+      "evidence_rounds": [
+        "<R23>"
+      ]
+    },
+    {
+      "trace_number": 73,
+      "trace_id": "tr_1a0fbc7be65c7c50",
+      "task_id": 18,
+      "task_type": "Compound",
+      "task_prompt": "Among passengers aged 50–60, which class had the lowest survival rate, and what was it?",
+      "model": "Claude Sonnet 5",
+      "app": "SandDance",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 0.0,
+      "offscreen_percent": 100.0,
+      "evidence_category": "Computed evidence",
+      "evidence_level": 4,
+      "evidence_percent": 57.14,
+      "evidence_rounds": [
+        "<R7>"
+      ]
+    },
+    {
+      "trace_number": 74,
+      "trace_id": "tr_efdd0b9ada70e5d3",
+      "task_id": 7,
+      "task_type": "Low-level",
+      "task_prompt": "Grouping ages into ten-year ranges starting from 0 (0–10, 10–20, 20–30, …), which age range contains the most people aboard?",
+      "model": "Claude Sonnet 5",
+      "app": "SandDance",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 0.0,
+      "offscreen_percent": 100.0,
+      "evidence_category": "Computed evidence",
+      "evidence_level": 4,
+      "evidence_percent": 57.14,
+      "evidence_rounds": [
+        "<R5>"
+      ]
+    },
+    {
+      "trace_number": 75,
+      "trace_id": "tr_7327b957f066d73f",
+      "task_id": 2,
+      "task_type": "Low-level",
+      "task_prompt": "Which datapoints have a culmen depth of 15.9 mm and a flipper length between 220 and 250 mm? Report how many there are and their indexes.",
+      "model": "Claude Sonnet 5",
+      "app": "LIT",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 66.67,
+      "offscreen_percent": 33.33,
+      "evidence_category": "Grounded visual evidence",
+      "evidence_level": 6,
+      "evidence_percent": 85.71,
+      "evidence_rounds": [
+        "<R7>"
+      ]
+    },
+    {
+      "trace_number": 76,
+      "trace_id": "tr_866ca55fe303e873",
+      "task_id": 27,
+      "task_type": "High-level",
+      "task_prompt": "What characterizes the Gentoo penguins compared to the other species?",
+      "model": "Claude Sonnet 5",
+      "app": "LIT",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 33.33,
+      "offscreen_percent": 66.67,
+      "evidence_category": "Computed evidence",
+      "evidence_level": 4,
+      "evidence_percent": 57.14,
+      "evidence_rounds": [
+        "<R4>"
+      ]
+    },
+    {
+      "trace_number": 77,
+      "trace_id": "tr_e24f8c416e7bc9fd",
+      "task_id": 30,
+      "task_type": "High-level",
+      "task_prompt": "For the entire dataset of penguins, which feature matters most to the model's prediction of species overall?",
+      "model": "Claude Sonnet 5",
+      "app": "LIT",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Grounded visual evidence",
+      "evidence_level": 6,
+      "evidence_percent": 85.71,
+      "evidence_rounds": [
+        "<R18>"
+      ]
+    },
+    {
+      "trace_number": 78,
+      "trace_id": "tr_a5ec55d9d9dd841a",
+      "task_id": 20,
+      "task_type": "Compound",
+      "task_prompt": "For the penguin with the largest body mass, which feature contributes most to its predicted class according to SHAP?",
+      "model": "Claude Sonnet 5",
+      "app": "LIT",
+      "completion_status": "unfinished",
+      "task_score": 0,
+      "gui_percent": 99.0,
+      "offscreen_percent": 1.0,
+      "evidence_category": "No delivered evidence",
+      "evidence_level": 0,
+      "evidence_percent": 0.0,
+      "evidence_rounds": [
+        "<R100>"
+      ]
+    },
+    {
+      "trace_number": 79,
+      "trace_id": "tr_fca84f2783df65c2",
+      "task_id": 17,
+      "task_type": "Compound",
+      "task_prompt": "In the past 30 days, how many earthquakes of magnitude 4.5 or greater occurred worldwide?",
+      "model": "Claude Sonnet 5",
+      "app": "USGS",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 0.0,
+      "offscreen_percent": 100.0,
+      "evidence_category": "Computed evidence",
+      "evidence_level": 4,
+      "evidence_percent": 57.14,
+      "evidence_rounds": [
+        "<R2>"
+      ]
+    },
+    {
+      "trace_number": 80,
+      "trace_id": "tr_bfdf5647c845e7d2",
+      "task_id": 12,
+      "task_type": "Compound",
+      "task_prompt": "Using the \"30 Days, Significant Worldwide\" feed, where is the largest-magnitude earthquake located?",
+      "model": "Claude Sonnet 5",
+      "app": "USGS",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 85.71,
+      "offscreen_percent": 14.29,
+      "evidence_category": "Computed evidence",
+      "evidence_level": 4,
+      "evidence_percent": 57.14,
+      "evidence_rounds": [
+        "<R8>"
+      ]
+    },
+    {
+      "trace_number": 81,
+      "trace_id": "tr_6e79ef53a1e4a9d1",
+      "task_id": 11,
+      "task_type": "Compound",
+      "task_prompt": "Locate the newest earthquake that occurred in Asia and report its country.",
+      "model": "Claude Sonnet 5",
+      "app": "USGS",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Grounded visual evidence",
+      "evidence_level": 6,
+      "evidence_percent": 85.71,
+      "evidence_rounds": [
+        "<R7>"
+      ]
+    },
+    {
+      "trace_number": 82,
+      "trace_id": "tr_e046ad274f5a69fd",
+      "task_id": 26,
+      "task_type": "High-level",
+      "task_prompt": "What characterizes the wines rated above 95 points?",
+      "model": "Claude Sonnet 5",
+      "app": "Embedding Atlas",
+      "completion_status": "unfinished",
+      "task_score": 0,
+      "gui_percent": 65.0,
+      "offscreen_percent": 35.0,
+      "evidence_category": "No delivered evidence",
+      "evidence_level": 0,
+      "evidence_percent": 0.0,
+      "evidence_rounds": [
+        "<R100>"
+      ]
+    },
+    {
+      "trace_number": 83,
+      "trace_id": "tr_5a758c279de39a39",
+      "task_id": 10,
+      "task_type": "Low-level",
+      "task_prompt": "Is there a correlation between price and points (scores)?",
+      "model": "Claude Sonnet 5",
+      "app": "Embedding Atlas",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 33.33,
+      "offscreen_percent": 66.67,
+      "evidence_category": "Grounded visual evidence",
+      "evidence_level": 6,
+      "evidence_percent": 85.71,
+      "evidence_rounds": [
+        "<R7>"
+      ]
+    },
+    {
+      "trace_number": 84,
+      "trace_id": "tr_44bd06e793cbbc8f",
+      "task_id": 9,
+      "task_type": "Low-level",
+      "task_prompt": "Coloring the points by country, which country's reviews form a distinct cluster separate from the main mass?",
+      "model": "Claude Sonnet 5",
+      "app": "Embedding Atlas",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Grounded visual evidence",
+      "evidence_level": 6,
+      "evidence_percent": 85.71,
+      "evidence_rounds": [
+        "<R19>"
+      ]
+    },
+    {
+      "trace_number": 85,
+      "trace_id": "tr_d48b4d6689e0d88f",
+      "task_id": 4,
+      "task_type": "Low-level",
+      "task_prompt": "What is the most expensive wine?",
+      "model": "Claude Sonnet 5",
+      "app": "Embedding Atlas",
+      "completion_status": "unfinished",
+      "task_score": 0,
+      "gui_percent": 69.0,
+      "offscreen_percent": 31.0,
+      "evidence_category": "No delivered evidence",
+      "evidence_level": 0,
+      "evidence_percent": 0.0,
+      "evidence_rounds": [
+        "<R100>"
+      ]
+    },
+    {
+      "trace_number": 86,
+      "trace_id": "tr_0b6828de68d7c046",
+      "task_id": 6,
+      "task_type": "Low-level",
+      "task_prompt": "What is the range of life expectancy across countries in 2025?",
+      "model": "Claude Sonnet 5",
+      "app": "Gapminder",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 94.94,
+      "offscreen_percent": 5.06,
+      "evidence_category": "Grounded visual evidence",
+      "evidence_level": 6,
+      "evidence_percent": 85.71,
+      "evidence_rounds": [
+        "<R80>"
+      ]
+    },
+    {
+      "trace_number": 87,
+      "trace_id": "tr_37a7791fdefa35a0",
+      "task_id": 23,
+      "task_type": "High-level",
+      "task_prompt": "How did the relationship between income and life expectancy change between 1950 and 2025?",
+      "model": "Claude Sonnet 5",
+      "app": "Gapminder",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Grounded visual evidence",
+      "evidence_level": 6,
+      "evidence_percent": 85.71,
+      "evidence_rounds": [
+        "<R16>"
+      ]
+    },
+    {
+      "trace_number": 88,
+      "trace_id": "tr_b0179cd54c757ba2",
+      "task_id": 8,
+      "task_type": "Low-level",
+      "task_prompt": "In 2025, which country stands out as an exception to the pattern that higher income goes with higher life expectancy?",
+      "model": "Claude Sonnet 5",
+      "app": "Gapminder",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Grounded visual evidence",
+      "evidence_level": 6,
+      "evidence_percent": 85.71,
+      "evidence_rounds": [
+        "<R12>"
+      ]
+    },
+    {
+      "trace_number": 89,
+      "trace_id": "tr_29c16a0bcdfb5415",
+      "task_id": 21,
+      "task_type": "High-level",
+      "task_prompt": "What differences do you observe between the Leiden and k-means groupings, and which one better separates the cells into distinct areas of the tissue?",
+      "model": "GPT-5.4",
+      "app": "Vitessce",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Visual + prior knowledge",
+      "evidence_level": 5,
+      "evidence_percent": 71.43,
+      "evidence_rounds": [
+        "<R11>"
+      ]
+    },
+    {
+      "trace_number": 90,
+      "trace_id": "tr_ee13ccac1cdef81a",
+      "task_id": 13,
+      "task_type": "Compound",
+      "task_prompt": "Using k-means clustering, which cluster has the most cells, and how many?",
+      "model": "GPT-5.4",
+      "app": "Vitessce",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Grounded visual evidence",
+      "evidence_level": 6,
+      "evidence_percent": 85.71,
+      "evidence_rounds": [
+        "<R4>"
+      ]
+    },
+    {
+      "trace_number": 91,
+      "trace_id": "tr_cac95fb97272f663",
+      "task_id": 1,
+      "task_type": "Low-level",
+      "task_prompt": "Using Leiden clustering, how many cell groups (clusters) does the UMAP show?",
+      "model": "GPT-5.4",
+      "app": "Vitessce",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Grounded visual evidence",
+      "evidence_level": 6,
+      "evidence_percent": 85.71,
+      "evidence_rounds": [
+        "<R4>"
+      ]
+    },
+    {
+      "trace_number": 92,
+      "trace_id": "tr_65e7ef075dfcecf9",
+      "task_id": 5,
+      "task_type": "Low-level",
+      "task_prompt": "Rank the players by games played — what is the sorted order of the top 5?",
+      "model": "GPT-5.4",
+      "app": "LineUp",
+      "completion_status": "completed",
+      "task_score": 0,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Misgrounded evidence",
+      "evidence_level": 2,
+      "evidence_percent": 28.57,
+      "evidence_rounds": [
+        "<R4>"
+      ]
+    },
+    {
+      "trace_number": 93,
+      "trace_id": "tr_a50c08fbd1995815",
+      "task_id": 19,
+      "task_type": "Compound",
+      "task_prompt": "Among right-footed players, who scored the most goals?",
+      "model": "GPT-5.4",
+      "app": "LineUp",
+      "completion_status": "completed",
+      "task_score": 0,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Misgrounded evidence",
+      "evidence_level": 2,
+      "evidence_percent": 28.57,
+      "evidence_rounds": [
+        "<R6>"
+      ]
+    },
+    {
+      "trace_number": 94,
+      "trace_id": "tr_039f43821b0f2f35",
+      "task_id": 14,
+      "task_type": "Compound",
+      "task_prompt": "Which player scored the most goals in a single year — name the player, the year, and how many goals?",
+      "model": "GPT-5.4",
+      "app": "LineUp",
+      "completion_status": "completed",
+      "task_score": 0.5,
+      "gui_percent": 82.35,
+      "offscreen_percent": 17.65,
+      "evidence_category": "Prior knowledge only",
+      "evidence_level": 3,
+      "evidence_percent": 42.86,
+      "evidence_rounds": [
+        "<R18>"
+      ]
+    },
+    {
+      "trace_number": 95,
+      "trace_id": "tr_d4bf8421d9b4a7c2",
+      "task_id": 30,
+      "task_type": "High-level",
+      "task_prompt": "For the entire dataset of penguins, which feature matters most to the model's prediction of species overall?",
+      "model": "GPT-5.4",
+      "app": "LIT",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Visual + prior knowledge",
+      "evidence_level": 5,
+      "evidence_percent": 71.43,
+      "evidence_rounds": [
+        "<R10>"
+      ]
+    },
+    {
+      "trace_number": 96,
+      "trace_id": "tr_bf571bef5ee9915e",
+      "task_id": 27,
+      "task_type": "High-level",
+      "task_prompt": "What characterizes the Gentoo penguins compared to the other species?",
+      "model": "GPT-5.4",
+      "app": "LIT",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Grounded visual evidence",
+      "evidence_level": 6,
+      "evidence_percent": 85.71,
+      "evidence_rounds": [
+        "<R10>"
+      ]
+    },
+    {
+      "trace_number": 97,
+      "trace_id": "tr_b17d3e932904dbb4",
+      "task_id": 6,
+      "task_type": "Low-level",
+      "task_prompt": "What is the range of life expectancy across countries in 2025?",
+      "model": "GPT-5.4",
+      "app": "Gapminder",
+      "completion_status": "completed",
+      "task_score": 0.8,
+      "gui_percent": 0.0,
+      "offscreen_percent": 100.0,
+      "evidence_category": "Visual + prior knowledge",
+      "evidence_level": 5,
+      "evidence_percent": 71.43,
+      "evidence_rounds": [
+        "<P2>"
+      ]
+    },
+    {
+      "trace_number": 98,
+      "trace_id": "tr_bd1a27e1312b9301",
+      "task_id": 8,
+      "task_type": "Low-level",
+      "task_prompt": "In 2025, which country stands out as an exception to the pattern that higher income goes with higher life expectancy?",
+      "model": "GPT-5.4",
+      "app": "Gapminder",
+      "completion_status": "completed",
+      "task_score": 0.5,
+      "gui_percent": 89.47,
+      "offscreen_percent": 10.53,
+      "evidence_category": "Fabricated evidence",
+      "evidence_level": 1,
+      "evidence_percent": 14.29,
+      "evidence_rounds": [
+        "<R39>"
+      ]
+    },
+    {
+      "trace_number": 99,
+      "trace_id": "tr_5e0e5300b59e05f7",
+      "task_id": 23,
+      "task_type": "High-level",
+      "task_prompt": "How did the relationship between income and life expectancy change between 1950 and 2025?",
+      "model": "GPT-5.4",
+      "app": "Gapminder",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Fabricated evidence",
+      "evidence_level": 1,
+      "evidence_percent": 14.29,
+      "evidence_rounds": [
+        "<R7>"
+      ]
+    },
+    {
+      "trace_number": 100,
+      "trace_id": "tr_fbb54f964cd904f6",
+      "task_id": 24,
+      "task_type": "High-level",
+      "task_prompt": "How did child mortality change across the world over time?",
+      "model": "GPT-5.4",
+      "app": "Gapminder",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Fabricated evidence",
+      "evidence_level": 1,
+      "evidence_percent": 14.29,
+      "evidence_rounds": [
+        "<R5>"
+      ]
+    },
+    {
+      "trace_number": 101,
+      "trace_id": "tr_fd07d6ea1c3073c3",
+      "task_id": 20,
+      "task_type": "Compound",
+      "task_prompt": "For the penguin with the largest body mass, which feature contributes most to its predicted class according to SHAP?",
+      "model": "GPT-5.4",
+      "app": "LIT",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Grounded visual evidence",
+      "evidence_level": 6,
+      "evidence_percent": 85.71,
+      "evidence_rounds": [
+        "<R20>"
+      ]
+    },
+    {
+      "trace_number": 102,
+      "trace_id": "tr_7c11ca9aff93a83f",
+      "task_id": 12,
+      "task_type": "Compound",
+      "task_prompt": "Using the \"30 Days, Significant Worldwide\" feed, where is the largest-magnitude earthquake located?",
+      "model": "GPT-5.4",
+      "app": "USGS",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 83.33,
+      "offscreen_percent": 16.67,
+      "evidence_category": "Computed evidence",
+      "evidence_level": 4,
+      "evidence_percent": 57.14,
+      "evidence_rounds": [
+        "<R7>"
+      ]
+    },
+    {
+      "trace_number": 103,
+      "trace_id": "tr_a55ab1ce7cdb2d18",
+      "task_id": 17,
+      "task_type": "Compound",
+      "task_prompt": "In the past 30 days, how many earthquakes of magnitude 4.5 or greater occurred worldwide?",
+      "model": "GPT-5.4",
+      "app": "USGS",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 91.67,
+      "offscreen_percent": 8.33,
+      "evidence_category": "Computed evidence",
+      "evidence_level": 4,
+      "evidence_percent": 57.14,
+      "evidence_rounds": [
+        "<R13>"
+      ]
+    },
+    {
+      "trace_number": 104,
+      "trace_id": "tr_730f0dfa05bca83d",
+      "task_id": 11,
+      "task_type": "Compound",
+      "task_prompt": "Locate the newest earthquake that occurred in Asia and report its country.",
+      "model": "GPT-5.4",
+      "app": "USGS",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 85.71,
+      "offscreen_percent": 14.29,
+      "evidence_category": "Computed evidence",
+      "evidence_level": 4,
+      "evidence_percent": 57.14,
+      "evidence_rounds": [
+        "<R15>"
+      ]
+    },
+    {
+      "trace_number": 105,
+      "trace_id": "tr_49d24650e3c488c3",
+      "task_id": 16,
+      "task_type": "Compound",
+      "task_prompt": "What is the most fuel-efficient European car with 4 cylinders and horsepower above 100?",
+      "model": "GPT-5.4",
+      "app": "Data Voyager",
+      "completion_status": "completed",
+      "task_score": 0,
+      "gui_percent": 62.5,
+      "offscreen_percent": 37.5,
+      "evidence_category": "Fabricated evidence",
+      "evidence_level": 1,
+      "evidence_percent": 14.29,
+      "evidence_rounds": [
+        "<R9>"
+      ]
+    },
+    {
+      "trace_number": 106,
+      "trace_id": "tr_2b0ed9cbfbd05f3e",
+      "task_id": 28,
+      "task_type": "High-level",
+      "task_prompt": "Use the interface to Build charts and describe the characteristics of eight-cylinder cars relative to other cylinder counts in this dataset.",
+      "model": "GPT-5.4",
+      "app": "Data Voyager",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Prior knowledge only",
+      "evidence_level": 3,
+      "evidence_percent": 42.86,
+      "evidence_rounds": [
+        "<R14>"
+      ]
+    },
+    {
+      "trace_number": 107,
+      "trace_id": "tr_39e15a5ef7804383",
+      "task_id": 15,
+      "task_type": "Compound",
+      "task_prompt": "Are there exceptions to the relationship between horsepower and weight? Report that car's horsepower and weight.",
+      "model": "GPT-5.4",
+      "app": "Data Voyager",
+      "completion_status": "completed",
+      "task_score": 0,
+      "gui_percent": 72.0,
+      "offscreen_percent": 28.0,
+      "evidence_category": "Misgrounded evidence",
+      "evidence_level": 2,
+      "evidence_percent": 28.57,
+      "evidence_rounds": [
+        "<R26>"
+      ]
+    },
+    {
+      "trace_number": 108,
+      "trace_id": "tr_5bd2a03cb3b6524c",
+      "task_id": 25,
+      "task_type": "High-level",
+      "task_prompt": "In the movies dataset, are there aspects of a film that go with commercial success? Which ones?",
+      "model": "GPT-5.4",
+      "app": "Data Voyager",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Grounded visual evidence",
+      "evidence_level": 6,
+      "evidence_percent": 85.71,
+      "evidence_rounds": [
+        "<R18>"
+      ]
+    },
+    {
+      "trace_number": 109,
+      "trace_id": "tr_14b2266d422948f7",
+      "task_id": 9,
+      "task_type": "Low-level",
+      "task_prompt": "Coloring the points by country, which country's reviews form a distinct cluster separate from the main mass?",
+      "model": "GPT-5.4",
+      "app": "Embedding Atlas",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 0,
+      "offscreen_percent": 0,
+      "evidence_category": "Grounded visual evidence",
+      "evidence_level": 6,
+      "evidence_percent": 85.71,
+      "evidence_rounds": [
+        "<R1>"
+      ]
+    },
+    {
+      "trace_number": 110,
+      "trace_id": "tr_348678e8b110c666",
+      "task_id": 10,
+      "task_type": "Low-level",
+      "task_prompt": "Is there a correlation between price and points (scores)?",
+      "model": "GPT-5.4",
+      "app": "Embedding Atlas",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Grounded visual evidence",
+      "evidence_level": 6,
+      "evidence_percent": 85.71,
+      "evidence_rounds": [
+        "<R11>"
+      ]
+    },
+    {
+      "trace_number": 111,
+      "trace_id": "tr_aa1b3210ce504504",
+      "task_id": 4,
+      "task_type": "Low-level",
+      "task_prompt": "What is the most expensive wine?",
+      "model": "GPT-5.4",
+      "app": "Embedding Atlas",
+      "completion_status": "completed",
+      "task_score": 0,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Misgrounded evidence",
+      "evidence_level": 2,
+      "evidence_percent": 28.57,
+      "evidence_rounds": [
+        "<R14>"
+      ]
+    },
+    {
+      "trace_number": 112,
+      "trace_id": "tr_e877c6dd4fe7347d",
+      "task_id": 18,
+      "task_type": "Compound",
+      "task_prompt": "Among passengers aged 50–60, which class had the lowest survival rate, and what was it?",
+      "model": "GPT-5.4",
+      "app": "SandDance",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 58.7,
+      "offscreen_percent": 41.3,
+      "evidence_category": "Computed evidence",
+      "evidence_level": 4,
+      "evidence_percent": 57.14,
+      "evidence_rounds": [
+        "<R47>"
+      ]
+    },
+    {
+      "trace_number": 113,
+      "trace_id": "tr_f0a7933d57ea12b1",
+      "task_id": 29,
+      "task_type": "High-level",
+      "task_prompt": "How did the crew aboard differ from the passengers?",
+      "model": "GPT-5.4",
+      "app": "SandDance",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Grounded visual evidence",
+      "evidence_level": 6,
+      "evidence_percent": 85.71,
+      "evidence_rounds": [
+        "<R13>"
+      ]
+    },
+    {
+      "trace_number": 114,
+      "trace_id": "tr_9124c71db680598e",
+      "task_id": 22,
+      "task_type": "High-level",
+      "task_prompt": "Which factors best distinguish the people who survived from those who did not?",
+      "model": "GPT-5.4",
+      "app": "SandDance",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Visual + prior knowledge",
+      "evidence_level": 5,
+      "evidence_percent": 71.43,
+      "evidence_rounds": [
+        "<R7>"
+      ]
+    },
+    {
+      "trace_number": 115,
+      "trace_id": "tr_a7380becde97fcab",
+      "task_id": 7,
+      "task_type": "Low-level",
+      "task_prompt": "Grouping ages into ten-year ranges starting from 0 (0–10, 10–20, 20–30, …), which age range contains the most people aboard?",
+      "model": "GPT-5.4",
+      "app": "SandDance",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Grounded visual evidence",
+      "evidence_level": 6,
+      "evidence_percent": 85.71,
+      "evidence_rounds": [
+        "<R3>"
+      ]
+    },
+    {
+      "trace_number": 116,
+      "trace_id": "tr_27837c5a0285cb6e",
+      "task_id": 26,
+      "task_type": "High-level",
+      "task_prompt": "What characterizes the wines rated above 95 points?",
+      "model": "GPT-5.5",
+      "app": "Embedding Atlas",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 11.76,
+      "offscreen_percent": 88.24,
+      "evidence_category": "Visual + prior knowledge",
+      "evidence_level": 5,
+      "evidence_percent": 71.43,
+      "evidence_rounds": [
+        "<R86>"
+      ]
+    },
+    {
+      "trace_number": 117,
+      "trace_id": "tr_5b5ac1b6a772a5b7",
+      "task_id": 10,
+      "task_type": "Low-level",
+      "task_prompt": "Is there a correlation between price and points (scores)?",
+      "model": "GPT-5.5",
+      "app": "Embedding Atlas",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 0.0,
+      "offscreen_percent": 100.0,
+      "evidence_category": "Computed + visual evidence",
+      "evidence_level": 7,
+      "evidence_percent": 100.0,
+      "evidence_rounds": [
+        "<R21>"
+      ]
+    },
+    {
+      "trace_number": 118,
+      "trace_id": "tr_b3c7b6cf4f40ea5d",
+      "task_id": 9,
+      "task_type": "Low-level",
+      "task_prompt": "Coloring the points by country, which country's reviews form a distinct cluster separate from the main mass?",
+      "model": "GPT-5.5",
+      "app": "Embedding Atlas",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 0,
+      "offscreen_percent": 0,
+      "evidence_category": "Grounded visual evidence",
+      "evidence_level": 6,
+      "evidence_percent": 85.71,
+      "evidence_rounds": [
+        "<R1>"
+      ]
+    },
+    {
+      "trace_number": 119,
+      "trace_id": "tr_26e90d3779796a3c",
+      "task_id": 4,
+      "task_type": "Low-level",
+      "task_prompt": "What is the most expensive wine?",
+      "model": "GPT-5.5",
+      "app": "Embedding Atlas",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 0.0,
+      "offscreen_percent": 100.0,
+      "evidence_category": "Computed evidence",
+      "evidence_level": 4,
+      "evidence_percent": 57.14,
+      "evidence_rounds": [
+        "<R9>"
+      ]
+    },
+    {
+      "trace_number": 120,
+      "trace_id": "tr_11c750f763ffc83b",
+      "task_id": 9,
+      "task_type": "Low-level",
+      "task_prompt": "Coloring the points by country, which country's reviews form a distinct cluster separate from the main mass?",
+      "model": "Claude Opus 4.8",
+      "app": "Embedding Atlas",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Grounded visual evidence",
+      "evidence_level": 6,
+      "evidence_percent": 85.71,
+      "evidence_rounds": [
+        "<R1>"
+      ]
+    },
+    {
+      "trace_number": 121,
+      "trace_id": "tr_94d43bf638904a54",
+      "task_id": 10,
+      "task_type": "Low-level",
+      "task_prompt": "Is there a correlation between price and points (scores)?",
+      "model": "Claude Opus 4.8",
+      "app": "Embedding Atlas",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Grounded visual evidence",
+      "evidence_level": 6,
+      "evidence_percent": 85.71,
+      "evidence_rounds": [
+        "<R19>"
+      ]
+    },
+    {
+      "trace_number": 122,
+      "trace_id": "tr_4cdf0ebde8f08ada",
+      "task_id": 2,
+      "task_type": "Low-level",
+      "task_prompt": "Which datapoints have a culmen depth of 15.9 mm and a flipper length between 220 and 250 mm? Report how many there are and their indexes.",
+      "model": "GPT-5.4",
+      "app": "LIT",
+      "completion_status": "completed",
+      "task_score": 0,
+      "gui_percent": 58.33,
+      "offscreen_percent": 41.67,
+      "evidence_category": "Misgrounded evidence",
+      "evidence_level": 2,
+      "evidence_percent": 28.57,
+      "evidence_rounds": [
+        "<R13>"
+      ]
+    },
+    {
+      "trace_number": 123,
+      "trace_id": "tr_68db8fddec7d6d1e",
+      "task_id": 29,
+      "task_type": "High-level",
+      "task_prompt": "How did the crew aboard differ from the passengers?",
+      "model": "Claude Opus 4.8",
+      "app": "SandDance",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Grounded visual evidence",
+      "evidence_level": 6,
+      "evidence_percent": 85.71,
+      "evidence_rounds": [
+        "<R15>"
+      ]
+    },
+    {
+      "trace_number": 124,
+      "trace_id": "tr_7aa582985ead8650",
+      "task_id": 7,
+      "task_type": "Low-level",
+      "task_prompt": "Grouping ages into ten-year ranges starting from 0 (0–10, 10–20, 20–30, …), which age range contains the most people aboard?",
+      "model": "Claude Opus 4.8",
+      "app": "SandDance",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 95.0,
+      "offscreen_percent": 5.0,
+      "evidence_category": "Grounded visual evidence",
+      "evidence_level": 6,
+      "evidence_percent": 85.71,
+      "evidence_rounds": [
+        "<R35>"
+      ]
+    },
+    {
+      "trace_number": 125,
+      "trace_id": "tr_0e560a3fb23c5d21",
+      "task_id": 18,
+      "task_type": "Compound",
+      "task_prompt": "Among passengers aged 50–60, which class had the lowest survival rate, and what was it?",
+      "model": "Claude Opus 4.8",
+      "app": "SandDance",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 0.0,
+      "offscreen_percent": 100.0,
+      "evidence_category": "Computed evidence",
+      "evidence_level": 4,
+      "evidence_percent": 57.14,
+      "evidence_rounds": [
+        "<R10>"
+      ]
+    },
+    {
+      "trace_number": 126,
+      "trace_id": "tr_cbac1d76d92a9f97",
+      "task_id": 22,
+      "task_type": "High-level",
+      "task_prompt": "Which factors best distinguish the people who survived from those who did not?",
+      "model": "GPT-5.5",
+      "app": "SandDance",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 72.73,
+      "offscreen_percent": 27.27,
+      "evidence_category": "Computed evidence",
+      "evidence_level": 4,
+      "evidence_percent": 57.14,
+      "evidence_rounds": [
+        "<R23>"
+      ]
+    },
+    {
+      "trace_number": 127,
+      "trace_id": "tr_ecd34b167ed24c5d",
+      "task_id": 15,
+      "task_type": "Compound",
+      "task_prompt": "Are there exceptions to the relationship between horsepower and weight? Report that car's horsepower and weight.",
+      "model": "Claude Sonnet 5",
+      "app": "Data Voyager",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 50.0,
+      "offscreen_percent": 50.0,
+      "evidence_category": "Computed + visual evidence",
+      "evidence_level": 7,
+      "evidence_percent": 100.0,
+      "evidence_rounds": [
+        "<R17>"
+      ]
+    },
+    {
+      "trace_number": 128,
+      "trace_id": "tr_b5008604260f71fe",
+      "task_id": 24,
+      "task_type": "High-level",
+      "task_prompt": "How did child mortality change across the world over time?",
+      "model": "Claude Sonnet 5",
+      "app": "Gapminder",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Visual + prior knowledge",
+      "evidence_level": 5,
+      "evidence_percent": 71.43,
+      "evidence_rounds": [
+        "<R34>"
+      ]
+    },
+    {
+      "trace_number": 129,
+      "trace_id": "tr_35c872b883119134",
+      "task_id": 3,
+      "task_type": "Low-level",
+      "task_prompt": "What is the average acceleration of the cars?",
+      "model": "GPT-5.4",
+      "app": "Data Voyager",
+      "completion_status": "completed",
+      "task_score": 0,
+      "gui_percent": 71.43,
+      "offscreen_percent": 28.57,
+      "evidence_category": "Fabricated evidence",
+      "evidence_level": 1,
+      "evidence_percent": 14.29,
+      "evidence_rounds": [
+        "<R6>",
+        "<R8>"
+      ]
+    },
+    {
+      "trace_number": 130,
+      "trace_id": "tr_7eaf20e2ecf1282f",
+      "task_id": 26,
+      "task_type": "High-level",
+      "task_prompt": "What characterizes the wines rated above 95 points?",
+      "model": "GPT-5.4",
+      "app": "Embedding Atlas",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Fabricated evidence",
+      "evidence_level": 1,
+      "evidence_percent": 14.29,
+      "evidence_rounds": [
+        "<R18>"
+      ]
+    },
+    {
+      "trace_number": 131,
+      "trace_id": "tr_dce5af319f92d2fa",
+      "task_id": 22,
+      "task_type": "High-level",
+      "task_prompt": "Which factors best distinguish the people who survived from those who did not?",
+      "model": "Claude Opus 4.8",
+      "app": "SandDance",
+      "completion_status": "completed",
+      "task_score": 1,
+      "gui_percent": 100.0,
+      "offscreen_percent": 0.0,
+      "evidence_category": "Grounded visual evidence",
+      "evidence_level": 6,
+      "evidence_percent": 85.71,
+      "evidence_rounds": [
+        "<R35>"
+      ]
+    }
+  ]
+}
