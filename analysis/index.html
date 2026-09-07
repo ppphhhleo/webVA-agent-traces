@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="../styles.css" />
-    <link rel="stylesheet" href="analysis.css?v=19" />
+    <link rel="stylesheet" href="analysis.css?v=20" />
   </head>
   <body>
     <div class="app-shell">
@@ -47,12 +47,30 @@
             <p id="cohort-summary">Unique trial-one traces per model.</p>
           </header>
           <div class="summary-table-wrap">
-            <table>
-              <thead><tr><th>Model</th><th>N</th><th>Mean task score</th><th>Score coverage</th><th>Input tokens</th><th>Output tokens</th><th>Total tokens</th><th>Actions</th><th>Rounds</th></tr></thead>
+            <table class="performance-table">
+              <thead>
+                <tr>
+                  <th rowspan="2" scope="col">Model</th>
+                  <th rowspan="2" scope="col">N</th>
+                  <th colspan="4" scope="colgroup" class="score-group-heading">Task score</th>
+                  <th rowspan="2" scope="col">Score coverage</th>
+                  <th rowspan="2" scope="col">Input tokens</th>
+                  <th rowspan="2" scope="col">Output tokens</th>
+                  <th rowspan="2" scope="col">Total tokens</th>
+                  <th rowspan="2" scope="col">Actions</th>
+                  <th rowspan="2" scope="col">Rounds</th>
+                </tr>
+                <tr class="score-subhead">
+                  <th scope="col" class="score-overall-heading">Overall</th>
+                  <th scope="col">Low-level</th>
+                  <th scope="col">Compound</th>
+                  <th scope="col">High-level</th>
+                </tr>
+              </thead>
               <tbody id="performance-summary"></tbody>
             </table>
           </div>
-          <p class="table-note">Token, action, and round values are means per trace. Unfinished trajectories remain labeled as unfinished and contribute a task score of 0 to the model mean.</p>
+          <p class="table-note"><strong>Overall</strong> aggregates all 30 tasks; each task-type column summarizes its 10-task subset. Token, action, and round values are means per trace. Unfinished trajectories remain labeled as unfinished and contribute a task score of 0.</p>
         </section>
 
         <section class="analysis-card work-share-card" aria-labelledby="work-share-title">
@@ -177,6 +195,6 @@
       </main>
     </div>
     <script src="../config.js"></script>
-    <script src="analysis.js?v=19" type="module"></script>
+    <script src="analysis.js?v=20" type="module"></script>
   </body>
 </html>

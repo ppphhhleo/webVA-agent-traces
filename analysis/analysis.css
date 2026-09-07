@@ -195,12 +195,24 @@ table { width: 100%; border-collapse: collapse; font-size: 12px; }
 th, td { padding: 13px 16px; text-align: left; border-bottom: 1px solid var(--line); white-space: nowrap; }
 th { color: var(--muted); background: #f8f6ef; font-size: 8px; letter-spacing: .08em; text-transform: uppercase; }
 tbody tr:last-child td { border-bottom: 0; }
+.performance-table thead tr:first-child th { border-bottom: 1px solid var(--line); }
+.performance-table thead th[rowspan] { vertical-align: bottom; }
+.performance-table .score-group-heading { border-inline: 1px solid var(--line-strong); color: var(--ink); text-align: center; }
+.performance-table .score-subhead th { padding-block: 8px; text-align: right; }
+.performance-table .score-subhead th:first-child,
+.performance-table tbody .score-overall { border-left: 1px solid var(--line-strong); }
+.performance-table .score-subhead th:last-child,
+.performance-table tbody .score-by-type:nth-of-type(6) { border-right: 1px solid var(--line-strong); }
+.performance-table .score-overall-heading,
+.performance-table tbody .score-overall { background: #eef5f1; }
 .model-key { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; }
 .model-key i { width: 10px; height: 10px; border-radius: 50%; background: var(--series-color); }
 .metric-value { font-family: var(--mono); }
-.score-value { color: var(--teal); font-weight: 700; }
+.score-value { color: var(--ink); font-weight: 500; text-align: right; }
+.score-overall { color: var(--teal); font-weight: 700; }
 .coverage-value { color: var(--muted); }
 .table-note { margin: 0; padding: 11px 16px 13px; border-top: 1px solid var(--line); color: var(--muted); font-size: 10px; line-height: 1.5; }
+.table-note strong { color: var(--ink); }
 .table-note code { color: var(--ink); font: 500 9px var(--mono); }
 
 .analysis-error { padding: 60px 24px; text-align: center; color: var(--danger); }

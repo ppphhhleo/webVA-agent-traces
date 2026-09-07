@@ -48,6 +48,7 @@ const formatMean = (value, digits = 1) => value === null ? "—" : value.toLocal
   maximumFractionDigits: digits,
 });
 const formatTokens = (value) => value === null ? "—" : Math.round(value).toLocaleString();
+const formatScore = (value) => value === null ? "—" : `${(value * 100).toFixed(1)}%`;
 
 const percent = (value) => value === null || value === undefined ? "Never" : `${value.toFixed(1)}%`;
 const colorFor = (model) => MODEL_COLORS[model] || "#687777";
@@ -227,10 +228,15 @@ function renderPerformanceSummary() {
   performanceBody.replaceChildren(...orderedModels(state.traces).map((model) => {
     const rows = state.traces.filter((trace) => trace.model === model);
     const scores = numeric(rows.map((trace) => trace.task_score));
+    const scoresByType = Object.fromEntries(TASK_TYPE_ORDER.map((taskType) => [
+      taskType,
+      numeric(rows.filter((trace) => trace.task_type === taskType).map((trace) => trace.task_score)),
+    ]));
     const row = document.createElement("tr");
     row.innerHTML = `<td><span class="model-key" style="--series-color:${colorFor(model)}"><i></i>${model}</span></td>
       <td class="metric-value">${rows.length}</td>
-      <td class="metric-value score-value">${formatMean(mean(scores), 2)}</td>
+      <td class="metric-value score-value score-overall">${formatScore(mean(scores))}</td>
+      ${TASK_TYPE_ORDER.map((taskType) => `<td class="metric-value score-value score-by-type" title="${taskType} task score">${formatScore(mean(scoresByType[taskType]))}</td>`).join("")}
       <td class="metric-value coverage-value">${scores.length}/${rows.length}</td>
       <td class="metric-value">${formatTokens(mean(numeric(rows.map((trace) => trace.input_tokens))))}</td>
       <td class="metric-value">${formatTokens(mean(numeric(rows.map((trace) => trace.output_tokens))))}</td>
