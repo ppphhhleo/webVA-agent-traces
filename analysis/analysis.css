@@ -196,6 +196,9 @@ th, td { padding: 13px 16px; text-align: left; border-bottom: 1px solid var(--li
 th { color: var(--muted); background: #f8f6ef; font-size: 8px; letter-spacing: .08em; text-transform: uppercase; }
 tbody tr:last-child td { border-bottom: 0; }
 .performance-table thead tr:first-child th { border-bottom: 1px solid var(--line); }
+.performance-table th, .performance-table td { padding-inline: 10px; }
+.performance-table th:first-child, .performance-table td:first-child { padding-left: 16px; }
+.performance-table th:last-child, .performance-table td:last-child { padding-right: 16px; }
 .performance-table thead th[rowspan] { vertical-align: bottom; }
 .performance-table .score-group-heading { border-inline: 1px solid var(--line-strong); color: var(--ink); text-align: center; }
 .performance-table .score-subhead th { padding-block: 8px; text-align: right; }

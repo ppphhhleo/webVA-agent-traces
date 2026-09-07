@@ -49,6 +49,13 @@ const formatMean = (value, digits = 1) => value === null ? "—" : value.toLocal
 });
 const formatTokens = (value) => value === null ? "—" : Math.round(value).toLocaleString();
 const formatScore = (value) => value === null ? "—" : `${(value * 100).toFixed(1)}%`;
+const formatDuration = (milliseconds) => {
+  if (!Number.isFinite(milliseconds)) return "—";
+  if (milliseconds < 60_000) return `${(milliseconds / 1000).toFixed(1)}s`;
+  const minutes = Math.floor(milliseconds / 60_000);
+  const seconds = Math.round((milliseconds % 60_000) / 1000);
+  return `${minutes}m ${seconds}s`;
+};
 
 const percent = (value) => value === null || value === undefined ? "Never" : `${value.toFixed(1)}%`;
 const colorFor = (model) => MODEL_COLORS[model] || "#687777";
@@ -241,6 +248,7 @@ function renderPerformanceSummary() {
       <td class="metric-value">${formatTokens(mean(numeric(rows.map((trace) => trace.input_tokens))))}</td>
       <td class="metric-value">${formatTokens(mean(numeric(rows.map((trace) => trace.output_tokens))))}</td>
       <td class="metric-value">${formatTokens(mean(numeric(rows.map((trace) => trace.total_tokens))))}</td>
+      <td class="metric-value">${formatDuration(mean(numeric(rows.map((trace) => trace.acting_time_ms))))}</td>
       <td class="metric-value">${formatMean(mean(numeric(rows.map((trace) => trace.action_count))))}</td>
       <td class="metric-value">${formatMean(mean(numeric(rows.map((trace) => trace.total_rounds))))}</td>`;
     return row;
