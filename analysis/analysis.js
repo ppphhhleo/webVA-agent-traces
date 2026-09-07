@@ -227,7 +227,7 @@ function renderWorkShareChart() {
 
 async function init() {
   try {
-    const response = await fetch("data.json");
+    const response = await fetch("data.json?v=2");
     if (!response.ok) throw new Error(`Analysis data request failed (${response.status})`);
     const data = await response.json();
     state.traces = data.traces || [];
