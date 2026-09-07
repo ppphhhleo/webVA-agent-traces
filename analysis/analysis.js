@@ -232,26 +232,28 @@ function renderChart() {
 }
 
 function renderPerformanceSummary() {
+  const scopes = [{ label: "Overall", taskType: "" }, ...TASK_TYPE_ORDER.map((taskType) => ({ label: taskType, taskType }))];
   performanceBody.replaceChildren(...orderedModels(state.traces).map((model) => {
-    const rows = state.traces.filter((trace) => trace.model === model);
-    const scores = numeric(rows.map((trace) => trace.task_score));
-    const scoresByType = Object.fromEntries(TASK_TYPE_ORDER.map((taskType) => [
-      taskType,
-      numeric(rows.filter((trace) => trace.task_type === taskType).map((trace) => trace.task_score)),
-    ]));
-    const row = document.createElement("tr");
-    row.innerHTML = `<td><span class="model-key" style="--series-color:${colorFor(model)}"><i></i>${model}</span></td>
-      <td class="metric-value">${rows.length}</td>
-      <td class="metric-value score-value score-overall">${formatScore(mean(scores))}</td>
-      ${TASK_TYPE_ORDER.map((taskType) => `<td class="metric-value score-value score-by-type" title="${taskType} task score">${formatScore(mean(scoresByType[taskType]))}</td>`).join("")}
-      <td class="metric-value coverage-value">${scores.length}/${rows.length}</td>
-      <td class="metric-value">${formatTokens(mean(numeric(rows.map((trace) => trace.input_tokens))))}</td>
-      <td class="metric-value">${formatTokens(mean(numeric(rows.map((trace) => trace.output_tokens))))}</td>
-      <td class="metric-value">${formatTokens(mean(numeric(rows.map((trace) => trace.total_tokens))))}</td>
-      <td class="metric-value">${formatDuration(mean(numeric(rows.map((trace) => trace.acting_time_ms))))}</td>
-      <td class="metric-value">${formatMean(mean(numeric(rows.map((trace) => trace.action_count))))}</td>
-      <td class="metric-value">${formatMean(mean(numeric(rows.map((trace) => trace.total_rounds))))}</td>`;
-    return row;
+    const modelRows = state.traces.filter((trace) => trace.model === model);
+    const group = document.createDocumentFragment();
+    scopes.forEach((scope, index) => {
+      const rows = scope.taskType ? modelRows.filter((trace) => trace.task_type === scope.taskType) : modelRows;
+      const row = document.createElement("tr");
+      row.className = `${index === 0 ? "model-start scope-overall" : "scope-detail"}`;
+      if (index === 0) {
+        row.innerHTML = `<th class="model-cell" rowspan="${scopes.length}" scope="rowgroup"><span class="model-key" style="--series-color:${colorFor(model)}"><i></i>${model}</span></th>`;
+      }
+      row.insertAdjacentHTML("beforeend", `<th class="scope-cell" scope="row">${scope.label}</th>
+        <td class="metric-value score-value">${formatScore(mean(numeric(rows.map((trace) => trace.task_score))))}</td>
+        <td class="metric-value">${formatTokens(mean(numeric(rows.map((trace) => trace.input_tokens))))}</td>
+        <td class="metric-value">${formatTokens(mean(numeric(rows.map((trace) => trace.output_tokens))))}</td>
+        <td class="metric-value total-token-value">${formatTokens(mean(numeric(rows.map((trace) => trace.total_tokens))))}</td>
+        <td class="metric-value">${formatDuration(mean(numeric(rows.map((trace) => trace.acting_time_ms))))}</td>
+        <td class="metric-value">${formatMean(mean(numeric(rows.map((trace) => trace.action_count))))}</td>
+        <td class="metric-value">${formatMean(mean(numeric(rows.map((trace) => trace.total_rounds))))}</td>`);
+      group.append(row);
+    });
+    return group;
   }));
 }
 

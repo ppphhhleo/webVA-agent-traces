@@ -195,25 +195,24 @@ table { width: 100%; border-collapse: collapse; font-size: 12px; }
 th, td { padding: 13px 16px; text-align: left; border-bottom: 1px solid var(--line); white-space: nowrap; }
 th { color: var(--muted); background: #f8f6ef; font-size: 8px; letter-spacing: .08em; text-transform: uppercase; }
 tbody tr:last-child td { border-bottom: 0; }
-.performance-table thead tr:first-child th { border-bottom: 1px solid var(--line); }
 .performance-table th, .performance-table td { padding-inline: 10px; }
 .performance-table th:first-child, .performance-table td:first-child { padding-left: 16px; }
 .performance-table th:last-child, .performance-table td:last-child { padding-right: 16px; }
-.performance-table thead th[rowspan] { vertical-align: bottom; }
-.performance-table .score-group-heading { border-inline: 1px solid var(--line-strong); color: var(--ink); text-align: center; }
-.performance-table .score-subhead th { padding-block: 8px; text-align: right; }
-.performance-table .score-subhead th:first-child,
-.performance-table tbody .score-overall { border-left: 1px solid var(--line-strong); }
-.performance-table .score-subhead th:last-child,
-.performance-table tbody .score-by-type:nth-of-type(6) { border-right: 1px solid var(--line-strong); }
-.performance-table .score-overall-heading,
-.performance-table tbody .score-overall { background: #eef5f1; }
+.performance-table thead th:nth-child(n + 3), .performance-table td { text-align: right; }
+.performance-table tbody th { background: var(--surface); text-align: left; text-transform: none; letter-spacing: 0; }
+.performance-table tbody tr > * { padding-block: 8px; }
+.performance-table .model-start > * { border-top: 1px solid var(--line-strong); }
+.performance-table tbody tr:first-child > * { border-top: 0; }
+.performance-table .model-cell { width: 170px; padding-top: 11px; border-right: 1px solid var(--line); vertical-align: top; }
+.performance-table .scope-cell { width: 92px; color: var(--muted); font-size: 10px; font-weight: 500; }
+.performance-table .scope-overall > *:not(.model-cell) { background: #eef5f1; }
+.performance-table .scope-overall .scope-cell, .performance-table .scope-overall .score-value { color: var(--teal); font-weight: 700; }
+.performance-table .scope-detail > * { color: var(--muted); }
+.performance-table .scope-detail .score-value, .performance-table .scope-detail .total-token-value { color: var(--ink); }
 .model-key { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; }
 .model-key i { width: 10px; height: 10px; border-radius: 50%; background: var(--series-color); }
 .metric-value { font-family: var(--mono); }
-.score-value { color: var(--ink); font-weight: 500; text-align: right; }
-.score-overall { color: var(--teal); font-weight: 700; }
-.coverage-value { color: var(--muted); }
+.score-value { color: var(--ink); font-weight: 500; }
 .table-note { margin: 0; padding: 11px 16px 13px; border-top: 1px solid var(--line); color: var(--muted); font-size: 10px; line-height: 1.5; }
 .table-note strong { color: var(--ink); }
 .table-note code { color: var(--ink); font: 500 9px var(--mono); }
