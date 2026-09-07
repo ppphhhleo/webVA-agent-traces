@@ -5,20 +5,23 @@ const MODEL_COLORS = {
   "Claude Sonnet 5": "#278061",
 };
 const MODEL_ORDER = ["GPT-5.4", "GPT-5.5", "Claude Opus 4.8", "Claude Sonnet 5"];
+const TASK_TYPE_ORDER = ["Low-level", "Compound", "High-level"];
 
 const state = { traces: [], activeModels: new Set(), taskType: "" };
 const svg = document.querySelector("#scatterplot");
 const tooltip = document.querySelector("#plot-tooltip");
 const legend = document.querySelector("#model-legend");
 const taskFilter = document.querySelector("#task-type-filter");
-const summaryBody = document.querySelector("#model-summary");
+const performanceBody = document.querySelector("#performance-summary");
+const workShareChart = document.querySelector("#work-share-chart");
 
-const median = (values) => {
-  if (!values.length) return null;
-  const sorted = [...values].sort((a, b) => a - b);
-  const middle = Math.floor(sorted.length / 2);
-  return sorted.length % 2 ? sorted[middle] : (sorted[middle - 1] + sorted[middle]) / 2;
-};
+const mean = (values) => values.length ? values.reduce((sum, value) => sum + value, 0) / values.length : null;
+const numeric = (values) => values.filter((value) => Number.isFinite(value));
+const formatMean = (value, digits = 1) => value === null ? "—" : value.toLocaleString(undefined, {
+  minimumFractionDigits: digits,
+  maximumFractionDigits: digits,
+});
+const formatTokens = (value) => value === null ? "—" : Math.round(value).toLocaleString();
 
 const percent = (value) => value === null || value === undefined ? "Never" : `${value.toFixed(1)}%`;
 const colorFor = (model) => MODEL_COLORS[model] || "#687777";
@@ -50,7 +53,6 @@ function renderLegend() {
       state.activeModels.has(model) ? state.activeModels.delete(model) : state.activeModels.add(model);
       renderLegend();
       renderChart();
-      renderSummary();
     });
     return button;
   }));
@@ -175,19 +177,51 @@ function renderChart() {
   });
 }
 
-function renderSummary() {
-  const traces = visibleTraces();
-  const models = orderedModels(state.traces).filter((model) => state.activeModels.has(model));
-  summaryBody.replaceChildren(...models.map((model) => {
-    const rows = traces.filter((trace) => trace.model === model);
-    const firstPositions = rows.map((trace) => trace.first_offscreen_position_percent).filter((value) => value !== null);
+function renderPerformanceSummary() {
+  performanceBody.replaceChildren(...orderedModels(state.traces).map((model) => {
+    const rows = state.traces.filter((trace) => trace.model === model);
+    const scores = numeric(rows.map((trace) => trace.task_score));
     const row = document.createElement("tr");
     row.innerHTML = `<td><span class="model-key" style="--series-color:${colorFor(model)}"><i></i>${model}</span></td>
       <td class="metric-value">${rows.length}</td>
-      <td class="metric-value">${percent(median(rows.map((trace) => trace.offscreen_percent)))}</td>
-      <td class="metric-value">${percent(median(firstPositions))}</td>
-      <td class="metric-value">${rows.filter((trace) => trace.first_offscreen_round === null).length}</td>`;
+      <td class="metric-value score-value">${formatMean(mean(scores), 2)}</td>
+      <td class="metric-value coverage-value">${scores.length}/${rows.length}</td>
+      <td class="metric-value">${formatTokens(mean(numeric(rows.map((trace) => trace.input_tokens))))}</td>
+      <td class="metric-value">${formatTokens(mean(numeric(rows.map((trace) => trace.output_tokens))))}</td>
+      <td class="metric-value">${formatTokens(mean(numeric(rows.map((trace) => trace.total_tokens))))}</td>
+      <td class="metric-value">${formatMean(mean(numeric(rows.map((trace) => trace.action_count))))}</td>
+      <td class="metric-value">${formatMean(mean(numeric(rows.map((trace) => trace.total_rounds))))}</td>`;
     return row;
+  }));
+}
+
+function renderWorkShareChart() {
+  const models = orderedModels(state.traces);
+  const taskTypes = [...new Set(state.traces.map((trace) => trace.task_type).filter(Boolean))]
+    .sort((a, b) => TASK_TYPE_ORDER.indexOf(a) - TASK_TYPE_ORDER.indexOf(b));
+
+  workShareChart.replaceChildren(...taskTypes.map((taskType) => {
+    const group = document.createElement("section");
+    group.className = "share-group";
+    const title = document.createElement("h3");
+    title.textContent = taskType;
+    const rows = document.createElement("div");
+    rows.className = "share-rows";
+    rows.replaceChildren(...models.map((model) => {
+      const traces = state.traces.filter((trace) => trace.model === model && trace.task_type === taskType);
+      const offscreen = mean(numeric(traces.map((trace) => trace.offscreen_percent))) || 0;
+      const onscreen = 100 - offscreen;
+      const row = document.createElement("div");
+      row.className = "share-row";
+      row.innerHTML = `<div class="share-label"><span class="model-key" style="--series-color:${colorFor(model)}"><i></i>${model}</span><small>n=${traces.length}</small></div>
+        <div class="share-track" aria-label="${model}, ${taskType}: ${onscreen.toFixed(1)}% on screen and ${offscreen.toFixed(1)}% off screen">
+          <div class="share-segment share-on" style="width:${onscreen}%">${onscreen >= 14 ? `${onscreen.toFixed(1)}%` : ""}</div>
+          <div class="share-segment share-off" style="width:${offscreen}%">${offscreen >= 14 ? `${offscreen.toFixed(1)}%` : ""}</div>
+        </div>`;
+      return row;
+    }));
+    group.append(title, rows);
+    return group;
   }));
 }
 
@@ -202,14 +236,14 @@ async function init() {
     taskTypes.forEach((type) => taskFilter.add(new Option(type, type)));
     document.querySelector("#total-traces").textContent = state.traces.length;
     document.querySelector("#total-models").textContent = state.activeModels.size;
-    document.querySelector("#never-count").textContent = state.traces.filter((trace) => trace.first_offscreen_round === null).length;
+    document.querySelector("#tasks-per-model").textContent = state.traces.length / state.activeModels.size;
     renderLegend();
-    renderSummary();
+    renderPerformanceSummary();
+    renderWorkShareChart();
     renderChart();
     taskFilter.addEventListener("change", () => {
       state.taskType = taskFilter.value;
       renderChart();
-      renderSummary();
     });
     new ResizeObserver(renderChart).observe(svg);
   } catch (error) {
