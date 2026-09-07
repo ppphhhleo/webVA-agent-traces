@@ -39,7 +39,7 @@ The `/analysis/` route plots each public trace by:
 - horizontal axis: off-screen rounds divided by GUI plus off-screen rounds
 - vertical axis: the one-based first off-screen round divided by all model rounds
 
-Desktop screenshots and waits count as GUI; Shell, Python, file, and browser-script actions count as off-screen. Neutral rounds are excluded from the share. Traces without off-screen work are plotted at 0% off-screen share and 100% delay, with slight packing for visibility.
+Desktop screenshots and waits count as GUI; Shell, Python, file, and browser-script actions count as off-screen. Neutral rounds are excluded from the share. Answer-only traces with no working actions are assigned 100% visibility and 0% off-screen reliance by convention. Traces without off-screen work are plotted at 0% off-screen share and 100% delay, with slight packing for visibility.
 
 The route reads a small derived dataset from `analysis/data.json`. Rebuild it after publishing new traces:
 

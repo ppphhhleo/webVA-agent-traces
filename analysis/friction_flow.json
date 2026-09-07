@@ -1,11 +1,11 @@
 {
   "schema_version": "3.0",
   "classifier_version": "gui-friction-flow-v3-handling-families",
-  "generated_at": "2026-09-07T19:06:17.564318+00:00",
+  "generated_at": "2026-09-07T20:11:54.660285+00:00",
   "source": {
     "dataset": "webva-agent-behaviors-trial1",
     "workbook_filename": "Trace Coding (1).xlsx",
-    "workbook_sha256": "354c5248c2edc6ad4809dd15f687e8f4789e95b9156331d66af66ee198433efe",
+    "workbook_sha256": "a423090c05d00c1ed17c142d12c44e34ebde26bcf07b1a48fd4fac396d2033d4",
     "sheet": "Coded Agent Traces Trial 1"
   },
   "method": {
@@ -58,13 +58,13 @@
       "Unresolved / abandoned": 6
     },
     "landing": {
-      "Computed evidence": 12,
+      "Computed evidence": 13,
       "Grounded visual evidence": 12,
-      "Prior-knowledge answer": 3,
       "Combined visual + computed": 2,
       "Misgrounded evidence": 6,
       "Fabricated evidence": 7,
-      "No answer": 4
+      "No answer": 4,
+      "Prior-knowledge answer": 2
     }
   },
   "links": [
@@ -78,14 +78,14 @@
         "agent-trial1-0001",
         "agent-trial1-0072",
         "agent-trial1-0085",
-        "agent-trial1-0334",
-        "agent-trial1-0364",
-        "agent-trial1-0367",
-        "agent-trial1-0372",
-        "agent-trial1-0374",
+        "agent-trial1-0335",
+        "agent-trial1-0365",
+        "agent-trial1-0368",
+        "agent-trial1-0373",
         "agent-trial1-0375",
-        "agent-trial1-0440",
-        "agent-trial1-0381"
+        "agent-trial1-0376",
+        "agent-trial1-0441",
+        "agent-trial1-0382"
       ],
       "trace_ids": [
         "tr_039f43821b0f2f35",
@@ -105,17 +105,18 @@
       "source": "Shifted to code",
       "target_stage": "landing",
       "target": "Computed evidence",
-      "count": 9,
+      "count": 10,
       "episode_ids": [
         "agent-trial1-0001",
         "agent-trial1-0072",
-        "agent-trial1-0172",
-        "agent-trial1-0240",
-        "agent-trial1-0364",
-        "agent-trial1-0367",
-        "agent-trial1-0372",
-        "agent-trial1-0401",
-        "agent-trial1-0166"
+        "agent-trial1-0085",
+        "agent-trial1-0173",
+        "agent-trial1-0241",
+        "agent-trial1-0365",
+        "agent-trial1-0368",
+        "agent-trial1-0373",
+        "agent-trial1-0402",
+        "agent-trial1-0167"
       ],
       "trace_ids": [
         "tr_126e517fd31a4dde",
@@ -123,6 +124,7 @@
         "tr_4b80c170362e99e7",
         "tr_730f0dfa05bca83d",
         "tr_7c11ca9aff93a83f",
+        "tr_885beba33a3c2e3f",
         "tr_a55ab1ce7cdb2d18",
         "tr_ac4c7be1bca52b35",
         "tr_cbac1d76d92a9f97",
@@ -139,10 +141,10 @@
         "agent-trial1-0008",
         "agent-trial1-0062",
         "agent-trial1-0064",
-        "agent-trial1-0307",
-        "agent-trial1-0315",
-        "agent-trial1-0445",
-        "agent-trial1-0450"
+        "agent-trial1-0308",
+        "agent-trial1-0316",
+        "agent-trial1-0446",
+        "agent-trial1-0451"
       ],
       "trace_ids": [
         "tr_0b6828de68d7c046",
@@ -164,14 +166,14 @@
         "agent-trial1-0008",
         "agent-trial1-0062",
         "agent-trial1-0064",
-        "agent-trial1-0307",
-        "agent-trial1-0315",
-        "agent-trial1-0407",
-        "agent-trial1-0410",
-        "agent-trial1-0413",
-        "agent-trial1-0445",
-        "agent-trial1-0450",
-        "agent-trial1-0297"
+        "agent-trial1-0308",
+        "agent-trial1-0316",
+        "agent-trial1-0408",
+        "agent-trial1-0411",
+        "agent-trial1-0414",
+        "agent-trial1-0446",
+        "agent-trial1-0451",
+        "agent-trial1-0298"
       ],
       "trace_ids": [
         "tr_0b6828de68d7c046",
@@ -225,10 +227,10 @@
       "count": 5,
       "episode_ids": [
         "agent-trial1-0035",
-        "agent-trial1-0186",
-        "agent-trial1-0327",
-        "agent-trial1-0330",
-        "agent-trial1-0399"
+        "agent-trial1-0187",
+        "agent-trial1-0328",
+        "agent-trial1-0331",
+        "agent-trial1-0400"
       ],
       "trace_ids": [
         "tr_3bfc101effde2330",
@@ -259,26 +261,11 @@
       "count": 2,
       "episode_ids": [
         "agent-trial1-0079",
-        "agent-trial1-0129"
+        "agent-trial1-0130"
       ],
       "trace_ids": [
         "tr_032e2887ac4891f6",
         "tr_aee13c5d7b73c83c"
-      ]
-    },
-    {
-      "source_stage": "handling",
-      "source": "Shifted to code",
-      "target_stage": "landing",
-      "target": "Prior-knowledge answer",
-      "count": 2,
-      "episode_ids": [
-        "agent-trial1-0085",
-        "agent-trial1-0334"
-      ],
-      "trace_ids": [
-        "tr_039f43821b0f2f35",
-        "tr_885beba33a3c2e3f"
       ]
     },
     {
@@ -288,7 +275,7 @@
       "target": "Combined visual + computed",
       "count": 1,
       "episode_ids": [
-        "agent-trial1-0129"
+        "agent-trial1-0130"
       ],
       "trace_ids": [
         "tr_aee13c5d7b73c83c"
@@ -301,12 +288,12 @@
       "target": "Shifted to code",
       "count": 6,
       "episode_ids": [
-        "agent-trial1-0139",
-        "agent-trial1-0172",
-        "agent-trial1-0240",
-        "agent-trial1-0386",
-        "agent-trial1-0401",
-        "agent-trial1-0166"
+        "agent-trial1-0140",
+        "agent-trial1-0173",
+        "agent-trial1-0241",
+        "agent-trial1-0387",
+        "agent-trial1-0402",
+        "agent-trial1-0167"
       ],
       "trace_ids": [
         "tr_126e517fd31a4dde",
@@ -324,7 +311,7 @@
       "target": "Combined visual + computed",
       "count": 1,
       "episode_ids": [
-        "agent-trial1-0139"
+        "agent-trial1-0140"
       ],
       "trace_ids": [
         "tr_fad8e689ae102d64"
@@ -337,10 +324,10 @@
       "target": "Misgrounded evidence",
       "count": 4,
       "episode_ids": [
-        "agent-trial1-0186",
-        "agent-trial1-0327",
-        "agent-trial1-0330",
-        "agent-trial1-0399"
+        "agent-trial1-0187",
+        "agent-trial1-0328",
+        "agent-trial1-0331",
+        "agent-trial1-0400"
       ],
       "trace_ids": [
         "tr_65e7ef075dfcecf9",
@@ -356,11 +343,11 @@
       "target": "Unresolved / abandoned",
       "count": 5,
       "episode_ids": [
-        "agent-trial1-0234",
-        "agent-trial1-0270",
-        "agent-trial1-0285",
-        "agent-trial1-0288",
-        "agent-trial1-0354"
+        "agent-trial1-0235",
+        "agent-trial1-0271",
+        "agent-trial1-0286",
+        "agent-trial1-0289",
+        "agent-trial1-0355"
       ],
       "trace_ids": [
         "tr_475d111272ead831",
@@ -376,8 +363,8 @@
       "target": "Fabricated evidence",
       "count": 2,
       "episode_ids": [
-        "agent-trial1-0234",
-        "agent-trial1-0354"
+        "agent-trial1-0235",
+        "agent-trial1-0355"
       ],
       "trace_ids": [
         "tr_475d111272ead831",
@@ -391,10 +378,10 @@
       "target": "No answer",
       "count": 4,
       "episode_ids": [
-        "agent-trial1-0270",
-        "agent-trial1-0284",
+        "agent-trial1-0271",
         "agent-trial1-0285",
-        "agent-trial1-0288"
+        "agent-trial1-0286",
+        "agent-trial1-0289"
       ],
       "trace_ids": [
         "tr_a5ec55d9d9dd841a",
@@ -409,10 +396,23 @@
       "target": "Unresolved / abandoned",
       "count": 1,
       "episode_ids": [
-        "agent-trial1-0284"
+        "agent-trial1-0285"
       ],
       "trace_ids": [
         "tr_e046ad274f5a69fd"
+      ]
+    },
+    {
+      "source_stage": "handling",
+      "source": "Shifted to code",
+      "target_stage": "landing",
+      "target": "Prior-knowledge answer",
+      "count": 1,
+      "episode_ids": [
+        "agent-trial1-0335"
+      ],
+      "trace_ids": [
+        "tr_039f43821b0f2f35"
       ]
     },
     {
@@ -422,8 +422,8 @@
       "target": "Finished without GUI repair",
       "count": 2,
       "episode_ids": [
-        "agent-trial1-0350",
-        "agent-trial1-0355"
+        "agent-trial1-0351",
+        "agent-trial1-0356"
       ],
       "trace_ids": [
         "tr_bd1a27e1312b9301",
@@ -437,8 +437,8 @@
       "target": "Fabricated evidence",
       "count": 2,
       "episode_ids": [
-        "agent-trial1-0350",
-        "agent-trial1-0355"
+        "agent-trial1-0351",
+        "agent-trial1-0356"
       ],
       "trace_ids": [
         "tr_bd1a27e1312b9301",
@@ -452,9 +452,9 @@
       "target": "Fabricated evidence",
       "count": 3,
       "episode_ids": [
-        "agent-trial1-0374",
         "agent-trial1-0375",
-        "agent-trial1-0381"
+        "agent-trial1-0376",
+        "agent-trial1-0382"
       ],
       "trace_ids": [
         "tr_35c872b883119134",
@@ -468,11 +468,11 @@
       "target": "Recovered in GUI",
       "count": 5,
       "episode_ids": [
-        "agent-trial1-0379",
-        "agent-trial1-0407",
-        "agent-trial1-0410",
-        "agent-trial1-0413",
-        "agent-trial1-0297"
+        "agent-trial1-0380",
+        "agent-trial1-0408",
+        "agent-trial1-0411",
+        "agent-trial1-0414",
+        "agent-trial1-0298"
       ],
       "trace_ids": [
         "tr_2b0ed9cbfbd05f3e",
@@ -489,7 +489,7 @@
       "target": "Prior-knowledge answer",
       "count": 1,
       "episode_ids": [
-        "agent-trial1-0379"
+        "agent-trial1-0380"
       ],
       "trace_ids": [
         "tr_2b0ed9cbfbd05f3e"
@@ -502,8 +502,8 @@
       "target": "Misgrounded evidence",
       "count": 2,
       "episode_ids": [
-        "agent-trial1-0386",
-        "agent-trial1-0440"
+        "agent-trial1-0387",
+        "agent-trial1-0441"
       ],
       "trace_ids": [
         "tr_39e15a5ef7804383",
@@ -720,10 +720,10 @@
       "first_mechanism": "Search / fetch",
       "pathway": "Code resolution after GUI friction",
       "handling": "Shifted to code",
-      "landing": "Prior-knowledge answer"
+      "landing": "Computed evidence"
     },
     {
-      "episode_id": "agent-trial1-0129",
+      "episode_id": "agent-trial1-0130",
       "trace_id": "tr_aee13c5d7b73c83c",
       "trace_number": 46,
       "model": "GPT-5.5",
@@ -737,14 +737,14 @@
       "friction_end_round": 57,
       "response": "Retry / recover in GUI",
       "response_round": 63,
-      "response_annotation_id": "agent-trial1-0130",
+      "response_annotation_id": "agent-trial1-0131",
       "first_mechanism": "Code augmentation",
       "pathway": "GUI retry → code verification",
       "handling": "Mixed GUI + code",
       "landing": "Combined visual + computed"
     },
     {
-      "episode_id": "agent-trial1-0139",
+      "episode_id": "agent-trial1-0140",
       "trace_id": "tr_fad8e689ae102d64",
       "trace_number": 48,
       "model": "GPT-5.5",
@@ -758,14 +758,14 @@
       "friction_end_round": 54,
       "response": "Moved off screen",
       "response_round": 58,
-      "response_annotation_id": "agent-trial1-0140",
+      "response_annotation_id": "agent-trial1-0141",
       "first_mechanism": "App inspection",
       "pathway": "Code resolution after GUI friction",
       "handling": "Shifted to code",
       "landing": "Combined visual + computed"
     },
     {
-      "episode_id": "agent-trial1-0172",
+      "episode_id": "agent-trial1-0173",
       "trace_id": "tr_126e517fd31a4dde",
       "trace_number": 57,
       "model": "GPT-5.5",
@@ -779,14 +779,14 @@
       "friction_end_round": 5,
       "response": "Moved off screen",
       "response_round": 8,
-      "response_annotation_id": "agent-trial1-0173",
+      "response_annotation_id": "agent-trial1-0174",
       "first_mechanism": "App inspection",
       "pathway": "Code resolution after GUI friction",
       "handling": "Shifted to code",
       "landing": "Computed evidence"
     },
     {
-      "episode_id": "agent-trial1-0186",
+      "episode_id": "agent-trial1-0187",
       "trace_id": "tr_8c9eccf85eb1f0eb",
       "trace_number": 60,
       "model": "GPT-5.5",
@@ -800,14 +800,14 @@
       "friction_end_round": 3,
       "response": "Continued without repair",
       "response_round": 3,
-      "response_annotation_id": "agent-trial1-0190",
+      "response_annotation_id": "agent-trial1-0191",
       "first_mechanism": "No repair / assumed state",
       "pathway": "Continued without repair",
       "handling": "Finished without GUI repair",
       "landing": "Misgrounded evidence"
     },
     {
-      "episode_id": "agent-trial1-0234",
+      "episode_id": "agent-trial1-0235",
       "trace_id": "tr_475d111272ead831",
       "trace_number": 68,
       "model": "Claude Sonnet 5",
@@ -821,14 +821,14 @@
       "friction_end_round": 92,
       "response": "Stopped without resolution",
       "response_round": 93,
-      "response_annotation_id": "agent-trial1-0233",
+      "response_annotation_id": "agent-trial1-0234",
       "first_mechanism": "No repair / task ended",
       "pathway": "Stopped without resolution",
       "handling": "Unresolved / abandoned",
       "landing": "Fabricated evidence"
     },
     {
-      "episode_id": "agent-trial1-0240",
+      "episode_id": "agent-trial1-0241",
       "trace_id": "tr_4b80c170362e99e7",
       "trace_number": 71,
       "model": "Claude Sonnet 5",
@@ -842,14 +842,14 @@
       "friction_end_round": 31,
       "response": "Moved off screen",
       "response_round": 32,
-      "response_annotation_id": "agent-trial1-0241",
+      "response_annotation_id": "agent-trial1-0242",
       "first_mechanism": "App inspection",
       "pathway": "Code resolution after GUI friction",
       "handling": "Shifted to code",
       "landing": "Computed evidence"
     },
     {
-      "episode_id": "agent-trial1-0270",
+      "episode_id": "agent-trial1-0271",
       "trace_id": "tr_a5ec55d9d9dd841a",
       "trace_number": 78,
       "model": "Claude Sonnet 5",
@@ -863,14 +863,14 @@
       "friction_end_round": 80,
       "response": "Retry / recover in GUI",
       "response_round": 98,
-      "response_annotation_id": "agent-trial1-0268",
+      "response_annotation_id": "agent-trial1-0269",
       "first_mechanism": "Persistent retry / re-aim",
       "pathway": "Stopped without resolution",
       "handling": "Unresolved / abandoned",
       "landing": "No answer"
     },
     {
-      "episode_id": "agent-trial1-0284",
+      "episode_id": "agent-trial1-0285",
       "trace_id": "tr_e046ad274f5a69fd",
       "trace_number": 82,
       "model": "Claude Sonnet 5",
@@ -884,14 +884,14 @@
       "friction_end_round": 66,
       "response": "Retry / recover in GUI",
       "response_round": 69,
-      "response_annotation_id": "agent-trial1-0282",
+      "response_annotation_id": "agent-trial1-0283",
       "first_mechanism": "Persistent retry / re-aim",
       "pathway": "GUI retry → off-screen attempts → unresolved",
       "handling": "Unresolved / abandoned",
       "landing": "No answer"
     },
     {
-      "episode_id": "agent-trial1-0285",
+      "episode_id": "agent-trial1-0286",
       "trace_id": "tr_d48b4d6689e0d88f",
       "trace_number": 85,
       "model": "Claude Sonnet 5",
@@ -905,14 +905,14 @@
       "friction_end_round": 14,
       "response": "Moved off screen",
       "response_round": 15,
-      "response_annotation_id": "agent-trial1-0287",
+      "response_annotation_id": "agent-trial1-0288",
       "first_mechanism": "Search / fetch",
       "pathway": "Off-screen attempt, unresolved",
       "handling": "Unresolved / abandoned",
       "landing": "No answer"
     },
     {
-      "episode_id": "agent-trial1-0288",
+      "episode_id": "agent-trial1-0289",
       "trace_id": "tr_d48b4d6689e0d88f",
       "trace_number": 85,
       "model": "Claude Sonnet 5",
@@ -926,14 +926,14 @@
       "friction_end_round": 81,
       "response": "Retry / recover in GUI",
       "response_round": 95,
-      "response_annotation_id": "agent-trial1-0289",
+      "response_annotation_id": "agent-trial1-0290",
       "first_mechanism": "Persistent retry / re-aim",
       "pathway": "Stopped without resolution",
       "handling": "Unresolved / abandoned",
       "landing": "No answer"
     },
     {
-      "episode_id": "agent-trial1-0307",
+      "episode_id": "agent-trial1-0308",
       "trace_id": "tr_0b6828de68d7c046",
       "trace_number": 86,
       "model": "Claude Sonnet 5",
@@ -947,14 +947,14 @@
       "friction_end_round": 48,
       "response": "Retry / recover in GUI",
       "response_round": 50,
-      "response_annotation_id": "agent-trial1-0308",
+      "response_annotation_id": "agent-trial1-0309",
       "first_mechanism": "Self-recovery",
       "pathway": "GUI recovery",
       "handling": "Recovered in GUI",
       "landing": "Grounded visual evidence"
     },
     {
-      "episode_id": "agent-trial1-0315",
+      "episode_id": "agent-trial1-0316",
       "trace_id": "tr_37a7791fdefa35a0",
       "trace_number": 87,
       "model": "Claude Sonnet 5",
@@ -968,14 +968,14 @@
       "friction_end_round": 14,
       "response": "Retry / recover in GUI",
       "response_round": 4,
-      "response_annotation_id": "agent-trial1-0312",
+      "response_annotation_id": "agent-trial1-0313",
       "first_mechanism": "On-screen bypass",
       "pathway": "GUI recovery",
       "handling": "Recovered in GUI",
       "landing": "Grounded visual evidence"
     },
     {
-      "episode_id": "agent-trial1-0327",
+      "episode_id": "agent-trial1-0328",
       "trace_id": "tr_65e7ef075dfcecf9",
       "trace_number": 92,
       "model": "GPT-5.4",
@@ -989,14 +989,14 @@
       "friction_end_round": 2,
       "response": "Continued without repair",
       "response_round": 2,
-      "response_annotation_id": "agent-trial1-0328",
+      "response_annotation_id": "agent-trial1-0329",
       "first_mechanism": "No repair / assumed state",
       "pathway": "Continued without repair",
       "handling": "Finished without GUI repair",
       "landing": "Misgrounded evidence"
     },
     {
-      "episode_id": "agent-trial1-0330",
+      "episode_id": "agent-trial1-0331",
       "trace_id": "tr_a50c08fbd1995815",
       "trace_number": 93,
       "model": "GPT-5.4",
@@ -1010,14 +1010,14 @@
       "friction_end_round": 4,
       "response": "Continued without repair",
       "response_round": 4,
-      "response_annotation_id": "agent-trial1-0331",
+      "response_annotation_id": "agent-trial1-0332",
       "first_mechanism": "No repair / assumed state",
       "pathway": "Continued without repair",
       "handling": "Finished without GUI repair",
       "landing": "Misgrounded evidence"
     },
     {
-      "episode_id": "agent-trial1-0334",
+      "episode_id": "agent-trial1-0335",
       "trace_id": "tr_039f43821b0f2f35",
       "trace_number": 94,
       "model": "GPT-5.4",
@@ -1031,14 +1031,14 @@
       "friction_end_round": 13,
       "response": "Moved off screen",
       "response_round": 14,
-      "response_annotation_id": "agent-trial1-0337",
+      "response_annotation_id": "agent-trial1-0338",
       "first_mechanism": "Search / fetch",
       "pathway": "Code resolution after GUI friction",
       "handling": "Shifted to code",
       "landing": "Prior-knowledge answer"
     },
     {
-      "episode_id": "agent-trial1-0350",
+      "episode_id": "agent-trial1-0351",
       "trace_id": "tr_bd1a27e1312b9301",
       "trace_number": 98,
       "model": "GPT-5.4",
@@ -1052,14 +1052,14 @@
       "friction_end_round": 23,
       "response": "Moved off screen",
       "response_round": 13,
-      "response_annotation_id": "agent-trial1-0351",
+      "response_annotation_id": "agent-trial1-0352",
       "first_mechanism": "Failed code/image inspection",
       "pathway": "GUI repetition + failed code → fabrication",
       "handling": "Finished without GUI repair",
       "landing": "Fabricated evidence"
     },
     {
-      "episode_id": "agent-trial1-0354",
+      "episode_id": "agent-trial1-0355",
       "trace_id": "tr_5e0e5300b59e05f7",
       "trace_number": 99,
       "model": "GPT-5.4",
@@ -1073,14 +1073,14 @@
       "friction_end_round": 6,
       "response": "Stopped without resolution",
       "response_round": 7,
-      "response_annotation_id": "agent-trial1-0353",
+      "response_annotation_id": "agent-trial1-0354",
       "first_mechanism": "No repair / task ended",
       "pathway": "Stopped without resolution",
       "handling": "Unresolved / abandoned",
       "landing": "Fabricated evidence"
     },
     {
-      "episode_id": "agent-trial1-0355",
+      "episode_id": "agent-trial1-0356",
       "trace_id": "tr_fbb54f964cd904f6",
       "trace_number": 100,
       "model": "GPT-5.4",
@@ -1094,14 +1094,14 @@
       "friction_end_round": 2,
       "response": "Continued without repair",
       "response_round": 2,
-      "response_annotation_id": "agent-trial1-0356",
+      "response_annotation_id": "agent-trial1-0357",
       "first_mechanism": "No repair / assumed state",
       "pathway": "Continued without repair",
       "handling": "Finished without GUI repair",
       "landing": "Fabricated evidence"
     },
     {
-      "episode_id": "agent-trial1-0364",
+      "episode_id": "agent-trial1-0365",
       "trace_id": "tr_7c11ca9aff93a83f",
       "trace_number": 102,
       "model": "GPT-5.4",
@@ -1115,14 +1115,14 @@
       "friction_end_round": 5,
       "response": "Moved off screen",
       "response_round": 6,
-      "response_annotation_id": "agent-trial1-0361",
+      "response_annotation_id": "agent-trial1-0362",
       "first_mechanism": "Prior knowledge / known source",
       "pathway": "Code resolution after GUI friction",
       "handling": "Shifted to code",
       "landing": "Computed evidence"
     },
     {
-      "episode_id": "agent-trial1-0367",
+      "episode_id": "agent-trial1-0368",
       "trace_id": "tr_a55ab1ce7cdb2d18",
       "trace_number": 103,
       "model": "GPT-5.4",
@@ -1136,14 +1136,14 @@
       "friction_end_round": 11,
       "response": "Moved off screen",
       "response_round": 12,
-      "response_annotation_id": "agent-trial1-0368",
+      "response_annotation_id": "agent-trial1-0369",
       "first_mechanism": "Prior knowledge / known source",
       "pathway": "Code resolution after GUI friction",
       "handling": "Shifted to code",
       "landing": "Computed evidence"
     },
     {
-      "episode_id": "agent-trial1-0372",
+      "episode_id": "agent-trial1-0373",
       "trace_id": "tr_730f0dfa05bca83d",
       "trace_number": 104,
       "model": "GPT-5.4",
@@ -1157,14 +1157,14 @@
       "friction_end_round": 12,
       "response": "Moved off screen",
       "response_round": 13,
-      "response_annotation_id": "agent-trial1-0371",
+      "response_annotation_id": "agent-trial1-0372",
       "first_mechanism": "Code debugging / environment",
       "pathway": "Code resolution after GUI friction",
       "handling": "Shifted to code",
       "landing": "Computed evidence"
     },
     {
-      "episode_id": "agent-trial1-0374",
+      "episode_id": "agent-trial1-0375",
       "trace_id": "tr_49d24650e3c488c3",
       "trace_number": 105,
       "model": "GPT-5.4",
@@ -1178,14 +1178,14 @@
       "friction_end_round": 2,
       "response": "Moved off screen",
       "response_round": 6,
-      "response_annotation_id": "agent-trial1-0376",
+      "response_annotation_id": "agent-trial1-0377",
       "first_mechanism": "Prior knowledge / known source",
       "pathway": "Code resolution after GUI friction",
       "handling": "Shifted to code",
       "landing": "Fabricated evidence"
     },
     {
-      "episode_id": "agent-trial1-0375",
+      "episode_id": "agent-trial1-0376",
       "trace_id": "tr_49d24650e3c488c3",
       "trace_number": 105,
       "model": "GPT-5.4",
@@ -1199,14 +1199,14 @@
       "friction_end_round": 5,
       "response": "Moved off screen",
       "response_round": 6,
-      "response_annotation_id": "agent-trial1-0376",
+      "response_annotation_id": "agent-trial1-0377",
       "first_mechanism": "Prior knowledge / known source",
       "pathway": "Code resolution after GUI friction",
       "handling": "Shifted to code",
       "landing": "Fabricated evidence"
     },
     {
-      "episode_id": "agent-trial1-0379",
+      "episode_id": "agent-trial1-0380",
       "trace_id": "tr_2b0ed9cbfbd05f3e",
       "trace_number": 106,
       "model": "GPT-5.4",
@@ -1220,14 +1220,14 @@
       "friction_end_round": 11,
       "response": "Retry / recover in GUI",
       "response_round": 12,
-      "response_annotation_id": "agent-trial1-0378",
+      "response_annotation_id": "agent-trial1-0379",
       "first_mechanism": "Persistent retry / re-aim",
       "pathway": "GUI recovery",
       "handling": "Recovered in GUI",
       "landing": "Prior-knowledge answer"
     },
     {
-      "episode_id": "agent-trial1-0386",
+      "episode_id": "agent-trial1-0387",
       "trace_id": "tr_39e15a5ef7804383",
       "trace_number": 107,
       "model": "GPT-5.4",
@@ -1241,14 +1241,14 @@
       "friction_end_round": 12,
       "response": "Moved off screen",
       "response_round": 13,
-      "response_annotation_id": "agent-trial1-0387",
+      "response_annotation_id": "agent-trial1-0388",
       "first_mechanism": "Search / fetch",
       "pathway": "Code resolution after GUI friction",
       "handling": "Shifted to code",
       "landing": "Misgrounded evidence"
     },
     {
-      "episode_id": "agent-trial1-0399",
+      "episode_id": "agent-trial1-0400",
       "trace_id": "tr_aa1b3210ce504504",
       "trace_number": 111,
       "model": "GPT-5.4",
@@ -1262,14 +1262,14 @@
       "friction_end_round": 9,
       "response": "Continued without repair",
       "response_round": 10,
-      "response_annotation_id": "agent-trial1-0400",
+      "response_annotation_id": "agent-trial1-0401",
       "first_mechanism": "No repair / assumed state",
       "pathway": "Continued without repair",
       "handling": "Finished without GUI repair",
       "landing": "Misgrounded evidence"
     },
     {
-      "episode_id": "agent-trial1-0401",
+      "episode_id": "agent-trial1-0402",
       "trace_id": "tr_e877c6dd4fe7347d",
       "trace_number": 112,
       "model": "GPT-5.4",
@@ -1283,14 +1283,14 @@
       "friction_end_round": 18,
       "response": "Moved off screen",
       "response_round": 19,
-      "response_annotation_id": "agent-trial1-0402",
+      "response_annotation_id": "agent-trial1-0403",
       "first_mechanism": "Prior knowledge / known source",
       "pathway": "Code resolution after GUI friction",
       "handling": "Shifted to code",
       "landing": "Computed evidence"
     },
     {
-      "episode_id": "agent-trial1-0407",
+      "episode_id": "agent-trial1-0408",
       "trace_id": "tr_f0a7933d57ea12b1",
       "trace_number": 113,
       "model": "GPT-5.4",
@@ -1304,14 +1304,14 @@
       "friction_end_round": 9,
       "response": "Retry / recover in GUI",
       "response_round": 11,
-      "response_annotation_id": "agent-trial1-0408",
+      "response_annotation_id": "agent-trial1-0409",
       "first_mechanism": "Self-recovery",
       "pathway": "GUI recovery",
       "handling": "Recovered in GUI",
       "landing": "Grounded visual evidence"
     },
     {
-      "episode_id": "agent-trial1-0410",
+      "episode_id": "agent-trial1-0411",
       "trace_id": "tr_9124c71db680598e",
       "trace_number": 114,
       "model": "GPT-5.4",
@@ -1325,14 +1325,14 @@
       "friction_end_round": 6,
       "response": "Retry / recover in GUI",
       "response_round": 7,
-      "response_annotation_id": "agent-trial1-0411",
+      "response_annotation_id": "agent-trial1-0412",
       "first_mechanism": "Persistent retry / re-aim",
       "pathway": "GUI recovery",
       "handling": "Recovered in GUI",
       "landing": "Grounded visual evidence"
     },
     {
-      "episode_id": "agent-trial1-0413",
+      "episode_id": "agent-trial1-0414",
       "trace_id": "tr_a7380becde97fcab",
       "trace_number": 115,
       "model": "GPT-5.4",
@@ -1346,14 +1346,14 @@
       "friction_end_round": 1,
       "response": "Retry / recover in GUI",
       "response_round": 2,
-      "response_annotation_id": "agent-trial1-0414",
+      "response_annotation_id": "agent-trial1-0415",
       "first_mechanism": "Self-recovery",
       "pathway": "GUI recovery",
       "handling": "Recovered in GUI",
       "landing": "Grounded visual evidence"
     },
     {
-      "episode_id": "agent-trial1-0440",
+      "episode_id": "agent-trial1-0441",
       "trace_id": "tr_4cdf0ebde8f08ada",
       "trace_number": 122,
       "model": "GPT-5.4",
@@ -1367,14 +1367,14 @@
       "friction_end_round": 6,
       "response": "Moved off screen",
       "response_round": 7,
-      "response_annotation_id": "agent-trial1-0441",
+      "response_annotation_id": "agent-trial1-0442",
       "first_mechanism": "Prior knowledge / known source",
       "pathway": "Code resolution after GUI friction",
       "handling": "Shifted to code",
       "landing": "Misgrounded evidence"
     },
     {
-      "episode_id": "agent-trial1-0445",
+      "episode_id": "agent-trial1-0446",
       "trace_id": "tr_68db8fddec7d6d1e",
       "trace_number": 123,
       "model": "Claude Opus 4.8",
@@ -1388,14 +1388,14 @@
       "friction_end_round": 13,
       "response": "Retry / recover in GUI",
       "response_round": 14,
-      "response_annotation_id": "agent-trial1-0446",
+      "response_annotation_id": "agent-trial1-0447",
       "first_mechanism": "Self-recovery",
       "pathway": "GUI recovery",
       "handling": "Recovered in GUI",
       "landing": "Grounded visual evidence"
     },
     {
-      "episode_id": "agent-trial1-0450",
+      "episode_id": "agent-trial1-0451",
       "trace_id": "tr_7aa582985ead8650",
       "trace_number": 124,
       "model": "Claude Opus 4.8",
@@ -1409,14 +1409,14 @@
       "friction_end_round": 14,
       "response": "Moved off screen",
       "response_round": 15,
-      "response_annotation_id": "agent-trial1-0451",
+      "response_annotation_id": "agent-trial1-0452",
       "first_mechanism": "Failed code attempt",
       "pathway": "Failed code attempt → GUI recovery",
       "handling": "Recovered in GUI",
       "landing": "Grounded visual evidence"
     },
     {
-      "episode_id": "agent-trial1-0166",
+      "episode_id": "agent-trial1-0167",
       "trace_id": "tr_cbac1d76d92a9f97",
       "trace_number": 126,
       "model": "GPT-5.5",
@@ -1430,14 +1430,14 @@
       "friction_end_round": 16,
       "response": "Moved off screen",
       "response_round": 17,
-      "response_annotation_id": "agent-trial1-0165",
+      "response_annotation_id": "agent-trial1-0166",
       "first_mechanism": "App inspection",
       "pathway": "Code resolution after GUI friction",
       "handling": "Shifted to code",
       "landing": "Computed evidence"
     },
     {
-      "episode_id": "agent-trial1-0297",
+      "episode_id": "agent-trial1-0298",
       "trace_id": "tr_b5008604260f71fe",
       "trace_number": 128,
       "model": "Claude Sonnet 5",
@@ -1451,14 +1451,14 @@
       "friction_end_round": 15,
       "response": "Retry / recover in GUI",
       "response_round": 2,
-      "response_annotation_id": "agent-trial1-0298",
+      "response_annotation_id": "agent-trial1-0299",
       "first_mechanism": "On-screen bypass",
       "pathway": "GUI recovery",
       "handling": "Recovered in GUI",
       "landing": "Grounded visual evidence"
     },
     {
-      "episode_id": "agent-trial1-0381",
+      "episode_id": "agent-trial1-0382",
       "trace_id": "tr_35c872b883119134",
       "trace_number": 129,
       "model": "GPT-5.4",
@@ -1472,7 +1472,7 @@
       "friction_end_round": 4,
       "response": "Moved off screen",
       "response_round": 6,
-      "response_annotation_id": "agent-trial1-0382",
+      "response_annotation_id": "agent-trial1-0383",
       "first_mechanism": "Prior knowledge / known source",
       "pathway": "Code resolution after GUI friction",
       "handling": "Shifted to code",

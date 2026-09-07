@@ -64,7 +64,7 @@
             <div class="mode-legend" aria-label="Work mode legend"><span><i class="mode-on"></i>On screen</span><span><i class="mode-off"></i>Off screen</span></div>
           </header>
           <div class="share-chart" id="work-share-chart" role="img" aria-labelledby="work-share-title work-share-description"></div>
-          <p class="chart-description" id="work-share-description">Each trace is first normalized to 100% across its GUI and off-screen working rounds. The chart then averages those trace-level shares within each model and task type, giving every trace equal weight.</p>
+          <p class="chart-description" id="work-share-description">Each trace is first normalized to 100% across its GUI and off-screen working rounds. Answer-only traces with no working actions count as 100% visible by convention. The chart then averages those trace-level shares within each model and task type, giving every trace equal weight.</p>
           <section class="switch-delay-section" aria-labelledby="switch-delay-title">
             <header>
               <div>
@@ -141,7 +141,7 @@
             <svg id="evidence-plot" role="img" aria-labelledby="evidence-title evidence-description"></svg>
             <div class="plot-tooltip evidence-tooltip" id="evidence-tooltip" role="status" hidden></div>
           </div>
-          <p class="chart-description" id="evidence-description">Each small point is one of the 120 coded trial-one traces and opens that trace when selected. Horizontal position is the share of working rounds performed on screen. Evidence categories form a descriptive ordered scale—not an answer-correctness score. Large points show model means; translucent regions show 95% confidence regions. Select a model label or mean point to focus its traces.</p>
+          <p class="chart-description" id="evidence-description">Each small point is one of the 120 coded trial-one traces and opens that trace when selected. Horizontal position is the share of working rounds performed on screen; answer-only traces with no working actions appear at 100% visible by convention. Evidence categories form a descriptive ordered scale—not an answer-correctness score. Large points show model means; translucent regions show 95% confidence regions. Select a model label or mean point to focus its traces.</p>
         </section>
 
         <section class="analysis-card distribution-card" aria-labelledby="chart-title">

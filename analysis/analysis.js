@@ -105,12 +105,15 @@ function tooltipHtml(trace) {
   const first = trace.first_offscreen_round
     ? `Round ${trace.first_offscreen_round} of ${trace.total_rounds} (${percent(trace.first_offscreen_position_percent)})`
     : "Never";
+  const visibilityNote = trace.visibility_basis === "answer_only_convention"
+    ? "<br><em>Answer-only trace: 100% visible by convention</em>"
+    : "";
   return `<strong>Trace ${trace.trace_number} · Task ${trace.task_id}</strong>
     <p><b>${trace.model}</b><br>${trace.task_type}<br>
     Off-screen share: <b>${percent(trace.offscreen_percent)}</b><br>
     GUI share: <b>${percent(trace.gui_percent)}</b><br>
     First off-screen: <b>${first}</b><br>
-    ${trace.offscreen_rounds} off-screen · ${trace.gui_rounds} GUI · ${trace.neutral_rounds} neutral</p>`;
+    ${trace.offscreen_rounds} off-screen · ${trace.gui_rounds} GUI · ${trace.neutral_rounds} neutral${visibilityNote}</p>`;
 }
 
 function showTooltip(event, trace) {
@@ -538,13 +541,16 @@ function renderEvidenceLegend() {
 function showEvidenceTooltip(event, trace) {
   const rounds = trace.evidence_rounds.length ? trace.evidence_rounds.join(", ") : "None";
   const score = Number.isFinite(trace.task_score) ? trace.task_score.toFixed(1) : "Unscored";
+  const visibilityNote = trace.visibility_basis === "answer_only_convention"
+    ? "<br><em>Answer-only trace: 100% visible by convention</em>"
+    : "";
   evidenceTooltip.innerHTML = `<strong>Trace ${trace.trace_number} · ${escapeHtml(trace.app || "WebVA")} task ${trace.task_id}</strong>
     <p><b>${escapeHtml(trace.model)}</b> · ${escapeHtml(trace.task_type)}<br><code>${escapeHtml(trace.trace_id)}</code><br>
     Evidence: <b>${escapeHtml(trace.evidence_category)}</b><br>
     Evidence round: <b>${escapeHtml(rounds)}</b><br>
     On-screen share: <b>${trace.gui_percent.toFixed(1)}%</b><br>
     Off-screen share: <b>${trace.offscreen_percent.toFixed(1)}%</b><br>
-    Task score: <b>${score}</b> · ${escapeHtml(trace.completion_status)}</p>`;
+    Task score: <b>${score}</b> · ${escapeHtml(trace.completion_status)}${visibilityNote}</p>`;
   evidenceTooltip.hidden = false;
   positionRelativeTooltip(event, evidenceTooltip);
 }
@@ -772,9 +778,9 @@ function renderEvidencePlot() {
 async function init() {
   try {
     const [response, frictionResponse, evidenceResponse] = await Promise.all([
-      fetch("data.json?v=3"),
-      fetch("friction_flow.json?v=4"),
-      fetch("evidence_visibility.json?v=1"),
+      fetch("data.json?v=4"),
+      fetch("friction_flow.json?v=5"),
+      fetch("evidence_visibility.json?v=2"),
     ]);
     if (!response.ok) throw new Error(`Analysis data request failed (${response.status})`);
     if (!frictionResponse.ok) throw new Error(`Friction data request failed (${frictionResponse.status})`);

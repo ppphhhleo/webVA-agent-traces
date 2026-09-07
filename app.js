@@ -193,9 +193,11 @@ function renderWorkModeSummary() {
   const offscreen = modes.filter((mode) => mode === "offscreen").length;
   const neutral = modes.length - gui - offscreen;
   const working = gui + offscreen;
-  const guiPercent = working ? Math.round((gui / working) * 100) : 0;
+  const guiPercent = working ? Math.round((gui / working) * 100) : 100;
   const offscreenPercent = working ? 100 - guiPercent : 0;
-  elements.guiRatio.textContent = `GUI ${gui} · ${guiPercent}%`;
+  elements.guiRatio.textContent = working
+    ? `GUI ${gui} · ${guiPercent}%`
+    : "Answer only · 100% visible";
   elements.offscreenRatio.textContent = `Off-screen ${offscreen} · ${offscreenPercent}%`;
   elements.neutralRounds.textContent = `${neutral} neutral`;
   elements.neutralRounds.hidden = neutral === 0;

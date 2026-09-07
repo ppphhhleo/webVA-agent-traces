@@ -117,6 +117,7 @@ def main() -> None:
             "task_score": trace["task_score"],
             "gui_percent": trace["gui_percent"],
             "offscreen_percent": trace["offscreen_percent"],
+            "visibility_basis": trace.get("visibility_basis", "working_rounds"),
             "evidence_category": evidence,
             "evidence_level": level,
             "evidence_percent": round(level / (len(EVIDENCE_ORDER) - 1) * 100, 2),
@@ -130,7 +131,7 @@ def main() -> None:
 
     output = {
         "schema_version": "1.0",
-        "classifier_version": "evidence-visibility-v1",
+        "classifier_version": "evidence-visibility-v2-answer-only-visible",
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "count": len(records),
         "cohort": {
@@ -142,7 +143,7 @@ def main() -> None:
         "evidence_order": EVIDENCE_ORDER,
         "category_counts": dict(Counter(record["evidence_category"] for record in records)),
         "method": {
-            "visibility": "GUI rounds divided by GUI plus off-screen working rounds; neutral rounds are excluded.",
+            "visibility": "GUI rounds divided by GUI plus off-screen working rounds; neutral rounds are excluded. Answer-only traces with no working rounds are assigned 100% visibility by convention.",
             "evidence": "One mutually exclusive delivery-evidence category is derived from the coded delivery annotations. Traces with both visual and prior-knowledge codes form a combined category.",
             "vertical_scale": "The evidence categories form an explicit descriptive ordinal scale from no delivered evidence to combined computed and visual evidence. It is not an answer-correctness score.",
             "aggregation": "Large dots are model means. Translucent ellipses are 95% bivariate confidence regions for the model mean, computed from unjittered trace positions.",

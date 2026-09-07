@@ -77,6 +77,12 @@ def analyze_trace(base_url: str, trace: dict) -> dict:
     neutral = total - gui - offscreen
     working = gui + offscreen
     first_index = next((index + 1 for index, mode in enumerate(modes) if mode == "offscreen"), None)
+    # Answer-only traces contain no working action to hide. Treat them as fully
+    # visible by convention, while retaining the zero GUI/off-screen counts so
+    # downstream views can distinguish the convention from GUI manipulation.
+    gui_percent = round(gui / working * 100, 2) if working else 100
+    offscreen_percent = round(offscreen / working * 100, 2) if working else 0
+    visibility_basis = "working_rounds" if working else "answer_only_convention"
 
     return {
         "trace_number": trace.get("trace_number"),
@@ -102,8 +108,9 @@ def analyze_trace(base_url: str, trace: dict) -> dict:
         "gui_rounds": gui,
         "offscreen_rounds": offscreen,
         "neutral_rounds": neutral,
-        "gui_percent": round(gui / working * 100, 2) if working else 0,
-        "offscreen_percent": round(offscreen / working * 100, 2) if working else 0,
+        "gui_percent": gui_percent,
+        "offscreen_percent": offscreen_percent,
+        "visibility_basis": visibility_basis,
         "first_offscreen_round": first_index,
         "first_offscreen_position_percent": round(first_index / total * 100, 2) if first_index and total else None,
     }
@@ -168,7 +175,7 @@ def main() -> None:
 
     output = {
         "schema_version": "1.0",
-        "classifier_version": "work-modes-v1",
+        "classifier_version": "work-modes-v2-answer-only-visible",
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "count": len(records),
         "source_count": len(catalog),
@@ -182,7 +189,7 @@ def main() -> None:
         "method": {
             "gui": "GUI manipulation plus desktop screenshot and desktop wait rounds.",
             "offscreen": "Shell, Python, file, and browser-script rounds; off-screen wins for mixed rounds.",
-            "ratio": "Off-screen rounds divided by GUI plus off-screen rounds; neutral rounds are excluded.",
+            "ratio": "Off-screen rounds divided by GUI plus off-screen rounds; neutral rounds are excluded. Answer-only traces with no working rounds are assigned 100% visibility and 0% off-screen reliance by convention.",
             "first_position": "One-based first off-screen round divided by all model rounds in the trace.",
             "actions": "Count of individual requested actions across model-message rounds, excluding final answers.",
             "task_type": "Modal task-type label across the four model traces for each task ID.",
