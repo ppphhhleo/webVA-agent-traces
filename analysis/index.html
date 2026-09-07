@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="../styles.css" />
-    <link rel="stylesheet" href="analysis.css?v=17" />
+    <link rel="stylesheet" href="analysis.css?v=18" />
   </head>
   <body>
     <div class="app-shell">
@@ -125,7 +125,7 @@
             <div class="alluvial-tooltip" id="alluvial-tooltip" role="status" hidden></div>
           </div>
           <div class="friction-examples" id="friction-examples" aria-label="Representative multi-stage trace pathways"></div>
-          <p class="chart-description" id="friction-description">Widths count coded friction episodes, not unique traces. Five handling families keep the aggregate flow readable; detailed ordered pathways still distinguish code verification, code resolution, GUI recovery, and failed attempts in the hover descriptions and trace timelines. Hover a ribbon or node to inspect the underlying paths and trace IDs.</p>
+          <p class="chart-description" id="friction-description">Widths count coded friction episodes, not unique traces. Five handling families keep the aggregate flow readable; labels and spatial flow provide cues in addition to the colorblind-safe palette. Detailed ordered pathways still distinguish code verification, code resolution, GUI recovery, and failed attempts in the hover descriptions and trace timelines. Hover a ribbon or node to inspect the underlying paths and trace IDs.</p>
         </section>
 
         <section class="analysis-card evidence-card" aria-labelledby="evidence-title">
@@ -141,7 +141,7 @@
             <svg id="evidence-plot" role="img" aria-labelledby="evidence-title evidence-description"></svg>
             <div class="plot-tooltip evidence-tooltip" id="evidence-tooltip" role="status" hidden></div>
           </div>
-          <p class="chart-description" id="evidence-description">Each small point is one coded trial-one trace and opens that trace when selected. Horizontal position is the share of working rounds performed on screen; answer-only traces with no working actions appear at 100% visible by convention. Points are deterministically jittered within their evidence band to reveal overlap, while model means and confidence regions use the unjittered values. Evidence categories form a descriptive ordered scale—not an answer-correctness score. Select a model label or mean point to focus its traces.</p>
+          <p class="chart-description" id="evidence-description">Each small point is one coded trial-one trace and opens that trace when selected. Horizontal position is the share of working rounds performed on screen; answer-only traces with no working actions appear at 100% visible by convention. Points are deterministically jittered within their evidence band to reveal overlap, while model means and confidence regions use the unjittered values. Color and marker shape redundantly encode each model using a colorblind-safe palette. Evidence categories form a descriptive ordered scale—not an answer-correctness score. Select a model label or mean point to focus its traces.</p>
         </section>
 
         <section class="analysis-card distribution-card" aria-labelledby="chart-title">
@@ -177,6 +177,6 @@
       </main>
     </div>
     <script src="../config.js"></script>
-    <script src="analysis.js?v=17" type="module"></script>
+    <script src="analysis.js?v=18" type="module"></script>
   </body>
 </html>

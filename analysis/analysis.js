@@ -1,30 +1,37 @@
 const MODEL_COLORS = {
-  "GPT-5.5": "#7655a6",
-  "GPT-5.4": "#2d72ad",
-  "Claude Opus 4.8": "#c55d3d",
-  "Claude Sonnet 5": "#278061",
+  "GPT-5.5": "#e69f00",
+  "GPT-5.4": "#0072b2",
+  "Claude Opus 4.8": "#cc79a7",
+  "Claude Sonnet 5": "#009e73",
 };
 const MODEL_ORDER = ["GPT-5.4", "GPT-5.5", "Claude Opus 4.8", "Claude Sonnet 5"];
 const TASK_TYPE_ORDER = ["Low-level", "Compound", "High-level"];
 const FRICTION_COLORS = {
-  "Misgrounded manipulation": "#d7621b",
-  "Repetition loop": "#3f8db8",
+  "Misgrounded manipulation": "#e69f00",
+  "Repetition loop": "#56b4e9",
 };
 const LANDING_COLORS = {
-  "Grounded visual evidence": "#2f7d50",
-  "Combined visual + computed": "#277f85",
-  "Computed evidence": "#62419a",
-  "Prior-knowledge answer": "#9a79ae",
-  "Misgrounded evidence": "#c76322",
-  "Fabricated evidence": "#ad2630",
-  "No answer": "#68706d",
+  "Grounded visual evidence": "#009e73",
+  "Combined visual + computed": "#56b4e9",
+  "Computed evidence": "#0072b2",
+  "Prior-knowledge answer": "#cc79a7",
+  "Misgrounded evidence": "#e69f00",
+  "Fabricated evidence": "#d55e00",
+  "No answer": "#666666",
 };
 const HANDLING_COLORS = {
-  "Recovered in GUI": "#2f7d50",
-  "Shifted to code": "#62419a",
-  "Mixed GUI + code": "#277f85",
-  "Finished without GUI repair": "#b44b43",
-  "Unresolved / abandoned": "#68706d",
+  "Recovered in GUI": "#009e73",
+  "Shifted to code": "#0072b2",
+  "Mixed GUI + code": "#cc79a7",
+  "Finished without GUI repair": "#d55e00",
+  "Unresolved / abandoned": "#666666",
+};
+
+const MODEL_MARKERS = {
+  "GPT-5.4": "circle",
+  "GPT-5.5": "square",
+  "Claude Opus 4.8": "triangle",
+  "Claude Sonnet 5": "diamond",
 };
 
 const state = { traces: [], friction: null, evidence: null, evidenceModel: "", activeModels: new Set(), taskType: "" };
@@ -51,12 +58,26 @@ const formatTokens = (value) => value === null ? "—" : Math.round(value).toLoc
 
 const percent = (value) => value === null || value === undefined ? "Never" : `${value.toFixed(1)}%`;
 const colorFor = (model) => MODEL_COLORS[model] || "#687777";
+const markerFor = (model) => MODEL_MARKERS[model] || "circle";
 const orderedModels = (traces) => [...new Set(traces.map((trace) => trace.model))]
   .sort((a, b) => MODEL_ORDER.indexOf(a) - MODEL_ORDER.indexOf(b));
 const svgElement = (name, attributes = {}) => {
   const node = document.createElementNS("http://www.w3.org/2000/svg", name);
   Object.entries(attributes).forEach(([key, value]) => node.setAttribute(key, value));
   return node;
+};
+const svgModelMarker = (model, cx, cy, radius, attributes = {}) => {
+  const marker = markerFor(model);
+  if (marker === "square") {
+    return svgElement("rect", { x: cx - radius, y: cy - radius, width: radius * 2, height: radius * 2, rx: radius * 0.12, ...attributes });
+  }
+  if (marker === "triangle") {
+    return svgElement("path", { d: `M ${cx} ${cy - radius * 1.2} L ${cx + radius * 1.08} ${cy + radius * 0.78} L ${cx - radius * 1.08} ${cy + radius * 0.78} Z`, ...attributes });
+  }
+  if (marker === "diamond") {
+    return svgElement("path", { d: `M ${cx} ${cy - radius * 1.3} L ${cx + radius} ${cy} L ${cx} ${cy + radius * 1.3} L ${cx - radius} ${cy} Z`, ...attributes });
+  }
+  return svgElement("circle", { cx, cy, r: radius, ...attributes });
 };
 const clamp = (value, lower, upper) => Math.max(lower, Math.min(upper, value));
 const stableHash = (value) => [...value].reduce((hash, character) => ((hash * 31) + character.charCodeAt(0)) >>> 0, 2166136261);
@@ -560,7 +581,7 @@ function renderEvidenceLegend() {
     item.dataset.muted = state.evidenceModel && state.evidenceModel !== model ? "true" : "false";
     item.title = state.evidenceModel === model ? "Show all models" : `Focus ${model}`;
     const count = state.evidence.traces.filter((trace) => trace.model === model).length;
-    item.innerHTML = `<i></i><b>${model}</b><small>n=${count}</small>`;
+    item.innerHTML = `<i class="marker-${markerFor(model)}"></i><b>${model}</b><small>n=${count}</small>`;
     item.addEventListener("click", () => {
       state.evidenceModel = state.evidenceModel === model ? "" : model;
       renderEvidenceLegend();
@@ -699,7 +720,7 @@ function renderEvidencePlot() {
   direction.textContent = "↑ More faithful evidence";
   evidenceSvg.append(direction);
   const xLabel = svgElement("text", { class: "axis-label", x: margin.left + plotWidth / 2, y: height - 21, "text-anchor": "middle" });
-  xLabel.textContent = "Action visibility · share of working rounds on screen";
+  xLabel.textContent = mobile ? "Share of working rounds on screen" : "Action visibility · share of working rounds on screen";
   evidenceSvg.append(xLabel);
   const offscreenHint = svgElement("text", { class: "axis-hint", x: margin.left, y: height - 48, "text-anchor": "start" });
   offscreenHint.textContent = "All work off screen";
@@ -743,11 +764,10 @@ function renderEvidencePlot() {
     if (trace.evidence_level === order.length - 1) jitterY = ySeed * ySpread * 0.5;
     const muted = state.evidenceModel && state.evidenceModel !== trace.model;
     const focused = state.evidenceModel === trace.model;
-    const point = svgElement("circle", {
+    const pointX = clamp(x(trace.gui_percent) + jitterX, margin.left + 5, margin.left + plotWidth - 5);
+    const pointY = clamp(y(trace.evidence_level) + jitterY, margin.top + 5, margin.top + plotHeight - 5);
+    const point = svgModelMarker(trace.model, pointX, pointY, mobile ? 3.8 : 4.8, {
       class: `evidence-trace-point${focused ? " is-focused" : ""}${muted ? " is-muted" : ""}`,
-      cx: clamp(x(trace.gui_percent) + jitterX, margin.left + 4, margin.left + plotWidth - 4),
-      cy: clamp(y(trace.evidence_level) + jitterY, margin.top + 4, margin.top + plotHeight - 4),
-      r: mobile ? 3.5 : 4.5,
       fill: colorFor(trace.model),
       tabindex: 0,
       role: "link",
@@ -772,11 +792,9 @@ function renderEvidencePlot() {
     const modelRecords = records.filter((trace) => trace.model === model);
     const averageVisibility = mean(modelRecords.map((trace) => trace.gui_percent));
     const averageEvidence = mean(modelRecords.map((trace) => trace.evidence_level));
-    const point = svgElement("circle", {
+    const meanRadius = state.evidenceModel === model ? (mobile ? 8 : 11) : (mobile ? 7 : 9);
+    const point = svgModelMarker(model, x(averageVisibility), y(averageEvidence), meanRadius, {
       class: `evidence-model-mean${state.evidenceModel === model ? " is-focused" : ""}${state.evidenceModel && state.evidenceModel !== model ? " is-muted" : ""}`,
-      cx: x(averageVisibility),
-      cy: y(averageEvidence),
-      r: state.evidenceModel === model ? (mobile ? 8 : 11) : (mobile ? 7 : 9),
       fill: colorFor(model),
       tabindex: 0,
       role: "button",
