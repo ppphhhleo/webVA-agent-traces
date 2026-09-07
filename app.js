@@ -10,6 +10,8 @@ const state = {
   roundIndex: 0,
   playTimer: null,
   playbackDelay: 850,
+  cursorPoint: null,
+  cursorViewport: null,
 };
 
 const $ = (selector) => document.querySelector(selector);
@@ -220,10 +222,12 @@ function screenshotUrl(artifactPath, trajectoryUrl) {
 function buildRounds(trajectory, trajectoryUrl) {
   const rounds = [];
   let latestScreenshot = null;
+  let latestViewport = null;
   for (const event of trajectory.events || []) {
     if (event.event_type === "screenshot") {
       const artifact = event.artifact_paths?.[0];
       if (artifact) latestScreenshot = screenshotUrl(artifact, trajectoryUrl);
+      if (event.data?.viewport?.width && event.data?.viewport?.height) latestViewport = event.data.viewport;
     }
     if (event.event_type !== "model_message") continue;
     const actions = requestedActions(event);
@@ -232,7 +236,15 @@ function buildRounds(trajectory, trajectoryUrl) {
     const title = actions.length
       ? actions.map((action) => displayAction(actionType(action))).join(" → ")
       : "Model output";
-    rounds.push({ event, actions, executions, rationale, title, screenshot: latestScreenshot });
+    rounds.push({
+      event,
+      actions,
+      executions,
+      rationale,
+      title,
+      screenshot: latestScreenshot,
+      viewport: event.data?.viewport || latestViewport,
+    });
   }
   return rounds;
 }
@@ -291,9 +303,14 @@ function formattedExecutionOutput(round) {
 }
 
 function cursorPoint(actions) {
-  const action = [...actions].reverse().find((item) => Number.isFinite(item?.x) && Number.isFinite(item?.y));
+  const action = [...actions].reverse().find((item) =>
+    (Number.isFinite(item?.x) && Number.isFinite(item?.y))
+    || (Array.isArray(item?.coordinate) && Number.isFinite(item.coordinate[0]) && Number.isFinite(item.coordinate[1]))
+  );
   if (!action) return null;
-  return { x: action.x, y: action.y };
+  return Array.isArray(action.coordinate)
+    ? { x: action.coordinate[0], y: action.coordinate[1] }
+    : { x: action.x, y: action.y };
 }
 
 function showToast(message) {
@@ -436,9 +453,33 @@ function renderRoundList() {
   }));
 }
 
+function positionActionCursor() {
+  const point = state.cursorPoint;
+  const viewport = state.cursorViewport;
+  if (!point || !viewport?.width || !viewport?.height || !elements.image.naturalWidth || !elements.image.naturalHeight) {
+    elements.cursor.hidden = true;
+    return;
+  }
+  const boxWidth = elements.image.clientWidth;
+  const boxHeight = elements.image.clientHeight;
+  const scale = Math.min(
+    boxWidth / elements.image.naturalWidth,
+    boxHeight / elements.image.naturalHeight,
+  );
+  const renderedWidth = elements.image.naturalWidth * scale;
+  const renderedHeight = elements.image.naturalHeight * scale;
+  const offsetX = (boxWidth - renderedWidth) / 2;
+  const offsetY = (boxHeight - renderedHeight) / 2;
+  elements.cursor.style.left = `${offsetX + (point.x / viewport.width) * renderedWidth}px`;
+  elements.cursor.style.top = `${offsetY + (point.y / viewport.height) * renderedHeight}px`;
+  elements.cursor.hidden = false;
+}
+
 function showImage(url, point = null, viewport = null) {
   elements.image.classList.remove("loaded");
   elements.cursor.hidden = true;
+  state.cursorPoint = point;
+  state.cursorViewport = viewport;
   if (!url) {
     elements.image.removeAttribute("src");
     elements.imageLoading.hidden = true;
@@ -450,11 +491,7 @@ function showImage(url, point = null, viewport = null) {
   elements.image.onload = () => {
     elements.imageLoading.hidden = true;
     elements.image.classList.add("loaded");
-    if (point && viewport?.width && viewport?.height) {
-      elements.cursor.style.left = `${(point.x / viewport.width) * 100}%`;
-      elements.cursor.style.top = `${(point.y / viewport.height) * 100}%`;
-      elements.cursor.hidden = false;
-    }
+    positionActionCursor();
   };
   elements.image.onerror = () => {
     elements.imageLoading.hidden = true;
@@ -485,8 +522,7 @@ function renderRound(index) {
   elements.slider.value = state.roundIndex;
   elements.previous.disabled = state.roundIndex === 0;
   elements.next.disabled = state.roundIndex === state.rounds.length - 1;
-  const viewport = round.event.data?.viewport || state.trajectory.events?.find((event) => event.event_type === "screenshot")?.data?.viewport;
-  showImage(round.screenshot, cursorPoint(round.actions), viewport);
+  showImage(round.screenshot, cursorPoint(round.actions), round.viewport);
   renderRoundList();
   requestAnimationFrame(() => elements.roundList.querySelector(".active")?.scrollIntoView({ block: "nearest", inline: "nearest" }));
 }
@@ -559,5 +595,6 @@ document.addEventListener("keydown", (event) => {
   if (event.key === "ArrowRight") renderRound(state.roundIndex + 1);
   if (event.key === " ") { event.preventDefault(); togglePlayback(); }
 });
+new ResizeObserver(positionActionCursor).observe(elements.image);
 
 loadCatalog();
