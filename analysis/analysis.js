@@ -33,6 +33,7 @@ const PATHWAY_COLORS = {
   "GUI ↔ code attempts → code resolution": "#62419a",
   "Code resolution after GUI friction": "#62419a",
   "GUI repetition + failed code → fabrication": "#9d3a40",
+  "GUI retry → off-screen attempts → unresolved": "#7b617f",
   "Off-screen attempt, unresolved": "#8b668b",
   "Continued without repair": "#b44b43",
   "Stopped without resolution": "#68706d",

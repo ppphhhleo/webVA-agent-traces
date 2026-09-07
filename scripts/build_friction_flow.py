@@ -68,6 +68,7 @@ STAGE_ORDERS = {
         "GUI ↔ code attempts → code resolution",
         "Code resolution after GUI friction",
         "GUI repetition + failed code → fabrication",
+        "GUI retry → off-screen attempts → unresolved",
         "Off-screen attempt, unresolved",
         "Continued without repair",
         "Stopped without resolution",
@@ -167,6 +168,18 @@ CASE_STUDIES = [
             {"rounds": "R14–33", "label": "GUI repetition + code checks", "kind": "context"},
             {"rounds": "R34–37", "label": "Failed code inspection", "kind": "offscreen"},
             {"rounds": "R38–39", "label": "Retry → fabricated answer", "kind": "landing"},
+        ],
+    },
+    {
+        "trace_id": "tr_e046ad274f5a69fd",
+        "label": "GUI retry, then unresolved off-screen attempts",
+        "summary": "After a misgrounded SQL interaction, the agent reinspects the GUI, then alternates screenshots and shell attempts until the round limit without obtaining an answer.",
+        "why": "The first response is a GUI retry, but the eventual pathway moves off screen and remains unresolved.",
+        "steps": [
+            {"rounds": "R66", "label": "Misgrounded SQL action", "kind": "gui"},
+            {"rounds": "R67–73", "label": "GUI retry + inspection", "kind": "gui"},
+            {"rounds": "R74–99", "label": "Mixed off-screen attempts", "kind": "context"},
+            {"rounds": "R100", "label": "No answer", "kind": "landing"},
         ],
     },
     {
@@ -318,6 +331,8 @@ def classify_pathway(
     )
 
     if landing == "No answer":
+        if used_offscreen and response == "Retry / recover in GUI":
+            return "GUI retry → off-screen attempts → unresolved"
         return "Off-screen attempt, unresolved" if used_offscreen else "Stopped without resolution"
     if mechanism == "Code augmentation" or "Code augmentation of visual" in later_codes:
         return "GUI retry → code verification"

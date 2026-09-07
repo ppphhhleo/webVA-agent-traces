@@ -1,7 +1,7 @@
 {
   "schema_version": "2.0",
   "classifier_version": "gui-friction-flow-v2-ordered-pathways",
-  "generated_at": "2026-09-07T18:43:52.370018+00:00",
+  "generated_at": "2026-09-07T18:53:05.973294+00:00",
   "source": {
     "dataset": "webva-agent-behaviors-trial1",
     "workbook_filename": "Trace Coding (1).xlsx",
@@ -41,6 +41,7 @@
       "GUI ↔ code attempts → code resolution",
       "Code resolution after GUI friction",
       "GUI repetition + failed code → fabrication",
+      "GUI retry → off-screen attempts → unresolved",
       "Off-screen attempt, unresolved",
       "Continued without repair",
       "Stopped without resolution"
@@ -73,7 +74,8 @@
       "Continued without repair": 6,
       "GUI ↔ code attempts → code resolution": 1,
       "Stopped without resolution": 4,
-      "Off-screen attempt, unresolved": 2,
+      "GUI retry → off-screen attempts → unresolved": 1,
+      "Off-screen attempt, unresolved": 1,
       "GUI repetition + failed code → fabrication": 1,
       "Failed code attempt → GUI recovery": 1
     },
@@ -595,7 +597,7 @@
       "source_stage": "response",
       "source": "Retry / recover in GUI",
       "target_stage": "pathway",
-      "target": "Off-screen attempt, unresolved",
+      "target": "GUI retry → off-screen attempts → unresolved",
       "count": 1,
       "episode_ids": [
         "agent-trial1-0284"
@@ -606,16 +608,14 @@
     },
     {
       "source_stage": "pathway",
-      "source": "Off-screen attempt, unresolved",
+      "source": "GUI retry → off-screen attempts → unresolved",
       "target_stage": "landing",
       "target": "No answer",
-      "count": 2,
+      "count": 1,
       "episode_ids": [
-        "agent-trial1-0284",
-        "agent-trial1-0285"
+        "agent-trial1-0284"
       ],
       "trace_ids": [
-        "tr_d48b4d6689e0d88f",
         "tr_e046ad274f5a69fd"
       ]
     },
@@ -624,6 +624,19 @@
       "source": "Moved off screen",
       "target_stage": "pathway",
       "target": "Off-screen attempt, unresolved",
+      "count": 1,
+      "episode_ids": [
+        "agent-trial1-0285"
+      ],
+      "trace_ids": [
+        "tr_d48b4d6689e0d88f"
+      ]
+    },
+    {
+      "source_stage": "pathway",
+      "source": "Off-screen attempt, unresolved",
+      "target_stage": "landing",
+      "target": "No answer",
       "count": 1,
       "episode_ids": [
         "agent-trial1-0285"
@@ -1113,7 +1126,7 @@
       "response_round": 69,
       "response_annotation_id": "agent-trial1-0282",
       "first_mechanism": "Persistent retry / re-aim",
-      "pathway": "Off-screen attempt, unresolved",
+      "pathway": "GUI retry → off-screen attempts → unresolved",
       "landing": "No answer"
     },
     {
@@ -1791,6 +1804,34 @@
         {
           "rounds": "R38–39",
           "label": "Retry → fabricated answer",
+          "kind": "landing"
+        }
+      ]
+    },
+    {
+      "trace_id": "tr_e046ad274f5a69fd",
+      "label": "GUI retry, then unresolved off-screen attempts",
+      "summary": "After a misgrounded SQL interaction, the agent reinspects the GUI, then alternates screenshots and shell attempts until the round limit without obtaining an answer.",
+      "why": "The first response is a GUI retry, but the eventual pathway moves off screen and remains unresolved.",
+      "steps": [
+        {
+          "rounds": "R66",
+          "label": "Misgrounded SQL action",
+          "kind": "gui"
+        },
+        {
+          "rounds": "R67–73",
+          "label": "GUI retry + inspection",
+          "kind": "gui"
+        },
+        {
+          "rounds": "R74–99",
+          "label": "Mixed off-screen attempts",
+          "kind": "context"
+        },
+        {
+          "rounds": "R100",
+          "label": "No answer",
           "kind": "landing"
         }
       ]
