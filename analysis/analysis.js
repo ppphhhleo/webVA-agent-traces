@@ -249,27 +249,16 @@ function renderSwitchDelayChart() {
           ? trace.first_offscreen_position_percent
           : 100
       );
-      const delay = mean(positions) || 0;
-      const minimum = positions.length ? Math.min(...positions) : 0;
-      const maximum = positions.length ? Math.max(...positions) : 0;
+      const switchSpeed = 100 - (mean(positions) || 100);
       const never = traces.filter((trace) => trace.first_offscreen_round === null).length;
-      const edgeClass = delay >= 88 ? " edge-right" : delay <= 12 ? " edge-left" : "";
-      const minimumEdgeClass = minimum <= 12 ? " edge-left" : "";
-      const maximumEdgeClass = maximum >= 88 ? " edge-right" : "";
-      const collapsedRange = Math.abs(maximum - minimum) < 0.05;
+      const edgeClass = switchSpeed >= 88 ? " edge-right" : switchSpeed <= 12 ? " edge-left" : "";
       const row = document.createElement("div");
       row.className = "delay-row";
       row.innerHTML = `<div class="delay-label"><span class="model-key" style="--series-color:${colorFor(model)}"><i></i>${model}</span><small>never ${never}/${traces.length}</small></div>
-        <div class="delay-track" aria-label="${model}, ${taskType}: minimum ${minimum.toFixed(1)}%, mean ${delay.toFixed(1)}%, maximum ${maximum.toFixed(1)}%; ${never} of ${traces.length} traces never went off screen">
-          <span class="delay-interval" style="left:${minimum}%;width:${maximum - minimum}%;--series-color:${colorFor(model)}"></span>
-          <i class="delay-cap" style="left:${minimum}%;--series-color:${colorFor(model)}"></i>
-          <i class="delay-cap" style="left:${maximum}%;--series-color:${colorFor(model)}"></i>
-          <i class="delay-dot" style="left:${delay}%;--series-color:${colorFor(model)}"></i>
-          <b class="delay-value${edgeClass}" style="left:${delay}%">mean ${delay.toFixed(1)}%</b>
-          ${collapsedRange
-            ? `<span class="delay-bound delay-collapsed${maximumEdgeClass || minimumEdgeClass}" style="left:${minimum}%">min = max ${minimum.toFixed(1)}%</span>`
-            : `<span class="delay-bound delay-min${minimumEdgeClass}" style="left:${minimum}%">min ${minimum.toFixed(1)}%</span>
-               <span class="delay-bound delay-max${maximumEdgeClass}" style="left:${maximum}%">max ${maximum.toFixed(1)}%</span>`}
+        <div class="delay-track" aria-label="${model}, ${taskType}: mean off-screen switch speed ${switchSpeed.toFixed(1)}%; ${never} of ${traces.length} traces never went off screen">
+          <span class="delay-fill" style="width:${switchSpeed}%;--series-color:${colorFor(model)}"></span>
+          <i class="delay-dot" style="left:${switchSpeed}%;--series-color:${colorFor(model)}"></i>
+          <b class="delay-value${edgeClass}" style="left:${switchSpeed}%">${switchSpeed.toFixed(1)}%</b>
         </div>`;
       return row;
     }));

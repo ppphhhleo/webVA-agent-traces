@@ -72,30 +72,24 @@
 .switch-delay-section > header { display: flex; align-items: end; justify-content: space-between; gap: 24px; padding: 18px 22px 14px; }
 .switch-delay-section > header h3 { margin: 5px 0 0; font: 600 24px/1.05 var(--serif); }
 .delay-direction { display: grid; grid-template-columns: auto minmax(80px, 150px) auto; align-items: center; gap: 8px; color: var(--muted); font: 8px var(--mono); }
-.delay-direction i { height: 1px; background: linear-gradient(90deg, var(--model-gpt55), var(--line-strong)); }
+.delay-direction i { height: 1px; background: linear-gradient(90deg, var(--line-strong), var(--model-gpt55)); }
 .delay-chart { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line); }
 .delay-group { min-width: 0; padding: 17px 22px 16px; }
 .delay-group + .delay-group { border-left: 1px solid var(--line); }
 .delay-group h4 { margin: 0 0 16px; font: 600 17px/1 var(--serif); }
-.delay-rows { display: grid; gap: 23px; }
-.delay-row { display: grid; gap: 14px; }
+.delay-rows { display: grid; gap: 15px; }
+.delay-row { display: grid; gap: 13px; }
 .delay-label { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 9px; }
 .delay-label .model-key { gap: 6px; }
 .delay-label .model-key i { width: 8px; height: 8px; }
 .delay-label small { color: var(--muted); font: 7px var(--mono); white-space: nowrap; }
 .delay-track { position: relative; height: 8px; border: 1px solid #cdd6d2; background: repeating-linear-gradient(90deg, #edf0ec 0, #edf0ec calc(25% - 1px), #d4dcd8 calc(25% - 1px), #d4dcd8 25%); }
-.delay-interval { position: absolute; top: 2px; height: 2px; min-width: 1px; background: var(--series-color); }
-.delay-cap { position: absolute; top: 50%; width: 2px; height: 8px; background: var(--series-color); transform: translate(-50%, -50%); }
+.delay-fill { position: absolute; top: 2px; left: 0; height: 2px; background: var(--series-color); }
 .delay-dot { position: absolute; top: 50%; width: 10px; height: 10px; border: 2px solid var(--surface); border-radius: 50%; background: var(--series-color); box-shadow: 0 0 0 1px var(--series-color); transform: translate(-50%, -50%); }
 .delay-value { position: absolute; top: -13px; color: var(--ink); font: 600 7px var(--mono); transform: translateX(-50%); white-space: nowrap; }
 .delay-value.edge-left { transform: none; }
 .delay-value.edge-right { transform: translateX(-100%); }
-.delay-bound { position: absolute; top: 10px; color: var(--muted); font: 500 6.5px var(--mono); transform: translateX(-50%); white-space: nowrap; }
-.delay-bound.edge-left { transform: none; }
-.delay-bound.edge-right { transform: translateX(-100%); }
-.delay-min { text-align: left; }
-.delay-max { text-align: right; }
-.delay-axis { display: flex; justify-content: space-between; margin-top: 23px; color: var(--muted); font: 7px var(--mono); }
+.delay-axis { display: flex; justify-content: space-between; margin-top: 10px; color: var(--muted); font: 7px var(--mono); }
 
 .signature-discussion { border-top: 1px solid var(--line-strong); }
 .signature-discussion > header { display: grid; grid-template-columns: auto minmax(0, 1fr) minmax(260px, 430px); align-items: end; gap: 14px 22px; padding: 18px 22px 14px; }

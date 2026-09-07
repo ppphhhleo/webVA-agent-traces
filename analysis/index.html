@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="../styles.css" />
-    <link rel="stylesheet" href="analysis.css?v=7" />
+    <link rel="stylesheet" href="analysis.css?v=8" />
   </head>
   <body>
     <div class="app-shell">
@@ -69,12 +69,12 @@
             <header>
               <div>
                 <p class="eyebrow">Model × task type</p>
-                <h3 id="switch-delay-title">When off-screen work first appears</h3>
+                <h3 id="switch-delay-title">How quickly off-screen work begins</h3>
               </div>
-              <div class="delay-direction" aria-label="Scale direction"><span>0% · Immediate</span><i></i><span>100% · Late or never</span></div>
+              <div class="delay-direction" aria-label="Scale direction"><span>0% · Slower or never</span><i></i><span>100% · Faster</span></div>
             </header>
             <div class="delay-chart" id="switch-delay-chart" role="img" aria-labelledby="switch-delay-title switch-delay-description"></div>
-            <p class="chart-description" id="switch-delay-description">For each trace, delay is the first off-screen round divided by all rounds. A trace that never goes off screen is assigned 100%; the chart then averages these trace-level positions, giving every trace equal weight.</p>
+            <p class="chart-description" id="switch-delay-description">Switch speed is 100% minus the normalized position of the first off-screen round. Higher values mean an earlier switch; traces that never go off screen receive 0%. Each trace contributes equal weight to the model average.</p>
           </section>
           <section class="signature-discussion" aria-labelledby="signature-title">
             <header>
@@ -85,22 +85,22 @@
             <div class="signature-grid">
               <article style="--signature-color:var(--model-gpt54)">
                 <h4>GPT-5.4 <span>Interface-bound persistence</span></h4>
-                <p>Only 11.5% of its working rounds are off screen, and 19 of 30 traces never leave the interface. Its mean switch position is 87.2%—the latest of the four—although visible persistence does not always produce the right answer.</p>
+                <p>Only 11.5% of its working rounds are off screen, and 19 of 30 traces never leave the interface. Its mean switch speed is 12.8%—the slowest of the four—although visible persistence does not always produce the right answer.</p>
                 <a href="../#trace=tr_7eaf20e2ecf1282f">tr_7eaf20e2ecf1282f</a>
               </article>
               <article style="--signature-color:var(--model-gpt55)">
                 <h4>GPT-5.5 <span>Backend-first extraction</span></h4>
-                <p>It spends 66.2% of working rounds off screen, starts there in 18 of 30 traces, and has the earliest mean switch position at 41.5%. A characteristic run searches bundles, opens Chrome remote debugging, and parses recovered data in code.</p>
+                <p>It spends 66.2% of working rounds off screen, starts there in 18 of 30 traces, and has the fastest mean switch speed at 58.5%. A characteristic run searches bundles, opens Chrome remote debugging, and parses recovered data in code.</p>
                 <a href="../#trace=tr_759cc42b6b434d91">tr_759cc42b6b434d91</a>
               </article>
               <article style="--signature-color:var(--model-opus)">
                 <h4>Claude Opus 4.8 <span>Task-adaptive switching</span></h4>
-                <p>Its off-screen share rises from 19.2% on low-level tasks to 52.0% on compound tasks, while its overall mean switch position is 70.1%. It often begins visually, then moves to Python or shell when exact aggregation is useful.</p>
+                <p>Its off-screen share rises from 19.2% on low-level tasks to 52.0% on compound tasks, while its overall mean switch speed is 29.9%. It often begins visually, then moves to Python or shell when exact aggregation is useful.</p>
                 <p class="trace-links"><a href="../#trace=tr_3c23536d65984f39">tr_3c23536d65984f39</a><a href="../#trace=tr_a8085bfd2330aa30">tr_a8085bfd2330aa30</a></p>
               </article>
               <article style="--signature-color:var(--model-sonnet)">
                 <h4>Claude Sonnet 5 <span>Visual persistence</span></h4>
-                <p>It keeps 70.7% of working rounds on screen, yet switches earlier than Opus on average (57.4% versus 70.1%). Its visual work is also the most prolonged—33.8 rounds on average, with five unfinished traces.</p>
+                <p>It keeps 70.7% of working rounds on screen, yet switches faster than Opus on average (42.6% versus 29.9%). Its visual work is also the most prolonged—33.8 rounds on average, with five unfinished traces.</p>
                 <a href="../#trace=tr_475d111272ead831">tr_475d111272ead831</a>
               </article>
             </div>
@@ -140,6 +140,6 @@
       </main>
     </div>
     <script src="../config.js"></script>
-    <script src="analysis.js?v=5" type="module"></script>
+    <script src="analysis.js?v=6" type="module"></script>
   </body>
 </html>
