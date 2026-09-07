@@ -130,9 +130,10 @@
 .friction-examples { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line); }
 .friction-examples a { display: grid; grid-template-columns: 9px minmax(0, 1fr); gap: 3px 7px; align-items: center; min-width: 0; padding: 10px 13px; color: var(--ink); text-decoration: none; }
 .friction-examples a + a { border-left: 1px solid var(--line); }
-.friction-examples i { grid-row: 1 / span 2; width: 9px; height: 9px; border-radius: 50%; background: var(--path-color); }
+.friction-examples i { grid-row: 1 / span 3; align-self: start; margin-top: 2px; width: 9px; height: 9px; border-radius: 50%; background: var(--path-color); }
 .friction-examples span { font-size: 9px; font-weight: 700; }
 .friction-examples code { min-width: 0; overflow: hidden; color: var(--muted); font: 7px var(--mono); text-overflow: ellipsis; white-space: nowrap; }
+.friction-examples p { grid-column: 2; margin: 3px 0 0; color: var(--muted); font-size: 9px; line-height: 1.45; }
 .friction-examples a:hover { background: #f8f6ef; }
 
 .analysis-notes { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 46px; padding: 42px 0 38px; }

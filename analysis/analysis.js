@@ -31,6 +31,12 @@ const FRICTION_EXAMPLES = {
   "Overlooked change": "tr_8c9eccf85eb1f0eb",
   "Abandoned unresolved": "tr_475d111272ead831",
 };
+const FRICTION_EXAMPLE_NOTES = {
+  "Stayed on screen": "A failed first interaction is corrected in round 2 and yields a visually grounded answer—a compact example of GUI self-recovery.",
+  "Moved off screen": "After a click-versus-drag error, the agent switches to Python and a remembered dataset URL—a clear GUI-to-code retreat.",
+  "Overlooked change": "The agent opens a filter instead of sorting, overlooks the changed state, and later asserts an unsupported ranking—a clear overlooked-error chain.",
+  "Abandoned unresolved": "The agent repeatedly re-aims at an unresponsive target through rounds 34–92, then fabricates the comparison—an extreme unresolved loop.",
+};
 
 const state = { traces: [], friction: null, activeModels: new Set(), taskType: "" };
 const svg = document.querySelector("#scatterplot");
@@ -337,7 +343,7 @@ function renderFrictionSummary() {
     const link = document.createElement("a");
     link.href = `../#trace=${encodeURIComponent(traceId)}`;
     link.style.setProperty("--path-color", RESPONSE_COLORS[response]);
-    link.innerHTML = `<i></i><span>${response}</span><code>${traceId}</code>`;
+    link.innerHTML = `<i></i><span>${response}</span><code>${traceId}</code><p>${FRICTION_EXAMPLE_NOTES[response]}</p>`;
     link.title = episode ? `${episode.friction} → ${episode.mechanism} → ${episode.landing}` : response;
     return link;
   }));
