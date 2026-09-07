@@ -1,7 +1,7 @@
 {
   "schema_version": "3.0",
   "classifier_version": "gui-friction-flow-v3-handling-families",
-  "generated_at": "2026-09-07T19:04:34.710073+00:00",
+  "generated_at": "2026-09-07T19:06:17.564318+00:00",
   "source": {
     "dataset": "webva-agent-behaviors-trial1",
     "workbook_filename": "Trace Coding (1).xlsx",
@@ -32,7 +32,7 @@
       "Recovered in GUI",
       "Shifted to code",
       "Mixed GUI + code",
-      "Continued without repair",
+      "Finished without GUI repair",
       "Unresolved / abandoned"
     ],
     "landing": [
@@ -54,7 +54,7 @@
       "Shifted to code": 17,
       "Recovered in GUI": 12,
       "Mixed GUI + code": 4,
-      "Continued without repair": 7,
+      "Finished without GUI repair": 7,
       "Unresolved / abandoned": 6
     },
     "landing": {
@@ -221,7 +221,7 @@
       "source_stage": "friction",
       "source": "Misgrounded manipulation",
       "target_stage": "handling",
-      "target": "Continued without repair",
+      "target": "Finished without GUI repair",
       "count": 5,
       "episode_ids": [
         "agent-trial1-0035",
@@ -240,7 +240,7 @@
     },
     {
       "source_stage": "handling",
-      "source": "Continued without repair",
+      "source": "Finished without GUI repair",
       "target_stage": "landing",
       "target": "Grounded visual evidence",
       "count": 1,
@@ -332,7 +332,7 @@
     },
     {
       "source_stage": "handling",
-      "source": "Continued without repair",
+      "source": "Finished without GUI repair",
       "target_stage": "landing",
       "target": "Misgrounded evidence",
       "count": 4,
@@ -419,7 +419,7 @@
       "source_stage": "friction",
       "source": "Repetition loop",
       "target_stage": "handling",
-      "target": "Continued without repair",
+      "target": "Finished without GUI repair",
       "count": 2,
       "episode_ids": [
         "agent-trial1-0350",
@@ -432,7 +432,7 @@
     },
     {
       "source_stage": "handling",
-      "source": "Continued without repair",
+      "source": "Finished without GUI repair",
       "target_stage": "landing",
       "target": "Fabricated evidence",
       "count": 2,
@@ -614,7 +614,7 @@
       "response_annotation_id": "agent-trial1-0038",
       "first_mechanism": "No repair / assumed state",
       "pathway": "Continued without repair",
-      "handling": "Continued without repair",
+      "handling": "Finished without GUI repair",
       "landing": "Grounded visual evidence"
     },
     {
@@ -803,7 +803,7 @@
       "response_annotation_id": "agent-trial1-0190",
       "first_mechanism": "No repair / assumed state",
       "pathway": "Continued without repair",
-      "handling": "Continued without repair",
+      "handling": "Finished without GUI repair",
       "landing": "Misgrounded evidence"
     },
     {
@@ -992,7 +992,7 @@
       "response_annotation_id": "agent-trial1-0328",
       "first_mechanism": "No repair / assumed state",
       "pathway": "Continued without repair",
-      "handling": "Continued without repair",
+      "handling": "Finished without GUI repair",
       "landing": "Misgrounded evidence"
     },
     {
@@ -1013,7 +1013,7 @@
       "response_annotation_id": "agent-trial1-0331",
       "first_mechanism": "No repair / assumed state",
       "pathway": "Continued without repair",
-      "handling": "Continued without repair",
+      "handling": "Finished without GUI repair",
       "landing": "Misgrounded evidence"
     },
     {
@@ -1055,7 +1055,7 @@
       "response_annotation_id": "agent-trial1-0351",
       "first_mechanism": "Failed code/image inspection",
       "pathway": "GUI repetition + failed code → fabrication",
-      "handling": "Continued without repair",
+      "handling": "Finished without GUI repair",
       "landing": "Fabricated evidence"
     },
     {
@@ -1097,7 +1097,7 @@
       "response_annotation_id": "agent-trial1-0356",
       "first_mechanism": "No repair / assumed state",
       "pathway": "Continued without repair",
-      "handling": "Continued without repair",
+      "handling": "Finished without GUI repair",
       "landing": "Fabricated evidence"
     },
     {
@@ -1265,7 +1265,7 @@
       "response_annotation_id": "agent-trial1-0400",
       "first_mechanism": "No repair / assumed state",
       "pathway": "Continued without repair",
-      "handling": "Continued without repair",
+      "handling": "Finished without GUI repair",
       "landing": "Misgrounded evidence"
     },
     {

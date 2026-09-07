@@ -58,7 +58,7 @@ STAGE_ORDERS = {
         "Recovered in GUI",
         "Shifted to code",
         "Mixed GUI + code",
-        "Continued without repair",
+        "Finished without GUI repair",
         "Unresolved / abandoned",
     ],
     "landing": [
@@ -79,8 +79,8 @@ HANDLING_FAMILIES = {
     "GUI retry → code verification": "Mixed GUI + code",
     "Off-screen work → GUI verification": "Mixed GUI + code",
     "GUI ↔ code attempts → code resolution": "Mixed GUI + code",
-    "Continued without repair": "Continued without repair",
-    "GUI repetition + failed code → fabrication": "Continued without repair",
+    "Continued without repair": "Finished without GUI repair",
+    "GUI repetition + failed code → fabrication": "Finished without GUI repair",
     "Stopped without resolution": "Unresolved / abandoned",
     "GUI retry → off-screen attempts → unresolved": "Unresolved / abandoned",
     "Off-screen attempt, unresolved": "Unresolved / abandoned",
@@ -433,7 +433,7 @@ def main() -> None:
         "code" in episode["pathway"].lower() or "off-screen" in episode["pathway"].lower()
         for episode in episodes
     )
-    continued_without_repair = stage_counts["handling"].get("Continued without repair", 0)
+    continued_without_repair = stage_counts["handling"].get("Finished without GUI repair", 0)
     unresolved_or_abandoned = stage_counts["handling"].get("Unresolved / abandoned", 0)
     output = {
         "schema_version": "3.0",

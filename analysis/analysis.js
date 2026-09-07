@@ -23,7 +23,7 @@ const HANDLING_COLORS = {
   "Recovered in GUI": "#2f7d50",
   "Shifted to code": "#62419a",
   "Mixed GUI + code": "#277f85",
-  "Continued without repair": "#b44b43",
+  "Finished without GUI repair": "#b44b43",
   "Unresolved / abandoned": "#68706d",
 };
 
@@ -334,7 +334,7 @@ function renderFrictionSummary() {
   document.querySelector("#friction-offscreen").textContent = `${offscreen} · ${(offscreen / total * 100).toFixed(0)}%`;
   document.querySelector("#friction-unseen").textContent = `${continued + unresolved} · ${((continued + unresolved) / total * 100).toFixed(0)}%`;
   document.querySelector("#friction-callout").innerHTML = `<strong>One friction episode can cross channels more than once.</strong>
-    Of ${total} coded episodes, ${offscreen} use off-screen work somewhere in the handling path; ${continued} continue without repairing the interface, while ${unresolved} remain unresolved or are abandoned. Detailed sequences remain in the trace cards and hover descriptions.`;
+    Of ${total} coded episodes, ${offscreen} use off-screen work somewhere in the handling path; ${continued} finish without repairing the interface, while ${unresolved} remain unresolved or are abandoned. Detailed sequences remain in the trace cards and hover descriptions.`;
 
   const examples = document.querySelector("#friction-examples");
   examples.replaceChildren(...(data.case_studies || []).map((example) => {
@@ -493,7 +493,7 @@ async function init() {
   try {
     const [response, frictionResponse] = await Promise.all([
       fetch("data.json?v=3"),
-      fetch("friction_flow.json?v=3"),
+      fetch("friction_flow.json?v=4"),
     ]);
     if (!response.ok) throw new Error(`Analysis data request failed (${response.status})`);
     if (!frictionResponse.ok) throw new Error(`Friction data request failed (${frictionResponse.status})`);
