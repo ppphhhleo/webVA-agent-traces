@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="../styles.css" />
-    <link rel="stylesheet" href="analysis.css?v=22" />
+    <link rel="stylesheet" href="analysis.css?v=23" />
   </head>
   <body>
     <div class="app-shell">
@@ -153,6 +153,50 @@
             <svg id="evidence-plot" role="img" aria-labelledby="evidence-title evidence-description"></svg>
             <div class="plot-tooltip evidence-tooltip" id="evidence-tooltip" role="status" hidden></div>
           </div>
+          <section class="evidence-quadrants" aria-labelledby="evidence-quadrants-title">
+            <header>
+              <p class="eyebrow">Reading the quadrants</p>
+              <h3 id="evidence-quadrants-title">Visibility changes the cost of checking—not whether evidence is faithful</h3>
+            </header>
+            <div class="quadrant-grid">
+              <article class="quadrant-card quadrant-backed quadrant-left">
+                <p class="quadrant-position">Upper left · less visible, evidence-backed</p>
+                <h4>Costly to audit</h4>
+                <p>The claim has a computed or mixed evidentiary basis, but reviewers must leave the visible interface and reconstruct off-screen work to verify it.</p>
+                <ul>
+                  <li><a href="../#trace=tr_c953e1cb79849f1f"><code>tr_c953e1cb79849f1f</code><span>Opus bypasses Data Voyager, computes correlations and means in code, and never reconciles them with the view.</span></a></li>
+                  <li><a href="../#trace=tr_885beba33a3c2e3f"><code>tr_885beba33a3c2e3f</code><span>After a failed brush, Opus downloads and analyzes the wine data off screen; the computed answer is grounded but laborious to inspect.</span></a></li>
+                </ul>
+              </article>
+              <article class="quadrant-card quadrant-backed quadrant-right">
+                <p class="quadrant-position">Upper right · more visible, evidence-backed</p>
+                <h4>Readily inspectable</h4>
+                <p>The decisive evidence is established in the rendered interface, making the connection between action, visible state, and claim relatively cheap to check.</p>
+                <ul>
+                  <li><a href="../#trace=tr_ac736c74cc47e0c9"><code>tr_ac736c74cc47e0c9</code><span>GPT‑5.5 reads its Gapminder claim directly from a hovered bubble, tying the answer to a visible tooltip.</span></a></li>
+                  <li><a href="../#trace=tr_3c23536d65984f39"><code>tr_3c23536d65984f39</code><span>Despite a repeated hover loop, Opus compares the visible Vitessce panels and grounds its conclusion in the displayed groupings.</span></a></li>
+                </ul>
+              </article>
+              <article class="quadrant-card quadrant-risk quadrant-left">
+                <p class="quadrant-position">Lower left · less visible, unsupported</p>
+                <h4>Opaque and untrustworthy</h4>
+                <p>Off-screen work neither establishes reliable evidence nor leaves an inspectable visual account, so both the process and its conclusion are difficult to trust.</p>
+                <ul>
+                  <li><a href="../#trace=tr_8c9eccf85eb1f0eb"><code>tr_8c9eccf85eb1f0eb</code><span>GPT‑5.5 misclicks the sort control, searches bundles off screen, then reports an incorrect ranking from an unestablished interface state.</span></a></li>
+                  <li><a href="../#trace=tr_4c29dca0e244dc14"><code>tr_4c29dca0e244dc14</code><span>Sonnet alternates between LineUp and failed engineering attempts until the 100-round cap, without obtaining or delivering an answer.</span></a></li>
+                </ul>
+              </article>
+              <article class="quadrant-card quadrant-risk quadrant-right">
+                <p class="quadrant-position">Lower right · more visible, unsupported</p>
+                <h4>Visible activity, misplaced trust</h4>
+                <p>The interaction is easy to observe, but the final claim is not supported by the visible result; apparent transparency can therefore create false confidence.</p>
+                <ul>
+                  <li><a href="../#trace=tr_475d111272ead831"><code>tr_475d111272ead831</code><span>Sonnet spends 93 rounds micro-reaiming at an unresponsive Vitessce target, then fabricates the comparison it claims to have observed.</span></a></li>
+                  <li><a href="../#trace=tr_6803ce072cf0a6e8"><code>tr_6803ce072cf0a6e8</code><span>Opus performs prolonged visible hovering in Gapminder, but substitutes prior knowledge for evidence in the final exception claim.</span></a></li>
+                </ul>
+              </article>
+            </div>
+          </section>
           <p class="chart-description" id="evidence-description">Each small point is one coded trial-one trace and opens that trace when selected. Horizontal position is the share of working rounds performed on screen; answer-only traces with no working actions appear at 100% visible by convention. Points receive deterministic, density-aware jitter within their evidence band to reveal overlap, while model means and confidence regions use the unjittered values. Color encodes each model using a colorblind-safe palette. Evidence categories form a descriptive ordered scale—not an answer-correctness score. Select a model label or mean point to focus its traces.</p>
         </section>
 
@@ -189,6 +233,6 @@
       </main>
     </div>
     <script src="../config.js"></script>
-    <script src="analysis.js?v=22" type="module"></script>
+    <script src="analysis.js?v=23" type="module"></script>
   </body>
 </html>

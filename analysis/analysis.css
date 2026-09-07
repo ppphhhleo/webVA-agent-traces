@@ -170,6 +170,7 @@
 .evidence-midline { stroke: #8f9b97; stroke-width: 1; stroke-dasharray: 5 6; }
 .evidence-tick-label { fill: var(--ink); font: 500 10px var(--sans); }
 .evidence-direction { fill: var(--teal); font: 700 9px var(--sans); letter-spacing: .03em; text-transform: uppercase; }
+.evidence-quadrant-label { fill: #53635f; stroke: rgba(255,253,248,.92); stroke-width: 4px; paint-order: stroke; stroke-linejoin: round; font: 600 10px/1.2 var(--sans); pointer-events: none; }
 .evidence-confidence { opacity: .2; stroke-width: 2; stroke-dasharray: 5 3; pointer-events: none; transition: opacity .18s; }
 .evidence-confidence.is-focused { opacity: .34; stroke-width: 2; }
 .evidence-confidence.is-muted { opacity: .035; }
@@ -181,6 +182,25 @@
 .evidence-model-mean.is-muted { opacity: .18; }
 .evidence-model-mean:hover, .evidence-model-mean:focus { stroke: var(--ink); stroke-width: 2; }
 .evidence-tooltip { width: 270px; }
+.evidence-quadrants { border-top: 1px solid var(--line-strong); }
+.evidence-quadrants > header { display: grid; grid-template-columns: 190px minmax(0, 1fr); align-items: end; gap: 18px; padding: 16px 22px 13px; border-bottom: 1px solid var(--line); }
+.evidence-quadrants > header .eyebrow { margin: 0; }
+.evidence-quadrants > header h3 { margin: 0; font: 600 19px/1.15 var(--serif); }
+.quadrant-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.quadrant-card { min-width: 0; padding: 17px 22px 19px; border-top: 4px solid var(--quadrant-color); }
+.quadrant-card:nth-child(even) { border-left: 1px solid var(--line); }
+.quadrant-card:nth-child(n + 3) { border-top-width: 5px; box-shadow: inset 0 1px var(--line); }
+.quadrant-backed { --quadrant-color: #009e73; background: #f6faf7; }
+.quadrant-risk { --quadrant-color: #d55e00; background: #fdf8f3; }
+.quadrant-position { margin: 0 0 5px; color: var(--quadrant-color); font: 700 7.5px/1.3 var(--mono); letter-spacing: .055em; text-transform: uppercase; }
+.quadrant-card h4 { margin: 0; font-size: 13px; line-height: 1.3; }
+.quadrant-card > p:not(.quadrant-position) { max-width: 680px; margin: 8px 0 13px; color: var(--muted); font-size: 10px; line-height: 1.55; }
+.quadrant-card ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 0; padding: 0; list-style: none; }
+.quadrant-card li { min-width: 0; }
+.quadrant-card a { display: block; height: 100%; border-top: 1px solid color-mix(in srgb, var(--quadrant-color) 50%, var(--line)); padding-top: 8px; color: var(--ink); text-decoration: none; }
+.quadrant-card a:hover, .quadrant-card a:focus-visible { border-top-color: var(--quadrant-color); background: color-mix(in srgb, var(--quadrant-color) 5%, transparent); outline: none; }
+.quadrant-card code { display: block; overflow: hidden; margin-bottom: 5px; color: var(--quadrant-color); font: 500 7.5px var(--mono); text-overflow: ellipsis; white-space: nowrap; }
+.quadrant-card a span { display: block; color: var(--muted); font-size: 9px; line-height: 1.5; }
 
 .analysis-notes { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 46px; padding: 42px 0 38px; }
 .note-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line-strong); }
@@ -255,6 +275,7 @@ tbody tr:last-child td { border-bottom: 0; }
   .friction-totals { width: 100%; }
   .evidence-header-note { max-width: 560px; text-align: left; }
   .evidence-mark-key { width: 100%; margin-left: 0; padding-top: 2px; }
+  .evidence-quadrants > header { grid-template-columns: 1fr; gap: 7px; }
 }
 
 @media (max-width: 680px) {
@@ -280,6 +301,10 @@ tbody tr:last-child td { border-bottom: 0; }
   .evidence-model-key { flex: 1 1 calc(50% - 12px); }
   .evidence-plot-shell { min-height: 560px; }
   #evidence-plot { height: 560px; }
+  .quadrant-grid { grid-template-columns: 1fr; }
+  .quadrant-card:nth-child(even) { border-left: 0; }
+  .quadrant-card + .quadrant-card { box-shadow: inset 0 1px var(--line); }
+  .quadrant-card ul { grid-template-columns: 1fr; }
   .task-filter-label select { width: 100%; }
   .model-legend { padding: 10px 12px; }
   .legend-toggle { flex: 1 1 calc(50% - 8px); }

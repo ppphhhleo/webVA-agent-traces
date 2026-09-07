@@ -708,6 +708,38 @@ function renderEvidencePlot() {
     label.textContent = `${tick}%`;
     evidenceSvg.append(label);
   });
+  const evidenceBoundaryY = y(3.5);
+  evidenceSvg.append(svgElement("line", {
+    class: "evidence-midline",
+    x1: margin.left,
+    x2: margin.left + plotWidth,
+    y1: evidenceBoundaryY,
+    y2: evidenceBoundaryY,
+  }));
+
+  if (!mobile) {
+    const labels = [
+      { x: margin.left + 16, y: margin.top + 22, anchor: "start", lines: ["Evidence-backed", "costly to audit"] },
+      { x: margin.left + plotWidth - 16, y: margin.top + 22, anchor: "end", lines: ["Evidence-backed", "readily inspectable"] },
+      { x: margin.left + 16, y: margin.top + plotHeight - 31, anchor: "start", lines: ["Unsupported", "and opaque"] },
+      { x: margin.left + plotWidth - 16, y: margin.top + plotHeight - 31, anchor: "end", lines: ["Visible activity", "misplaced trust"] },
+    ];
+    labels.forEach((item) => {
+      const label = svgElement("text", {
+        class: "evidence-quadrant-label",
+        x: item.x,
+        y: item.y,
+        "text-anchor": item.anchor,
+        "aria-hidden": "true",
+      });
+      item.lines.forEach((line, index) => {
+        const span = svgElement("tspan", { x: item.x, dy: index ? 13 : 0 });
+        span.textContent = line;
+        label.append(span);
+      });
+      evidenceSvg.append(label);
+    });
+  }
   evidenceSvg.append(svgElement("line", { class: "axis-line", x1: margin.left, x2: margin.left + plotWidth, y1: margin.top + plotHeight, y2: margin.top + plotHeight }));
   evidenceSvg.append(svgElement("line", { class: "axis-line", x1: margin.left, x2: margin.left, y1: margin.top, y2: margin.top + plotHeight }));
 
