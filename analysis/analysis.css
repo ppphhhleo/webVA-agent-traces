@@ -72,7 +72,7 @@
 .switch-delay-section > header { display: flex; align-items: end; justify-content: space-between; gap: 24px; padding: 18px 22px 14px; }
 .switch-delay-section > header h3 { margin: 5px 0 0; font: 600 24px/1.05 var(--serif); }
 .delay-direction { display: grid; grid-template-columns: auto minmax(80px, 150px) auto; align-items: center; gap: 8px; color: var(--muted); font: 8px var(--mono); }
-.delay-direction i { height: 1px; background: linear-gradient(90deg, var(--line-strong), var(--model-gpt55)); }
+.delay-direction i { height: 1px; background: linear-gradient(90deg, var(--model-gpt55), var(--line-strong)); }
 .delay-chart { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line); }
 .delay-group { min-width: 0; padding: 17px 22px 16px; }
 .delay-group + .delay-group { border-left: 1px solid var(--line); }

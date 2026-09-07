@@ -249,16 +249,16 @@ function renderSwitchDelayChart() {
           ? trace.first_offscreen_position_percent
           : 100
       );
-      const switchSpeed = 100 - (mean(positions) || 100);
+      const switchLatency = mean(positions) || 0;
       const never = traces.filter((trace) => trace.first_offscreen_round === null).length;
-      const edgeClass = switchSpeed >= 88 ? " edge-right" : switchSpeed <= 12 ? " edge-left" : "";
+      const edgeClass = switchLatency >= 88 ? " edge-right" : switchLatency <= 12 ? " edge-left" : "";
       const row = document.createElement("div");
       row.className = "delay-row";
       row.innerHTML = `<div class="delay-label"><span class="model-key" style="--series-color:${colorFor(model)}"><i></i>${model}</span><small>never ${never}/${traces.length}</small></div>
-        <div class="delay-track" aria-label="${model}, ${taskType}: mean off-screen switch speed ${switchSpeed.toFixed(1)}%; ${never} of ${traces.length} traces never went off screen">
-          <span class="delay-fill" style="width:${switchSpeed}%;--series-color:${colorFor(model)}"></span>
-          <i class="delay-dot" style="left:${switchSpeed}%;--series-color:${colorFor(model)}"></i>
-          <b class="delay-value${edgeClass}" style="left:${switchSpeed}%">${switchSpeed.toFixed(1)}%</b>
+        <div class="delay-track" aria-label="${model}, ${taskType}: mean off-screen switch latency ${switchLatency.toFixed(1)}%; lower is faster; ${never} of ${traces.length} traces never went off screen">
+          <span class="delay-fill" style="width:${switchLatency}%;--series-color:${colorFor(model)}"></span>
+          <i class="delay-dot" style="left:${switchLatency}%;--series-color:${colorFor(model)}"></i>
+          <b class="delay-value${edgeClass}" style="left:${switchLatency}%">${switchLatency.toFixed(1)}%</b>
         </div>`;
       return row;
     }));
