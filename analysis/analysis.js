@@ -27,7 +27,7 @@ const HANDLING_COLORS = {
   "Unresolved / abandoned": "#68706d",
 };
 
-const state = { traces: [], friction: null, evidence: null, activeModels: new Set(), taskType: "" };
+const state = { traces: [], friction: null, evidence: null, evidenceModel: "", activeModels: new Set(), taskType: "" };
 const svg = document.querySelector("#scatterplot");
 const tooltip = document.querySelector("#plot-tooltip");
 const legend = document.querySelector("#model-legend");
@@ -513,16 +513,25 @@ function renderEvidenceLegend() {
   if (!state.evidence || !evidenceLegend) return;
   const models = orderedModels(state.evidence.traces);
   evidenceLegend.replaceChildren(...models.map((model) => {
-    const item = document.createElement("span");
+    const item = document.createElement("button");
+    item.type = "button";
     item.className = "evidence-model-key";
     item.style.setProperty("--series-color", colorFor(model));
+    item.setAttribute("aria-pressed", state.evidenceModel === model);
+    item.dataset.muted = state.evidenceModel && state.evidenceModel !== model ? "true" : "false";
+    item.title = state.evidenceModel === model ? "Show all models" : `Focus ${model}`;
     const count = state.evidence.traces.filter((trace) => trace.model === model).length;
     item.innerHTML = `<i></i><b>${model}</b><small>n=${count}</small>`;
+    item.addEventListener("click", () => {
+      state.evidenceModel = state.evidenceModel === model ? "" : model;
+      renderEvidenceLegend();
+      renderEvidencePlot();
+    });
     return item;
   }));
   const marks = document.createElement("span");
   marks.className = "evidence-mark-key";
-  marks.innerHTML = `<span><i class="mark-trace"></i>Trace</span><span><i class="mark-mean"></i>Model mean</span><span><i class="mark-region"></i>95% confidence region</span>`;
+  marks.innerHTML = `<span><i class="mark-trace"></i>Trace</span><span><i class="mark-mean"></i>Model mean</span><span><i class="mark-region"></i>95% confidence region</span><em>Click a model to focus</em>`;
   evidenceLegend.append(marks);
 }
 
@@ -659,12 +668,15 @@ function renderEvidencePlot() {
 
   const plotted = svgElement("g", { "clip-path": "url(#evidence-plot-clip)" });
   const models = orderedModels(records);
-  models.forEach((model) => {
+  const drawOrder = state.evidenceModel
+    ? [...models.filter((model) => model !== state.evidenceModel), state.evidenceModel]
+    : models;
+  drawOrder.forEach((model) => {
     const modelRecords = records.filter((trace) => trace.model === model);
     const region = confidenceEllipse(modelRecords, x, y);
     if (!region) return;
     plotted.append(svgElement("ellipse", {
-      class: "evidence-confidence",
+      class: `evidence-confidence${state.evidenceModel === model ? " is-focused" : ""}${state.evidenceModel && state.evidenceModel !== model ? " is-muted" : ""}`,
       cx: region.centerX,
       cy: region.centerY,
       rx: region.radiusX,
@@ -677,10 +689,20 @@ function renderEvidencePlot() {
 
   records.forEach((trace) => {
     const hash = stableHash(trace.trace_id);
-    const jitterX = (((hash % 101) / 100) - 0.5) * (mobile ? 5 : 8);
-    const jitterY = ((((Math.floor(hash / 101)) % 101) / 100) - 0.5) * (mobile ? 8 : 12);
+    const xUnit = ((hash % 1001) / 1000) - 0.5;
+    const ySeed = (Math.floor(hash / 1001) % 1001) / 1000;
+    const xSpread = mobile ? 12 : 22;
+    let jitterX = xUnit * xSpread;
+    if (trace.gui_percent <= 1) jitterX = Math.abs(xUnit) * xSpread;
+    if (trace.gui_percent >= 99) jitterX = -Math.abs(xUnit) * xSpread;
+    const ySpread = bandStep * 0.72;
+    let jitterY = (ySeed - 0.5) * ySpread;
+    if (trace.evidence_level === 0) jitterY = -ySeed * ySpread * 0.5;
+    if (trace.evidence_level === order.length - 1) jitterY = ySeed * ySpread * 0.5;
+    const muted = state.evidenceModel && state.evidenceModel !== trace.model;
+    const focused = state.evidenceModel === trace.model;
     const point = svgElement("circle", {
-      class: "evidence-trace-point",
+      class: `evidence-trace-point${focused ? " is-focused" : ""}${muted ? " is-muted" : ""}`,
       cx: clamp(x(trace.gui_percent) + jitterX, margin.left + 4, margin.left + plotWidth - 4),
       cy: clamp(y(trace.evidence_level) + jitterY, margin.top + 4, margin.top + plotHeight - 4),
       r: mobile ? 3.5 : 4.5,
@@ -704,18 +726,19 @@ function renderEvidencePlot() {
     plotted.append(point);
   });
 
-  models.forEach((model) => {
+  drawOrder.forEach((model) => {
     const modelRecords = records.filter((trace) => trace.model === model);
     const averageVisibility = mean(modelRecords.map((trace) => trace.gui_percent));
     const averageEvidence = mean(modelRecords.map((trace) => trace.evidence_level));
     const point = svgElement("circle", {
-      class: "evidence-model-mean",
+      class: `evidence-model-mean${state.evidenceModel === model ? " is-focused" : ""}${state.evidenceModel && state.evidenceModel !== model ? " is-muted" : ""}`,
       cx: x(averageVisibility),
       cy: y(averageEvidence),
-      r: mobile ? 7 : 9,
+      r: state.evidenceModel === model ? (mobile ? 8 : 11) : (mobile ? 7 : 9),
       fill: colorFor(model),
       tabindex: 0,
-      role: "img",
+      role: "button",
+      "aria-pressed": state.evidenceModel === model,
       "aria-label": `${model} mean, ${averageVisibility.toFixed(1)}% on screen`,
     });
     const showMean = (event) => {
@@ -729,6 +752,18 @@ function renderEvidencePlot() {
     point.addEventListener("pointerleave", () => { evidenceTooltip.hidden = true; });
     point.addEventListener("focus", showMean);
     point.addEventListener("blur", () => { evidenceTooltip.hidden = true; });
+    point.addEventListener("click", () => {
+      state.evidenceModel = state.evidenceModel === model ? "" : model;
+      evidenceTooltip.hidden = true;
+      renderEvidenceLegend();
+      renderEvidencePlot();
+    });
+    point.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        point.dispatchEvent(new MouseEvent("click"));
+      }
+    });
     plotted.append(point);
   });
   evidenceSvg.append(plotted);

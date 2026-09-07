@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="../styles.css" />
-    <link rel="stylesheet" href="analysis.css?v=16" />
+    <link rel="stylesheet" href="analysis.css?v=17" />
   </head>
   <body>
     <div class="app-shell">
@@ -141,7 +141,7 @@
             <svg id="evidence-plot" role="img" aria-labelledby="evidence-title evidence-description"></svg>
             <div class="plot-tooltip evidence-tooltip" id="evidence-tooltip" role="status" hidden></div>
           </div>
-          <p class="chart-description" id="evidence-description">Each small point is one of the 120 coded trial-one traces and opens that trace when selected. Horizontal position is the share of working rounds performed on screen. Evidence categories form a descriptive ordered scale—not an answer-correctness score. Large points show model means; translucent regions show 95% confidence regions of those means.</p>
+          <p class="chart-description" id="evidence-description">Each small point is one of the 120 coded trial-one traces and opens that trace when selected. Horizontal position is the share of working rounds performed on screen. Evidence categories form a descriptive ordered scale—not an answer-correctness score. Large points show model means; translucent regions show 95% confidence regions. Select a model label or mean point to focus its traces.</p>
         </section>
 
         <section class="analysis-card distribution-card" aria-labelledby="chart-title">
@@ -177,6 +177,6 @@
       </main>
     </div>
     <script src="../config.js"></script>
-    <script src="analysis.js?v=15" type="module"></script>
+    <script src="analysis.js?v=16" type="module"></script>
   </body>
 </html>
