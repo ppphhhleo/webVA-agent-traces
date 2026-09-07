@@ -6,8 +6,33 @@ const MODEL_COLORS = {
 };
 const MODEL_ORDER = ["GPT-5.4", "GPT-5.5", "Claude Opus 4.8", "Claude Sonnet 5"];
 const TASK_TYPE_ORDER = ["Low-level", "Compound", "High-level"];
+const FRICTION_COLORS = {
+  "Misgrounded manipulation": "#d7621b",
+  "Repetition loop": "#3f8db8",
+};
+const RESPONSE_COLORS = {
+  "Stayed on screen": "#2f7d50",
+  "Moved off screen": "#62419a",
+  "Overlooked change": "#b44b43",
+  "Abandoned unresolved": "#68706d",
+};
+const LANDING_COLORS = {
+  "Grounded visual evidence": "#2f7d50",
+  "Combined visual + computed": "#277f85",
+  "Computed evidence": "#62419a",
+  "Prior-knowledge answer": "#9a79ae",
+  "Misgrounded evidence": "#c76322",
+  "Fabricated evidence": "#ad2630",
+  "No answer": "#68706d",
+};
+const FRICTION_EXAMPLES = {
+  "Stayed on screen": "tr_a7380becde97fcab",
+  "Moved off screen": "tr_ac4c7be1bca52b35",
+  "Overlooked change": "tr_8c9eccf85eb1f0eb",
+  "Abandoned unresolved": "tr_475d111272ead831",
+};
 
-const state = { traces: [], activeModels: new Set(), taskType: "" };
+const state = { traces: [], friction: null, activeModels: new Set(), taskType: "" };
 const svg = document.querySelector("#scatterplot");
 const tooltip = document.querySelector("#plot-tooltip");
 const legend = document.querySelector("#model-legend");
@@ -15,6 +40,8 @@ const taskFilter = document.querySelector("#task-type-filter");
 const performanceBody = document.querySelector("#performance-summary");
 const workShareChart = document.querySelector("#work-share-chart");
 const switchDelayChart = document.querySelector("#switch-delay-chart");
+const frictionSvg = document.querySelector("#friction-alluvial");
+const alluvialTooltip = document.querySelector("#alluvial-tooltip");
 
 const mean = (values) => values.length ? values.reduce((sum, value) => sum + value, 0) / values.length : null;
 const numeric = (values) => values.filter((value) => Number.isFinite(value));
@@ -270,12 +297,199 @@ function renderSwitchDelayChart() {
   }));
 }
 
+function frictionColor(stage, label, episodes = []) {
+  if (stage === "friction") return FRICTION_COLORS[label] || "#687777";
+  if (stage === "response") return RESPONSE_COLORS[label] || "#687777";
+  if (stage === "landing") return LANDING_COLORS[label] || "#687777";
+  const response = episodes.find((episode) => episode.mechanism === label)?.response;
+  return RESPONSE_COLORS[response] || "#687777";
+}
+
+function showAlluvialTooltip(event, title, count, traceIds, detail = "") {
+  const total = state.friction?.counts?.episodes || 1;
+  const shown = traceIds.slice(0, 4);
+  alluvialTooltip.innerHTML = `<strong>${title}</strong>
+    <p><b>${count} episode${count === 1 ? "" : "s"}</b> · ${(count / total * 100).toFixed(1)}%${detail ? `<br>${detail}` : ""}<br>
+    ${shown.join(" · ")}${traceIds.length > shown.length ? `<br>+${traceIds.length - shown.length} more traces` : ""}</p>`;
+  alluvialTooltip.hidden = false;
+  const shell = alluvialTooltip.parentElement.getBoundingClientRect();
+  const left = Math.min(event.clientX - shell.left + 14, shell.width - 290);
+  const top = Math.max(8, event.clientY - shell.top - 34);
+  alluvialTooltip.style.left = `${Math.max(8, left)}px`;
+  alluvialTooltip.style.top = `${top}px`;
+}
+
+function renderFrictionSummary() {
+  const data = state.friction;
+  if (!data) return;
+  const total = data.counts.episodes;
+  const offscreen = data.counts.moved_off_screen;
+  const unseen = data.counts.invisible_or_unrepaired;
+  document.querySelector("#friction-episodes").textContent = total;
+  document.querySelector("#friction-offscreen").textContent = `${offscreen} · ${(offscreen / total * 100).toFixed(0)}%`;
+  document.querySelector("#friction-unseen").textContent = `${unseen} · ${(unseen / total * 100).toFixed(0)}%`;
+  document.querySelector("#friction-callout").innerHTML = `<strong>Visible recovery is only one exit.</strong>
+    Of ${total} coded episodes, ${offscreen} move into off-screen work; another ${unseen - offscreen} overlook the interface change or end without repair.`;
+
+  const examples = document.querySelector("#friction-examples");
+  examples.replaceChildren(...Object.entries(FRICTION_EXAMPLES).map(([response, traceId]) => {
+    const episode = data.episodes.find((item) => item.response === response && item.trace_id === traceId);
+    const link = document.createElement("a");
+    link.href = `../#trace=${encodeURIComponent(traceId)}`;
+    link.style.setProperty("--path-color", RESPONSE_COLORS[response]);
+    link.innerHTML = `<i></i><span>${response}</span><code>${traceId}</code>`;
+    link.title = episode ? `${episode.friction} → ${episode.mechanism} → ${episode.landing}` : response;
+    return link;
+  }));
+}
+
+function renderFrictionAlluvial() {
+  const data = state.friction;
+  if (!data || !frictionSvg) return;
+  const width = 1280;
+  const height = 600;
+  const top = 62;
+  const bottom = 26;
+  const plotHeight = height - top - bottom;
+  const nodeWidth = 12;
+  const stageKeys = ["friction", "response", "mechanism", "landing"];
+  const stageTitles = ["GUI friction", "First response", "Mechanism", "Evidence landing"];
+  const stageX = [164, 430, 742, 1050];
+  const nodeMap = new Map();
+  const stages = {};
+  const activeLabels = {};
+
+  stageKeys.forEach((stage) => {
+    const counts = data.stage_counts[stage] || {};
+    const ordered = (data.stage_orders[stage] || []).filter((label) => counts[label]);
+    const extras = Object.keys(counts).filter((label) => !ordered.includes(label));
+    activeLabels[stage] = [...ordered, ...extras];
+  });
+  const maxGapSpace = Math.max(...stageKeys.map((stage) => Math.max(0, activeLabels[stage].length - 1) * 9));
+  const unit = (plotHeight - maxGapSpace) / data.counts.episodes;
+
+  stageKeys.forEach((stage, stageIndex) => {
+    const labels = activeLabels[stage];
+    const gap = labels.length > 8 ? 9 : 15;
+    const usedHeight = data.counts.episodes * unit + Math.max(0, labels.length - 1) * gap;
+    let cursor = top + (plotHeight - usedHeight) / 2;
+    stages[stage] = labels.map((label) => {
+      const count = data.stage_counts[stage][label];
+      const node = {
+        stage,
+        label,
+        count,
+        x: stageX[stageIndex],
+        y: cursor,
+        height: count * unit,
+        sourceOffset: 0,
+        targetOffset: 0,
+      };
+      cursor += node.height + gap;
+      nodeMap.set(`${stage}:${label}`, node);
+      return node;
+    });
+  });
+
+  frictionSvg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+  frictionSvg.replaceChildren();
+  stageTitles.forEach((title, index) => {
+    const label = svgElement("text", {
+      class: "alluvial-stage-title",
+      x: stageX[index] + nodeWidth / 2,
+      y: 28,
+      "text-anchor": "middle",
+    });
+    label.textContent = title;
+    frictionSvg.append(label);
+  });
+
+  const episodeLookup = new Map(data.episodes.map((episode) => [episode.episode_id, episode]));
+  const pairs = [["friction", "response"], ["response", "mechanism"], ["mechanism", "landing"]];
+  pairs.forEach(([sourceStage, targetStage]) => {
+    const links = data.links
+      .filter((link) => link.source_stage === sourceStage && link.target_stage === targetStage)
+      .sort((a, b) => {
+        const sourceOrder = activeLabels[sourceStage].indexOf(a.source) - activeLabels[sourceStage].indexOf(b.source);
+        return sourceOrder || activeLabels[targetStage].indexOf(a.target) - activeLabels[targetStage].indexOf(b.target);
+      });
+    const targetOffsets = new Map();
+    links.forEach((link) => {
+      const source = nodeMap.get(`${sourceStage}:${link.source}`);
+      const target = nodeMap.get(`${targetStage}:${link.target}`);
+      const ribbonWidth = link.count * unit;
+      const sourceY = source.y + source.sourceOffset + ribbonWidth / 2;
+      const targetOffset = targetOffsets.get(target.label) || 0;
+      const targetY = target.y + targetOffset + ribbonWidth / 2;
+      source.sourceOffset += ribbonWidth;
+      targetOffsets.set(target.label, targetOffset + ribbonWidth);
+      const x1 = source.x + nodeWidth;
+      const x2 = target.x;
+      const curve = Math.max(60, (x2 - x1) * 0.48);
+      const path = svgElement("path", {
+        class: "alluvial-link",
+        d: `M ${x1} ${sourceY} C ${x1 + curve} ${sourceY}, ${x2 - curve} ${targetY}, ${x2} ${targetY}`,
+        stroke: frictionColor("response", sourceStage === "response" ? source.label : (episodeLookup.get(link.episode_ids[0])?.response || "")),
+        "stroke-width": ribbonWidth,
+      });
+      const traceIds = link.trace_ids || [];
+      const title = `${link.source} → ${link.target}`;
+      path.addEventListener("pointerenter", (event) => showAlluvialTooltip(event, title, link.count, traceIds));
+      path.addEventListener("pointermove", (event) => showAlluvialTooltip(event, title, link.count, traceIds));
+      path.addEventListener("pointerleave", () => { alluvialTooltip.hidden = true; });
+      const accessibleTitle = svgElement("title");
+      accessibleTitle.textContent = `${title}: ${link.count} episodes`;
+      path.append(accessibleTitle);
+      frictionSvg.append(path);
+    });
+  });
+
+  stageKeys.forEach((stage, stageIndex) => {
+    stages[stage].forEach((node) => {
+      const episodes = data.episodes.filter((episode) => episode[stage] === node.label);
+      const color = frictionColor(stage, node.label, episodes);
+      const group = svgElement("g", { class: "alluvial-node", tabindex: "0" });
+      const rect = svgElement("rect", {
+        x: node.x,
+        y: node.y,
+        width: nodeWidth,
+        height: Math.max(3, node.height),
+        fill: color,
+      });
+      const label = svgElement("text", {
+        class: `alluvial-node-label stage-${stageIndex}`,
+        x: stageIndex === 0 ? node.x - 9 : node.x + nodeWidth + 9,
+        y: node.y + node.height / 2 + 3,
+        "text-anchor": stageIndex === 0 ? "end" : "start",
+      });
+      label.textContent = `${node.label} (${node.count})`;
+      const traceIds = [...new Set(episodes.map((episode) => episode.trace_id))];
+      const show = (event) => showAlluvialTooltip(event, node.label, node.count, traceIds, stageTitles[stageIndex]);
+      group.addEventListener("pointerenter", show);
+      group.addEventListener("pointermove", show);
+      group.addEventListener("pointerleave", () => { alluvialTooltip.hidden = true; });
+      group.addEventListener("focus", () => {
+        const bounds = rect.getBoundingClientRect();
+        show({ clientX: bounds.left, clientY: bounds.top });
+      });
+      group.addEventListener("blur", () => { alluvialTooltip.hidden = true; });
+      group.append(rect, label);
+      frictionSvg.append(group);
+    });
+  });
+}
+
 async function init() {
   try {
-    const response = await fetch("data.json?v=3");
+    const [response, frictionResponse] = await Promise.all([
+      fetch("data.json?v=3"),
+      fetch("friction_flow.json?v=1"),
+    ]);
     if (!response.ok) throw new Error(`Analysis data request failed (${response.status})`);
-    const data = await response.json();
+    if (!frictionResponse.ok) throw new Error(`Friction data request failed (${frictionResponse.status})`);
+    const [data, frictionData] = await Promise.all([response.json(), frictionResponse.json()]);
     state.traces = data.traces || [];
+    state.friction = frictionData;
     state.activeModels = new Set(state.traces.map((trace) => trace.model));
     const taskTypes = [...new Set(state.traces.map((trace) => trace.task_type).filter(Boolean))].sort();
     taskTypes.forEach((type) => taskFilter.add(new Option(type, type)));
@@ -286,6 +500,8 @@ async function init() {
     renderPerformanceSummary();
     renderWorkShareChart();
     renderSwitchDelayChart();
+    renderFrictionSummary();
+    renderFrictionAlluvial();
     renderChart();
     taskFilter.addEventListener("change", () => {
       state.taskType = taskFilter.value;

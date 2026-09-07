@@ -62,6 +62,19 @@ Publish the generated file at
 `data/annotations/agent_behaviors_trial1.json`. Updating annotations does not modify
 the original trajectory JSON or screenshots.
 
+The GUI-friction alluvial on `/analysis/` is a reproducible derivative of that
+annotation file. It treats each coded ineffective/misgrounded or repeated GUI
+manipulation annotation as one episode and follows it through the first coded
+response, mechanism, and eventual evidence landing:
+
+```bash
+python3 scripts/build_friction_flow.py
+```
+
+This writes `analysis/friction_flow.json`, including episode-level provenance and
+the aggregated links used by the visualization. The flow is a descriptive coded
+sequence, not a causal estimate.
+
 ## GAIA sample
 
 The `/gaia/` route displays a paired sample of 30 GAIA tasks across four models. The same task sample is used for every model and is stratified by GAIA difficulty level.

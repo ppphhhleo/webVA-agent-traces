@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="../styles.css" />
-    <link rel="stylesheet" href="analysis.css?v=9" />
+    <link rel="stylesheet" href="analysis.css?v=10" />
   </head>
   <body>
     <div class="app-shell">
@@ -107,6 +107,27 @@
           </section>
         </section>
 
+        <section class="analysis-card friction-card" aria-labelledby="friction-title">
+          <header class="chart-header friction-header">
+            <div>
+              <p class="eyebrow">Coded friction episodes</p>
+              <h2 id="friction-title">How GUI friction is handled</h2>
+            </div>
+            <dl class="friction-totals" aria-label="GUI friction summary">
+              <div><dt>Episodes</dt><dd id="friction-episodes">—</dd></div>
+              <div><dt>Moved off screen</dt><dd id="friction-offscreen">—</dd></div>
+              <div><dt>Off-screen or unrepaired</dt><dd id="friction-unseen">—</dd></div>
+            </dl>
+          </header>
+          <div class="friction-callout" id="friction-callout"></div>
+          <div class="alluvial-shell">
+            <svg id="friction-alluvial" role="img" aria-labelledby="friction-title friction-description"></svg>
+            <div class="alluvial-tooltip" id="alluvial-tooltip" role="status" hidden></div>
+          </div>
+          <div class="friction-examples" id="friction-examples" aria-label="Example traces by response path"></div>
+          <p class="chart-description" id="friction-description">Widths count coded friction episodes, not unique traces. Each episode follows its first coded response after friction and then the trace's eventual evidence outcome; hover a ribbon or node to inspect counts and trace IDs. The sequence is descriptive and does not by itself establish causality.</p>
+        </section>
+
         <section class="analysis-card distribution-card" aria-labelledby="chart-title">
           <header class="chart-header">
             <div>
@@ -140,6 +161,6 @@
       </main>
     </div>
     <script src="../config.js"></script>
-    <script src="analysis.js?v=7" type="module"></script>
+    <script src="analysis.js?v=8" type="module"></script>
   </body>
 </html>
