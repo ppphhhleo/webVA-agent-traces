@@ -54,24 +54,12 @@ LANDING_LABELS = {
 LANDING_PRIORITY = list(LANDING_LABELS)
 STAGE_ORDERS = {
     "friction": ["Misgrounded manipulation", "Repetition loop"],
-    "response": [
-        "Retry / recover in GUI",
-        "Moved off screen",
+    "handling": [
+        "Recovered in GUI",
+        "Shifted to code",
+        "Mixed GUI + code",
         "Continued without repair",
-        "Stopped without resolution",
-    ],
-    "pathway": [
-        "GUI recovery",
-        "Failed code attempt → GUI recovery",
-        "GUI retry → code verification",
-        "Off-screen work → GUI verification",
-        "GUI ↔ code attempts → code resolution",
-        "Code resolution after GUI friction",
-        "GUI repetition + failed code → fabrication",
-        "GUI retry → off-screen attempts → unresolved",
-        "Off-screen attempt, unresolved",
-        "Continued without repair",
-        "Stopped without resolution",
+        "Unresolved / abandoned",
     ],
     "landing": [
         "Grounded visual evidence",
@@ -82,6 +70,20 @@ STAGE_ORDERS = {
         "Fabricated evidence",
         "No answer",
     ],
+}
+
+HANDLING_FAMILIES = {
+    "GUI recovery": "Recovered in GUI",
+    "Failed code attempt → GUI recovery": "Recovered in GUI",
+    "Code resolution after GUI friction": "Shifted to code",
+    "GUI retry → code verification": "Mixed GUI + code",
+    "Off-screen work → GUI verification": "Mixed GUI + code",
+    "GUI ↔ code attempts → code resolution": "Mixed GUI + code",
+    "Continued without repair": "Continued without repair",
+    "GUI repetition + failed code → fabrication": "Continued without repair",
+    "Stopped without resolution": "Unresolved / abandoned",
+    "GUI retry → off-screen attempts → unresolved": "Unresolved / abandoned",
+    "Off-screen attempt, unresolved": "Unresolved / abandoned",
 }
 
 
@@ -345,7 +347,7 @@ def classify_pathway(
 
 def aggregate_links(episodes: list[dict[str, Any]]) -> list[dict[str, Any]]:
     edges: dict[tuple[str, str, str, str], list[dict[str, Any]]] = defaultdict(list)
-    stage_pairs = (("friction", "response"), ("response", "pathway"), ("pathway", "landing"))
+    stage_pairs = (("friction", "handling"), ("handling", "landing"))
     for episode in episodes:
         for source_stage, target_stage in stage_pairs:
             edges[(source_stage, episode[source_stage], target_stage, episode[target_stage])].append(episode)
@@ -399,6 +401,7 @@ def main() -> None:
             mechanism = override.get("first_mechanism", mechanism)
             pathway = override.get("pathway", pathway)
             landing = override.get("landing", landing)
+            handling = HANDLING_FAMILIES[pathway]
             episodes.append({
                 "episode_id": friction["annotation_id"],
                 "trace_id": trace_id,
@@ -417,6 +420,7 @@ def main() -> None:
                 "response_annotation_id": response_annotation["annotation_id"] if response_annotation else None,
                 "first_mechanism": mechanism,
                 "pathway": pathway,
+                "handling": handling,
                 "landing": landing,
             })
     episodes.sort(key=lambda episode: (episode["trace_number"], episode["friction_start_round"], episode["episode_id"]))
@@ -429,11 +433,11 @@ def main() -> None:
         "code" in episode["pathway"].lower() or "off-screen" in episode["pathway"].lower()
         for episode in episodes
     )
-    continued_without_repair = stage_counts["response"].get("Continued without repair", 0)
-    stopped_without_resolution = stage_counts["response"].get("Stopped without resolution", 0)
+    continued_without_repair = stage_counts["handling"].get("Continued without repair", 0)
+    unresolved_or_abandoned = stage_counts["handling"].get("Unresolved / abandoned", 0)
     output = {
-        "schema_version": "2.0",
-        "classifier_version": "gui-friction-flow-v2-ordered-pathways",
+        "schema_version": "3.0",
+        "classifier_version": "gui-friction-flow-v3-handling-families",
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "source": {
             "dataset": source.get("dataset"),
@@ -445,6 +449,7 @@ def main() -> None:
             "unit": "Each coded GUI-friction annotation is one episode; annotations are not merged across rows.",
             "response": "The first explicit GUI retry, channel switch, overlooked change, or stop associated with the coded friction episode.",
             "pathway": "An ordered handling category that separates GUI recovery, code verification, code resolution, channel re-entry, continued work without repair, and stopping unresolved. Documented trace-level overrides preserve multi-stage paths that one annotation cannot express.",
+            "handling": "Five mutually exclusive strategy families summarize the detailed ordered pathways for the aggregate flow; detailed pathways remain attached to every episode.",
             "landing": "The trace's coded delivery-evidence category after friction begins, resolved to one mutually exclusive category by documented priority.",
             "scope": "Pre-friction work is excluded from aggregate flow classification but may be shown as context in representative trace timelines.",
         },
@@ -453,7 +458,7 @@ def main() -> None:
             "traces": len({episode["trace_id"] for episode in episodes}),
             "used_offscreen": used_offscreen,
             "continued_without_repair": continued_without_repair,
-            "stopped_without_resolution": stopped_without_resolution,
+            "unresolved_or_abandoned": unresolved_or_abandoned,
         },
         "stage_orders": STAGE_ORDERS,
         "stage_counts": stage_counts,

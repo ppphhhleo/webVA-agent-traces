@@ -10,12 +10,6 @@ const FRICTION_COLORS = {
   "Misgrounded manipulation": "#d7621b",
   "Repetition loop": "#3f8db8",
 };
-const RESPONSE_COLORS = {
-  "Retry / recover in GUI": "#2f7d50",
-  "Moved off screen": "#62419a",
-  "Continued without repair": "#b44b43",
-  "Stopped without resolution": "#68706d",
-};
 const LANDING_COLORS = {
   "Grounded visual evidence": "#2f7d50",
   "Combined visual + computed": "#277f85",
@@ -25,18 +19,12 @@ const LANDING_COLORS = {
   "Fabricated evidence": "#ad2630",
   "No answer": "#68706d",
 };
-const PATHWAY_COLORS = {
-  "GUI recovery": "#2f7d50",
-  "Failed code attempt → GUI recovery": "#4d8a55",
-  "GUI retry → code verification": "#277f85",
-  "Off-screen work → GUI verification": "#277f85",
-  "GUI ↔ code attempts → code resolution": "#62419a",
-  "Code resolution after GUI friction": "#62419a",
-  "GUI repetition + failed code → fabrication": "#9d3a40",
-  "GUI retry → off-screen attempts → unresolved": "#7b617f",
-  "Off-screen attempt, unresolved": "#8b668b",
+const HANDLING_COLORS = {
+  "Recovered in GUI": "#2f7d50",
+  "Shifted to code": "#62419a",
+  "Mixed GUI + code": "#277f85",
   "Continued without repair": "#b44b43",
-  "Stopped without resolution": "#68706d",
+  "Unresolved / abandoned": "#68706d",
 };
 
 const state = { traces: [], friction: null, activeModels: new Set(), taskType: "" };
@@ -306,11 +294,19 @@ function renderSwitchDelayChart() {
 
 function frictionColor(stage, label, episodes = []) {
   if (stage === "friction") return FRICTION_COLORS[label] || "#687777";
-  if (stage === "response") return RESPONSE_COLORS[label] || "#687777";
-  if (stage === "pathway") return PATHWAY_COLORS[label] || "#687777";
+  if (stage === "handling") return HANDLING_COLORS[label] || "#687777";
   if (stage === "landing") return LANDING_COLORS[label] || "#687777";
-  const response = episodes.find((episode) => episode.pathway === label)?.response;
-  return RESPONSE_COLORS[response] || "#687777";
+  const handling = episodes.find((episode) => episode.handling === label)?.handling;
+  return HANDLING_COLORS[handling] || "#687777";
+}
+
+function pathwayBreakdown(episodes) {
+  const counts = new Map();
+  episodes.forEach((episode) => counts.set(episode.pathway, (counts.get(episode.pathway) || 0) + 1));
+  return [...counts.entries()]
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .map(([label, count]) => `${label} (${count})`)
+    .join("<br>");
 }
 
 function showAlluvialTooltip(event, title, count, traceIds, detail = "") {
@@ -333,20 +329,19 @@ function renderFrictionSummary() {
   const total = data.counts.episodes;
   const offscreen = data.counts.used_offscreen;
   const continued = data.counts.continued_without_repair;
-  const stopped = data.counts.stopped_without_resolution;
-  const unresolved = continued + stopped;
+  const unresolved = data.counts.unresolved_or_abandoned;
   document.querySelector("#friction-episodes").textContent = total;
   document.querySelector("#friction-offscreen").textContent = `${offscreen} · ${(offscreen / total * 100).toFixed(0)}%`;
-  document.querySelector("#friction-unseen").textContent = `${unresolved} · ${(unresolved / total * 100).toFixed(0)}%`;
+  document.querySelector("#friction-unseen").textContent = `${continued + unresolved} · ${((continued + unresolved) / total * 100).toFixed(0)}%`;
   document.querySelector("#friction-callout").innerHTML = `<strong>One friction episode can cross channels more than once.</strong>
-    Of ${total} coded episodes, ${offscreen} use off-screen work somewhere in the handling path; ${continued} continue under an unrepaired interface state, while ${stopped} stop without resolving it.`;
+    Of ${total} coded episodes, ${offscreen} use off-screen work somewhere in the handling path; ${continued} continue without repairing the interface, while ${unresolved} remain unresolved or are abandoned. Detailed sequences remain in the trace cards and hover descriptions.`;
 
   const examples = document.querySelector("#friction-examples");
   examples.replaceChildren(...(data.case_studies || []).map((example) => {
     const link = document.createElement("a");
     link.href = `../#trace=${encodeURIComponent(example.trace_id)}`;
     const episode = data.episodes.find((item) => item.trace_id === example.trace_id);
-    link.style.setProperty("--path-color", PATHWAY_COLORS[episode?.pathway] || "#68706d");
+    link.style.setProperty("--path-color", HANDLING_COLORS[episode?.handling] || "#68706d");
     const steps = example.steps.map((step) => `<span class="path-step path-${step.kind}"><b>${step.rounds}</b>${step.label}</span>`).join("");
     link.innerHTML = `<div class="example-heading"><i></i><span>${example.label}</span><code>${example.trace_id}</code></div>
       <p>${example.summary}</p><div class="path-steps">${steps}</div><strong>${example.why}</strong>`;
@@ -359,14 +354,14 @@ function renderFrictionAlluvial() {
   const data = state.friction;
   if (!data || !frictionSvg) return;
   const width = 1280;
-  const height = 600;
+  const height = 520;
   const top = 62;
   const bottom = 26;
   const plotHeight = height - top - bottom;
   const nodeWidth = 12;
-  const stageKeys = ["friction", "response", "pathway", "landing"];
-  const stageTitles = ["GUI friction", "First response", "Resolution pathway", "Evidence landing"];
-  const stageX = [164, 430, 742, 1050];
+  const stageKeys = ["friction", "handling", "landing"];
+  const stageTitles = ["GUI friction", "How it was handled", "Evidence landing"];
+  const stageX = [164, 640, 1050];
   const nodeMap = new Map();
   const stages = {};
   const activeLabels = {};
@@ -417,7 +412,7 @@ function renderFrictionAlluvial() {
   });
 
   const episodeLookup = new Map(data.episodes.map((episode) => [episode.episode_id, episode]));
-  const pairs = [["friction", "response"], ["response", "pathway"], ["pathway", "landing"]];
+  const pairs = [["friction", "handling"], ["handling", "landing"]];
   pairs.forEach(([sourceStage, targetStage]) => {
     const links = data.links
       .filter((link) => link.source_stage === sourceStage && link.target_stage === targetStage)
@@ -441,13 +436,15 @@ function renderFrictionAlluvial() {
       const path = svgElement("path", {
         class: "alluvial-link",
         d: `M ${x1} ${sourceY} C ${x1 + curve} ${sourceY}, ${x2 - curve} ${targetY}, ${x2} ${targetY}`,
-        stroke: frictionColor("response", sourceStage === "response" ? source.label : (episodeLookup.get(link.episode_ids[0])?.response || "")),
+        stroke: frictionColor("handling", sourceStage === "handling" ? source.label : (episodeLookup.get(link.episode_ids[0])?.handling || "")),
         "stroke-width": ribbonWidth,
       });
       const traceIds = link.trace_ids || [];
       const title = `${link.source} → ${link.target}`;
-      path.addEventListener("pointerenter", (event) => showAlluvialTooltip(event, title, link.count, traceIds));
-      path.addEventListener("pointermove", (event) => showAlluvialTooltip(event, title, link.count, traceIds));
+      const linkedEpisodes = link.episode_ids.map((id) => episodeLookup.get(id)).filter(Boolean);
+      const detail = (sourceStage === "handling" || targetStage === "handling") ? pathwayBreakdown(linkedEpisodes) : "";
+      path.addEventListener("pointerenter", (event) => showAlluvialTooltip(event, title, link.count, traceIds, detail));
+      path.addEventListener("pointermove", (event) => showAlluvialTooltip(event, title, link.count, traceIds, detail));
       path.addEventListener("pointerleave", () => { alluvialTooltip.hidden = true; });
       const accessibleTitle = svgElement("title");
       accessibleTitle.textContent = `${title}: ${link.count} episodes`;
@@ -476,7 +473,8 @@ function renderFrictionAlluvial() {
       });
       label.textContent = `${node.label} (${node.count})`;
       const traceIds = [...new Set(episodes.map((episode) => episode.trace_id))];
-      const show = (event) => showAlluvialTooltip(event, node.label, node.count, traceIds, stageTitles[stageIndex]);
+      const detail = stage === "handling" ? pathwayBreakdown(episodes) : stageTitles[stageIndex];
+      const show = (event) => showAlluvialTooltip(event, node.label, node.count, traceIds, detail);
       group.addEventListener("pointerenter", show);
       group.addEventListener("pointermove", show);
       group.addEventListener("pointerleave", () => { alluvialTooltip.hidden = true; });
@@ -495,7 +493,7 @@ async function init() {
   try {
     const [response, frictionResponse] = await Promise.all([
       fetch("data.json?v=3"),
-      fetch("friction_flow.json?v=2"),
+      fetch("friction_flow.json?v=3"),
     ]);
     if (!response.ok) throw new Error(`Analysis data request failed (${response.status})`);
     if (!frictionResponse.ok) throw new Error(`Friction data request failed (${frictionResponse.status})`);

@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="../styles.css" />
-    <link rel="stylesheet" href="analysis.css?v=14" />
+    <link rel="stylesheet" href="analysis.css?v=15" />
   </head>
   <body>
     <div class="app-shell">
@@ -116,7 +116,7 @@
             <dl class="friction-totals" aria-label="GUI friction summary">
               <div><dt>Episodes</dt><dd id="friction-episodes">—</dd></div>
               <div><dt>Used off-screen work</dt><dd id="friction-offscreen">—</dd></div>
-              <div><dt>Continued / stopped unresolved</dt><dd id="friction-unseen">—</dd></div>
+              <div><dt>Continued / unresolved</dt><dd id="friction-unseen">—</dd></div>
             </dl>
           </header>
           <div class="friction-callout" id="friction-callout"></div>
@@ -125,7 +125,7 @@
             <div class="alluvial-tooltip" id="alluvial-tooltip" role="status" hidden></div>
           </div>
           <div class="friction-examples" id="friction-examples" aria-label="Representative multi-stage trace pathways"></div>
-          <p class="chart-description" id="friction-description">Widths count coded friction episodes, not unique traces. The flow separates the first response from the eventual resolution pathway, so code used to verify GUI work is distinct from code that resolves the task. Earlier actions are excluded from the aggregate flow; the trace timelines retain that context. Hover a ribbon or node to inspect counts and trace IDs.</p>
+          <p class="chart-description" id="friction-description">Widths count coded friction episodes, not unique traces. Five handling families keep the aggregate flow readable; detailed ordered pathways still distinguish code verification, code resolution, GUI recovery, and failed attempts in the hover descriptions and trace timelines. Hover a ribbon or node to inspect the underlying paths and trace IDs.</p>
         </section>
 
         <section class="analysis-card distribution-card" aria-labelledby="chart-title">
@@ -161,6 +161,6 @@
       </main>
     </div>
     <script src="../config.js"></script>
-    <script src="analysis.js?v=12" type="module"></script>
+    <script src="analysis.js?v=13" type="module"></script>
   </body>
 </html>
