@@ -186,7 +186,7 @@ def main() -> None:
             "first_position": "One-based first off-screen round divided by all model rounds in the trace.",
             "actions": "Count of individual requested actions across model-message rounds, excluding final answers.",
             "task_type": "Modal task-type label across the four model traces for each task ID.",
-            "aggregation": "Table values and stacked bars are arithmetic means across traces; missing task scores are excluded, never converted to zero.",
+            "aggregation": "Table values and stacked bars are arithmetic means across traces; unfinished traces retain that status and contribute a task score of zero.",
         },
         "traces": records,
     }

@@ -52,7 +52,7 @@
               <tbody id="performance-summary"></tbody>
             </table>
           </div>
-          <p class="table-note">Token, action, and round values are means per trace. Score coverage counts trajectories with a numeric <code>summary.check_answer_score</code> in the published metadata. Missing ratings are reported as unrated and are not treated as zero.</p>
+          <p class="table-note">Token, action, and round values are means per trace. Unfinished trajectories remain labeled as unfinished and contribute a task score of 0 to the model mean.</p>
         </section>
 
         <section class="analysis-card work-share-card" aria-labelledby="work-share-title">
