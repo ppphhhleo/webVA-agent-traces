@@ -44,7 +44,7 @@
         <section class="summary-card performance-card" aria-labelledby="performance-title">
           <header class="report-header">
             <div><p class="eyebrow">Model-level means</p><h2 id="performance-title">Performance, cost, and interaction length</h2></div>
-            <p>Exactly 30 unique trial-one traces per model.</p>
+            <p id="cohort-summary">Unique trial-one traces per model.</p>
           </header>
           <div class="summary-table-wrap">
             <table>
@@ -85,22 +85,22 @@
             <div class="signature-grid">
               <article style="--signature-color:var(--model-gpt54)">
                 <h4>GPT-5.4 <span>Interface-bound persistence</span></h4>
-                <p>Only 11.5% of its working rounds are off screen, and 19 of 30 traces never leave the interface. Its mean switch latency is 87.2%—the slowest of the four—although visible persistence does not always produce the right answer.</p>
+                <p id="signature-gpt54"></p>
                 <a href="../#trace=tr_7eaf20e2ecf1282f">tr_7eaf20e2ecf1282f</a>
               </article>
               <article style="--signature-color:var(--model-gpt55)">
                 <h4>GPT-5.5 <span>Backend-first extraction</span></h4>
-                <p>It spends 66.2% of working rounds off screen, starts there in 18 of 30 traces, and has the lowest mean switch latency at 41.5%—the fastest switch. A characteristic run searches bundles, opens Chrome remote debugging, and parses recovered data in code.</p>
+                <p id="signature-gpt55"></p>
                 <a href="../#trace=tr_759cc42b6b434d91">tr_759cc42b6b434d91</a>
               </article>
               <article style="--signature-color:var(--model-opus)">
                 <h4>Claude Opus 4.8 <span>Task-adaptive switching</span></h4>
-                <p>Its off-screen share rises from 19.2% on low-level tasks to 52.0% on compound tasks, while its overall mean switch latency is 70.1%. It often begins visually, then moves to Python or shell when exact aggregation is useful.</p>
+                <p id="signature-opus"></p>
                 <p class="trace-links"><a href="../#trace=tr_3c23536d65984f39">tr_3c23536d65984f39</a><a href="../#trace=tr_a8085bfd2330aa30">tr_a8085bfd2330aa30</a></p>
               </article>
               <article style="--signature-color:var(--model-sonnet)">
                 <h4>Claude Sonnet 5 <span>Visual persistence</span></h4>
-                <p>It keeps 70.7% of working rounds on screen, yet switches faster than Opus on average, with lower latency (57.4% versus 70.1%). Its visual work is also the most prolonged—33.8 rounds on average, with five unfinished traces.</p>
+                <p id="signature-sonnet"></p>
                 <a href="../#trace=tr_475d111272ead831">tr_475d111272ead831</a>
               </article>
             </div>
@@ -141,7 +141,7 @@
             <svg id="evidence-plot" role="img" aria-labelledby="evidence-title evidence-description"></svg>
             <div class="plot-tooltip evidence-tooltip" id="evidence-tooltip" role="status" hidden></div>
           </div>
-          <p class="chart-description" id="evidence-description">Each small point is one of the 120 coded trial-one traces and opens that trace when selected. Horizontal position is the share of working rounds performed on screen; answer-only traces with no working actions appear at 100% visible by convention. Evidence categories form a descriptive ordered scale—not an answer-correctness score. Large points show model means; translucent regions show 95% confidence regions. Select a model label or mean point to focus its traces.</p>
+          <p class="chart-description" id="evidence-description">Each small point is one coded trial-one trace and opens that trace when selected. Horizontal position is the share of working rounds performed on screen; answer-only traces with no working actions appear at 100% visible by convention. Points are deterministically jittered within their evidence band to reveal overlap, while model means and confidence regions use the unjittered values. Evidence categories form a descriptive ordered scale—not an answer-correctness score. Select a model label or mean point to focus its traces.</p>
         </section>
 
         <section class="analysis-card distribution-card" aria-labelledby="chart-title">
@@ -177,6 +177,6 @@
       </main>
     </div>
     <script src="../config.js"></script>
-    <script src="analysis.js?v=16" type="module"></script>
+    <script src="analysis.js?v=17" type="module"></script>
   </body>
 </html>

@@ -315,6 +315,42 @@ function renderSwitchDelayChart() {
   }));
 }
 
+function modelStats(model) {
+  const traces = state.traces.filter((trace) => trace.model === model);
+  const positions = traces.map((trace) => Number.isFinite(trace.first_offscreen_position_percent)
+    ? trace.first_offscreen_position_percent
+    : 100);
+  return {
+    traces,
+    count: traces.length,
+    offscreen: mean(numeric(traces.map((trace) => trace.offscreen_percent))) || 0,
+    latency: mean(positions) || 0,
+    never: traces.filter((trace) => trace.first_offscreen_round === null).length,
+    startsOffscreen: traces.filter((trace) => trace.first_offscreen_round === 1).length,
+    rounds: mean(numeric(traces.map((trace) => trace.total_rounds))) || 0,
+    unfinished: traces.filter((trace) => trace.completion_status === "unfinished").length,
+  };
+}
+
+function taskTypeOffscreen(stats, taskType) {
+  return mean(numeric(stats.traces
+    .filter((trace) => trace.task_type === taskType)
+    .map((trace) => trace.offscreen_percent))) || 0;
+}
+
+function renderBehavioralSignatures() {
+  const gpt54 = modelStats("GPT-5.4");
+  const gpt55 = modelStats("GPT-5.5");
+  const opus = modelStats("Claude Opus 4.8");
+  const sonnet = modelStats("Claude Sonnet 5");
+  const perModel = state.activeModels.size ? state.traces.length / state.activeModels.size : 0;
+  document.querySelector("#cohort-summary").textContent = `${perModel} unique trial-one traces per model.`;
+  document.querySelector("#signature-gpt54").textContent = `It averages ${gpt54.offscreen.toFixed(1)}% of working rounds off screen, and ${gpt54.never} of ${gpt54.count} traces never leave the interface. Its mean switch latency is ${gpt54.latency.toFixed(1)}%. Visible persistence does not always produce the right answer.`;
+  document.querySelector("#signature-gpt55").textContent = `It averages ${gpt55.offscreen.toFixed(1)}% of working rounds off screen, starts there in ${gpt55.startsOffscreen} of ${gpt55.count} traces, and has a mean switch latency of ${gpt55.latency.toFixed(1)}%. A characteristic run searches bundles, opens Chrome remote debugging, and parses recovered data in code.`;
+  document.querySelector("#signature-opus").textContent = `Its off-screen share changes from ${taskTypeOffscreen(opus, "Low-level").toFixed(1)}% on low-level tasks to ${taskTypeOffscreen(opus, "Compound").toFixed(1)}% on compound tasks, while its overall mean switch latency is ${opus.latency.toFixed(1)}%. It often begins visually, then moves to Python or shell when exact aggregation is useful.`;
+  document.querySelector("#signature-sonnet").textContent = `It keeps ${(100 - sonnet.offscreen).toFixed(1)}% of working rounds on screen and has a mean switch latency of ${sonnet.latency.toFixed(1)}%, compared with ${opus.latency.toFixed(1)}% for Opus. Its traces average ${sonnet.rounds.toFixed(1)} rounds, with ${sonnet.unfinished} unfinished.`;
+}
+
 function frictionColor(stage, label, episodes = []) {
   if (stage === "friction") return FRICTION_COLORS[label] || "#687777";
   if (stage === "handling") return HANDLING_COLORS[label] || "#687777";
@@ -697,11 +733,11 @@ function renderEvidencePlot() {
     const hash = stableHash(trace.trace_id);
     const xUnit = ((hash % 1001) / 1000) - 0.5;
     const ySeed = (Math.floor(hash / 1001) % 1001) / 1000;
-    const xSpread = mobile ? 12 : 22;
+    const xSpread = mobile ? 30 : 58;
     let jitterX = xUnit * xSpread;
     if (trace.gui_percent <= 1) jitterX = Math.abs(xUnit) * xSpread;
     if (trace.gui_percent >= 99) jitterX = -Math.abs(xUnit) * xSpread;
-    const ySpread = bandStep * 0.72;
+    const ySpread = bandStep * 0.96;
     let jitterY = (ySeed - 0.5) * ySpread;
     if (trace.evidence_level === 0) jitterY = -ySeed * ySpread * 0.5;
     if (trace.evidence_level === order.length - 1) jitterY = ySeed * ySpread * 0.5;
@@ -799,6 +835,7 @@ async function init() {
     renderPerformanceSummary();
     renderWorkShareChart();
     renderSwitchDelayChart();
+    renderBehavioralSignatures();
     renderFrictionSummary();
     renderFrictionAlluvial();
     renderEvidenceLegend();
