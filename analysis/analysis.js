@@ -14,6 +14,7 @@ const legend = document.querySelector("#model-legend");
 const taskFilter = document.querySelector("#task-type-filter");
 const performanceBody = document.querySelector("#performance-summary");
 const workShareChart = document.querySelector("#work-share-chart");
+const switchDelayChart = document.querySelector("#switch-delay-chart");
 
 const mean = (values) => values.length ? values.reduce((sum, value) => sum + value, 0) / values.length : null;
 const numeric = (values) => values.filter((value) => Number.isFinite(value));
@@ -227,6 +228,48 @@ function renderWorkShareChart() {
   }));
 }
 
+function renderSwitchDelayChart() {
+  const models = orderedModels(state.traces);
+  const taskTypes = ["Overall", ...[...new Set(state.traces.map((trace) => trace.task_type).filter(Boolean))]
+    .sort((a, b) => TASK_TYPE_ORDER.indexOf(a) - TASK_TYPE_ORDER.indexOf(b))];
+
+  switchDelayChart.replaceChildren(...taskTypes.map((taskType) => {
+    const group = document.createElement("section");
+    group.className = "delay-group";
+    const title = document.createElement("h4");
+    title.textContent = taskType;
+    const rows = document.createElement("div");
+    rows.className = "delay-rows";
+    rows.replaceChildren(...models.map((model) => {
+      const traces = state.traces.filter((trace) =>
+        trace.model === model && (taskType === "Overall" || trace.task_type === taskType)
+      );
+      const positions = traces.map((trace) =>
+        Number.isFinite(trace.first_offscreen_position_percent)
+          ? trace.first_offscreen_position_percent
+          : 100
+      );
+      const delay = mean(positions) || 0;
+      const never = traces.filter((trace) => trace.first_offscreen_round === null).length;
+      const edgeClass = delay >= 88 ? " edge-right" : delay <= 12 ? " edge-left" : "";
+      const row = document.createElement("div");
+      row.className = "delay-row";
+      row.innerHTML = `<div class="delay-label"><span class="model-key" style="--series-color:${colorFor(model)}"><i></i>${model}</span><small>never ${never}/${traces.length}</small></div>
+        <div class="delay-track" aria-label="${model}, ${taskType}: mean first off-screen position ${delay.toFixed(1)}%; ${never} of ${traces.length} traces never went off screen">
+          <span class="delay-fill" style="width:${delay}%;--series-color:${colorFor(model)}"></span>
+          <i class="delay-dot" style="left:${delay}%;--series-color:${colorFor(model)}"></i>
+          <b class="delay-value${edgeClass}" style="left:${delay}%">${delay.toFixed(1)}%</b>
+        </div>`;
+      return row;
+    }));
+    const axis = document.createElement("div");
+    axis.className = "delay-axis";
+    axis.innerHTML = "<span>0%</span><span>50%</span><span>100%</span>";
+    group.append(title, rows, axis);
+    return group;
+  }));
+}
+
 async function init() {
   try {
     const response = await fetch("data.json?v=3");
@@ -242,6 +285,7 @@ async function init() {
     renderLegend();
     renderPerformanceSummary();
     renderWorkShareChart();
+    renderSwitchDelayChart();
     renderChart();
     taskFilter.addEventListener("change", () => {
       state.taskType = taskFilter.value;
