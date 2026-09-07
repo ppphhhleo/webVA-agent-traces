@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="../styles.css" />
-    <link rel="stylesheet" href="analysis.css?v=20" />
+    <link rel="stylesheet" href="analysis.css?v=19" />
   </head>
   <body>
     <div class="app-shell">
@@ -59,15 +59,23 @@
           <header class="chart-header">
             <div>
               <p class="eyebrow">Model × task type</p>
-              <h2 id="work-share-title">Working-mode share and off-screen onset</h2>
+              <h2 id="work-share-title">Average share of working rounds</h2>
             </div>
-            <div class="combined-legend">
-              <div class="mode-legend" aria-label="Work mode legend"><span><i class="mode-on"></i>On screen</span><span><i class="mode-off"></i>Off screen</span></div>
-              <div class="delay-direction" aria-label="Off-screen onset scale"><span>0% · Faster</span><i></i><span>100% · Slower or never</span></div>
-            </div>
+            <div class="mode-legend" aria-label="Work mode legend"><span><i class="mode-on"></i>On screen</span><span><i class="mode-off"></i>Off screen</span></div>
           </header>
           <div class="share-chart" id="work-share-chart" role="img" aria-labelledby="work-share-title work-share-description"></div>
-          <p class="chart-description" id="work-share-description">Each of the four panels combines two trace-normalized measures for the same model and task-type group. The stacked bar averages the share of GUI and off-screen working rounds; answer-only traces count as 100% visible by convention. The onset marker averages first off-screen round ÷ all rounds: lower values mean a faster switch, while traces that never go off screen receive 100%. Every trace contributes equal weight.</p>
+          <p class="chart-description" id="work-share-description">Each trace is first normalized to 100% across its GUI and off-screen working rounds. Answer-only traces with no working actions count as 100% visible by convention. The chart then averages those trace-level shares within each model and task type, giving every trace equal weight.</p>
+          <section class="switch-delay-section" aria-labelledby="switch-delay-title">
+            <header>
+              <div>
+                <p class="eyebrow">Model × task type</p>
+                <h3 id="switch-delay-title">How quickly off-screen work begins</h3>
+              </div>
+              <div class="delay-direction" aria-label="Scale direction"><span>0% · Faster</span><i></i><span>100% · Slower or never</span></div>
+            </header>
+            <div class="delay-chart" id="switch-delay-chart" role="img" aria-labelledby="switch-delay-title switch-delay-description"></div>
+            <p class="chart-description" id="switch-delay-description">The chart plots switch latency: first off-screen round divided by all rounds. Lower values mean a faster switch; traces that never go off screen receive 100%. Each trace contributes equal weight to the model average.</p>
+          </section>
           <section class="signature-discussion" aria-labelledby="signature-title">
             <header>
               <p class="eyebrow">Interpretation</p>
@@ -169,6 +177,6 @@
       </main>
     </div>
     <script src="../config.js"></script>
-    <script src="analysis.js?v=20" type="module"></script>
+    <script src="analysis.js?v=19" type="module"></script>
   </body>
 </html>
