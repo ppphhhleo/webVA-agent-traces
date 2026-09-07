@@ -197,18 +197,20 @@ function renderPerformanceSummary() {
 
 function renderWorkShareChart() {
   const models = orderedModels(state.traces);
-  const taskTypes = [...new Set(state.traces.map((trace) => trace.task_type).filter(Boolean))]
-    .sort((a, b) => TASK_TYPE_ORDER.indexOf(a) - TASK_TYPE_ORDER.indexOf(b));
+  const taskTypes = ["Overall", ...[...new Set(state.traces.map((trace) => trace.task_type).filter(Boolean))]
+    .sort((a, b) => TASK_TYPE_ORDER.indexOf(a) - TASK_TYPE_ORDER.indexOf(b))];
 
   workShareChart.replaceChildren(...taskTypes.map((taskType) => {
     const group = document.createElement("section");
-    group.className = "share-group";
+    group.className = `share-group${taskType === "Overall" ? " share-overall" : ""}`;
     const title = document.createElement("h3");
     title.textContent = taskType;
     const rows = document.createElement("div");
     rows.className = "share-rows";
     rows.replaceChildren(...models.map((model) => {
-      const traces = state.traces.filter((trace) => trace.model === model && trace.task_type === taskType);
+      const traces = state.traces.filter((trace) =>
+        trace.model === model && (taskType === "Overall" || trace.task_type === taskType)
+      );
       const offscreen = mean(numeric(traces.map((trace) => trace.offscreen_percent))) || 0;
       const onscreen = 100 - offscreen;
       const row = document.createElement("div");
@@ -227,7 +229,7 @@ function renderWorkShareChart() {
 
 async function init() {
   try {
-    const response = await fetch("data.json?v=2");
+    const response = await fetch("data.json?v=3");
     if (!response.ok) throw new Error(`Analysis data request failed (${response.status})`);
     const data = await response.json();
     state.traces = data.traces || [];
