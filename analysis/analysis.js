@@ -6,6 +6,11 @@ const MODEL_COLORS = {
 };
 const MODEL_ORDER = ["GPT-5.4", "GPT-5.5", "Claude Opus 4.8", "Claude Sonnet 5"];
 const TASK_TYPE_ORDER = ["Low-level", "Compound", "High-level"];
+const TASK_TYPE_COLORS = {
+  "Low-level": "#e69f00",
+  "Compound": "#56b4e9",
+  "High-level": "#009e73",
+};
 const BEHAVIOR_THEME_ORDER = [
   "Interpreting the task",
   "Working on the screen",
@@ -409,7 +414,7 @@ function renderBehaviorMatrix() {
       ${models.map((model) => `
         <div class="behavior-model-head" role="columnheader" style="--series-color:${colorFor(model)}">
           <span><i></i>${escapeHtml(model)}</span>
-          <small>${modelRecords.get(model).trace_count} traces · ${modelRecords.get(model).episode_count} episodes</small>
+          <small>${modelRecords.get(model).trace_count} traces</small>
         </div>`).join("")}
     </div>`;
   const rows = themes.map((theme) => {
@@ -418,20 +423,33 @@ function renderBehaviorMatrix() {
       const cells = models.map((model) => {
         const modelRecord = modelRecords.get(model);
         const metric = behavior.models.find((record) => record.model === model) || {};
-        const episodeCount = metric.episode_count || 0;
-        const episodeShare = metric.episode_share_percent || 0;
         const traceCount = metric.trace_count || 0;
         const prevalence = metric.trace_prevalence_percent || 0;
-        const label = `${model}: ${episodeShare.toFixed(1)}% of coded episodes (${episodeCount} of ${modelRecord.episode_count}); present in ${traceCount} of ${modelRecord.trace_count} traces (${prevalence.toFixed(1)}%).`;
+        const taskMetrics = TASK_TYPE_ORDER.map((taskType) => {
+          const taskRecord = metric.task_types?.find((record) => record.task_type === taskType) || {};
+          const modelTaskRecord = modelRecord.task_types?.find((record) => record.task_type === taskType) || {};
+          return {
+            taskType,
+            traceCount: taskRecord.trace_count || 0,
+            denominator: modelTaskRecord.trace_count || 0,
+            share: taskRecord.share_of_model_traces_percent || 0,
+          };
+        });
+        const taskBreakdown = taskMetrics
+          .map((record) => `${record.taskType} ${record.traceCount}/${record.denominator}`)
+          .join("; ");
+        const label = `${model}: present in ${traceCount} of ${modelRecord.trace_count} traces (${prevalence.toFixed(1)}%). ${taskBreakdown}.`;
         return `
-          <div class="behavior-cell${episodeCount ? "" : " is-zero"}" role="cell" aria-label="${escapeHtml(label)}" title="${escapeHtml(label)}" style="--series-color:${colorFor(model)};--behavior-share:${episodeShare.toFixed(2)}%">
-            <i class="behavior-fill" aria-hidden="true"></i>
-            <span><b>${episodeShare.toFixed(1)}%</b><small>n=${episodeCount}</small></span>
+          <div class="behavior-cell${traceCount ? "" : " is-zero"}" role="cell" aria-label="${escapeHtml(label)}" title="${escapeHtml(label)}">
+            <span class="behavior-stack" aria-hidden="true">
+              ${taskMetrics.map((record) => `<i class="behavior-segment" style="width:${record.share.toFixed(2)}%;background:${TASK_TYPE_COLORS[record.taskType]}"></i>`).join("")}
+            </span>
+            <span class="behavior-value"><b>${traceCount}/${modelRecord.trace_count}</b><small>${prevalence.toFixed(1)}%</small></span>
           </div>`;
       }).join("");
       return `<div class="behavior-row" role="row"><div class="behavior-label" role="rowheader">${escapeHtml(code)}</div>${cells}</div>`;
     }).join("");
-    return `<section class="behavior-theme" role="rowgroup"><h3>${escapeHtml(theme.theme)} <small>${theme.episode_count} coded episodes</small></h3>${themeRows}</section>`;
+    return `<section class="behavior-theme" role="rowgroup"><h3>${escapeHtml(theme.theme)} <small>${theme.behaviors.length} behavior codes</small></h3>${themeRows}</section>`;
   }).join("");
   behaviorMatrix.innerHTML = header + rows;
 }
@@ -1151,7 +1169,7 @@ async function init() {
       fetch("friction_flow.json?v=6"),
       fetch("code_error_flow.json?v=2"),
       fetch("evidence_visibility.json?v=3"),
-      fetch("behavior_summary.json?v=2"),
+      fetch("behavior_summary.json?v=3"),
     ]);
     if (!response.ok) throw new Error(`Analysis data request failed (${response.status})`);
     if (!frictionResponse.ok) throw new Error(`Friction data request failed (${frictionResponse.status})`);

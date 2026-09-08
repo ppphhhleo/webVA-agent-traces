@@ -123,14 +123,18 @@
           <header class="chart-header">
             <div>
               <p class="eyebrow">Coded behavior overview</p>
-              <h2 id="behavior-title">Behavior prevalence and frequency</h2>
+              <h2 id="behavior-title">Behavior trace prevalence</h2>
             </div>
-            <p class="behavior-header-note"><strong>Share = behavior episodes ÷ all coded episodes.</strong> <span><strong>n</strong> = behavior episodes.</span></p>
+            <div class="behavior-task-legend" aria-label="Task type colors">
+              <span><i class="task-low"></i>Low-level</span>
+              <span><i class="task-compound"></i>Compound</span>
+              <span><i class="task-high"></i>High-level</span>
+            </div>
           </header>
           <div class="behavior-matrix-shell">
             <div class="behavior-matrix" id="behavior-matrix" role="table" aria-labelledby="behavior-title behavior-description"></div>
           </div>
-          <p class="chart-description" id="behavior-description">For each model, the percentage divides the number of episodes assigned a behavior by that model’s total coded episodes. Frequency (<strong>n</strong>) is the corresponding episode count. Hover a cell to also see how many distinct traces contain the behavior. The matrix is derived reactively from the trial-one behavior annotation file.</p>
+          <p class="chart-description" id="behavior-description">Each bar uses the model’s 30 traces as its baseline. Its length is the number of distinct traces containing the behavior, and its stacked segments show how those traces divide across low-level, compound, and high-level tasks. Hover a cell for the task-type counts. A trace is counted at most once per behavior.</p>
         </section>
 
         <section class="analysis-card friction-card" aria-labelledby="friction-title">

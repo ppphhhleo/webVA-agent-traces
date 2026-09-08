@@ -16,6 +16,7 @@ from typing import Any
 
 
 MODEL_ORDER = ["GPT-5.4", "GPT-5.5", "Claude Opus 4.8", "Claude Sonnet 5"]
+TASK_TYPE_ORDER = ["Low-level", "Compound", "High-level"]
 THEME_ORDER = [
     "Interpreting the task",
     "Working on the screen",
@@ -35,16 +36,22 @@ def build_summary(coded: dict[str, Any]) -> dict[str, Any]:
     taxonomy = {item["theme"]: item for item in coded["taxonomy"]}
 
     trace_ids_by_model: dict[str, set[str]] = defaultdict(set)
+    trace_ids_by_model_and_task_type: dict[tuple[str, str], set[str]] = defaultdict(set)
     for trace in trace_index:
         trace_ids_by_model[trace["model"]].add(trace["trace_id"])
+        trace_ids_by_model_and_task_type[(trace["model"], trace["task_type"])].add(trace["trace_id"])
 
     episode_totals = Counter(annotation["model"] for annotation in annotations)
     episode_counts: Counter[tuple[str, str]] = Counter(
         (annotation["model"], annotation["code"]) for annotation in annotations
     )
     traces_by_code: dict[tuple[str, str], set[str]] = defaultdict(set)
+    traces_by_code_and_task_type: dict[tuple[str, str, str], set[str]] = defaultdict(set)
     for annotation in annotations:
         traces_by_code[(annotation["model"], annotation["code"])].add(annotation["trace_id"])
+        traces_by_code_and_task_type[
+            (annotation["model"], annotation["code"], annotation["task_type"])
+        ].add(annotation["trace_id"])
 
     models = []
     for model in MODEL_ORDER:
@@ -56,6 +63,13 @@ def build_summary(coded: dict[str, Any]) -> dict[str, Any]:
             "model": model,
             "trace_count": trace_count,
             "episode_count": episode_count,
+            "task_types": [
+                {
+                    "task_type": task_type,
+                    "trace_count": len(trace_ids_by_model_and_task_type[(model, task_type)]),
+                }
+                for task_type in TASK_TYPE_ORDER
+            ],
         })
 
     themes = []
@@ -68,12 +82,31 @@ def build_summary(coded: dict[str, Any]) -> dict[str, Any]:
             for model in MODEL_ORDER:
                 episode_count = episode_counts[(model, code)]
                 trace_count = len(traces_by_code[(model, code)])
+                task_type_metrics = []
+                for task_type in TASK_TYPE_ORDER:
+                    task_trace_count = len(
+                        traces_by_code_and_task_type[(model, code, task_type)]
+                    )
+                    task_denominator = len(
+                        trace_ids_by_model_and_task_type[(model, task_type)]
+                    )
+                    task_type_metrics.append({
+                        "task_type": task_type,
+                        "trace_count": task_trace_count,
+                        "share_of_model_traces_percent": percentage(
+                            task_trace_count, len(trace_ids_by_model[model])
+                        ),
+                        "prevalence_within_task_type_percent": percentage(
+                            task_trace_count, task_denominator
+                        ),
+                    })
                 model_metrics.append({
                     "model": model,
                     "episode_count": episode_count,
                     "episode_share_percent": percentage(episode_count, episode_totals[model]),
                     "trace_count": trace_count,
                     "trace_prevalence_percent": percentage(trace_count, len(trace_ids_by_model[model])),
+                    "task_types": task_type_metrics,
                 })
             behaviors.append({
                 "code": code,
@@ -92,8 +125,8 @@ def build_summary(coded: dict[str, Any]) -> dict[str, Any]:
         raise RuntimeError("Behavior summary totals do not reconcile with source annotations")
 
     return {
-        "schema_version": "1.0",
-        "classifier_version": "behavior-summary-v1",
+        "schema_version": "1.1",
+        "classifier_version": "behavior-summary-v2-task-type-prevalence",
         "source": {
             "dataset": coded.get("dataset"),
             "generated_at": coded.get("generated_at"),
@@ -111,6 +144,8 @@ def build_summary(coded: dict[str, Any]) -> dict[str, Any]:
         "definitions": {
             "episode_share_percent": "Behavior episodes divided by all coded episodes for the model.",
             "trace_prevalence_percent": "Distinct traces containing the behavior divided by all traces for the model.",
+            "share_of_model_traces_percent": "Distinct traces in one task type containing the behavior divided by all traces for the model; task-type shares stack to total trace prevalence.",
+            "prevalence_within_task_type_percent": "Distinct traces containing the behavior divided by traces of that task type for the model.",
         },
         "models": models,
         "themes": themes,

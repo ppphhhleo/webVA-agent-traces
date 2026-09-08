@@ -89,10 +89,12 @@ episode-level annotation file:
 python3 scripts/build_behavior_summary.py
 ```
 
-This writes `analysis/behavior_summary.json`, containing episode share, episode
-frequency, affected-trace count, and trace prevalence for every model × behavior.
-The public behavior matrix and publication plot scripts can use this derivative
-without downloading the episode-level annotations from S3.
+This writes `analysis/behavior_summary.json`, containing episode counts and
+trace prevalence for every model × behavior, with distinct-trace prevalence
+partitioned by task type. The public behavior matrix uses the 30 traces per model
+as its baseline and renders low-level, compound, and high-level prevalence as a
+stacked bar. Publication plot scripts can use the same derivative without
+downloading the episode-level annotations from S3.
 
 The GUI-friction alluvial on `/analysis/` is a reproducible derivative of that
 annotation file. It treats each coded ineffective/misgrounded or repeated GUI
