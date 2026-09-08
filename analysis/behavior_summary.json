@@ -3,9 +3,9 @@
   "classifier_version": "behavior-summary-v2-task-type-prevalence",
   "source": {
     "dataset": "webva-agent-behaviors-trial1",
-    "generated_at": "2026-09-08T16:11:10.258973+00:00",
+    "generated_at": "2026-09-08T17:03:03.393395+00:00",
     "workbook_filename": "Trace Coding (1).xlsx",
-    "workbook_sha256": "6b4efe758a47d524c3445c4920839a2c7403a8deef794f1725f4c767c391d2cd",
+    "workbook_sha256": "9836d5b2cdc71a531cd12aaa58df8963c2cf4f69c1e9ad3e5d11f68d1064f51b",
     "sheet": "Coded Agent Traces Trial 1"
   },
   "counts": {
@@ -2752,7 +2752,7 @@
       "behaviors": [
         {
           "code": "Computed and visually established evidence",
-          "episode_count": 10,
+          "episode_count": 8,
           "models": [
             {
               "model": "GPT-5.4",
@@ -2810,10 +2810,10 @@
             },
             {
               "model": "Claude Opus 4.8",
-              "episode_count": 3,
-              "episode_share_percent": 2.6087,
-              "trace_count": 3,
-              "trace_prevalence_percent": 10.0,
+              "episode_count": 1,
+              "episode_share_percent": 0.8696,
+              "trace_count": 1,
+              "trace_prevalence_percent": 3.3333,
               "task_types": [
                 {
                   "task_type": "Low-level",
@@ -2823,15 +2823,15 @@
                 },
                 {
                   "task_type": "Compound",
-                  "trace_count": 1,
-                  "share_of_model_traces_percent": 3.3333,
-                  "prevalence_within_task_type_percent": 10.0
+                  "trace_count": 0,
+                  "share_of_model_traces_percent": 0.0,
+                  "prevalence_within_task_type_percent": 0.0
                 },
                 {
                   "task_type": "High-level",
-                  "trace_count": 1,
-                  "share_of_model_traces_percent": 3.3333,
-                  "prevalence_within_task_type_percent": 10.0
+                  "trace_count": 0,
+                  "share_of_model_traces_percent": 0.0,
+                  "prevalence_within_task_type_percent": 0.0
                 }
               ]
             },
@@ -3094,7 +3094,7 @@
         },
         {
           "code": "Grounded in-app visual evidence",
-          "episode_count": 48,
+          "episode_count": 50,
           "models": [
             {
               "model": "GPT-5.4",
@@ -3152,10 +3152,10 @@
             },
             {
               "model": "Claude Opus 4.8",
-              "episode_count": 14,
-              "episode_share_percent": 12.1739,
-              "trace_count": 14,
-              "trace_prevalence_percent": 46.6667,
+              "episode_count": 16,
+              "episode_share_percent": 13.913,
+              "trace_count": 16,
+              "trace_prevalence_percent": 53.3333,
               "task_types": [
                 {
                   "task_type": "Low-level",
@@ -3165,15 +3165,15 @@
                 },
                 {
                   "task_type": "Compound",
-                  "trace_count": 3,
-                  "share_of_model_traces_percent": 10.0,
-                  "prevalence_within_task_type_percent": 30.0
+                  "trace_count": 4,
+                  "share_of_model_traces_percent": 13.3333,
+                  "prevalence_within_task_type_percent": 40.0
                 },
                 {
                   "task_type": "High-level",
-                  "trace_count": 6,
-                  "share_of_model_traces_percent": 20.0,
-                  "prevalence_within_task_type_percent": 60.0
+                  "trace_count": 7,
+                  "share_of_model_traces_percent": 23.3333,
+                  "prevalence_within_task_type_percent": 70.0
                 }
               ]
             },

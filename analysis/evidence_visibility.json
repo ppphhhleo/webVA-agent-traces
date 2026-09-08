@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "classifier_version": "evidence-visibility-v2-answer-only-visible",
-  "generated_at": "2026-09-08T16:11:20.274232+00:00",
+  "generated_at": "2026-09-08T17:03:31.199338+00:00",
   "count": 120,
   "cohort": {
     "name": "coded-agent-traces-trial-one",
@@ -23,8 +23,8 @@
   ],
   "category_counts": {
     "Computed evidence": 39,
-    "Grounded visual evidence": 41,
-    "Computed + visual evidence": 10,
+    "Grounded visual evidence": 43,
+    "Computed + visual evidence": 8,
     "Misgrounded evidence": 7,
     "Prior knowledge only": 4,
     "Visual + prior knowledge": 7,
@@ -291,9 +291,9 @@
       "gui_percent": 100.0,
       "offscreen_percent": 0.0,
       "visibility_basis": "working_rounds",
-      "evidence_category": "Computed + visual evidence",
-      "evidence_level": 7,
-      "evidence_percent": 100.0,
+      "evidence_category": "Grounded visual evidence",
+      "evidence_level": 6,
+      "evidence_percent": 85.71,
       "evidence_rounds": [
         "<R12>"
       ]
@@ -311,9 +311,9 @@
       "gui_percent": 100.0,
       "offscreen_percent": 0.0,
       "visibility_basis": "working_rounds",
-      "evidence_category": "Computed + visual evidence",
-      "evidence_level": 7,
-      "evidence_percent": 100.0,
+      "evidence_category": "Grounded visual evidence",
+      "evidence_level": 6,
+      "evidence_percent": 85.71,
       "evidence_rounds": [
         "<R13>"
       ]

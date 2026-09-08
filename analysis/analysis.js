@@ -1166,10 +1166,10 @@ async function init() {
   try {
     const [response, frictionResponse, codeErrorResponse, evidenceResponse, behaviorResponse] = await Promise.all([
       fetch("data.json?v=4"),
-      fetch("friction_flow.json?v=6"),
-      fetch("code_error_flow.json?v=2"),
-      fetch("evidence_visibility.json?v=3"),
-      fetch("behavior_summary.json?v=3"),
+      fetch("friction_flow.json?v=7"),
+      fetch("code_error_flow.json?v=3"),
+      fetch("evidence_visibility.json?v=4"),
+      fetch("behavior_summary.json?v=4"),
     ]);
     if (!response.ok) throw new Error(`Analysis data request failed (${response.status})`);
     if (!frictionResponse.ok) throw new Error(`Friction data request failed (${frictionResponse.status})`);
