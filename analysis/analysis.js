@@ -1,3 +1,6 @@
+const CONFIG = window.TRACE_COLLECTION_CONFIG || {};
+const DATA_BASE = new URL(CONFIG.dataBaseUrl || "../data/", window.location.href);
+
 const MODEL_COLORS = {
   "GPT-5.5": "#e69f00",
   "GPT-5.4": "#0072b2",
@@ -937,11 +940,14 @@ function renderEvidencePlot() {
 
 async function init() {
   try {
+    const behaviorRequest = fetch(new URL("annotations/agent_behaviors_trial1.json?v=3", DATA_BASE))
+      .then((response) => response.ok ? response : fetch("../data/annotations/agent_behaviors_trial1.json?v=3"))
+      .catch(() => fetch("../data/annotations/agent_behaviors_trial1.json?v=3"));
     const [response, frictionResponse, evidenceResponse, behaviorResponse] = await Promise.all([
       fetch("data.json?v=4"),
       fetch("friction_flow.json?v=5"),
       fetch("evidence_visibility.json?v=2"),
-      fetch("../data/annotations/agent_behaviors_trial1.json?v=3"),
+      behaviorRequest,
     ]);
     if (!response.ok) throw new Error(`Analysis data request failed (${response.status})`);
     if (!frictionResponse.ok) throw new Error(`Friction data request failed (${frictionResponse.status})`);
