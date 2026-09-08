@@ -125,12 +125,12 @@
               <p class="eyebrow">Coded behavior overview</p>
               <h2 id="behavior-title">Behavior prevalence and frequency</h2>
             </div>
-            <p class="behavior-header-note"><strong>Share = traces with this behavior ÷ 30.</strong> <span><strong>n</strong> = all coded occurrences.</span></p>
+            <p class="behavior-header-note"><strong>Share = behavior episodes ÷ all coded episodes.</strong> <span><strong>n</strong> = behavior episodes.</span></p>
           </header>
           <div class="behavior-matrix-shell">
             <div class="behavior-matrix" id="behavior-matrix" role="table" aria-labelledby="behavior-title behavior-description"></div>
           </div>
-          <p class="chart-description" id="behavior-description">For each model and behavior, the percentage is the share of its 30 traces containing that behavior at least once. Frequency (<strong>n</strong>) counts every coded occurrence, so it can exceed the number of affected traces when a behavior recurs. The matrix is derived reactively from the trial-one behavior annotation file.</p>
+          <p class="chart-description" id="behavior-description">For each model, the percentage divides the number of episodes assigned a behavior by that model’s total coded episodes. Frequency (<strong>n</strong>) is the corresponding episode count. Hover a cell to also see how many distinct traces contain the behavior. The matrix is derived reactively from the trial-one behavior annotation file.</p>
         </section>
 
         <section class="analysis-card friction-card" aria-labelledby="friction-title">
@@ -247,6 +247,6 @@
       </main>
     </div>
     <script src="../config.js"></script>
-    <script src="analysis.js?v=25" type="module"></script>
+    <script src="analysis.js?v=26" type="module"></script>
   </body>
 </html>

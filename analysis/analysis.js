@@ -409,7 +409,7 @@ function renderBehaviorMatrix() {
       ${models.map((model) => `
         <div class="behavior-model-head" role="columnheader" style="--series-color:${colorFor(model)}">
           <span><i></i>${escapeHtml(model)}</span>
-          <small>${traceCounts.get(model)} traces · ${modelAnnotationCounts.get(model)} codes</small>
+          <small>${traceCounts.get(model)} traces · ${modelAnnotationCounts.get(model)} episodes</small>
         </div>`).join("")}
     </div>`;
   const rows = taxonomy.map((theme) => {
@@ -419,17 +419,17 @@ function renderBehaviorMatrix() {
         const traceTotal = traceCounts.get(model) || 0;
         const prevalence = traceTotal ? (metric.traces.size / traceTotal) * 100 : 0;
         const annotationTotal = modelAnnotationCounts.get(model) || 0;
-        const composition = annotationTotal ? (metric.frequency / annotationTotal) * 100 : 0;
-        const label = `${model}: ${prevalence.toFixed(1)}% of traces (${metric.traces.size} of ${traceTotal}); ${metric.frequency} coded occurrences; ${composition.toFixed(1)}% of this model's annotations.`;
+        const episodeShare = annotationTotal ? (metric.frequency / annotationTotal) * 100 : 0;
+        const label = `${model}: ${episodeShare.toFixed(1)}% of coded episodes (${metric.frequency} of ${annotationTotal}); present in ${metric.traces.size} of ${traceTotal} traces (${prevalence.toFixed(1)}%).`;
         return `
-          <div class="behavior-cell${metric.frequency ? "" : " is-zero"}" role="cell" aria-label="${escapeHtml(label)}" title="${escapeHtml(label)}" style="--series-color:${colorFor(model)};--behavior-share:${prevalence.toFixed(2)}%">
+          <div class="behavior-cell${metric.frequency ? "" : " is-zero"}" role="cell" aria-label="${escapeHtml(label)}" title="${escapeHtml(label)}" style="--series-color:${colorFor(model)};--behavior-share:${episodeShare.toFixed(2)}%">
             <i class="behavior-fill" aria-hidden="true"></i>
-            <span><b>${prevalence.toFixed(1)}%</b><small>n=${metric.frequency}</small></span>
+            <span><b>${episodeShare.toFixed(1)}%</b><small>n=${metric.frequency}</small></span>
           </div>`;
       }).join("");
       return `<div class="behavior-row" role="row"><div class="behavior-label" role="rowheader">${escapeHtml(code)}</div>${cells}</div>`;
     }).join("");
-    return `<section class="behavior-theme" role="rowgroup"><h3>${escapeHtml(theme.theme)} <small>${theme.annotation_count} coded occurrences</small></h3>${themeRows}</section>`;
+    return `<section class="behavior-theme" role="rowgroup"><h3>${escapeHtml(theme.theme)} <small>${theme.annotation_count} coded episodes</small></h3>${themeRows}</section>`;
   }).join("");
   behaviorMatrix.innerHTML = header + rows;
 }
