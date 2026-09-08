@@ -1,11 +1,11 @@
 {
   "schema_version": "3.0",
   "classifier_version": "gui-friction-flow-v3-handling-families",
-  "generated_at": "2026-09-07T20:11:54.660285+00:00",
+  "generated_at": "2026-09-08T13:33:07.600300+00:00",
   "source": {
     "dataset": "webva-agent-behaviors-trial1",
-    "workbook_filename": "Trace Coding (1).xlsx",
-    "workbook_sha256": "a423090c05d00c1ed17c142d12c44e34ebde26bcf07b1a48fd4fac396d2033d4",
+    "workbook_filename": "Trace Coding (1) - code recovery updated.xlsx",
+    "workbook_sha256": "6b9282c2cab2d300041e308fc1751cde52862877af5baa63e2dab5dcdb60cfd7",
     "sheet": "Coded Agent Traces Trial 1"
   },
   "method": {
@@ -778,9 +778,9 @@
       "friction_start_round": 4,
       "friction_end_round": 5,
       "response": "Moved off screen",
-      "response_round": 8,
-      "response_annotation_id": "agent-trial1-0174",
-      "first_mechanism": "App inspection",
+      "response_round": 7,
+      "response_annotation_id": "agent-trial1-0465",
+      "first_mechanism": "Code debugging / environment",
       "pathway": "Code resolution after GUI friction",
       "handling": "Shifted to code",
       "landing": "Computed evidence"

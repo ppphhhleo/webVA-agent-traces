@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "classifier_version": "evidence-visibility-v2-answer-only-visible",
-  "generated_at": "2026-09-07T20:11:54.584766+00:00",
+  "generated_at": "2026-09-08T13:33:32.074746+00:00",
   "count": 120,
   "cohort": {
     "name": "coded-agent-traces-trial-one",
@@ -26,10 +26,10 @@
     "Grounded visual evidence": 41,
     "Computed + visual evidence": 10,
     "Misgrounded evidence": 7,
-    "Prior knowledge only": 3,
+    "Prior knowledge only": 4,
     "Visual + prior knowledge": 7,
     "No delivered evidence": 5,
-    "Fabricated evidence": 8
+    "Fabricated evidence": 7
   },
   "method": {
     "visibility": "GUI rounds divided by GUI plus off-screen working rounds; neutral rounds are excluded. Answer-only traces with no working rounds are assigned 100% visibility by convention.",
@@ -1771,9 +1771,9 @@
       "gui_percent": 89.47,
       "offscreen_percent": 10.53,
       "visibility_basis": "working_rounds",
-      "evidence_category": "Fabricated evidence",
-      "evidence_level": 1,
-      "evidence_percent": 14.29,
+      "evidence_category": "Prior knowledge only",
+      "evidence_level": 3,
+      "evidence_percent": 42.86,
       "evidence_rounds": [
         "<R39>"
       ]

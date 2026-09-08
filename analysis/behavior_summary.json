@@ -3,9 +3,9 @@
   "classifier_version": "behavior-summary-v1",
   "source": {
     "dataset": "webva-agent-behaviors-trial1",
-    "generated_at": "2026-09-07T20:07:19.356134+00:00",
-    "workbook_filename": "Trace Coding (1).xlsx",
-    "workbook_sha256": "a423090c05d00c1ed17c142d12c44e34ebde26bcf07b1a48fd4fac396d2033d4",
+    "generated_at": "2026-09-08T13:33:07.445159+00:00",
+    "workbook_filename": "Trace Coding (1) - code recovery updated.xlsx",
+    "workbook_sha256": "6b9282c2cab2d300041e308fc1751cde52862877af5baa63e2dab5dcdb60cfd7",
     "sheet": "Coded Agent Traces Trial 1"
   },
   "counts": {
@@ -13,7 +13,7 @@
     "models": 4,
     "themes": 5,
     "behaviors": 34,
-    "episodes": 462
+    "episodes": 477
   },
   "definitions": {
     "episode_share_percent": "Behavior episodes divided by all coded episodes for the model.",
@@ -23,22 +23,22 @@
     {
       "model": "GPT-5.4",
       "trace_count": 30,
-      "episode_count": 101
+      "episode_count": 102
     },
     {
       "model": "GPT-5.5",
       "trace_count": 30,
-      "episode_count": 120
+      "episode_count": 125
     },
     {
       "model": "Claude Opus 4.8",
       "trace_count": 30,
-      "episode_count": 113
+      "episode_count": 115
     },
     {
       "model": "Claude Sonnet 5",
       "trace_count": 30,
-      "episode_count": 128
+      "episode_count": 135
     }
   ],
   "themes": [
@@ -53,7 +53,7 @@
             {
               "model": "GPT-5.4",
               "episode_count": 1,
-              "episode_share_percent": 0.9901,
+              "episode_share_percent": 0.9804,
               "trace_count": 1,
               "trace_prevalence_percent": 3.3333
             },
@@ -74,7 +74,7 @@
             {
               "model": "Claude Sonnet 5",
               "episode_count": 2,
-              "episode_share_percent": 1.5625,
+              "episode_share_percent": 1.4815,
               "trace_count": 2,
               "trace_prevalence_percent": 6.6667
             }
@@ -87,14 +87,14 @@
             {
               "model": "GPT-5.4",
               "episode_count": 3,
-              "episode_share_percent": 2.9703,
+              "episode_share_percent": 2.9412,
               "trace_count": 3,
               "trace_prevalence_percent": 10.0
             },
             {
               "model": "GPT-5.5",
               "episode_count": 2,
-              "episode_share_percent": 1.6667,
+              "episode_share_percent": 1.6,
               "trace_count": 2,
               "trace_prevalence_percent": 6.6667
             },
@@ -108,7 +108,7 @@
             {
               "model": "Claude Sonnet 5",
               "episode_count": 1,
-              "episode_share_percent": 0.7812,
+              "episode_share_percent": 0.7407,
               "trace_count": 1,
               "trace_prevalence_percent": 3.3333
             }
@@ -128,7 +128,7 @@
             {
               "model": "GPT-5.5",
               "episode_count": 1,
-              "episode_share_percent": 0.8333,
+              "episode_share_percent": 0.8,
               "trace_count": 1,
               "trace_prevalence_percent": 3.3333
             },
@@ -175,7 +175,7 @@
             {
               "model": "Claude Opus 4.8",
               "episode_count": 1,
-              "episode_share_percent": 0.885,
+              "episode_share_percent": 0.8696,
               "trace_count": 1,
               "trace_prevalence_percent": 3.3333
             },
@@ -195,7 +195,7 @@
             {
               "model": "GPT-5.4",
               "episode_count": 2,
-              "episode_share_percent": 1.9802,
+              "episode_share_percent": 1.9608,
               "trace_count": 2,
               "trace_prevalence_percent": 6.6667
             },
@@ -209,14 +209,14 @@
             {
               "model": "Claude Opus 4.8",
               "episode_count": 4,
-              "episode_share_percent": 3.5398,
+              "episode_share_percent": 3.4783,
               "trace_count": 4,
               "trace_prevalence_percent": 13.3333
             },
             {
               "model": "Claude Sonnet 5",
               "episode_count": 5,
-              "episode_share_percent": 3.9062,
+              "episode_share_percent": 3.7037,
               "trace_count": 5,
               "trace_prevalence_percent": 16.6667
             }
@@ -229,28 +229,28 @@
             {
               "model": "GPT-5.4",
               "episode_count": 15,
-              "episode_share_percent": 14.8515,
+              "episode_share_percent": 14.7059,
               "trace_count": 14,
               "trace_prevalence_percent": 46.6667
             },
             {
               "model": "GPT-5.5",
               "episode_count": 1,
-              "episode_share_percent": 0.8333,
+              "episode_share_percent": 0.8,
               "trace_count": 1,
               "trace_prevalence_percent": 3.3333
             },
             {
               "model": "Claude Opus 4.8",
               "episode_count": 6,
-              "episode_share_percent": 5.3097,
+              "episode_share_percent": 5.2174,
               "trace_count": 5,
               "trace_prevalence_percent": 16.6667
             },
             {
               "model": "Claude Sonnet 5",
               "episode_count": 2,
-              "episode_share_percent": 1.5625,
+              "episode_share_percent": 1.4815,
               "trace_count": 2,
               "trace_prevalence_percent": 6.6667
             }
@@ -263,7 +263,7 @@
             {
               "model": "GPT-5.4",
               "episode_count": 1,
-              "episode_share_percent": 0.9901,
+              "episode_share_percent": 0.9804,
               "trace_count": 1,
               "trace_prevalence_percent": 3.3333
             },
@@ -311,14 +311,14 @@
             {
               "model": "Claude Opus 4.8",
               "episode_count": 1,
-              "episode_share_percent": 0.885,
+              "episode_share_percent": 0.8696,
               "trace_count": 1,
               "trace_prevalence_percent": 3.3333
             },
             {
               "model": "Claude Sonnet 5",
               "episode_count": 3,
-              "episode_share_percent": 2.3438,
+              "episode_share_percent": 2.2222,
               "trace_count": 2,
               "trace_prevalence_percent": 6.6667
             }
@@ -331,28 +331,28 @@
             {
               "model": "GPT-5.4",
               "episode_count": 4,
-              "episode_share_percent": 3.9604,
+              "episode_share_percent": 3.9216,
               "trace_count": 4,
               "trace_prevalence_percent": 13.3333
             },
             {
               "model": "GPT-5.5",
               "episode_count": 1,
-              "episode_share_percent": 0.8333,
+              "episode_share_percent": 0.8,
               "trace_count": 1,
               "trace_prevalence_percent": 3.3333
             },
             {
               "model": "Claude Opus 4.8",
               "episode_count": 1,
-              "episode_share_percent": 0.885,
+              "episode_share_percent": 0.8696,
               "trace_count": 1,
               "trace_prevalence_percent": 3.3333
             },
             {
               "model": "Claude Sonnet 5",
               "episode_count": 1,
-              "episode_share_percent": 0.7812,
+              "episode_share_percent": 0.7407,
               "trace_count": 1,
               "trace_prevalence_percent": 3.3333
             }
@@ -365,28 +365,28 @@
             {
               "model": "GPT-5.4",
               "episode_count": 5,
-              "episode_share_percent": 4.9505,
+              "episode_share_percent": 4.902,
               "trace_count": 5,
               "trace_prevalence_percent": 16.6667
             },
             {
               "model": "GPT-5.5",
               "episode_count": 4,
-              "episode_share_percent": 3.3333,
+              "episode_share_percent": 3.2,
               "trace_count": 4,
               "trace_prevalence_percent": 13.3333
             },
             {
               "model": "Claude Opus 4.8",
               "episode_count": 6,
-              "episode_share_percent": 5.3097,
+              "episode_share_percent": 5.2174,
               "trace_count": 6,
               "trace_prevalence_percent": 20.0
             },
             {
               "model": "Claude Sonnet 5",
               "episode_count": 7,
-              "episode_share_percent": 5.4688,
+              "episode_share_percent": 5.1852,
               "trace_count": 6,
               "trace_prevalence_percent": 20.0
             }
@@ -399,28 +399,28 @@
             {
               "model": "GPT-5.4",
               "episode_count": 11,
-              "episode_share_percent": 10.8911,
+              "episode_share_percent": 10.7843,
               "trace_count": 11,
               "trace_prevalence_percent": 36.6667
             },
             {
               "model": "GPT-5.5",
               "episode_count": 3,
-              "episode_share_percent": 2.5,
+              "episode_share_percent": 2.4,
               "trace_count": 3,
               "trace_prevalence_percent": 10.0
             },
             {
               "model": "Claude Opus 4.8",
               "episode_count": 11,
-              "episode_share_percent": 9.7345,
+              "episode_share_percent": 9.5652,
               "trace_count": 11,
               "trace_prevalence_percent": 36.6667
             },
             {
               "model": "Claude Sonnet 5",
               "episode_count": 22,
-              "episode_share_percent": 17.1875,
+              "episode_share_percent": 16.2963,
               "trace_count": 18,
               "trace_prevalence_percent": 60.0
             }
@@ -430,7 +430,7 @@
     },
     {
       "theme": "Switching channels",
-      "episode_count": 70,
+      "episode_count": 71,
       "behaviors": [
         {
           "code": "Code augmentation of visual",
@@ -446,21 +446,21 @@
             {
               "model": "GPT-5.5",
               "episode_count": 1,
-              "episode_share_percent": 0.8333,
+              "episode_share_percent": 0.8,
               "trace_count": 1,
               "trace_prevalence_percent": 3.3333
             },
             {
               "model": "Claude Opus 4.8",
               "episode_count": 3,
-              "episode_share_percent": 2.6549,
+              "episode_share_percent": 2.6087,
               "trace_count": 3,
               "trace_prevalence_percent": 10.0
             },
             {
               "model": "Claude Sonnet 5",
               "episode_count": 2,
-              "episode_share_percent": 1.5625,
+              "episode_share_percent": 1.4815,
               "trace_count": 2,
               "trace_prevalence_percent": 6.6667
             }
@@ -473,28 +473,28 @@
             {
               "model": "GPT-5.4",
               "episode_count": 8,
-              "episode_share_percent": 7.9208,
+              "episode_share_percent": 7.8431,
               "trace_count": 8,
               "trace_prevalence_percent": 26.6667
             },
             {
               "model": "GPT-5.5",
               "episode_count": 3,
-              "episode_share_percent": 2.5,
+              "episode_share_percent": 2.4,
               "trace_count": 3,
               "trace_prevalence_percent": 10.0
             },
             {
               "model": "Claude Opus 4.8",
               "episode_count": 5,
-              "episode_share_percent": 4.4248,
+              "episode_share_percent": 4.3478,
               "trace_count": 5,
               "trace_prevalence_percent": 16.6667
             },
             {
               "model": "Claude Sonnet 5",
               "episode_count": 5,
-              "episode_share_percent": 3.9062,
+              "episode_share_percent": 3.7037,
               "trace_count": 5,
               "trace_prevalence_percent": 16.6667
             }
@@ -502,7 +502,7 @@
         },
         {
           "code": "Forced return to GUI",
-          "episode_count": 6,
+          "episode_count": 7,
           "models": [
             {
               "model": "GPT-5.4",
@@ -514,23 +514,23 @@
             {
               "model": "GPT-5.5",
               "episode_count": 3,
-              "episode_share_percent": 2.5,
+              "episode_share_percent": 2.4,
               "trace_count": 3,
               "trace_prevalence_percent": 10.0
             },
             {
               "model": "Claude Opus 4.8",
               "episode_count": 2,
-              "episode_share_percent": 1.7699,
+              "episode_share_percent": 1.7391,
               "trace_count": 2,
               "trace_prevalence_percent": 6.6667
             },
             {
               "model": "Claude Sonnet 5",
-              "episode_count": 1,
-              "episode_share_percent": 0.7812,
-              "trace_count": 1,
-              "trace_prevalence_percent": 3.3333
+              "episode_count": 2,
+              "episode_share_percent": 1.4815,
+              "trace_count": 2,
+              "trace_prevalence_percent": 6.6667
             }
           ]
         },
@@ -562,7 +562,7 @@
             {
               "model": "Claude Sonnet 5",
               "episode_count": 3,
-              "episode_share_percent": 2.3438,
+              "episode_share_percent": 2.2222,
               "trace_count": 3,
               "trace_prevalence_percent": 10.0
             }
@@ -575,28 +575,28 @@
             {
               "model": "GPT-5.4",
               "episode_count": 1,
-              "episode_share_percent": 0.9901,
+              "episode_share_percent": 0.9804,
               "trace_count": 1,
               "trace_prevalence_percent": 3.3333
             },
             {
               "model": "GPT-5.5",
               "episode_count": 19,
-              "episode_share_percent": 15.8333,
+              "episode_share_percent": 15.2,
               "trace_count": 19,
               "trace_prevalence_percent": 63.3333
             },
             {
               "model": "Claude Opus 4.8",
               "episode_count": 6,
-              "episode_share_percent": 5.3097,
+              "episode_share_percent": 5.2174,
               "trace_count": 6,
               "trace_prevalence_percent": 20.0
             },
             {
               "model": "Claude Sonnet 5",
               "episode_count": 6,
-              "episode_share_percent": 4.6875,
+              "episode_share_percent": 4.4444,
               "trace_count": 6,
               "trace_prevalence_percent": 20.0
             }
@@ -616,7 +616,7 @@
             {
               "model": "GPT-5.5",
               "episode_count": 1,
-              "episode_share_percent": 0.8333,
+              "episode_share_percent": 0.8,
               "trace_count": 1,
               "trace_prevalence_percent": 3.3333
             },
@@ -630,7 +630,7 @@
             {
               "model": "Claude Sonnet 5",
               "episode_count": 1,
-              "episode_share_percent": 0.7812,
+              "episode_share_percent": 0.7407,
               "trace_count": 1,
               "trace_prevalence_percent": 3.3333
             }
@@ -640,39 +640,39 @@
     },
     {
       "theme": "Working off the screen",
-      "episode_count": 136,
+      "episode_count": 150,
       "behaviors": [
         {
           "code": "Code error recovery",
-          "episode_count": 20,
+          "episode_count": 33,
           "models": [
             {
               "model": "GPT-5.4",
-              "episode_count": 3,
-              "episode_share_percent": 2.9703,
-              "trace_count": 3,
-              "trace_prevalence_percent": 10.0
+              "episode_count": 4,
+              "episode_share_percent": 3.9216,
+              "trace_count": 4,
+              "trace_prevalence_percent": 13.3333
             },
             {
               "model": "GPT-5.5",
+              "episode_count": 14,
+              "episode_share_percent": 11.2,
+              "trace_count": 14,
+              "trace_prevalence_percent": 46.6667
+            },
+            {
+              "model": "Claude Opus 4.8",
               "episode_count": 9,
-              "episode_share_percent": 7.5,
+              "episode_share_percent": 7.8261,
               "trace_count": 9,
               "trace_prevalence_percent": 30.0
             },
             {
-              "model": "Claude Opus 4.8",
-              "episode_count": 7,
-              "episode_share_percent": 6.1947,
-              "trace_count": 7,
-              "trace_prevalence_percent": 23.3333
-            },
-            {
               "model": "Claude Sonnet 5",
-              "episode_count": 1,
-              "episode_share_percent": 0.7812,
-              "trace_count": 1,
-              "trace_prevalence_percent": 3.3333
+              "episode_count": 6,
+              "episode_share_percent": 4.4444,
+              "trace_count": 6,
+              "trace_prevalence_percent": 20.0
             }
           ]
         },
@@ -683,28 +683,28 @@
             {
               "model": "GPT-5.4",
               "episode_count": 1,
-              "episode_share_percent": 0.9901,
+              "episode_share_percent": 0.9804,
               "trace_count": 1,
               "trace_prevalence_percent": 3.3333
             },
             {
               "model": "GPT-5.5",
               "episode_count": 5,
-              "episode_share_percent": 4.1667,
+              "episode_share_percent": 4.0,
               "trace_count": 5,
               "trace_prevalence_percent": 16.6667
             },
             {
               "model": "Claude Opus 4.8",
               "episode_count": 3,
-              "episode_share_percent": 2.6549,
+              "episode_share_percent": 2.6087,
               "trace_count": 3,
               "trace_prevalence_percent": 10.0
             },
             {
               "model": "Claude Sonnet 5",
               "episode_count": 5,
-              "episode_share_percent": 3.9062,
+              "episode_share_percent": 3.7037,
               "trace_count": 5,
               "trace_prevalence_percent": 16.6667
             }
@@ -731,14 +731,14 @@
             {
               "model": "Claude Opus 4.8",
               "episode_count": 5,
-              "episode_share_percent": 4.4248,
+              "episode_share_percent": 4.3478,
               "trace_count": 5,
               "trace_prevalence_percent": 16.6667
             },
             {
               "model": "Claude Sonnet 5",
               "episode_count": 3,
-              "episode_share_percent": 2.3438,
+              "episode_share_percent": 2.2222,
               "trace_count": 3,
               "trace_prevalence_percent": 10.0
             }
@@ -751,28 +751,28 @@
             {
               "model": "GPT-5.4",
               "episode_count": 2,
-              "episode_share_percent": 1.9802,
+              "episode_share_percent": 1.9608,
               "trace_count": 2,
               "trace_prevalence_percent": 6.6667
             },
             {
               "model": "GPT-5.5",
               "episode_count": 3,
-              "episode_share_percent": 2.5,
+              "episode_share_percent": 2.4,
               "trace_count": 3,
               "trace_prevalence_percent": 10.0
             },
             {
               "model": "Claude Opus 4.8",
               "episode_count": 3,
-              "episode_share_percent": 2.6549,
+              "episode_share_percent": 2.6087,
               "trace_count": 3,
               "trace_prevalence_percent": 10.0
             },
             {
               "model": "Claude Sonnet 5",
               "episode_count": 7,
-              "episode_share_percent": 5.4688,
+              "episode_share_percent": 5.1852,
               "trace_count": 7,
               "trace_prevalence_percent": 23.3333
             }
@@ -785,21 +785,21 @@
             {
               "model": "GPT-5.4",
               "episode_count": 2,
-              "episode_share_percent": 1.9802,
+              "episode_share_percent": 1.9608,
               "trace_count": 1,
               "trace_prevalence_percent": 3.3333
             },
             {
               "model": "GPT-5.5",
               "episode_count": 3,
-              "episode_share_percent": 2.5,
+              "episode_share_percent": 2.4,
               "trace_count": 3,
               "trace_prevalence_percent": 10.0
             },
             {
               "model": "Claude Opus 4.8",
               "episode_count": 4,
-              "episode_share_percent": 3.5398,
+              "episode_share_percent": 3.4783,
               "trace_count": 3,
               "trace_prevalence_percent": 10.0
             },
@@ -819,28 +819,28 @@
             {
               "model": "GPT-5.4",
               "episode_count": 7,
-              "episode_share_percent": 6.9307,
+              "episode_share_percent": 6.8627,
               "trace_count": 7,
               "trace_prevalence_percent": 23.3333
             },
             {
               "model": "GPT-5.5",
               "episode_count": 10,
-              "episode_share_percent": 8.3333,
+              "episode_share_percent": 8.0,
               "trace_count": 10,
               "trace_prevalence_percent": 33.3333
             },
             {
               "model": "Claude Opus 4.8",
               "episode_count": 10,
-              "episode_share_percent": 8.8496,
+              "episode_share_percent": 8.6957,
               "trace_count": 10,
               "trace_prevalence_percent": 33.3333
             },
             {
               "model": "Claude Sonnet 5",
               "episode_count": 10,
-              "episode_share_percent": 7.8125,
+              "episode_share_percent": 7.4074,
               "trace_count": 10,
               "trace_prevalence_percent": 33.3333
             }
@@ -848,7 +848,7 @@
         },
         {
           "code": "Stalled engineering",
-          "episode_count": 5,
+          "episode_count": 6,
           "models": [
             {
               "model": "GPT-5.4",
@@ -867,16 +867,16 @@
             {
               "model": "Claude Opus 4.8",
               "episode_count": 2,
-              "episode_share_percent": 1.7699,
+              "episode_share_percent": 1.7391,
               "trace_count": 2,
               "trace_prevalence_percent": 6.6667
             },
             {
               "model": "Claude Sonnet 5",
-              "episode_count": 3,
-              "episode_share_percent": 2.3438,
-              "trace_count": 2,
-              "trace_prevalence_percent": 6.6667
+              "episode_count": 4,
+              "episode_share_percent": 2.963,
+              "trace_count": 3,
+              "trace_prevalence_percent": 10.0
             }
           ]
         },
@@ -894,21 +894,21 @@
             {
               "model": "GPT-5.5",
               "episode_count": 19,
-              "episode_share_percent": 15.8333,
+              "episode_share_percent": 15.2,
               "trace_count": 15,
               "trace_prevalence_percent": 50.0
             },
             {
               "model": "Claude Opus 4.8",
               "episode_count": 3,
-              "episode_share_percent": 2.6549,
+              "episode_share_percent": 2.6087,
               "trace_count": 3,
               "trace_prevalence_percent": 10.0
             },
             {
               "model": "Claude Sonnet 5",
               "episode_count": 6,
-              "episode_share_percent": 4.6875,
+              "episode_share_percent": 4.4444,
               "trace_count": 5,
               "trace_prevalence_percent": 16.6667
             }
@@ -934,21 +934,21 @@
             {
               "model": "GPT-5.5",
               "episode_count": 4,
-              "episode_share_percent": 3.3333,
+              "episode_share_percent": 3.2,
               "trace_count": 4,
               "trace_prevalence_percent": 13.3333
             },
             {
               "model": "Claude Opus 4.8",
               "episode_count": 3,
-              "episode_share_percent": 2.6549,
+              "episode_share_percent": 2.6087,
               "trace_count": 3,
               "trace_prevalence_percent": 10.0
             },
             {
               "model": "Claude Sonnet 5",
               "episode_count": 3,
-              "episode_share_percent": 2.3438,
+              "episode_share_percent": 2.2222,
               "trace_count": 3,
               "trace_prevalence_percent": 10.0
             }
@@ -961,28 +961,28 @@
             {
               "model": "GPT-5.4",
               "episode_count": 4,
-              "episode_share_percent": 3.9604,
+              "episode_share_percent": 3.9216,
               "trace_count": 4,
               "trace_prevalence_percent": 13.3333
             },
             {
               "model": "GPT-5.5",
               "episode_count": 17,
-              "episode_share_percent": 14.1667,
+              "episode_share_percent": 13.6,
               "trace_count": 17,
               "trace_prevalence_percent": 56.6667
             },
             {
               "model": "Claude Opus 4.8",
               "episode_count": 11,
-              "episode_share_percent": 9.7345,
+              "episode_share_percent": 9.5652,
               "trace_count": 11,
               "trace_prevalence_percent": 36.6667
             },
             {
               "model": "Claude Sonnet 5",
               "episode_count": 7,
-              "episode_share_percent": 5.4688,
+              "episode_share_percent": 5.1852,
               "trace_count": 7,
               "trace_prevalence_percent": 23.3333
             }
@@ -990,14 +990,14 @@
         },
         {
           "code": "Fabricated evidence",
-          "episode_count": 10,
+          "episode_count": 9,
           "models": [
             {
               "model": "GPT-5.4",
-              "episode_count": 7,
-              "episode_share_percent": 6.9307,
-              "trace_count": 6,
-              "trace_prevalence_percent": 20.0
+              "episode_count": 6,
+              "episode_share_percent": 5.8824,
+              "trace_count": 5,
+              "trace_prevalence_percent": 16.6667
             },
             {
               "model": "GPT-5.5",
@@ -1016,7 +1016,7 @@
             {
               "model": "Claude Sonnet 5",
               "episode_count": 3,
-              "episode_share_percent": 2.3438,
+              "episode_share_percent": 2.2222,
               "trace_count": 2,
               "trace_prevalence_percent": 6.6667
             }
@@ -1029,28 +1029,28 @@
             {
               "model": "GPT-5.4",
               "episode_count": 13,
-              "episode_share_percent": 12.8713,
+              "episode_share_percent": 12.7451,
               "trace_count": 13,
               "trace_prevalence_percent": 43.3333
             },
             {
               "model": "GPT-5.5",
               "episode_count": 8,
-              "episode_share_percent": 6.6667,
+              "episode_share_percent": 6.4,
               "trace_count": 8,
               "trace_prevalence_percent": 26.6667
             },
             {
               "model": "Claude Opus 4.8",
               "episode_count": 14,
-              "episode_share_percent": 12.3894,
+              "episode_share_percent": 12.1739,
               "trace_count": 14,
               "trace_prevalence_percent": 46.6667
             },
             {
               "model": "Claude Sonnet 5",
               "episode_count": 13,
-              "episode_share_percent": 10.1562,
+              "episode_share_percent": 9.6296,
               "trace_count": 13,
               "trace_prevalence_percent": 43.3333
             }
@@ -1063,21 +1063,21 @@
             {
               "model": "GPT-5.4",
               "episode_count": 5,
-              "episode_share_percent": 4.9505,
+              "episode_share_percent": 4.902,
               "trace_count": 5,
               "trace_prevalence_percent": 16.6667
             },
             {
               "model": "GPT-5.5",
               "episode_count": 1,
-              "episode_share_percent": 0.8333,
+              "episode_share_percent": 0.8,
               "trace_count": 1,
               "trace_prevalence_percent": 3.3333
             },
             {
               "model": "Claude Opus 4.8",
               "episode_count": 1,
-              "episode_share_percent": 0.885,
+              "episode_share_percent": 0.8696,
               "trace_count": 1,
               "trace_prevalence_percent": 3.3333
             },
@@ -1118,7 +1118,7 @@
             {
               "model": "Claude Sonnet 5",
               "episode_count": 2,
-              "episode_share_percent": 1.5625,
+              "episode_share_percent": 1.4815,
               "trace_count": 2,
               "trace_prevalence_percent": 6.6667
             }
@@ -1152,7 +1152,7 @@
             {
               "model": "Claude Sonnet 5",
               "episode_count": 1,
-              "episode_share_percent": 0.7812,
+              "episode_share_percent": 0.7407,
               "trace_count": 1,
               "trace_prevalence_percent": 3.3333
             }
@@ -1186,7 +1186,7 @@
             {
               "model": "Claude Sonnet 5",
               "episode_count": 2,
-              "episode_share_percent": 1.5625,
+              "episode_share_percent": 1.4815,
               "trace_count": 2,
               "trace_prevalence_percent": 6.6667
             }
@@ -1194,33 +1194,33 @@
         },
         {
           "code": "Prior-knowledge substitution or generalization",
-          "episode_count": 10,
+          "episode_count": 11,
           "models": [
             {
               "model": "GPT-5.4",
-              "episode_count": 6,
-              "episode_share_percent": 5.9406,
-              "trace_count": 6,
-              "trace_prevalence_percent": 20.0
+              "episode_count": 7,
+              "episode_share_percent": 6.8627,
+              "trace_count": 7,
+              "trace_prevalence_percent": 23.3333
             },
             {
               "model": "GPT-5.5",
               "episode_count": 2,
-              "episode_share_percent": 1.6667,
+              "episode_share_percent": 1.6,
               "trace_count": 2,
               "trace_prevalence_percent": 6.6667
             },
             {
               "model": "Claude Opus 4.8",
               "episode_count": 1,
-              "episode_share_percent": 0.885,
+              "episode_share_percent": 0.8696,
               "trace_count": 1,
               "trace_prevalence_percent": 3.3333
             },
             {
               "model": "Claude Sonnet 5",
               "episode_count": 1,
-              "episode_share_percent": 0.7812,
+              "episode_share_percent": 0.7407,
               "trace_count": 1,
               "trace_prevalence_percent": 3.3333
             }
