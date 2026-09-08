@@ -1,6 +1,3 @@
-const CONFIG = window.TRACE_COLLECTION_CONFIG || {};
-const DATA_BASE = new URL(CONFIG.dataBaseUrl || "../data/", window.location.href);
-
 const MODEL_COLORS = {
   "GPT-5.5": "#e69f00",
   "GPT-5.4": "#0072b2",
@@ -380,27 +377,12 @@ function renderBehavioralSignatures() {
 
 function renderBehaviorMatrix() {
   const data = state.behaviors;
-  if (!data?.annotations?.length || !data?.taxonomy?.length) return;
+  if (!data?.models?.length || !data?.themes?.length) return;
 
-  const models = MODEL_ORDER.filter((model) => data.trace_index.some((trace) => trace.model === model));
-  const traceCounts = new Map(models.map((model) => [
-    model,
-    new Set(data.trace_index.filter((trace) => trace.model === model).map((trace) => trace.trace_id)).size,
-  ]));
-  const modelAnnotationCounts = new Map(models.map((model) => [
-    model,
-    data.annotations.filter((annotation) => annotation.model === model).length,
-  ]));
-  const metrics = new Map();
-  data.annotations.forEach((annotation) => {
-    const key = `${annotation.model}\u0000${annotation.code}`;
-    if (!metrics.has(key)) metrics.set(key, { frequency: 0, traces: new Set() });
-    const metric = metrics.get(key);
-    metric.frequency += 1;
-    metric.traces.add(annotation.trace_id);
-  });
+  const modelRecords = new Map(data.models.map((record) => [record.model, record]));
+  const models = MODEL_ORDER.filter((model) => modelRecords.has(model));
 
-  const taxonomy = [...data.taxonomy].sort((a, b) =>
+  const themes = [...data.themes].sort((a, b) =>
     BEHAVIOR_THEME_ORDER.indexOf(a.theme) - BEHAVIOR_THEME_ORDER.indexOf(b.theme)
   );
   const header = `
@@ -409,27 +391,29 @@ function renderBehaviorMatrix() {
       ${models.map((model) => `
         <div class="behavior-model-head" role="columnheader" style="--series-color:${colorFor(model)}">
           <span><i></i>${escapeHtml(model)}</span>
-          <small>${traceCounts.get(model)} traces · ${modelAnnotationCounts.get(model)} episodes</small>
+          <small>${modelRecords.get(model).trace_count} traces · ${modelRecords.get(model).episode_count} episodes</small>
         </div>`).join("")}
     </div>`;
-  const rows = taxonomy.map((theme) => {
-    const themeRows = theme.codes.map(({ code }) => {
+  const rows = themes.map((theme) => {
+    const themeRows = theme.behaviors.map((behavior) => {
+      const code = behavior.code;
       const cells = models.map((model) => {
-        const metric = metrics.get(`${model}\u0000${code}`) || { frequency: 0, traces: new Set() };
-        const traceTotal = traceCounts.get(model) || 0;
-        const prevalence = traceTotal ? (metric.traces.size / traceTotal) * 100 : 0;
-        const annotationTotal = modelAnnotationCounts.get(model) || 0;
-        const episodeShare = annotationTotal ? (metric.frequency / annotationTotal) * 100 : 0;
-        const label = `${model}: ${episodeShare.toFixed(1)}% of coded episodes (${metric.frequency} of ${annotationTotal}); present in ${metric.traces.size} of ${traceTotal} traces (${prevalence.toFixed(1)}%).`;
+        const modelRecord = modelRecords.get(model);
+        const metric = behavior.models.find((record) => record.model === model) || {};
+        const episodeCount = metric.episode_count || 0;
+        const episodeShare = metric.episode_share_percent || 0;
+        const traceCount = metric.trace_count || 0;
+        const prevalence = metric.trace_prevalence_percent || 0;
+        const label = `${model}: ${episodeShare.toFixed(1)}% of coded episodes (${episodeCount} of ${modelRecord.episode_count}); present in ${traceCount} of ${modelRecord.trace_count} traces (${prevalence.toFixed(1)}%).`;
         return `
-          <div class="behavior-cell${metric.frequency ? "" : " is-zero"}" role="cell" aria-label="${escapeHtml(label)}" title="${escapeHtml(label)}" style="--series-color:${colorFor(model)};--behavior-share:${episodeShare.toFixed(2)}%">
+          <div class="behavior-cell${episodeCount ? "" : " is-zero"}" role="cell" aria-label="${escapeHtml(label)}" title="${escapeHtml(label)}" style="--series-color:${colorFor(model)};--behavior-share:${episodeShare.toFixed(2)}%">
             <i class="behavior-fill" aria-hidden="true"></i>
-            <span><b>${episodeShare.toFixed(1)}%</b><small>n=${metric.frequency}</small></span>
+            <span><b>${episodeShare.toFixed(1)}%</b><small>n=${episodeCount}</small></span>
           </div>`;
       }).join("");
       return `<div class="behavior-row" role="row"><div class="behavior-label" role="rowheader">${escapeHtml(code)}</div>${cells}</div>`;
     }).join("");
-    return `<section class="behavior-theme" role="rowgroup"><h3>${escapeHtml(theme.theme)} <small>${theme.annotation_count} coded episodes</small></h3>${themeRows}</section>`;
+    return `<section class="behavior-theme" role="rowgroup"><h3>${escapeHtml(theme.theme)} <small>${theme.episode_count} coded episodes</small></h3>${themeRows}</section>`;
   }).join("");
   behaviorMatrix.innerHTML = header + rows;
 }
@@ -940,19 +924,16 @@ function renderEvidencePlot() {
 
 async function init() {
   try {
-    const behaviorRequest = fetch(new URL("annotations/agent_behaviors_trial1.json?v=3", DATA_BASE))
-      .then((response) => response.ok ? response : fetch("../data/annotations/agent_behaviors_trial1.json?v=3"))
-      .catch(() => fetch("../data/annotations/agent_behaviors_trial1.json?v=3"));
     const [response, frictionResponse, evidenceResponse, behaviorResponse] = await Promise.all([
       fetch("data.json?v=4"),
       fetch("friction_flow.json?v=5"),
       fetch("evidence_visibility.json?v=2"),
-      behaviorRequest,
+      fetch("behavior_summary.json?v=1"),
     ]);
     if (!response.ok) throw new Error(`Analysis data request failed (${response.status})`);
     if (!frictionResponse.ok) throw new Error(`Friction data request failed (${frictionResponse.status})`);
     if (!evidenceResponse.ok) throw new Error(`Evidence data request failed (${evidenceResponse.status})`);
-    if (!behaviorResponse.ok) throw new Error(`Behavior annotation request failed (${behaviorResponse.status})`);
+    if (!behaviorResponse.ok) throw new Error(`Behavior summary request failed (${behaviorResponse.status})`);
     const [data, frictionData, evidenceData, behaviorData] = await Promise.all([response.json(), frictionResponse.json(), evidenceResponse.json(), behaviorResponse.json()]);
     state.traces = data.traces || [];
     state.friction = frictionData;

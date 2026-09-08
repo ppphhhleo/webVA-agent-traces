@@ -48,8 +48,8 @@ python3 scripts/build_analysis_data.py
 ```
 
 The analysis interface uses native browser SVG and DOM APIs rather than D3. At
-runtime it loads `analysis/data.json`, `analysis/evidence_visibility.json`, and
-`analysis/friction_flow.json`; the performance table, quantitative charts,
+runtime it loads `analysis/data.json`, `analysis/evidence_visibility.json`,
+`analysis/friction_flow.json`, and `analysis/behavior_summary.json`; the performance table, quantitative charts,
 model-level statistics in the behavioral-signature prose, and friction totals
 are calculated from those files. Interpretive labels and representative trace
 links remain researcher-authored. Regenerate the derived JSON files after a
@@ -69,6 +69,18 @@ python3 scripts/build_behavior_annotations.py /path/to/Trace\ Coding.xlsx
 Publish the generated file at
 `data/annotations/agent_behaviors_trial1.json`. Updating annotations does not modify
 the original trajectory JSON or screenshots.
+
+Generate the compact, aggregate datasource tracked by GitHub after updating the
+episode-level annotation file:
+
+```bash
+python3 scripts/build_behavior_summary.py
+```
+
+This writes `analysis/behavior_summary.json`, containing episode share, episode
+frequency, affected-trace count, and trace prevalence for every model × behavior.
+The public behavior matrix and publication plot scripts can use this derivative
+without downloading the episode-level annotations from S3.
 
 The GUI-friction alluvial on `/analysis/` is a reproducible derivative of that
 annotation file. It treats each coded ineffective/misgrounded or repeated GUI

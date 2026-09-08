@@ -1,0 +1,1232 @@
+{
+  "schema_version": "1.0",
+  "classifier_version": "behavior-summary-v1",
+  "source": {
+    "dataset": "webva-agent-behaviors-trial1",
+    "generated_at": "2026-09-07T20:07:19.356134+00:00",
+    "workbook_filename": "Trace Coding (1).xlsx",
+    "workbook_sha256": "a423090c05d00c1ed17c142d12c44e34ebde26bcf07b1a48fd4fac396d2033d4",
+    "sheet": "Coded Agent Traces Trial 1"
+  },
+  "counts": {
+    "traces": 120,
+    "models": 4,
+    "themes": 5,
+    "behaviors": 34,
+    "episodes": 462
+  },
+  "definitions": {
+    "episode_share_percent": "Behavior episodes divided by all coded episodes for the model.",
+    "trace_prevalence_percent": "Distinct traces containing the behavior divided by all traces for the model."
+  },
+  "models": [
+    {
+      "model": "GPT-5.4",
+      "trace_count": 30,
+      "episode_count": 101
+    },
+    {
+      "model": "GPT-5.5",
+      "trace_count": 30,
+      "episode_count": 120
+    },
+    {
+      "model": "Claude Opus 4.8",
+      "trace_count": 30,
+      "episode_count": 113
+    },
+    {
+      "model": "Claude Sonnet 5",
+      "trace_count": 30,
+      "episode_count": 128
+    }
+  ],
+  "themes": [
+    {
+      "theme": "Interpreting the task",
+      "episode_count": 10,
+      "behaviors": [
+        {
+          "code": "Goal substitution",
+          "episode_count": 3,
+          "models": [
+            {
+              "model": "GPT-5.4",
+              "episode_count": 1,
+              "episode_share_percent": 0.9901,
+              "trace_count": 1,
+              "trace_prevalence_percent": 3.3333
+            },
+            {
+              "model": "GPT-5.5",
+              "episode_count": 0,
+              "episode_share_percent": 0.0,
+              "trace_count": 0,
+              "trace_prevalence_percent": 0.0
+            },
+            {
+              "model": "Claude Opus 4.8",
+              "episode_count": 0,
+              "episode_share_percent": 0.0,
+              "trace_count": 0,
+              "trace_prevalence_percent": 0.0
+            },
+            {
+              "model": "Claude Sonnet 5",
+              "episode_count": 2,
+              "episode_share_percent": 1.5625,
+              "trace_count": 2,
+              "trace_prevalence_percent": 6.6667
+            }
+          ]
+        },
+        {
+          "code": "Silent operationalization",
+          "episode_count": 6,
+          "models": [
+            {
+              "model": "GPT-5.4",
+              "episode_count": 3,
+              "episode_share_percent": 2.9703,
+              "trace_count": 3,
+              "trace_prevalence_percent": 10.0
+            },
+            {
+              "model": "GPT-5.5",
+              "episode_count": 2,
+              "episode_share_percent": 1.6667,
+              "trace_count": 2,
+              "trace_prevalence_percent": 6.6667
+            },
+            {
+              "model": "Claude Opus 4.8",
+              "episode_count": 0,
+              "episode_share_percent": 0.0,
+              "trace_count": 0,
+              "trace_prevalence_percent": 0.0
+            },
+            {
+              "model": "Claude Sonnet 5",
+              "episode_count": 1,
+              "episode_share_percent": 0.7812,
+              "trace_count": 1,
+              "trace_prevalence_percent": 3.3333
+            }
+          ]
+        },
+        {
+          "code": "Task scope misread",
+          "episode_count": 1,
+          "models": [
+            {
+              "model": "GPT-5.4",
+              "episode_count": 0,
+              "episode_share_percent": 0.0,
+              "trace_count": 0,
+              "trace_prevalence_percent": 0.0
+            },
+            {
+              "model": "GPT-5.5",
+              "episode_count": 1,
+              "episode_share_percent": 0.8333,
+              "trace_count": 1,
+              "trace_prevalence_percent": 3.3333
+            },
+            {
+              "model": "Claude Opus 4.8",
+              "episode_count": 0,
+              "episode_share_percent": 0.0,
+              "trace_count": 0,
+              "trace_prevalence_percent": 0.0
+            },
+            {
+              "model": "Claude Sonnet 5",
+              "episode_count": 0,
+              "episode_share_percent": 0.0,
+              "trace_count": 0,
+              "trace_prevalence_percent": 0.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "theme": "Working on the screen",
+      "episode_count": 117,
+      "behaviors": [
+        {
+          "code": "Cycling input routes",
+          "episode_count": 1,
+          "models": [
+            {
+              "model": "GPT-5.4",
+              "episode_count": 0,
+              "episode_share_percent": 0.0,
+              "trace_count": 0,
+              "trace_prevalence_percent": 0.0
+            },
+            {
+              "model": "GPT-5.5",
+              "episode_count": 0,
+              "episode_share_percent": 0.0,
+              "trace_count": 0,
+              "trace_prevalence_percent": 0.0
+            },
+            {
+              "model": "Claude Opus 4.8",
+              "episode_count": 1,
+              "episode_share_percent": 0.885,
+              "trace_count": 1,
+              "trace_prevalence_percent": 3.3333
+            },
+            {
+              "model": "Claude Sonnet 5",
+              "episode_count": 0,
+              "episode_share_percent": 0.0,
+              "trace_count": 0,
+              "trace_prevalence_percent": 0.0
+            }
+          ]
+        },
+        {
+          "code": "GUI self-correction",
+          "episode_count": 11,
+          "models": [
+            {
+              "model": "GPT-5.4",
+              "episode_count": 2,
+              "episode_share_percent": 1.9802,
+              "trace_count": 2,
+              "trace_prevalence_percent": 6.6667
+            },
+            {
+              "model": "GPT-5.5",
+              "episode_count": 0,
+              "episode_share_percent": 0.0,
+              "trace_count": 0,
+              "trace_prevalence_percent": 0.0
+            },
+            {
+              "model": "Claude Opus 4.8",
+              "episode_count": 4,
+              "episode_share_percent": 3.5398,
+              "trace_count": 4,
+              "trace_prevalence_percent": 13.3333
+            },
+            {
+              "model": "Claude Sonnet 5",
+              "episode_count": 5,
+              "episode_share_percent": 3.9062,
+              "trace_count": 5,
+              "trace_prevalence_percent": 16.6667
+            }
+          ]
+        },
+        {
+          "code": "Ineffective or misgrounded GUI manipulation",
+          "episode_count": 24,
+          "models": [
+            {
+              "model": "GPT-5.4",
+              "episode_count": 15,
+              "episode_share_percent": 14.8515,
+              "trace_count": 14,
+              "trace_prevalence_percent": 46.6667
+            },
+            {
+              "model": "GPT-5.5",
+              "episode_count": 1,
+              "episode_share_percent": 0.8333,
+              "trace_count": 1,
+              "trace_prevalence_percent": 3.3333
+            },
+            {
+              "model": "Claude Opus 4.8",
+              "episode_count": 6,
+              "episode_share_percent": 5.3097,
+              "trace_count": 5,
+              "trace_prevalence_percent": 16.6667
+            },
+            {
+              "model": "Claude Sonnet 5",
+              "episode_count": 2,
+              "episode_share_percent": 1.5625,
+              "trace_count": 2,
+              "trace_prevalence_percent": 6.6667
+            }
+          ]
+        },
+        {
+          "code": "Interactive visual interpretation",
+          "episode_count": 1,
+          "models": [
+            {
+              "model": "GPT-5.4",
+              "episode_count": 1,
+              "episode_share_percent": 0.9901,
+              "trace_count": 1,
+              "trace_prevalence_percent": 3.3333
+            },
+            {
+              "model": "GPT-5.5",
+              "episode_count": 0,
+              "episode_share_percent": 0.0,
+              "trace_count": 0,
+              "trace_prevalence_percent": 0.0
+            },
+            {
+              "model": "Claude Opus 4.8",
+              "episode_count": 0,
+              "episode_share_percent": 0.0,
+              "trace_count": 0,
+              "trace_prevalence_percent": 0.0
+            },
+            {
+              "model": "Claude Sonnet 5",
+              "episode_count": 0,
+              "episode_share_percent": 0.0,
+              "trace_count": 0,
+              "trace_prevalence_percent": 0.0
+            }
+          ]
+        },
+        {
+          "code": "On-screen interaction bypass",
+          "episode_count": 4,
+          "models": [
+            {
+              "model": "GPT-5.4",
+              "episode_count": 0,
+              "episode_share_percent": 0.0,
+              "trace_count": 0,
+              "trace_prevalence_percent": 0.0
+            },
+            {
+              "model": "GPT-5.5",
+              "episode_count": 0,
+              "episode_share_percent": 0.0,
+              "trace_count": 0,
+              "trace_prevalence_percent": 0.0
+            },
+            {
+              "model": "Claude Opus 4.8",
+              "episode_count": 1,
+              "episode_share_percent": 0.885,
+              "trace_count": 1,
+              "trace_prevalence_percent": 3.3333
+            },
+            {
+              "model": "Claude Sonnet 5",
+              "episode_count": 3,
+              "episode_share_percent": 2.3438,
+              "trace_count": 2,
+              "trace_prevalence_percent": 6.6667
+            }
+          ]
+        },
+        {
+          "code": "Overlooked interface change",
+          "episode_count": 7,
+          "models": [
+            {
+              "model": "GPT-5.4",
+              "episode_count": 4,
+              "episode_share_percent": 3.9604,
+              "trace_count": 4,
+              "trace_prevalence_percent": 13.3333
+            },
+            {
+              "model": "GPT-5.5",
+              "episode_count": 1,
+              "episode_share_percent": 0.8333,
+              "trace_count": 1,
+              "trace_prevalence_percent": 3.3333
+            },
+            {
+              "model": "Claude Opus 4.8",
+              "episode_count": 1,
+              "episode_share_percent": 0.885,
+              "trace_count": 1,
+              "trace_prevalence_percent": 3.3333
+            },
+            {
+              "model": "Claude Sonnet 5",
+              "episode_count": 1,
+              "episode_share_percent": 0.7812,
+              "trace_count": 1,
+              "trace_prevalence_percent": 3.3333
+            }
+          ]
+        },
+        {
+          "code": "Repeated GUI manipulation",
+          "episode_count": 22,
+          "models": [
+            {
+              "model": "GPT-5.4",
+              "episode_count": 5,
+              "episode_share_percent": 4.9505,
+              "trace_count": 5,
+              "trace_prevalence_percent": 16.6667
+            },
+            {
+              "model": "GPT-5.5",
+              "episode_count": 4,
+              "episode_share_percent": 3.3333,
+              "trace_count": 4,
+              "trace_prevalence_percent": 13.3333
+            },
+            {
+              "model": "Claude Opus 4.8",
+              "episode_count": 6,
+              "episode_share_percent": 5.3097,
+              "trace_count": 6,
+              "trace_prevalence_percent": 20.0
+            },
+            {
+              "model": "Claude Sonnet 5",
+              "episode_count": 7,
+              "episode_share_percent": 5.4688,
+              "trace_count": 6,
+              "trace_prevalence_percent": 20.0
+            }
+          ]
+        },
+        {
+          "code": "Visual inspection and construction",
+          "episode_count": 47,
+          "models": [
+            {
+              "model": "GPT-5.4",
+              "episode_count": 11,
+              "episode_share_percent": 10.8911,
+              "trace_count": 11,
+              "trace_prevalence_percent": 36.6667
+            },
+            {
+              "model": "GPT-5.5",
+              "episode_count": 3,
+              "episode_share_percent": 2.5,
+              "trace_count": 3,
+              "trace_prevalence_percent": 10.0
+            },
+            {
+              "model": "Claude Opus 4.8",
+              "episode_count": 11,
+              "episode_share_percent": 9.7345,
+              "trace_count": 11,
+              "trace_prevalence_percent": 36.6667
+            },
+            {
+              "model": "Claude Sonnet 5",
+              "episode_count": 22,
+              "episode_share_percent": 17.1875,
+              "trace_count": 18,
+              "trace_prevalence_percent": 60.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "theme": "Switching channels",
+      "episode_count": 70,
+      "behaviors": [
+        {
+          "code": "Code augmentation of visual",
+          "episode_count": 6,
+          "models": [
+            {
+              "model": "GPT-5.4",
+              "episode_count": 0,
+              "episode_share_percent": 0.0,
+              "trace_count": 0,
+              "trace_prevalence_percent": 0.0
+            },
+            {
+              "model": "GPT-5.5",
+              "episode_count": 1,
+              "episode_share_percent": 0.8333,
+              "trace_count": 1,
+              "trace_prevalence_percent": 3.3333
+            },
+            {
+              "model": "Claude Opus 4.8",
+              "episode_count": 3,
+              "episode_share_percent": 2.6549,
+              "trace_count": 3,
+              "trace_prevalence_percent": 10.0
+            },
+            {
+              "model": "Claude Sonnet 5",
+              "episode_count": 2,
+              "episode_share_percent": 1.5625,
+              "trace_count": 2,
+              "trace_prevalence_percent": 6.6667
+            }
+          ]
+        },
+        {
+          "code": "Code retreat after GUI friction",
+          "episode_count": 21,
+          "models": [
+            {
+              "model": "GPT-5.4",
+              "episode_count": 8,
+              "episode_share_percent": 7.9208,
+              "trace_count": 8,
+              "trace_prevalence_percent": 26.6667
+            },
+            {
+              "model": "GPT-5.5",
+              "episode_count": 3,
+              "episode_share_percent": 2.5,
+              "trace_count": 3,
+              "trace_prevalence_percent": 10.0
+            },
+            {
+              "model": "Claude Opus 4.8",
+              "episode_count": 5,
+              "episode_share_percent": 4.4248,
+              "trace_count": 5,
+              "trace_prevalence_percent": 16.6667
+            },
+            {
+              "model": "Claude Sonnet 5",
+              "episode_count": 5,
+              "episode_share_percent": 3.9062,
+              "trace_count": 5,
+              "trace_prevalence_percent": 16.6667
+            }
+          ]
+        },
+        {
+          "code": "Forced return to GUI",
+          "episode_count": 6,
+          "models": [
+            {
+              "model": "GPT-5.4",
+              "episode_count": 0,
+              "episode_share_percent": 0.0,
+              "trace_count": 0,
+              "trace_prevalence_percent": 0.0
+            },
+            {
+              "model": "GPT-5.5",
+              "episode_count": 3,
+              "episode_share_percent": 2.5,
+              "trace_count": 3,
+              "trace_prevalence_percent": 10.0
+            },
+            {
+              "model": "Claude Opus 4.8",
+              "episode_count": 2,
+              "episode_share_percent": 1.7699,
+              "trace_count": 2,
+              "trace_prevalence_percent": 6.6667
+            },
+            {
+              "model": "Claude Sonnet 5",
+              "episode_count": 1,
+              "episode_share_percent": 0.7812,
+              "trace_count": 1,
+              "trace_prevalence_percent": 3.3333
+            }
+          ]
+        },
+        {
+          "code": "Parallel code excursion",
+          "episode_count": 3,
+          "models": [
+            {
+              "model": "GPT-5.4",
+              "episode_count": 0,
+              "episode_share_percent": 0.0,
+              "trace_count": 0,
+              "trace_prevalence_percent": 0.0
+            },
+            {
+              "model": "GPT-5.5",
+              "episode_count": 0,
+              "episode_share_percent": 0.0,
+              "trace_count": 0,
+              "trace_prevalence_percent": 0.0
+            },
+            {
+              "model": "Claude Opus 4.8",
+              "episode_count": 0,
+              "episode_share_percent": 0.0,
+              "trace_count": 0,
+              "trace_prevalence_percent": 0.0
+            },
+            {
+              "model": "Claude Sonnet 5",
+              "episode_count": 3,
+              "episode_share_percent": 2.3438,
+              "trace_count": 3,
+              "trace_prevalence_percent": 10.0
+            }
+          ]
+        },
+        {
+          "code": "Preemptive code substitution",
+          "episode_count": 32,
+          "models": [
+            {
+              "model": "GPT-5.4",
+              "episode_count": 1,
+              "episode_share_percent": 0.9901,
+              "trace_count": 1,
+              "trace_prevalence_percent": 3.3333
+            },
+            {
+              "model": "GPT-5.5",
+              "episode_count": 19,
+              "episode_share_percent": 15.8333,
+              "trace_count": 19,
+              "trace_prevalence_percent": 63.3333
+            },
+            {
+              "model": "Claude Opus 4.8",
+              "episode_count": 6,
+              "episode_share_percent": 5.3097,
+              "trace_count": 6,
+              "trace_prevalence_percent": 20.0
+            },
+            {
+              "model": "Claude Sonnet 5",
+              "episode_count": 6,
+              "episode_share_percent": 4.6875,
+              "trace_count": 6,
+              "trace_prevalence_percent": 20.0
+            }
+          ]
+        },
+        {
+          "code": "Visual reconciliation return",
+          "episode_count": 2,
+          "models": [
+            {
+              "model": "GPT-5.4",
+              "episode_count": 0,
+              "episode_share_percent": 0.0,
+              "trace_count": 0,
+              "trace_prevalence_percent": 0.0
+            },
+            {
+              "model": "GPT-5.5",
+              "episode_count": 1,
+              "episode_share_percent": 0.8333,
+              "trace_count": 1,
+              "trace_prevalence_percent": 3.3333
+            },
+            {
+              "model": "Claude Opus 4.8",
+              "episode_count": 0,
+              "episode_share_percent": 0.0,
+              "trace_count": 0,
+              "trace_prevalence_percent": 0.0
+            },
+            {
+              "model": "Claude Sonnet 5",
+              "episode_count": 1,
+              "episode_share_percent": 0.7812,
+              "trace_count": 1,
+              "trace_prevalence_percent": 3.3333
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "theme": "Working off the screen",
+      "episode_count": 136,
+      "behaviors": [
+        {
+          "code": "Code error recovery",
+          "episode_count": 20,
+          "models": [
+            {
+              "model": "GPT-5.4",
+              "episode_count": 3,
+              "episode_share_percent": 2.9703,
+              "trace_count": 3,
+              "trace_prevalence_percent": 10.0
+            },
+            {
+              "model": "GPT-5.5",
+              "episode_count": 9,
+              "episode_share_percent": 7.5,
+              "trace_count": 9,
+              "trace_prevalence_percent": 30.0
+            },
+            {
+              "model": "Claude Opus 4.8",
+              "episode_count": 7,
+              "episode_share_percent": 6.1947,
+              "trace_count": 7,
+              "trace_prevalence_percent": 23.3333
+            },
+            {
+              "model": "Claude Sonnet 5",
+              "episode_count": 1,
+              "episode_share_percent": 0.7812,
+              "trace_count": 1,
+              "trace_prevalence_percent": 3.3333
+            }
+          ]
+        },
+        {
+          "code": "In-code analysis and production",
+          "episode_count": 14,
+          "models": [
+            {
+              "model": "GPT-5.4",
+              "episode_count": 1,
+              "episode_share_percent": 0.9901,
+              "trace_count": 1,
+              "trace_prevalence_percent": 3.3333
+            },
+            {
+              "model": "GPT-5.5",
+              "episode_count": 5,
+              "episode_share_percent": 4.1667,
+              "trace_count": 5,
+              "trace_prevalence_percent": 16.6667
+            },
+            {
+              "model": "Claude Opus 4.8",
+              "episode_count": 3,
+              "episode_share_percent": 2.6549,
+              "trace_count": 3,
+              "trace_prevalence_percent": 10.0
+            },
+            {
+              "model": "Claude Sonnet 5",
+              "episode_count": 5,
+              "episode_share_percent": 3.9062,
+              "trace_count": 5,
+              "trace_prevalence_percent": 16.6667
+            }
+          ]
+        },
+        {
+          "code": "Local environment modification",
+          "episode_count": 8,
+          "models": [
+            {
+              "model": "GPT-5.4",
+              "episode_count": 0,
+              "episode_share_percent": 0.0,
+              "trace_count": 0,
+              "trace_prevalence_percent": 0.0
+            },
+            {
+              "model": "GPT-5.5",
+              "episode_count": 0,
+              "episode_share_percent": 0.0,
+              "trace_count": 0,
+              "trace_prevalence_percent": 0.0
+            },
+            {
+              "model": "Claude Opus 4.8",
+              "episode_count": 5,
+              "episode_share_percent": 4.4248,
+              "trace_count": 5,
+              "trace_prevalence_percent": 16.6667
+            },
+            {
+              "model": "Claude Sonnet 5",
+              "episode_count": 3,
+              "episode_share_percent": 2.3438,
+              "trace_count": 3,
+              "trace_prevalence_percent": 10.0
+            }
+          ]
+        },
+        {
+          "code": "Local search",
+          "episode_count": 15,
+          "models": [
+            {
+              "model": "GPT-5.4",
+              "episode_count": 2,
+              "episode_share_percent": 1.9802,
+              "trace_count": 2,
+              "trace_prevalence_percent": 6.6667
+            },
+            {
+              "model": "GPT-5.5",
+              "episode_count": 3,
+              "episode_share_percent": 2.5,
+              "trace_count": 3,
+              "trace_prevalence_percent": 10.0
+            },
+            {
+              "model": "Claude Opus 4.8",
+              "episode_count": 3,
+              "episode_share_percent": 2.6549,
+              "trace_count": 3,
+              "trace_prevalence_percent": 10.0
+            },
+            {
+              "model": "Claude Sonnet 5",
+              "episode_count": 7,
+              "episode_share_percent": 5.4688,
+              "trace_count": 7,
+              "trace_prevalence_percent": 23.3333
+            }
+          ]
+        },
+        {
+          "code": "Online fetching and searching",
+          "episode_count": 9,
+          "models": [
+            {
+              "model": "GPT-5.4",
+              "episode_count": 2,
+              "episode_share_percent": 1.9802,
+              "trace_count": 1,
+              "trace_prevalence_percent": 3.3333
+            },
+            {
+              "model": "GPT-5.5",
+              "episode_count": 3,
+              "episode_share_percent": 2.5,
+              "trace_count": 3,
+              "trace_prevalence_percent": 10.0
+            },
+            {
+              "model": "Claude Opus 4.8",
+              "episode_count": 4,
+              "episode_share_percent": 3.5398,
+              "trace_count": 3,
+              "trace_prevalence_percent": 10.0
+            },
+            {
+              "model": "Claude Sonnet 5",
+              "episode_count": 0,
+              "episode_share_percent": 0.0,
+              "trace_count": 0,
+              "trace_prevalence_percent": 0.0
+            }
+          ]
+        },
+        {
+          "code": "Prior-knowledge injection",
+          "episode_count": 37,
+          "models": [
+            {
+              "model": "GPT-5.4",
+              "episode_count": 7,
+              "episode_share_percent": 6.9307,
+              "trace_count": 7,
+              "trace_prevalence_percent": 23.3333
+            },
+            {
+              "model": "GPT-5.5",
+              "episode_count": 10,
+              "episode_share_percent": 8.3333,
+              "trace_count": 10,
+              "trace_prevalence_percent": 33.3333
+            },
+            {
+              "model": "Claude Opus 4.8",
+              "episode_count": 10,
+              "episode_share_percent": 8.8496,
+              "trace_count": 10,
+              "trace_prevalence_percent": 33.3333
+            },
+            {
+              "model": "Claude Sonnet 5",
+              "episode_count": 10,
+              "episode_share_percent": 7.8125,
+              "trace_count": 10,
+              "trace_prevalence_percent": 33.3333
+            }
+          ]
+        },
+        {
+          "code": "Stalled engineering",
+          "episode_count": 5,
+          "models": [
+            {
+              "model": "GPT-5.4",
+              "episode_count": 0,
+              "episode_share_percent": 0.0,
+              "trace_count": 0,
+              "trace_prevalence_percent": 0.0
+            },
+            {
+              "model": "GPT-5.5",
+              "episode_count": 0,
+              "episode_share_percent": 0.0,
+              "trace_count": 0,
+              "trace_prevalence_percent": 0.0
+            },
+            {
+              "model": "Claude Opus 4.8",
+              "episode_count": 2,
+              "episode_share_percent": 1.7699,
+              "trace_count": 2,
+              "trace_prevalence_percent": 6.6667
+            },
+            {
+              "model": "Claude Sonnet 5",
+              "episode_count": 3,
+              "episode_share_percent": 2.3438,
+              "trace_count": 2,
+              "trace_prevalence_percent": 6.6667
+            }
+          ]
+        },
+        {
+          "code": "Web app inspection",
+          "episode_count": 28,
+          "models": [
+            {
+              "model": "GPT-5.4",
+              "episode_count": 0,
+              "episode_share_percent": 0.0,
+              "trace_count": 0,
+              "trace_prevalence_percent": 0.0
+            },
+            {
+              "model": "GPT-5.5",
+              "episode_count": 19,
+              "episode_share_percent": 15.8333,
+              "trace_count": 15,
+              "trace_prevalence_percent": 50.0
+            },
+            {
+              "model": "Claude Opus 4.8",
+              "episode_count": 3,
+              "episode_share_percent": 2.6549,
+              "trace_count": 3,
+              "trace_prevalence_percent": 10.0
+            },
+            {
+              "model": "Claude Sonnet 5",
+              "episode_count": 6,
+              "episode_share_percent": 4.6875,
+              "trace_count": 5,
+              "trace_prevalence_percent": 16.6667
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "theme": "Delivering the answers",
+      "episode_count": 129,
+      "behaviors": [
+        {
+          "code": "Computed and visually established evidence",
+          "episode_count": 10,
+          "models": [
+            {
+              "model": "GPT-5.4",
+              "episode_count": 0,
+              "episode_share_percent": 0.0,
+              "trace_count": 0,
+              "trace_prevalence_percent": 0.0
+            },
+            {
+              "model": "GPT-5.5",
+              "episode_count": 4,
+              "episode_share_percent": 3.3333,
+              "trace_count": 4,
+              "trace_prevalence_percent": 13.3333
+            },
+            {
+              "model": "Claude Opus 4.8",
+              "episode_count": 3,
+              "episode_share_percent": 2.6549,
+              "trace_count": 3,
+              "trace_prevalence_percent": 10.0
+            },
+            {
+              "model": "Claude Sonnet 5",
+              "episode_count": 3,
+              "episode_share_percent": 2.3438,
+              "trace_count": 3,
+              "trace_prevalence_percent": 10.0
+            }
+          ]
+        },
+        {
+          "code": "Computed evidence",
+          "episode_count": 39,
+          "models": [
+            {
+              "model": "GPT-5.4",
+              "episode_count": 4,
+              "episode_share_percent": 3.9604,
+              "trace_count": 4,
+              "trace_prevalence_percent": 13.3333
+            },
+            {
+              "model": "GPT-5.5",
+              "episode_count": 17,
+              "episode_share_percent": 14.1667,
+              "trace_count": 17,
+              "trace_prevalence_percent": 56.6667
+            },
+            {
+              "model": "Claude Opus 4.8",
+              "episode_count": 11,
+              "episode_share_percent": 9.7345,
+              "trace_count": 11,
+              "trace_prevalence_percent": 36.6667
+            },
+            {
+              "model": "Claude Sonnet 5",
+              "episode_count": 7,
+              "episode_share_percent": 5.4688,
+              "trace_count": 7,
+              "trace_prevalence_percent": 23.3333
+            }
+          ]
+        },
+        {
+          "code": "Fabricated evidence",
+          "episode_count": 10,
+          "models": [
+            {
+              "model": "GPT-5.4",
+              "episode_count": 7,
+              "episode_share_percent": 6.9307,
+              "trace_count": 6,
+              "trace_prevalence_percent": 20.0
+            },
+            {
+              "model": "GPT-5.5",
+              "episode_count": 0,
+              "episode_share_percent": 0.0,
+              "trace_count": 0,
+              "trace_prevalence_percent": 0.0
+            },
+            {
+              "model": "Claude Opus 4.8",
+              "episode_count": 0,
+              "episode_share_percent": 0.0,
+              "trace_count": 0,
+              "trace_prevalence_percent": 0.0
+            },
+            {
+              "model": "Claude Sonnet 5",
+              "episode_count": 3,
+              "episode_share_percent": 2.3438,
+              "trace_count": 2,
+              "trace_prevalence_percent": 6.6667
+            }
+          ]
+        },
+        {
+          "code": "Grounded in-app visual evidence",
+          "episode_count": 48,
+          "models": [
+            {
+              "model": "GPT-5.4",
+              "episode_count": 13,
+              "episode_share_percent": 12.8713,
+              "trace_count": 13,
+              "trace_prevalence_percent": 43.3333
+            },
+            {
+              "model": "GPT-5.5",
+              "episode_count": 8,
+              "episode_share_percent": 6.6667,
+              "trace_count": 8,
+              "trace_prevalence_percent": 26.6667
+            },
+            {
+              "model": "Claude Opus 4.8",
+              "episode_count": 14,
+              "episode_share_percent": 12.3894,
+              "trace_count": 14,
+              "trace_prevalence_percent": 46.6667
+            },
+            {
+              "model": "Claude Sonnet 5",
+              "episode_count": 13,
+              "episode_share_percent": 10.1562,
+              "trace_count": 13,
+              "trace_prevalence_percent": 43.3333
+            }
+          ]
+        },
+        {
+          "code": "Misgrounded evidence",
+          "episode_count": 7,
+          "models": [
+            {
+              "model": "GPT-5.4",
+              "episode_count": 5,
+              "episode_share_percent": 4.9505,
+              "trace_count": 5,
+              "trace_prevalence_percent": 16.6667
+            },
+            {
+              "model": "GPT-5.5",
+              "episode_count": 1,
+              "episode_share_percent": 0.8333,
+              "trace_count": 1,
+              "trace_prevalence_percent": 3.3333
+            },
+            {
+              "model": "Claude Opus 4.8",
+              "episode_count": 1,
+              "episode_share_percent": 0.885,
+              "trace_count": 1,
+              "trace_prevalence_percent": 3.3333
+            },
+            {
+              "model": "Claude Sonnet 5",
+              "episode_count": 0,
+              "episode_share_percent": 0.0,
+              "trace_count": 0,
+              "trace_prevalence_percent": 0.0
+            }
+          ]
+        },
+        {
+          "code": "No delivery: answer never obtained",
+          "episode_count": 2,
+          "models": [
+            {
+              "model": "GPT-5.4",
+              "episode_count": 0,
+              "episode_share_percent": 0.0,
+              "trace_count": 0,
+              "trace_prevalence_percent": 0.0
+            },
+            {
+              "model": "GPT-5.5",
+              "episode_count": 0,
+              "episode_share_percent": 0.0,
+              "trace_count": 0,
+              "trace_prevalence_percent": 0.0
+            },
+            {
+              "model": "Claude Opus 4.8",
+              "episode_count": 0,
+              "episode_share_percent": 0.0,
+              "trace_count": 0,
+              "trace_prevalence_percent": 0.0
+            },
+            {
+              "model": "Claude Sonnet 5",
+              "episode_count": 2,
+              "episode_share_percent": 1.5625,
+              "trace_count": 2,
+              "trace_prevalence_percent": 6.6667
+            }
+          ]
+        },
+        {
+          "code": "No delivery: answer obtained but never committed",
+          "episode_count": 1,
+          "models": [
+            {
+              "model": "GPT-5.4",
+              "episode_count": 0,
+              "episode_share_percent": 0.0,
+              "trace_count": 0,
+              "trace_prevalence_percent": 0.0
+            },
+            {
+              "model": "GPT-5.5",
+              "episode_count": 0,
+              "episode_share_percent": 0.0,
+              "trace_count": 0,
+              "trace_prevalence_percent": 0.0
+            },
+            {
+              "model": "Claude Opus 4.8",
+              "episode_count": 0,
+              "episode_share_percent": 0.0,
+              "trace_count": 0,
+              "trace_prevalence_percent": 0.0
+            },
+            {
+              "model": "Claude Sonnet 5",
+              "episode_count": 1,
+              "episode_share_percent": 0.7812,
+              "trace_count": 1,
+              "trace_prevalence_percent": 3.3333
+            }
+          ]
+        },
+        {
+          "code": "No delivery: answer rendered but never read",
+          "episode_count": 2,
+          "models": [
+            {
+              "model": "GPT-5.4",
+              "episode_count": 0,
+              "episode_share_percent": 0.0,
+              "trace_count": 0,
+              "trace_prevalence_percent": 0.0
+            },
+            {
+              "model": "GPT-5.5",
+              "episode_count": 0,
+              "episode_share_percent": 0.0,
+              "trace_count": 0,
+              "trace_prevalence_percent": 0.0
+            },
+            {
+              "model": "Claude Opus 4.8",
+              "episode_count": 0,
+              "episode_share_percent": 0.0,
+              "trace_count": 0,
+              "trace_prevalence_percent": 0.0
+            },
+            {
+              "model": "Claude Sonnet 5",
+              "episode_count": 2,
+              "episode_share_percent": 1.5625,
+              "trace_count": 2,
+              "trace_prevalence_percent": 6.6667
+            }
+          ]
+        },
+        {
+          "code": "Prior-knowledge substitution or generalization",
+          "episode_count": 10,
+          "models": [
+            {
+              "model": "GPT-5.4",
+              "episode_count": 6,
+              "episode_share_percent": 5.9406,
+              "trace_count": 6,
+              "trace_prevalence_percent": 20.0
+            },
+            {
+              "model": "GPT-5.5",
+              "episode_count": 2,
+              "episode_share_percent": 1.6667,
+              "trace_count": 2,
+              "trace_prevalence_percent": 6.6667
+            },
+            {
+              "model": "Claude Opus 4.8",
+              "episode_count": 1,
+              "episode_share_percent": 0.885,
+              "trace_count": 1,
+              "trace_prevalence_percent": 3.3333
+            },
+            {
+              "model": "Claude Sonnet 5",
+              "episode_count": 1,
+              "episode_share_percent": 0.7812,
+              "trace_count": 1,
+              "trace_prevalence_percent": 3.3333
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
