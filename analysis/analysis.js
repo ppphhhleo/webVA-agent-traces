@@ -45,6 +45,7 @@ const switchDelayChart = document.querySelector("#switch-delay-chart");
 const behaviorMatrix = document.querySelector("#behavior-matrix");
 const frictionSvg = document.querySelector("#friction-alluvial");
 const alluvialTooltip = document.querySelector("#alluvial-tooltip");
+const frictionModelBars = document.querySelector("#friction-model-bars");
 const evidenceSvg = document.querySelector("#evidence-plot");
 const evidenceTooltip = document.querySelector("#evidence-tooltip");
 const evidenceLegend = document.querySelector("#evidence-legend");
@@ -474,6 +475,49 @@ function renderFrictionSummary() {
     link.title = episode ? `${episode.friction} → ${episode.pathway} → ${episode.landing}` : example.label;
     return link;
   }));
+}
+
+function renderFrictionModelComparison() {
+  const data = state.friction;
+  if (!data?.episodes?.length || !frictionModelBars) return;
+  const handlingOrder = (data.stage_orders?.handling || Object.keys(HANDLING_COLORS))
+    .filter((handling) => data.episodes.some((episode) => episode.handling === handling));
+  const models = MODEL_ORDER.filter((model) => data.episodes.some((episode) => episode.model === model));
+
+  const legend = document.createElement("div");
+  legend.className = "friction-handling-legend";
+  legend.setAttribute("aria-label", "GUI friction handling outcomes");
+  legend.innerHTML = handlingOrder.map((handling) => `
+    <span style="--handling-color:${HANDLING_COLORS[handling] || "#687777"}">
+      <i aria-hidden="true"></i>${escapeHtml(handling)}
+    </span>`).join("");
+
+  const rows = models.map((model) => {
+    const episodes = data.episodes.filter((episode) => episode.model === model);
+    const counts = new Map(handlingOrder.map((handling) => [
+      handling,
+      episodes.filter((episode) => episode.handling === handling).length,
+    ]));
+    const row = document.createElement("div");
+    row.className = "friction-model-row";
+    row.innerHTML = `
+      <div class="friction-model-label" style="--series-color:${colorFor(model)}">
+        <i aria-hidden="true"></i><strong>${escapeHtml(model)}</strong><small>n=${episodes.length}</small>
+      </div>
+      <div class="friction-stacked-bar" role="list" aria-label="${escapeHtml(model)} GUI friction handling outcomes">
+        ${handlingOrder.map((handling) => {
+          const count = counts.get(handling) || 0;
+          if (!count) return "";
+          const share = count / episodes.length * 100;
+          const label = `${model}: ${handling}, ${count} of ${episodes.length} episodes (${share.toFixed(1)}%)`;
+          const darkText = ["Recovered in GUI", "Mixed GUI + code", "Finished without GUI repair"].includes(handling);
+          const textColor = darkText ? "#0b1718" : "#fffdf8";
+          return `<span class="friction-segment" role="listitem" style="flex-basis:${share.toFixed(4)}%;--handling-color:${HANDLING_COLORS[handling] || "#687777"};--segment-text:${textColor}" title="${escapeHtml(label)}" aria-label="${escapeHtml(label)}">${count} · ${share.toFixed(0)}%</span>`;
+        }).join("")}
+      </div>`;
+    return row;
+  });
+  frictionModelBars.replaceChildren(legend, ...rows);
 }
 
 function renderFrictionAlluvial() {
@@ -953,6 +997,7 @@ async function init() {
     renderBehaviorMatrix();
     renderFrictionSummary();
     renderFrictionAlluvial();
+    renderFrictionModelComparison();
     renderEvidenceLegend();
     renderEvidencePlot();
     renderChart();

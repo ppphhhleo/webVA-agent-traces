@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="../styles.css" />
-    <link rel="stylesheet" href="analysis.css?v=26" />
+    <link rel="stylesheet" href="analysis.css?v=27" />
   </head>
   <body>
     <div class="app-shell">
@@ -150,8 +150,20 @@
             <svg id="friction-alluvial" role="img" aria-labelledby="friction-title friction-description"></svg>
             <div class="alluvial-tooltip" id="alluvial-tooltip" role="status" hidden></div>
           </div>
+          <section class="friction-model-comparison" aria-labelledby="friction-model-title">
+            <header>
+              <div>
+                <p class="eyebrow">Model comparison</p>
+                <h3 id="friction-model-title">How each model handled GUI friction</h3>
+              </div>
+              <p>Within-model shares of coded friction episodes; bar width is normalized because episode totals differ.</p>
+            </header>
+            <div class="friction-model-shell">
+              <div class="friction-model-bars" id="friction-model-bars"></div>
+            </div>
+          </section>
           <div class="friction-examples" id="friction-examples" aria-label="Representative multi-stage trace pathways"></div>
-          <p class="chart-description" id="friction-description">Widths count coded friction episodes, not unique traces. Five handling families keep the aggregate flow readable; labels and spatial flow provide cues in addition to the colorblind-safe palette. Detailed ordered pathways still distinguish code verification, code resolution, GUI recovery, and failed attempts in the hover descriptions and trace timelines. Hover a ribbon or node to inspect the underlying paths and trace IDs.</p>
+          <p class="chart-description" id="friction-description">Widths count coded friction episodes, not unique traces. Five handling families keep the aggregate flow readable; labels and spatial flow provide cues in addition to the colorblind-safe palette. The normalized bars compare handling outcomes across models while retaining each model’s episode count. Detailed ordered pathways still distinguish code verification, code resolution, GUI recovery, and failed attempts in the hover descriptions and trace timelines. Hover a ribbon or node to inspect the underlying paths and trace IDs.</p>
         </section>
 
         <section class="analysis-card evidence-card" aria-labelledby="evidence-title">
@@ -247,6 +259,6 @@
       </main>
     </div>
     <script src="../config.js"></script>
-    <script src="analysis.js?v=27" type="module"></script>
+    <script src="analysis.js?v=28" type="module"></script>
   </body>
 </html>
