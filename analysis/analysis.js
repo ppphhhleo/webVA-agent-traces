@@ -52,6 +52,45 @@ const CODE_HANDLING_COLORS = {
   "Finished without recovery": "#d55e00",
   "Unresolved / abandoned": "#666666",
 };
+const CODE_HANDLING_GROUPS = {
+  "Repaired code / parser": "Recovered through code",
+  "Changed source / endpoint": "Recovered through code",
+  "Adapted environment / method": "Recovered through code",
+  "Returned to GUI": "Returned to GUI",
+  "Finished without recovery": "Finished without recovery",
+  "Unresolved / abandoned": "Unresolved / abandoned",
+};
+const CODE_HANDLING_GROUP_ORDER = [
+  "Recovered through code",
+  "Returned to GUI",
+  "Finished without recovery",
+  "Unresolved / abandoned",
+];
+const CODE_HANDLING_GROUP_COLORS = {
+  "Recovered through code": "#0072b2",
+  "Returned to GUI": "#009e73",
+  "Finished without recovery": "#e69f00",
+  "Unresolved / abandoned": "#666666",
+};
+const CODE_LANDING_GROUPS = {
+  "Grounded visual evidence": "Evidence-backed answer",
+  "Combined visual + computed": "Evidence-backed answer",
+  "Computed evidence": "Evidence-backed answer",
+  "Prior-knowledge answer": "Unsupported answer",
+  "Misgrounded evidence": "Unsupported answer",
+  "Fabricated evidence": "Unsupported answer",
+  "No answer": "No answer",
+};
+const CODE_LANDING_GROUP_ORDER = [
+  "Evidence-backed answer",
+  "Unsupported answer",
+  "No answer",
+];
+const CODE_LANDING_GROUP_COLORS = {
+  "Evidence-backed answer": "#009e73",
+  "Unsupported answer": "#d55e00",
+  "No answer": "#666666",
+};
 
 const state = { traces: [], friction: null, codeErrors: null, evidence: null, behaviors: null, evidenceModel: "", activeModels: new Set(), taskType: "" };
 const svg = document.querySelector("#scatterplot");
@@ -703,31 +742,70 @@ function renderCodeErrorSummary() {
   const unrecovered = data.counts.unrecovered_or_unresolved;
   document.querySelector("#code-error-traces").textContent = total;
   document.querySelector("#code-error-recovered").textContent = `${recovered} · ${(recovered / total * 100).toFixed(0)}%`;
+  document.querySelector("#code-error-returned").textContent = `${returned} · ${(returned / total * 100).toFixed(0)}%`;
   document.querySelector("#code-error-unrecovered").textContent = `${unrecovered} · ${(unrecovered / total * 100).toFixed(0)}%`;
-  document.querySelector("#code-error-callout").innerHTML = `<strong>One error-bearing trace contributes one flow.</strong>
-    Repeated failures are consolidated so long trajectories do not dominate: ${recovered} of ${total} traces recover by changing code, source, or method; ${returned} return to the GUI; ${unrecovered} finish without a coded recovery or remain unresolved.`;
+  const evidenceBacked = data.episodes.filter((record) =>
+    CODE_LANDING_GROUPS[record.landing] === "Evidence-backed answer").length;
+  document.querySelector("#code-error-callout").innerHTML = `<strong>${recovered} of ${total} traces recovered through engineering changes.</strong>
+    Another ${returned} returned to the GUI, while ${unrecovered} did not successfully recover. Despite the failures, ${evidenceBacked} traces ended with an evidence-backed answer.`;
+}
+
+function simplifiedCodeErrorRecords() {
+  return (state.codeErrors?.episodes || []).map((record) => ({
+    ...record,
+    handling_group: CODE_HANDLING_GROUPS[record.handling] || record.handling,
+    landing_group: CODE_LANDING_GROUPS[record.landing] || record.landing,
+  }));
+}
+
+function codeErrorBreakdown(records, key) {
+  const counts = new Map();
+  records.forEach((record) => counts.set(record[key], (counts.get(record[key]) || 0) + 1));
+  return [...counts.entries()]
+    .sort((a, b) => b[1] - a[1])
+    .map(([label, count]) => `${label}: ${count}`)
+    .join(" · ");
+}
+
+function simplifiedCodeErrorLinks(records) {
+  const grouped = new Map();
+  [["error", "handling_group"], ["handling_group", "landing_group"]].forEach(([sourceStage, targetStage]) => {
+    records.forEach((record) => {
+      const key = `${sourceStage}\u0000${record[sourceStage]}\u0000${targetStage}\u0000${record[targetStage]}`;
+      if (!grouped.has(key)) grouped.set(key, {
+        source_stage: sourceStage,
+        source: record[sourceStage],
+        target_stage: targetStage,
+        target: record[targetStage],
+        records: [],
+      });
+      grouped.get(key).records.push(record);
+    });
+  });
+  return [...grouped.values()].map((link) => ({ ...link, count: link.records.length }));
 }
 
 function renderCodeErrorModelComparison() {
   const data = state.codeErrors;
   if (!data?.episodes?.length || !codeErrorModelTable) return;
-  const handlingOrder = data.stage_orders.handling.filter((handling) =>
-    data.episodes.some((episode) => episode.handling === handling));
-  const models = MODEL_ORDER.filter((model) => data.episodes.some((episode) => episode.model === model));
+  const simplified = simplifiedCodeErrorRecords();
+  const handlingOrder = CODE_HANDLING_GROUP_ORDER.filter((handling) =>
+    simplified.some((episode) => episode.handling_group === handling));
+  const models = MODEL_ORDER.filter((model) => simplified.some((episode) => episode.model === model));
   codeErrorModelTable.innerHTML = `
     <thead><tr><th scope="col">Model · error traces</th>
-      ${handlingOrder.map((handling) => `<th scope="col"><span class="friction-outcome-head" style="--handling-color:${CODE_HANDLING_COLORS[handling] || "#687777"}"><i aria-hidden="true"></i>${escapeHtml(handling)}</span></th>`).join("")}
+      ${handlingOrder.map((handling) => `<th scope="col"><span class="friction-outcome-head" style="--handling-color:${CODE_HANDLING_GROUP_COLORS[handling] || "#687777"}"><i aria-hidden="true"></i>${escapeHtml(handling)}</span></th>`).join("")}
     </tr></thead>
     <tbody>${models.map((model) => {
-      const records = data.episodes.filter((episode) => episode.model === model);
+      const records = simplified.filter((episode) => episode.model === model);
       return `<tr><th scope="row"><span class="friction-model-label" style="--series-color:${colorFor(model)}">
           <i aria-hidden="true"></i><strong>${escapeHtml(model)}</strong><small>n=${records.length}</small>
         </span></th>
         ${handlingOrder.map((handling) => {
-          const count = records.filter((record) => record.handling === handling).length;
+          const count = records.filter((record) => record.handling_group === handling).length;
           const share = count / records.length * 100;
           const label = `${model}: ${handling}, ${count} of ${records.length} error traces (${share.toFixed(1)}%)`;
-          return `<td class="${count ? "" : "is-zero"}" style="--handling-color:${CODE_HANDLING_COLORS[handling] || "#687777"}" title="${escapeHtml(label)}"><strong>${count}</strong><small>${share.toFixed(0)}%</small></td>`;
+          return `<td class="${count ? "" : "is-zero"}" style="--handling-color:${CODE_HANDLING_GROUP_COLORS[handling] || "#687777"}" title="${escapeHtml(label)}"><strong>${count}</strong><small>${share.toFixed(0)}%</small></td>`;
         }).join("")}</tr>`;
     }).join("")}</tbody>`;
 }
@@ -736,21 +814,30 @@ function renderCodeErrorAlluvial() {
   const data = state.codeErrors;
   if (!data?.episodes?.length || !codeErrorSvg) return;
   const width = 1280;
-  const height = 520;
+  const height = 460;
   const top = 62;
   const bottom = 26;
   const plotHeight = height - top - bottom;
   const nodeWidth = 12;
-  const stageKeys = ["error", "handling", "landing"];
-  const stageTitles = ["Engineering failure", "Recovery response", "Evidence landing"];
+  const stageKeys = ["error", "handling_group", "landing_group"];
+  const stageTitles = ["What failed?", "How did the agent respond?", "What supported the answer?"];
   const stageX = [232, 650, 1050];
   const activeLabels = {};
   const stages = {};
   const nodeMap = new Map();
+  const simplified = simplifiedCodeErrorRecords();
+  const stageOrders = {
+    error: data.stage_orders.error,
+    handling_group: CODE_HANDLING_GROUP_ORDER,
+    landing_group: CODE_LANDING_GROUP_ORDER,
+  };
+  const stageCounts = Object.fromEntries(stageKeys.map((stage) => [stage, Object.fromEntries(
+    stageOrders[stage].map((label) => [label, simplified.filter((record) => record[stage] === label).length])
+  )]));
 
   stageKeys.forEach((stage) => {
-    const counts = data.stage_counts[stage] || {};
-    const ordered = (data.stage_orders[stage] || []).filter((label) => counts[label]);
+    const counts = stageCounts[stage] || {};
+    const ordered = (stageOrders[stage] || []).filter((label) => counts[label]);
     const extras = Object.keys(counts).filter((label) => !ordered.includes(label));
     activeLabels[stage] = [...ordered, ...extras];
   });
@@ -763,7 +850,7 @@ function renderCodeErrorAlluvial() {
     const usedHeight = data.counts.error_traces * unit + Math.max(0, labels.length - 1) * gap;
     let cursor = top + (plotHeight - usedHeight) / 2;
     stages[stage] = labels.map((label) => {
-      const count = data.stage_counts[stage][label];
+      const count = stageCounts[stage][label];
       const node = { stage, label, count, x: stageX[stageIndex], y: cursor, height: count * unit, sourceOffset: 0 };
       cursor += node.height + gap;
       nodeMap.set(`${stage}:${label}`, node);
@@ -779,16 +866,16 @@ function renderCodeErrorAlluvial() {
     codeErrorSvg.append(label);
   });
 
-  const recordLookup = new Map(data.episodes.map((record) => [record.episode_id, record]));
-  [["error", "handling"], ["handling", "landing"]].forEach(([sourceStage, targetStage]) => {
-    const links = data.links
+  const links = simplifiedCodeErrorLinks(simplified);
+  [["error", "handling_group"], ["handling_group", "landing_group"]].forEach(([sourceStage, targetStage]) => {
+    const stageLinks = links
       .filter((link) => link.source_stage === sourceStage && link.target_stage === targetStage)
       .sort((a, b) => {
         const sourceOrder = activeLabels[sourceStage].indexOf(a.source) - activeLabels[sourceStage].indexOf(b.source);
         return sourceOrder || activeLabels[targetStage].indexOf(a.target) - activeLabels[targetStage].indexOf(b.target);
       });
     const targetOffsets = new Map();
-    links.forEach((link) => {
+    stageLinks.forEach((link) => {
       const source = nodeMap.get(`${sourceStage}:${link.source}`);
       const target = nodeMap.get(`${targetStage}:${link.target}`);
       const ribbonWidth = link.count * unit;
@@ -800,12 +887,12 @@ function renderCodeErrorAlluvial() {
       const x1 = source.x + nodeWidth;
       const x2 = target.x;
       const curve = Math.max(60, (x2 - x1) * 0.48);
-      const handling = sourceStage === "handling" ? source.label : target.label;
-      const linkedRecords = link.episode_ids.map((id) => recordLookup.get(id)).filter(Boolean);
+      const handling = sourceStage === "handling_group" ? source.label : target.label;
+      const linkedRecords = link.records;
       const path = svgElement("path", {
         class: "alluvial-link",
         d: `M ${x1} ${sourceY} C ${x1 + curve} ${sourceY}, ${x2 - curve} ${targetY}, ${x2} ${targetY}`,
-        stroke: CODE_HANDLING_COLORS[handling] || "#687777",
+        stroke: CODE_HANDLING_GROUP_COLORS[handling] || "#687777",
         "stroke-width": ribbonWidth,
       });
       const title = `${link.source} → ${link.target}`;
@@ -822,12 +909,12 @@ function renderCodeErrorAlluvial() {
 
   stageKeys.forEach((stage, stageIndex) => {
     stages[stage].forEach((node) => {
-      const records = data.episodes.filter((record) => record[stage] === node.label);
+      const records = simplified.filter((record) => record[stage] === node.label);
       const color = stage === "error"
         ? ERROR_COLORS[node.label]
-        : stage === "handling"
-          ? CODE_HANDLING_COLORS[node.label]
-          : LANDING_COLORS[node.label];
+        : stage === "handling_group"
+          ? CODE_HANDLING_GROUP_COLORS[node.label]
+          : CODE_LANDING_GROUP_COLORS[node.label];
       const group = svgElement("g", { class: "alluvial-node", tabindex: "0" });
       const rect = svgElement("rect", { x: node.x, y: node.y, width: nodeWidth, height: Math.max(3, node.height), fill: color || "#687777" });
       const label = svgElement("text", {
@@ -836,10 +923,12 @@ function renderCodeErrorAlluvial() {
         y: node.y + node.height / 2 + 3,
         "text-anchor": stageIndex === 0 ? "end" : "start",
       });
-      label.textContent = `${node.label} (${node.count})`;
+      label.textContent = `${node.label} (${node.count} · ${(node.count / data.counts.error_traces * 100).toFixed(0)}%)`;
       const detail = stage === "error"
         ? `First detected failure; ${records.reduce((sum, record) => sum + record.error_count, 0)} explicit failures across these traces.`
-        : stageTitles[stageIndex];
+        : stage === "handling_group"
+          ? codeErrorBreakdown(records, "handling")
+          : codeErrorBreakdown(records, "landing");
       const show = (event) => showCodeErrorTooltip(event, node.label, node.count, records, detail);
       group.addEventListener("pointerenter", show);
       group.addEventListener("pointermove", show);

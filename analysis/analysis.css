@@ -139,7 +139,7 @@
 .behavior-cell.is-zero b, .behavior-cell.is-zero small { color: #9aa5a1; }
 
 .friction-header { align-items: center; }
-.friction-totals { display: grid; grid-template-columns: repeat(3, minmax(108px, 1fr)); margin: 0; border: 1px solid var(--line); }
+.friction-totals { display: grid; grid-template-columns: repeat(4, minmax(104px, 1fr)); margin: 0; border: 1px solid var(--line); }
 .friction-totals div { padding: 9px 11px; }
 .friction-totals div + div { border-left: 1px solid var(--line); }
 .friction-totals dt { color: var(--muted); font-size: 7px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }

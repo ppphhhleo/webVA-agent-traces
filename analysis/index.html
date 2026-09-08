@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="../styles.css" />
-    <link rel="stylesheet" href="analysis.css?v=31" />
+    <link rel="stylesheet" href="analysis.css?v=32" />
   </head>
   <body>
     <div class="app-shell">
@@ -178,8 +178,9 @@
             </div>
             <dl class="friction-totals" aria-label="Coding-error summary">
               <div><dt>Error-bearing traces</dt><dd id="code-error-traces">—</dd></div>
-              <div><dt>Recovered in code</dt><dd id="code-error-recovered">—</dd></div>
-              <div><dt>Unrecovered / unresolved</dt><dd id="code-error-unrecovered">—</dd></div>
+              <div><dt>Recovered through code</dt><dd id="code-error-recovered">—</dd></div>
+              <div><dt>Returned to the GUI</dt><dd id="code-error-returned">—</dd></div>
+              <div><dt>No successful recovery</dt><dd id="code-error-unrecovered">—</dd></div>
             </dl>
           </header>
           <div class="friction-callout" id="code-error-callout"></div>
@@ -191,9 +192,9 @@
             <header>
               <div>
                 <p class="eyebrow">Model comparison</p>
-                <h3 id="code-error-model-title">Recovery routes by model</h3>
+                <h3 id="code-error-model-title">Recovery outcomes by model</h3>
               </div>
-              <p>Cells show trace count and within-model percentage among traces containing an explicit shell or Python failure.</p>
+              <p>Cells show trace count and within-model percentage among traces containing an explicit shell or Python failure. Detailed engineering mechanisms remain available on hover.</p>
             </header>
             <div class="friction-model-shell">
               <table class="friction-model-table" id="code-error-model-table"></table>
@@ -221,7 +222,7 @@
               <strong>This exposes the risk of finishing after engineering recovery fails.</strong>
             </a>
           </div>
-          <p class="chart-description" id="code-error-description">Each error-bearing trace contributes one flow, so repeated failures in long trajectories do not receive extra weight. The left stage classifies the first strongest explicit shell or Python failure; the middle stage uses audited recovery annotations; the right stage shows the coded evidence supporting the final claim. Hover a ribbon or node for counts and trace IDs.</p>
+          <p class="chart-description" id="code-error-description">Each error-bearing trace contributes one flow, so repeated failures in long trajectories do not receive extra weight. The overview groups detailed recovery mechanisms into four outcomes and final evidence into three outcomes. Hover a ribbon or node for the underlying categories, counts, and trace IDs.</p>
         </section>
 
         <section class="analysis-card evidence-card" aria-labelledby="evidence-title">
@@ -317,6 +318,6 @@
       </main>
     </div>
     <script src="../config.js"></script>
-    <script src="analysis.js?v=33" type="module"></script>
+    <script src="analysis.js?v=34" type="module"></script>
   </body>
 </html>
