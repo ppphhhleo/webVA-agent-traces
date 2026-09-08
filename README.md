@@ -49,11 +49,23 @@ python3 scripts/build_analysis_data.py
 
 The analysis interface uses native browser SVG and DOM APIs rather than D3. At
 runtime it loads `analysis/data.json`, `analysis/evidence_visibility.json`,
-`analysis/friction_flow.json`, and `analysis/behavior_summary.json`; the performance table, quantitative charts,
+`analysis/friction_flow.json`, `analysis/code_error_flow.json`, and
+`analysis/behavior_summary.json`; the performance table, quantitative charts,
 model-level statistics in the behavioral-signature prose, and friction totals
 are calculated from those files. Interpretive labels and representative trace
 links remain researcher-authored. Regenerate the derived JSON files after a
 trajectory or annotation correction so every dependent view updates together.
+
+The engineering-error alluvial consolidates repeated shell/Python failures to
+one flow per error-bearing trace. Rebuild it from the public trajectories and
+the audited behavior annotations with:
+
+```bash
+python3 scripts/build_code_error_flow.py
+```
+
+For an offline rebuild, pass a directory containing one `<trace_id>.json` file
+per public trace with `--trace-dir /path/to/traces`.
 
 ## Behavior annotations
 

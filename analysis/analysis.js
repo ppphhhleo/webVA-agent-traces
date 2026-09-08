@@ -33,8 +33,22 @@ const HANDLING_COLORS = {
   "Finished without GUI repair": "#d55e00",
   "Unresolved / abandoned": "#666666",
 };
+const ERROR_COLORS = {
+  "Missing dependency / environment": "#e69f00",
+  "Data source / access": "#56b4e9",
+  "Parsing / computation": "#cc79a7",
+  "Command / search": "#0072b2",
+};
+const CODE_HANDLING_COLORS = {
+  "Repaired code / parser": "#cc79a7",
+  "Changed source / endpoint": "#56b4e9",
+  "Adapted environment / method": "#0072b2",
+  "Returned to GUI": "#e69f00",
+  "Finished without recovery": "#d55e00",
+  "Unresolved / abandoned": "#666666",
+};
 
-const state = { traces: [], friction: null, evidence: null, behaviors: null, evidenceModel: "", activeModels: new Set(), taskType: "" };
+const state = { traces: [], friction: null, codeErrors: null, evidence: null, behaviors: null, evidenceModel: "", activeModels: new Set(), taskType: "" };
 const svg = document.querySelector("#scatterplot");
 const tooltip = document.querySelector("#plot-tooltip");
 const legend = document.querySelector("#model-legend");
@@ -46,6 +60,9 @@ const behaviorMatrix = document.querySelector("#behavior-matrix");
 const frictionSvg = document.querySelector("#friction-alluvial");
 const alluvialTooltip = document.querySelector("#alluvial-tooltip");
 const frictionModelTable = document.querySelector("#friction-model-table");
+const codeErrorSvg = document.querySelector("#code-error-alluvial");
+const codeErrorTooltip = document.querySelector("#code-error-tooltip");
+const codeErrorModelTable = document.querySelector("#code-error-model-table");
 const evidenceSvg = document.querySelector("#evidence-plot");
 const evidenceTooltip = document.querySelector("#evidence-tooltip");
 const evidenceLegend = document.querySelector("#evidence-legend");
@@ -648,6 +665,178 @@ function renderFrictionAlluvial() {
   });
 }
 
+function showCodeErrorTooltip(event, title, count, records, detail = "") {
+  const total = state.codeErrors?.counts?.error_traces || 1;
+  const traceIds = [...new Set(records.map((record) => record.trace_id))];
+  const shown = traceIds.slice(0, 5);
+  codeErrorTooltip.innerHTML = `<strong>${escapeHtml(title)}</strong>
+    <p><b>${count} trace${count === 1 ? "" : "s"}</b> · ${(count / total * 100).toFixed(1)}%${detail ? `<br>${escapeHtml(detail)}` : ""}<br>
+    ${shown.map(escapeHtml).join(" · ")}${traceIds.length > shown.length ? `<br>+${traceIds.length - shown.length} more traces` : ""}</p>`;
+  codeErrorTooltip.hidden = false;
+  positionRelativeTooltip(event, codeErrorTooltip, 300);
+}
+
+function renderCodeErrorSummary() {
+  const data = state.codeErrors;
+  if (!data) return;
+  const total = data.counts.error_traces;
+  const recovered = data.counts.code_recovered;
+  const returned = data.counts.returned_to_gui;
+  const unrecovered = data.counts.unrecovered_or_unresolved;
+  document.querySelector("#code-error-traces").textContent = total;
+  document.querySelector("#code-error-recovered").textContent = `${recovered} · ${(recovered / total * 100).toFixed(0)}%`;
+  document.querySelector("#code-error-unrecovered").textContent = `${unrecovered} · ${(unrecovered / total * 100).toFixed(0)}%`;
+  document.querySelector("#code-error-callout").innerHTML = `<strong>One error-bearing trace contributes one flow.</strong>
+    Repeated failures are consolidated so long trajectories do not dominate: ${recovered} of ${total} traces recover by changing code, source, or method; ${returned} return to the GUI; ${unrecovered} finish without a coded recovery or remain unresolved.`;
+}
+
+function renderCodeErrorModelComparison() {
+  const data = state.codeErrors;
+  if (!data?.episodes?.length || !codeErrorModelTable) return;
+  const handlingOrder = data.stage_orders.handling.filter((handling) =>
+    data.episodes.some((episode) => episode.handling === handling));
+  const models = MODEL_ORDER.filter((model) => data.episodes.some((episode) => episode.model === model));
+  codeErrorModelTable.innerHTML = `
+    <thead><tr><th scope="col">Model · error traces</th>
+      ${handlingOrder.map((handling) => `<th scope="col"><span class="friction-outcome-head" style="--handling-color:${CODE_HANDLING_COLORS[handling] || "#687777"}"><i aria-hidden="true"></i>${escapeHtml(handling)}</span></th>`).join("")}
+    </tr></thead>
+    <tbody>${models.map((model) => {
+      const records = data.episodes.filter((episode) => episode.model === model);
+      return `<tr><th scope="row"><span class="friction-model-label" style="--series-color:${colorFor(model)}">
+          <i aria-hidden="true"></i><strong>${escapeHtml(model)}</strong><small>n=${records.length}</small>
+        </span></th>
+        ${handlingOrder.map((handling) => {
+          const count = records.filter((record) => record.handling === handling).length;
+          const share = count / records.length * 100;
+          const label = `${model}: ${handling}, ${count} of ${records.length} error traces (${share.toFixed(1)}%)`;
+          return `<td class="${count ? "" : "is-zero"}" style="--handling-color:${CODE_HANDLING_COLORS[handling] || "#687777"}" title="${escapeHtml(label)}"><strong>${count}</strong><small>${share.toFixed(0)}%</small></td>`;
+        }).join("")}</tr>`;
+    }).join("")}</tbody>`;
+}
+
+function renderCodeErrorAlluvial() {
+  const data = state.codeErrors;
+  if (!data?.episodes?.length || !codeErrorSvg) return;
+  const width = 1280;
+  const height = 520;
+  const top = 62;
+  const bottom = 26;
+  const plotHeight = height - top - bottom;
+  const nodeWidth = 12;
+  const stageKeys = ["error", "handling", "landing"];
+  const stageTitles = ["Engineering failure", "Recovery response", "Evidence landing"];
+  const stageX = [232, 650, 1050];
+  const activeLabels = {};
+  const stages = {};
+  const nodeMap = new Map();
+
+  stageKeys.forEach((stage) => {
+    const counts = data.stage_counts[stage] || {};
+    const ordered = (data.stage_orders[stage] || []).filter((label) => counts[label]);
+    const extras = Object.keys(counts).filter((label) => !ordered.includes(label));
+    activeLabels[stage] = [...ordered, ...extras];
+  });
+  const maxGapSpace = Math.max(...stageKeys.map((stage) => Math.max(0, activeLabels[stage].length - 1) * 9));
+  const unit = (plotHeight - maxGapSpace) / data.counts.error_traces;
+
+  stageKeys.forEach((stage, stageIndex) => {
+    const labels = activeLabels[stage];
+    const gap = labels.length > 7 ? 9 : 15;
+    const usedHeight = data.counts.error_traces * unit + Math.max(0, labels.length - 1) * gap;
+    let cursor = top + (plotHeight - usedHeight) / 2;
+    stages[stage] = labels.map((label) => {
+      const count = data.stage_counts[stage][label];
+      const node = { stage, label, count, x: stageX[stageIndex], y: cursor, height: count * unit, sourceOffset: 0 };
+      cursor += node.height + gap;
+      nodeMap.set(`${stage}:${label}`, node);
+      return node;
+    });
+  });
+
+  codeErrorSvg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+  codeErrorSvg.replaceChildren();
+  stageTitles.forEach((title, index) => {
+    const label = svgElement("text", { class: "alluvial-stage-title", x: stageX[index] + nodeWidth / 2, y: 28, "text-anchor": "middle" });
+    label.textContent = title;
+    codeErrorSvg.append(label);
+  });
+
+  const recordLookup = new Map(data.episodes.map((record) => [record.episode_id, record]));
+  [["error", "handling"], ["handling", "landing"]].forEach(([sourceStage, targetStage]) => {
+    const links = data.links
+      .filter((link) => link.source_stage === sourceStage && link.target_stage === targetStage)
+      .sort((a, b) => {
+        const sourceOrder = activeLabels[sourceStage].indexOf(a.source) - activeLabels[sourceStage].indexOf(b.source);
+        return sourceOrder || activeLabels[targetStage].indexOf(a.target) - activeLabels[targetStage].indexOf(b.target);
+      });
+    const targetOffsets = new Map();
+    links.forEach((link) => {
+      const source = nodeMap.get(`${sourceStage}:${link.source}`);
+      const target = nodeMap.get(`${targetStage}:${link.target}`);
+      const ribbonWidth = link.count * unit;
+      const sourceY = source.y + source.sourceOffset + ribbonWidth / 2;
+      const targetOffset = targetOffsets.get(target.label) || 0;
+      const targetY = target.y + targetOffset + ribbonWidth / 2;
+      source.sourceOffset += ribbonWidth;
+      targetOffsets.set(target.label, targetOffset + ribbonWidth);
+      const x1 = source.x + nodeWidth;
+      const x2 = target.x;
+      const curve = Math.max(60, (x2 - x1) * 0.48);
+      const handling = sourceStage === "handling" ? source.label : target.label;
+      const linkedRecords = link.episode_ids.map((id) => recordLookup.get(id)).filter(Boolean);
+      const path = svgElement("path", {
+        class: "alluvial-link",
+        d: `M ${x1} ${sourceY} C ${x1 + curve} ${sourceY}, ${x2 - curve} ${targetY}, ${x2} ${targetY}`,
+        stroke: CODE_HANDLING_COLORS[handling] || "#687777",
+        "stroke-width": ribbonWidth,
+      });
+      const title = `${link.source} → ${link.target}`;
+      const show = (event) => showCodeErrorTooltip(event, title, link.count, linkedRecords);
+      path.addEventListener("pointerenter", show);
+      path.addEventListener("pointermove", show);
+      path.addEventListener("pointerleave", () => { codeErrorTooltip.hidden = true; });
+      const accessibleTitle = svgElement("title");
+      accessibleTitle.textContent = `${title}: ${link.count} traces`;
+      path.append(accessibleTitle);
+      codeErrorSvg.append(path);
+    });
+  });
+
+  stageKeys.forEach((stage, stageIndex) => {
+    stages[stage].forEach((node) => {
+      const records = data.episodes.filter((record) => record[stage] === node.label);
+      const color = stage === "error"
+        ? ERROR_COLORS[node.label]
+        : stage === "handling"
+          ? CODE_HANDLING_COLORS[node.label]
+          : LANDING_COLORS[node.label];
+      const group = svgElement("g", { class: "alluvial-node", tabindex: "0" });
+      const rect = svgElement("rect", { x: node.x, y: node.y, width: nodeWidth, height: Math.max(3, node.height), fill: color || "#687777" });
+      const label = svgElement("text", {
+        class: `alluvial-node-label stage-${stageIndex}`,
+        x: stageIndex === 0 ? node.x - 9 : node.x + nodeWidth + 9,
+        y: node.y + node.height / 2 + 3,
+        "text-anchor": stageIndex === 0 ? "end" : "start",
+      });
+      label.textContent = `${node.label} (${node.count})`;
+      const detail = stage === "error"
+        ? `First detected failure; ${records.reduce((sum, record) => sum + record.error_count, 0)} explicit failures across these traces.`
+        : stageTitles[stageIndex];
+      const show = (event) => showCodeErrorTooltip(event, node.label, node.count, records, detail);
+      group.addEventListener("pointerenter", show);
+      group.addEventListener("pointermove", show);
+      group.addEventListener("pointerleave", () => { codeErrorTooltip.hidden = true; });
+      group.addEventListener("focus", () => {
+        const bounds = rect.getBoundingClientRect();
+        show({ clientX: bounds.left, clientY: bounds.top, currentTarget: rect });
+      });
+      group.addEventListener("blur", () => { codeErrorTooltip.hidden = true; });
+      group.append(rect, label);
+      codeErrorSvg.append(group);
+    });
+  });
+}
+
 function renderEvidenceLegend() {
   if (!state.evidence || !evidenceLegend) return;
   const models = orderedModels(state.evidence.traces);
@@ -957,19 +1146,22 @@ function renderEvidencePlot() {
 
 async function init() {
   try {
-    const [response, frictionResponse, evidenceResponse, behaviorResponse] = await Promise.all([
+    const [response, frictionResponse, codeErrorResponse, evidenceResponse, behaviorResponse] = await Promise.all([
       fetch("data.json?v=4"),
       fetch("friction_flow.json?v=5"),
+      fetch("code_error_flow.json?v=1"),
       fetch("evidence_visibility.json?v=2"),
       fetch("behavior_summary.json?v=1"),
     ]);
     if (!response.ok) throw new Error(`Analysis data request failed (${response.status})`);
     if (!frictionResponse.ok) throw new Error(`Friction data request failed (${frictionResponse.status})`);
+    if (!codeErrorResponse.ok) throw new Error(`Code-error data request failed (${codeErrorResponse.status})`);
     if (!evidenceResponse.ok) throw new Error(`Evidence data request failed (${evidenceResponse.status})`);
     if (!behaviorResponse.ok) throw new Error(`Behavior summary request failed (${behaviorResponse.status})`);
-    const [data, frictionData, evidenceData, behaviorData] = await Promise.all([response.json(), frictionResponse.json(), evidenceResponse.json(), behaviorResponse.json()]);
+    const [data, frictionData, codeErrorData, evidenceData, behaviorData] = await Promise.all([response.json(), frictionResponse.json(), codeErrorResponse.json(), evidenceResponse.json(), behaviorResponse.json()]);
     state.traces = data.traces || [];
     state.friction = frictionData;
+    state.codeErrors = codeErrorData;
     state.evidence = evidenceData;
     state.behaviors = behaviorData;
     state.activeModels = new Set(state.traces.map((trace) => trace.model));
@@ -987,6 +1179,9 @@ async function init() {
     renderFrictionSummary();
     renderFrictionAlluvial();
     renderFrictionModelComparison();
+    renderCodeErrorSummary();
+    renderCodeErrorAlluvial();
+    renderCodeErrorModelComparison();
     renderEvidenceLegend();
     renderEvidencePlot();
     renderChart();

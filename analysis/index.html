@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="../styles.css" />
-    <link rel="stylesheet" href="analysis.css?v=28" />
+    <link rel="stylesheet" href="analysis.css?v=29" />
   </head>
   <body>
     <div class="app-shell">
@@ -166,6 +166,60 @@
           <p class="chart-description" id="friction-description">Widths count coded friction episodes, not unique traces. Five handling families keep the aggregate flow readable; labels and spatial flow provide cues in addition to the colorblind-safe palette. The table compares count and within-model share for each handling outcome while retaining unequal episode totals. Detailed ordered pathways still distinguish code verification, code resolution, GUI recovery, and failed attempts in the hover descriptions and trace timelines. Hover a ribbon or node to inspect the underlying paths and trace IDs.</p>
         </section>
 
+        <section class="analysis-card code-error-card" aria-labelledby="code-error-title">
+          <header class="chart-header friction-header">
+            <div>
+              <p class="eyebrow">Trace-level engineering failures</p>
+              <h2 id="code-error-title">How agents handle coding errors</h2>
+            </div>
+            <dl class="friction-totals" aria-label="Coding-error summary">
+              <div><dt>Error-bearing traces</dt><dd id="code-error-traces">—</dd></div>
+              <div><dt>Recovered in code</dt><dd id="code-error-recovered">—</dd></div>
+              <div><dt>Unrecovered / unresolved</dt><dd id="code-error-unrecovered">—</dd></div>
+            </dl>
+          </header>
+          <div class="friction-callout" id="code-error-callout"></div>
+          <div class="alluvial-shell">
+            <svg id="code-error-alluvial" role="img" aria-labelledby="code-error-title code-error-description"></svg>
+            <div class="alluvial-tooltip" id="code-error-tooltip" role="status" hidden></div>
+          </div>
+          <section class="friction-model-comparison" aria-labelledby="code-error-model-title">
+            <header>
+              <div>
+                <p class="eyebrow">Model comparison</p>
+                <h3 id="code-error-model-title">Recovery routes by model</h3>
+              </div>
+              <p>Cells show trace count and within-model percentage among traces containing an explicit shell or Python failure.</p>
+            </header>
+            <div class="friction-model-shell">
+              <table class="friction-model-table" id="code-error-model-table"></table>
+            </div>
+          </section>
+          <div class="friction-examples code-error-examples" aria-label="Representative coding-error recovery traces">
+            <a href="../#trace=tr_759cc42b6b434d91" style="--path-color:#cc79a7">
+              <div class="example-heading"><i></i><span>Parser repair</span><code>tr_759cc42b6b434d91</code></div>
+              <p>A failed bundle parser is revised, successfully exposing the embedded CSV for computation.</p>
+              <strong>A concise example of diagnosing and repairing analysis code.</strong>
+            </a>
+            <a href="../#trace=tr_e877c6dd4fe7347d" style="--path-color:#0072b2">
+              <div class="example-heading"><i></i><span>Method substitution</span><code>tr_e877c6dd4fe7347d</code></div>
+              <p>Missing pandas blocks the analysis, so the agent switches to Python’s standard library and completes the calculation.</p>
+              <strong>The environment remains constrained, but the computational method adapts.</strong>
+            </a>
+            <a href="../#trace=tr_0b6828de68d7c046" style="--path-color:#e69f00">
+              <div class="example-heading"><i></i><span>Return to the interface</span><code>tr_0b6828de68d7c046</code></div>
+              <p>After failed data probes, the agent abandons code and reads the extrema from the ranked chart.</p>
+              <strong>The coding error is bypassed through grounded GUI work.</strong>
+            </a>
+            <a href="../#trace=tr_5f08e2b6f350e453" style="--path-color:#666666">
+              <div class="example-heading"><i></i><span>Stalled engineering</span><code>tr_5f08e2b6f350e453</code></div>
+              <p>Missing pandas and failed fallback URLs remain unresolved before a fabricated final claim.</p>
+              <strong>This exposes the risk of finishing after engineering recovery fails.</strong>
+            </a>
+          </div>
+          <p class="chart-description" id="code-error-description">Each error-bearing trace contributes one flow, so repeated failures in long trajectories do not receive extra weight. The left stage classifies the first strongest explicit shell or Python failure; the middle stage uses audited recovery annotations; the right stage shows the coded evidence supporting the final claim. Hover a ribbon or node for counts and trace IDs.</p>
+        </section>
+
         <section class="analysis-card evidence-card" aria-labelledby="evidence-title">
           <header class="chart-header">
             <div>
@@ -259,6 +313,6 @@
       </main>
     </div>
     <script src="../config.js"></script>
-    <script src="analysis.js?v=29" type="module"></script>
+    <script src="analysis.js?v=30" type="module"></script>
   </body>
 </html>

@@ -1,0 +1,1398 @@
+{
+  "schema_version": "1.0",
+  "classifier_version": "engineering-error-flow-v1-trace-consolidated",
+  "generated_at": "2026-09-08T14:10:59.238678+00:00",
+  "source": {
+    "dataset": "webva-agent-behaviors-trial1",
+    "workbook_filename": "Trace Coding (1) - code recovery updated.xlsx",
+    "workbook_sha256": "6b9282c2cab2d300041e308fc1751cde52862877af5baa63e2dab5dcdb60cfd7",
+    "sheet": "Coded Agent Traces Trial 1"
+  },
+  "method": {
+    "unit": "Each error-bearing trace contributes one flow. Repeated engineering errors within a trace are consolidated so long traces do not dominate.",
+    "error": "The first strongest explicit shell/Python failure is classified into four descriptive error families; one manually checked source-code false positive is excluded.",
+    "handling": "Audited Code error recovery, Forced return to GUI, and Stalled engineering annotations determine recovery. Traces without a coded recovery are separated into completed and unresolved outcomes.",
+    "landing": "The trace's mutually exclusive coded delivery-evidence category."
+  },
+  "counts": {
+    "error_traces": 49,
+    "code_recovered": 33,
+    "returned_to_gui": 4,
+    "unrecovered_or_unresolved": 12
+  },
+  "stage_orders": {
+    "error": [
+      "Missing dependency / environment",
+      "Data source / access",
+      "Parsing / computation",
+      "Command / search"
+    ],
+    "handling": [
+      "Repaired code / parser",
+      "Changed source / endpoint",
+      "Adapted environment / method",
+      "Returned to GUI",
+      "Finished without recovery",
+      "Unresolved / abandoned"
+    ],
+    "landing": [
+      "Grounded visual evidence",
+      "Combined visual + computed",
+      "Computed evidence",
+      "Prior-knowledge answer",
+      "Misgrounded evidence",
+      "Fabricated evidence",
+      "No answer"
+    ]
+  },
+  "stage_counts": {
+    "error": {
+      "Missing dependency / environment": 27,
+      "Data source / access": 12,
+      "Parsing / computation": 2,
+      "Command / search": 8
+    },
+    "handling": {
+      "Repaired code / parser": 16,
+      "Returned to GUI": 4,
+      "Changed source / endpoint": 10,
+      "Finished without recovery": 9,
+      "Adapted environment / method": 7,
+      "Unresolved / abandoned": 3
+    },
+    "landing": {
+      "Computed evidence": 25,
+      "Grounded visual evidence": 8,
+      "Combined visual + computed": 6,
+      "Prior-knowledge answer": 3,
+      "No answer": 4,
+      "Fabricated evidence": 1,
+      "Misgrounded evidence": 2
+    }
+  },
+  "links": [
+    {
+      "source_stage": "error",
+      "source": "Missing dependency / environment",
+      "target_stage": "handling",
+      "target": "Repaired code / parser",
+      "count": 11,
+      "episode_ids": [
+        "engineering-error:tr_2dd72d9ed7dbeb1a",
+        "engineering-error:tr_c953e1cb79849f1f",
+        "engineering-error:tr_539c364497999a06",
+        "engineering-error:tr_e3f1abb78ee36f23",
+        "engineering-error:tr_032e2887ac4891f6",
+        "engineering-error:tr_885beba33a3c2e3f",
+        "engineering-error:tr_ffe6a5f45156ee81",
+        "engineering-error:tr_0099f8b69133a168",
+        "engineering-error:tr_4b80c170362e99e7",
+        "engineering-error:tr_730f0dfa05bca83d",
+        "engineering-error:tr_4cdf0ebde8f08ada"
+      ],
+      "trace_ids": [
+        "tr_0099f8b69133a168",
+        "tr_032e2887ac4891f6",
+        "tr_2dd72d9ed7dbeb1a",
+        "tr_4b80c170362e99e7",
+        "tr_4cdf0ebde8f08ada",
+        "tr_539c364497999a06",
+        "tr_730f0dfa05bca83d",
+        "tr_885beba33a3c2e3f",
+        "tr_c953e1cb79849f1f",
+        "tr_e3f1abb78ee36f23",
+        "tr_ffe6a5f45156ee81"
+      ]
+    },
+    {
+      "source_stage": "handling",
+      "source": "Repaired code / parser",
+      "target_stage": "landing",
+      "target": "Computed evidence",
+      "count": 12,
+      "episode_ids": [
+        "engineering-error:tr_2dd72d9ed7dbeb1a",
+        "engineering-error:tr_c953e1cb79849f1f",
+        "engineering-error:tr_539c364497999a06",
+        "engineering-error:tr_e3f1abb78ee36f23",
+        "engineering-error:tr_032e2887ac4891f6",
+        "engineering-error:tr_885beba33a3c2e3f",
+        "engineering-error:tr_ffe6a5f45156ee81",
+        "engineering-error:tr_0099f8b69133a168",
+        "engineering-error:tr_41a81129f60ea35a",
+        "engineering-error:tr_759cc42b6b434d91",
+        "engineering-error:tr_4b80c170362e99e7",
+        "engineering-error:tr_730f0dfa05bca83d"
+      ],
+      "trace_ids": [
+        "tr_0099f8b69133a168",
+        "tr_032e2887ac4891f6",
+        "tr_2dd72d9ed7dbeb1a",
+        "tr_41a81129f60ea35a",
+        "tr_4b80c170362e99e7",
+        "tr_539c364497999a06",
+        "tr_730f0dfa05bca83d",
+        "tr_759cc42b6b434d91",
+        "tr_885beba33a3c2e3f",
+        "tr_c953e1cb79849f1f",
+        "tr_e3f1abb78ee36f23",
+        "tr_ffe6a5f45156ee81"
+      ]
+    },
+    {
+      "source_stage": "error",
+      "source": "Data source / access",
+      "target_stage": "handling",
+      "target": "Returned to GUI",
+      "count": 3,
+      "episode_ids": [
+        "engineering-error:tr_3bfc101effde2330",
+        "engineering-error:tr_0b6828de68d7c046",
+        "engineering-error:tr_7aa582985ead8650"
+      ],
+      "trace_ids": [
+        "tr_0b6828de68d7c046",
+        "tr_3bfc101effde2330",
+        "tr_7aa582985ead8650"
+      ]
+    },
+    {
+      "source_stage": "handling",
+      "source": "Returned to GUI",
+      "target_stage": "landing",
+      "target": "Grounded visual evidence",
+      "count": 3,
+      "episode_ids": [
+        "engineering-error:tr_3bfc101effde2330",
+        "engineering-error:tr_0b6828de68d7c046",
+        "engineering-error:tr_7aa582985ead8650"
+      ],
+      "trace_ids": [
+        "tr_0b6828de68d7c046",
+        "tr_3bfc101effde2330",
+        "tr_7aa582985ead8650"
+      ]
+    },
+    {
+      "source_stage": "error",
+      "source": "Data source / access",
+      "target_stage": "handling",
+      "target": "Changed source / endpoint",
+      "count": 4,
+      "episode_ids": [
+        "engineering-error:tr_a8085bfd2330aa30",
+        "engineering-error:tr_126e517fd31a4dde",
+        "engineering-error:tr_1a0fbc7be65c7c50",
+        "engineering-error:tr_efdd0b9ada70e5d3"
+      ],
+      "trace_ids": [
+        "tr_126e517fd31a4dde",
+        "tr_1a0fbc7be65c7c50",
+        "tr_a8085bfd2330aa30",
+        "tr_efdd0b9ada70e5d3"
+      ]
+    },
+    {
+      "source_stage": "handling",
+      "source": "Changed source / endpoint",
+      "target_stage": "landing",
+      "target": "Computed evidence",
+      "count": 7,
+      "episode_ids": [
+        "engineering-error:tr_a8085bfd2330aa30",
+        "engineering-error:tr_424243bfa9d320a5",
+        "engineering-error:tr_126e517fd31a4dde",
+        "engineering-error:tr_ce7b3538097404fb",
+        "engineering-error:tr_1a0fbc7be65c7c50",
+        "engineering-error:tr_efdd0b9ada70e5d3",
+        "engineering-error:tr_0e560a3fb23c5d21"
+      ],
+      "trace_ids": [
+        "tr_0e560a3fb23c5d21",
+        "tr_126e517fd31a4dde",
+        "tr_1a0fbc7be65c7c50",
+        "tr_424243bfa9d320a5",
+        "tr_a8085bfd2330aa30",
+        "tr_ce7b3538097404fb",
+        "tr_efdd0b9ada70e5d3"
+      ]
+    },
+    {
+      "source_stage": "error",
+      "source": "Missing dependency / environment",
+      "target_stage": "handling",
+      "target": "Finished without recovery",
+      "count": 4,
+      "episode_ids": [
+        "engineering-error:tr_559ab5f1574f9a72",
+        "engineering-error:tr_5f08e2b6f350e453",
+        "engineering-error:tr_7327b957f066d73f",
+        "engineering-error:tr_39e15a5ef7804383"
+      ],
+      "trace_ids": [
+        "tr_39e15a5ef7804383",
+        "tr_559ab5f1574f9a72",
+        "tr_5f08e2b6f350e453",
+        "tr_7327b957f066d73f"
+      ]
+    },
+    {
+      "source_stage": "handling",
+      "source": "Finished without recovery",
+      "target_stage": "landing",
+      "target": "Grounded visual evidence",
+      "count": 4,
+      "episode_ids": [
+        "engineering-error:tr_559ab5f1574f9a72",
+        "engineering-error:tr_7904595feed41b41",
+        "engineering-error:tr_7327b957f066d73f",
+        "engineering-error:tr_5a758c279de39a39"
+      ],
+      "trace_ids": [
+        "tr_559ab5f1574f9a72",
+        "tr_5a758c279de39a39",
+        "tr_7327b957f066d73f",
+        "tr_7904595feed41b41"
+      ]
+    },
+    {
+      "source_stage": "error",
+      "source": "Missing dependency / environment",
+      "target_stage": "handling",
+      "target": "Changed source / endpoint",
+      "count": 3,
+      "episode_ids": [
+        "engineering-error:tr_16accedd47386226",
+        "engineering-error:tr_424243bfa9d320a5",
+        "engineering-error:tr_0e560a3fb23c5d21"
+      ],
+      "trace_ids": [
+        "tr_0e560a3fb23c5d21",
+        "tr_16accedd47386226",
+        "tr_424243bfa9d320a5"
+      ]
+    },
+    {
+      "source_stage": "handling",
+      "source": "Changed source / endpoint",
+      "target_stage": "landing",
+      "target": "Combined visual + computed",
+      "count": 3,
+      "episode_ids": [
+        "engineering-error:tr_16accedd47386226",
+        "engineering-error:tr_ac3f0215dbe38eb7",
+        "engineering-error:tr_ecd34b167ed24c5d"
+      ],
+      "trace_ids": [
+        "tr_16accedd47386226",
+        "tr_ac3f0215dbe38eb7",
+        "tr_ecd34b167ed24c5d"
+      ]
+    },
+    {
+      "source_stage": "error",
+      "source": "Data source / access",
+      "target_stage": "handling",
+      "target": "Finished without recovery",
+      "count": 2,
+      "episode_ids": [
+        "engineering-error:tr_6803ce072cf0a6e8",
+        "engineering-error:tr_bd1a27e1312b9301"
+      ],
+      "trace_ids": [
+        "tr_6803ce072cf0a6e8",
+        "tr_bd1a27e1312b9301"
+      ]
+    },
+    {
+      "source_stage": "handling",
+      "source": "Finished without recovery",
+      "target_stage": "landing",
+      "target": "Prior-knowledge answer",
+      "count": 2,
+      "episode_ids": [
+        "engineering-error:tr_6803ce072cf0a6e8",
+        "engineering-error:tr_bd1a27e1312b9301"
+      ],
+      "trace_ids": [
+        "tr_6803ce072cf0a6e8",
+        "tr_bd1a27e1312b9301"
+      ]
+    },
+    {
+      "source_stage": "error",
+      "source": "Missing dependency / environment",
+      "target_stage": "handling",
+      "target": "Adapted environment / method",
+      "count": 7,
+      "episode_ids": [
+        "engineering-error:tr_a3777fe6da07a803",
+        "engineering-error:tr_50a5166a8e508cdd",
+        "engineering-error:tr_9fbe71ed6f648c0d",
+        "engineering-error:tr_b8b7bf7c193501ec",
+        "engineering-error:tr_e877c6dd4fe7347d",
+        "engineering-error:tr_5b5ac1b6a772a5b7",
+        "engineering-error:tr_cbac1d76d92a9f97"
+      ],
+      "trace_ids": [
+        "tr_50a5166a8e508cdd",
+        "tr_5b5ac1b6a772a5b7",
+        "tr_9fbe71ed6f648c0d",
+        "tr_a3777fe6da07a803",
+        "tr_b8b7bf7c193501ec",
+        "tr_cbac1d76d92a9f97",
+        "tr_e877c6dd4fe7347d"
+      ]
+    },
+    {
+      "source_stage": "handling",
+      "source": "Adapted environment / method",
+      "target_stage": "landing",
+      "target": "Combined visual + computed",
+      "count": 2,
+      "episode_ids": [
+        "engineering-error:tr_a3777fe6da07a803",
+        "engineering-error:tr_5b5ac1b6a772a5b7"
+      ],
+      "trace_ids": [
+        "tr_5b5ac1b6a772a5b7",
+        "tr_a3777fe6da07a803"
+      ]
+    },
+    {
+      "source_stage": "handling",
+      "source": "Adapted environment / method",
+      "target_stage": "landing",
+      "target": "Computed evidence",
+      "count": 5,
+      "episode_ids": [
+        "engineering-error:tr_50a5166a8e508cdd",
+        "engineering-error:tr_9fbe71ed6f648c0d",
+        "engineering-error:tr_b8b7bf7c193501ec",
+        "engineering-error:tr_e877c6dd4fe7347d",
+        "engineering-error:tr_cbac1d76d92a9f97"
+      ],
+      "trace_ids": [
+        "tr_50a5166a8e508cdd",
+        "tr_9fbe71ed6f648c0d",
+        "tr_b8b7bf7c193501ec",
+        "tr_cbac1d76d92a9f97",
+        "tr_e877c6dd4fe7347d"
+      ]
+    },
+    {
+      "source_stage": "error",
+      "source": "Data source / access",
+      "target_stage": "handling",
+      "target": "Repaired code / parser",
+      "count": 3,
+      "episode_ids": [
+        "engineering-error:tr_fad8e689ae102d64",
+        "engineering-error:tr_039f43821b0f2f35",
+        "engineering-error:tr_27837c5a0285cb6e"
+      ],
+      "trace_ids": [
+        "tr_039f43821b0f2f35",
+        "tr_27837c5a0285cb6e",
+        "tr_fad8e689ae102d64"
+      ]
+    },
+    {
+      "source_stage": "handling",
+      "source": "Repaired code / parser",
+      "target_stage": "landing",
+      "target": "Combined visual + computed",
+      "count": 1,
+      "episode_ids": [
+        "engineering-error:tr_fad8e689ae102d64"
+      ],
+      "trace_ids": [
+        "tr_fad8e689ae102d64"
+      ]
+    },
+    {
+      "source_stage": "error",
+      "source": "Parsing / computation",
+      "target_stage": "handling",
+      "target": "Repaired code / parser",
+      "count": 2,
+      "episode_ids": [
+        "engineering-error:tr_41a81129f60ea35a",
+        "engineering-error:tr_759cc42b6b434d91"
+      ],
+      "trace_ids": [
+        "tr_41a81129f60ea35a",
+        "tr_759cc42b6b434d91"
+      ]
+    },
+    {
+      "source_stage": "error",
+      "source": "Command / search",
+      "target_stage": "handling",
+      "target": "Changed source / endpoint",
+      "count": 3,
+      "episode_ids": [
+        "engineering-error:tr_ac3f0215dbe38eb7",
+        "engineering-error:tr_ce7b3538097404fb",
+        "engineering-error:tr_ecd34b167ed24c5d"
+      ],
+      "trace_ids": [
+        "tr_ac3f0215dbe38eb7",
+        "tr_ce7b3538097404fb",
+        "tr_ecd34b167ed24c5d"
+      ]
+    },
+    {
+      "source_stage": "error",
+      "source": "Command / search",
+      "target_stage": "handling",
+      "target": "Finished without recovery",
+      "count": 3,
+      "episode_ids": [
+        "engineering-error:tr_7904595feed41b41",
+        "engineering-error:tr_5a758c279de39a39",
+        "engineering-error:tr_26e90d3779796a3c"
+      ],
+      "trace_ids": [
+        "tr_26e90d3779796a3c",
+        "tr_5a758c279de39a39",
+        "tr_7904595feed41b41"
+      ]
+    },
+    {
+      "source_stage": "error",
+      "source": "Command / search",
+      "target_stage": "handling",
+      "target": "Returned to GUI",
+      "count": 1,
+      "episode_ids": [
+        "engineering-error:tr_4c29dca0e244dc14"
+      ],
+      "trace_ids": [
+        "tr_4c29dca0e244dc14"
+      ]
+    },
+    {
+      "source_stage": "handling",
+      "source": "Returned to GUI",
+      "target_stage": "landing",
+      "target": "No answer",
+      "count": 1,
+      "episode_ids": [
+        "engineering-error:tr_4c29dca0e244dc14"
+      ],
+      "trace_ids": [
+        "tr_4c29dca0e244dc14"
+      ]
+    },
+    {
+      "source_stage": "error",
+      "source": "Command / search",
+      "target_stage": "handling",
+      "target": "Unresolved / abandoned",
+      "count": 1,
+      "episode_ids": [
+        "engineering-error:tr_6b35986a0b52b1fe"
+      ],
+      "trace_ids": [
+        "tr_6b35986a0b52b1fe"
+      ]
+    },
+    {
+      "source_stage": "handling",
+      "source": "Unresolved / abandoned",
+      "target_stage": "landing",
+      "target": "No answer",
+      "count": 3,
+      "episode_ids": [
+        "engineering-error:tr_6b35986a0b52b1fe",
+        "engineering-error:tr_e046ad274f5a69fd",
+        "engineering-error:tr_d48b4d6689e0d88f"
+      ],
+      "trace_ids": [
+        "tr_6b35986a0b52b1fe",
+        "tr_d48b4d6689e0d88f",
+        "tr_e046ad274f5a69fd"
+      ]
+    },
+    {
+      "source_stage": "handling",
+      "source": "Finished without recovery",
+      "target_stage": "landing",
+      "target": "Fabricated evidence",
+      "count": 1,
+      "episode_ids": [
+        "engineering-error:tr_5f08e2b6f350e453"
+      ],
+      "trace_ids": [
+        "tr_5f08e2b6f350e453"
+      ]
+    },
+    {
+      "source_stage": "error",
+      "source": "Missing dependency / environment",
+      "target_stage": "handling",
+      "target": "Unresolved / abandoned",
+      "count": 2,
+      "episode_ids": [
+        "engineering-error:tr_e046ad274f5a69fd",
+        "engineering-error:tr_d48b4d6689e0d88f"
+      ],
+      "trace_ids": [
+        "tr_d48b4d6689e0d88f",
+        "tr_e046ad274f5a69fd"
+      ]
+    },
+    {
+      "source_stage": "handling",
+      "source": "Repaired code / parser",
+      "target_stage": "landing",
+      "target": "Prior-knowledge answer",
+      "count": 1,
+      "episode_ids": [
+        "engineering-error:tr_039f43821b0f2f35"
+      ],
+      "trace_ids": [
+        "tr_039f43821b0f2f35"
+      ]
+    },
+    {
+      "source_stage": "handling",
+      "source": "Finished without recovery",
+      "target_stage": "landing",
+      "target": "Misgrounded evidence",
+      "count": 1,
+      "episode_ids": [
+        "engineering-error:tr_39e15a5ef7804383"
+      ],
+      "trace_ids": [
+        "tr_39e15a5ef7804383"
+      ]
+    },
+    {
+      "source_stage": "handling",
+      "source": "Repaired code / parser",
+      "target_stage": "landing",
+      "target": "Grounded visual evidence",
+      "count": 1,
+      "episode_ids": [
+        "engineering-error:tr_27837c5a0285cb6e"
+      ],
+      "trace_ids": [
+        "tr_27837c5a0285cb6e"
+      ]
+    },
+    {
+      "source_stage": "handling",
+      "source": "Finished without recovery",
+      "target_stage": "landing",
+      "target": "Computed evidence",
+      "count": 1,
+      "episode_ids": [
+        "engineering-error:tr_26e90d3779796a3c"
+      ],
+      "trace_ids": [
+        "tr_26e90d3779796a3c"
+      ]
+    },
+    {
+      "source_stage": "handling",
+      "source": "Repaired code / parser",
+      "target_stage": "landing",
+      "target": "Misgrounded evidence",
+      "count": 1,
+      "episode_ids": [
+        "engineering-error:tr_4cdf0ebde8f08ada"
+      ],
+      "trace_ids": [
+        "tr_4cdf0ebde8f08ada"
+      ]
+    }
+  ],
+  "episodes": [
+    {
+      "episode_id": "engineering-error:tr_2dd72d9ed7dbeb1a",
+      "trace_id": "tr_2dd72d9ed7dbeb1a",
+      "trace_number": 7,
+      "model": "Claude Opus 4.8",
+      "app": null,
+      "task_id": 28,
+      "task_type": "High-level",
+      "error": "Missing dependency / environment",
+      "error_round": 6,
+      "error_count": 1,
+      "error_excerpt": "Traceback (most recent call last): File \"<string>\", line 1, in <module> ModuleNotFoundError: No module named 'pandas'",
+      "handling": "Repaired code / parser",
+      "handling_detail": "recover coding error",
+      "landing": "Computed evidence"
+    },
+    {
+      "episode_id": "engineering-error:tr_c953e1cb79849f1f",
+      "trace_id": "tr_c953e1cb79849f1f",
+      "trace_number": 8,
+      "model": "Claude Opus 4.8",
+      "app": null,
+      "task_id": 25,
+      "task_type": "High-level",
+      "error": "Missing dependency / environment",
+      "error_round": 5,
+      "error_count": 1,
+      "error_excerpt": "Traceback (most recent call last): File \"<string>\", line 1, in <module> ModuleNotFoundError: No module named 'pandas'",
+      "handling": "Repaired code / parser",
+      "handling_detail": "recover coding error",
+      "landing": "Computed evidence"
+    },
+    {
+      "episode_id": "engineering-error:tr_539c364497999a06",
+      "trace_id": "tr_539c364497999a06",
+      "trace_number": 9,
+      "model": "Claude Opus 4.8",
+      "app": null,
+      "task_id": 16,
+      "task_type": "Compound",
+      "error": "Missing dependency / environment",
+      "error_round": 1,
+      "error_count": 1,
+      "error_excerpt": "Traceback (most recent call last): File \"<string>\", line 1, in <module> ModuleNotFoundError: No module named 'pandas'",
+      "handling": "Repaired code / parser",
+      "handling_detail": "recover coding error",
+      "landing": "Computed evidence"
+    },
+    {
+      "episode_id": "engineering-error:tr_e3f1abb78ee36f23",
+      "trace_id": "tr_e3f1abb78ee36f23",
+      "trace_number": 10,
+      "model": "Claude Opus 4.8",
+      "app": null,
+      "task_id": 15,
+      "task_type": "Compound",
+      "error": "Missing dependency / environment",
+      "error_round": 1,
+      "error_count": 1,
+      "error_excerpt": "Traceback (most recent call last): File \"<string>\", line 1, in <module> ModuleNotFoundError: No module named 'pandas'",
+      "handling": "Repaired code / parser",
+      "handling_detail": "recover coding error",
+      "landing": "Computed evidence"
+    },
+    {
+      "episode_id": "engineering-error:tr_3bfc101effde2330",
+      "trace_id": "tr_3bfc101effde2330",
+      "trace_number": 12,
+      "model": "Claude Opus 4.8",
+      "app": null,
+      "task_id": 5,
+      "task_type": "Low-level",
+      "error": "Data source / access",
+      "error_round": 17,
+      "error_count": 5,
+      "error_excerpt": "Traceback (most recent call last): File \"<string>\", line 2, in <module> File \"/usr/lib/python3.10/urllib/request.py\", line 216, in urlopen return opener.open(url, data, timeout) File \"/usr/lib/python3.10/urllib/request.py\", line 525, in ope",
+      "handling": "Returned to GUI",
+      "handling_detail": "GUI return and retry after unavailble dataset",
+      "landing": "Grounded visual evidence"
+    },
+    {
+      "episode_id": "engineering-error:tr_a8085bfd2330aa30",
+      "trace_id": "tr_a8085bfd2330aa30",
+      "trace_number": 14,
+      "model": "Claude Opus 4.8",
+      "app": null,
+      "task_id": 14,
+      "task_type": "Compound",
+      "error": "Data source / access",
+      "error_round": 5,
+      "error_count": 12,
+      "error_excerpt": "Traceback (most recent call last): File \"<string>\", line 2, in <module> File \"/usr/lib/python3.10/urllib/request.py\", line 216, in urlopen return opener.open(url, data, timeout) File \"/usr/lib/python3.10/urllib/request.py\", line 525, in ope",
+      "handling": "Changed source / endpoint",
+      "handling_detail": "recovering URL fetching errors  multiple times",
+      "landing": "Computed evidence"
+    },
+    {
+      "episode_id": "engineering-error:tr_559ab5f1574f9a72",
+      "trace_id": "tr_559ab5f1574f9a72",
+      "trace_number": 15,
+      "model": "Claude Opus 4.8",
+      "app": null,
+      "task_id": 27,
+      "task_type": "High-level",
+      "error": "Missing dependency / environment",
+      "error_round": 10,
+      "error_count": 3,
+      "error_excerpt": "Traceback (most recent call last): File \"<string>\", line 1, in <module> ModuleNotFoundError: No module named 'pandas'",
+      "handling": "Finished without recovery",
+      "handling_detail": "code data acquisition failed attempt; no pandas  multiple times",
+      "landing": "Grounded visual evidence"
+    },
+    {
+      "episode_id": "engineering-error:tr_16accedd47386226",
+      "trace_id": "tr_16accedd47386226",
+      "trace_number": 18,
+      "model": "Claude Opus 4.8",
+      "app": null,
+      "task_id": 2,
+      "task_type": "Low-level",
+      "error": "Missing dependency / environment",
+      "error_round": 15,
+      "error_count": 4,
+      "error_excerpt": "Traceback (most recent call last): File \"<string>\", line 1, in <module> ModuleNotFoundError: No module named 'pandas'",
+      "handling": "Changed source / endpoint",
+      "handling_detail": "installed the missing dependency and cross-checked the filtered in-app rows against a local penguin dataset",
+      "landing": "Combined visual + computed"
+    },
+    {
+      "episode_id": "engineering-error:tr_6803ce072cf0a6e8",
+      "trace_id": "tr_6803ce072cf0a6e8",
+      "trace_number": 23,
+      "model": "Claude Opus 4.8",
+      "app": null,
+      "task_id": 8,
+      "task_type": "Low-level",
+      "error": "Data source / access",
+      "error_round": 61,
+      "error_count": 1,
+      "error_excerpt": "gdp ERR HTTP Error 404: Not Found life ERR HTTP Error 404: Not Found names OK 52931",
+      "handling": "Finished without recovery",
+      "handling_detail": "The trace completed without a coded recovery of the engineering failure.",
+      "landing": "Prior-knowledge answer"
+    },
+    {
+      "episode_id": "engineering-error:tr_032e2887ac4891f6",
+      "trace_id": "tr_032e2887ac4891f6",
+      "trace_number": 27,
+      "model": "Claude Opus 4.8",
+      "app": null,
+      "task_id": 4,
+      "task_type": "Low-level",
+      "error": "Missing dependency / environment",
+      "error_round": 10,
+      "error_count": 3,
+      "error_excerpt": "Traceback (most recent call last): File \"<string>\", line 2, in <module> ModuleNotFoundError: No module named 'pandas'",
+      "handling": "Repaired code / parser",
+      "handling_detail": "self-recover on wrong-artifact analysis",
+      "landing": "Computed evidence"
+    },
+    {
+      "episode_id": "engineering-error:tr_885beba33a3c2e3f",
+      "trace_id": "tr_885beba33a3c2e3f",
+      "trace_number": 29,
+      "model": "Claude Opus 4.8",
+      "app": null,
+      "task_id": 26,
+      "task_type": "High-level",
+      "error": "Missing dependency / environment",
+      "error_round": 10,
+      "error_count": 9,
+      "error_excerpt": "Traceback (most recent call last): File \"<string>\", line 1, in <module> ModuleNotFoundError: No module named 'pandas'",
+      "handling": "Repaired code / parser",
+      "handling_detail": "Code recovery",
+      "landing": "Computed evidence"
+    },
+    {
+      "episode_id": "engineering-error:tr_ffe6a5f45156ee81",
+      "trace_id": "tr_ffe6a5f45156ee81",
+      "trace_number": 36,
+      "model": "GPT-5.5",
+      "app": null,
+      "task_id": 13,
+      "task_type": "Compound",
+      "error": "Missing dependency / environment",
+      "error_round": 16,
+      "error_count": 3,
+      "error_excerpt": "Traceback (most recent call last): File \"<string>\", line 1, in <module> ModuleNotFoundError: No module named 'pandas'",
+      "handling": "Repaired code / parser",
+      "handling_detail": "Code recovery by alternative env setup",
+      "landing": "Computed evidence"
+    },
+    {
+      "episode_id": "engineering-error:tr_a3777fe6da07a803",
+      "trace_id": "tr_a3777fe6da07a803",
+      "trace_number": 38,
+      "model": "GPT-5.5",
+      "app": null,
+      "task_id": 28,
+      "task_type": "High-level",
+      "error": "Missing dependency / environment",
+      "error_round": 1,
+      "error_count": 1,
+      "error_excerpt": "Traceback (most recent call last): File \"<string>\", line 1, in <module> ModuleNotFoundError: No module named 'pandas'",
+      "handling": "Adapted environment / method",
+      "handling_detail": "code recovery, modules",
+      "landing": "Combined visual + computed"
+    },
+    {
+      "episode_id": "engineering-error:tr_50a5166a8e508cdd",
+      "trace_id": "tr_50a5166a8e508cdd",
+      "trace_number": 40,
+      "model": "GPT-5.5",
+      "app": null,
+      "task_id": 15,
+      "task_type": "Compound",
+      "error": "Missing dependency / environment",
+      "error_round": 1,
+      "error_count": 1,
+      "error_excerpt": "Traceback (most recent call last): File \"<string>\", line 1, in <module> ModuleNotFoundError: No module named 'pandas'",
+      "handling": "Adapted environment / method",
+      "handling_detail": "code recovery, modules",
+      "landing": "Computed evidence"
+    },
+    {
+      "episode_id": "engineering-error:tr_9fbe71ed6f648c0d",
+      "trace_id": "tr_9fbe71ed6f648c0d",
+      "trace_number": 42,
+      "model": "GPT-5.5",
+      "app": null,
+      "task_id": 25,
+      "task_type": "High-level",
+      "error": "Missing dependency / environment",
+      "error_round": 2,
+      "error_count": 2,
+      "error_excerpt": "Traceback (most recent call last): File \"<stdin>\", line 2, in <module> ModuleNotFoundError: No module named 'pandas'",
+      "handling": "Adapted environment / method",
+      "handling_detail": "code recovery, modules",
+      "landing": "Computed evidence"
+    },
+    {
+      "episode_id": "engineering-error:tr_0099f8b69133a168",
+      "trace_id": "tr_0099f8b69133a168",
+      "trace_number": 47,
+      "model": "GPT-5.5",
+      "app": null,
+      "task_id": 2,
+      "task_type": "Low-level",
+      "error": "Missing dependency / environment",
+      "error_round": 1,
+      "error_count": 3,
+      "error_excerpt": "Traceback (most recent call last): File \"<string>\", line 1, in <module> ModuleNotFoundError: No module named 'pandas'",
+      "handling": "Repaired code / parser",
+      "handling_detail": "code recovery",
+      "landing": "Computed evidence"
+    },
+    {
+      "episode_id": "engineering-error:tr_fad8e689ae102d64",
+      "trace_id": "tr_fad8e689ae102d64",
+      "trace_number": 48,
+      "model": "GPT-5.5",
+      "app": null,
+      "task_id": 20,
+      "task_type": "Compound",
+      "error": "Data source / access",
+      "error_round": 28,
+      "error_count": 4,
+      "error_excerpt": "GET /get_info 200 application/json; charset=utf-8 {\"models\": {\"species classifier\": {\"description\": \"TensorFlow Keras model for penguin classification.\", \"spec\": {\"input\": {\"body_mass_g\": {\"required\": true, \"annotated\": false, \"min_val\": 27",
+      "handling": "Repaired code / parser",
+      "handling_detail": "corrected the LIT interpretation request by replacing an invalid numeric ID with the selected datapoint key",
+      "landing": "Combined visual + computed"
+    },
+    {
+      "episode_id": "engineering-error:tr_b8b7bf7c193501ec",
+      "trace_id": "tr_b8b7bf7c193501ec",
+      "trace_number": 49,
+      "model": "GPT-5.5",
+      "app": null,
+      "task_id": 27,
+      "task_type": "High-level",
+      "error": "Missing dependency / environment",
+      "error_round": 1,
+      "error_count": 1,
+      "error_excerpt": "Traceback (most recent call last): File \"<string>\", line 1, in <module> ModuleNotFoundError: No module named 'pandas'",
+      "handling": "Adapted environment / method",
+      "handling_detail": "code recovery: pandas to stdlib",
+      "landing": "Computed evidence"
+    },
+    {
+      "episode_id": "engineering-error:tr_424243bfa9d320a5",
+      "trace_id": "tr_424243bfa9d320a5",
+      "trace_number": 50,
+      "model": "GPT-5.5",
+      "app": null,
+      "task_id": 6,
+      "task_type": "Low-level",
+      "error": "Missing dependency / environment",
+      "error_round": 9,
+      "error_count": 5,
+      "error_excerpt": "Traceback (most recent call last): File \"<stdin>\", line 1, in <module> ModuleNotFoundError: No module named 'pandas'",
+      "handling": "Changed source / endpoint",
+      "handling_detail": "switched from the wrong life-expectancy resource to Gapminder's lex dataset, removed the zero-data artifact, and recomputed the range",
+      "landing": "Computed evidence"
+    },
+    {
+      "episode_id": "engineering-error:tr_126e517fd31a4dde",
+      "trace_id": "tr_126e517fd31a4dde",
+      "trace_number": 57,
+      "model": "GPT-5.5",
+      "app": null,
+      "task_id": 29,
+      "task_type": "High-level",
+      "error": "Data source / access",
+      "error_round": 6,
+      "error_count": 1,
+      "error_excerpt": "ERR HTTP Error 404: Not Found",
+      "handling": "Changed source / endpoint",
+      "handling_detail": "recovered from a missing sample-data URL by inspecting SandDance, locating titanicmaster.tsv, and parsing it directly",
+      "landing": "Computed evidence"
+    },
+    {
+      "episode_id": "engineering-error:tr_41a81129f60ea35a",
+      "trace_id": "tr_41a81129f60ea35a",
+      "trace_number": 58,
+      "model": "GPT-5.5",
+      "app": null,
+      "task_id": 19,
+      "task_type": "Compound",
+      "error": "Parsing / computation",
+      "error_round": 16,
+      "error_count": 1,
+      "error_excerpt": "Traceback (most recent call last): File \"<string>\", line 12, in <module> IndexError: list index out of range",
+      "handling": "Repaired code / parser",
+      "handling_detail": "code recovery",
+      "landing": "Computed evidence"
+    },
+    {
+      "episode_id": "engineering-error:tr_759cc42b6b434d91",
+      "trace_id": "tr_759cc42b6b434d91",
+      "trace_number": 59,
+      "model": "GPT-5.5",
+      "app": null,
+      "task_id": 14,
+      "task_type": "Compound",
+      "error": "Parsing / computation",
+      "error_round": 35,
+      "error_count": 1,
+      "error_excerpt": "Traceback (most recent call last): File \"<string>\", line 10, in <module> AttributeError: 'NoneType' object has no attribute 'group'",
+      "handling": "Repaired code / parser",
+      "handling_detail": "revised the failed bundle parser, extracted the embedded CSV, and computed the yearly goal maximum",
+      "landing": "Computed evidence"
+    },
+    {
+      "episode_id": "engineering-error:tr_ac3f0215dbe38eb7",
+      "trace_id": "tr_ac3f0215dbe38eb7",
+      "trace_number": 61,
+      "model": "Claude Sonnet 5",
+      "app": null,
+      "task_id": 28,
+      "task_type": "High-level",
+      "error": "Command / search",
+      "error_round": 14,
+      "error_count": 1,
+      "error_excerpt": "Command failed with exit code 1: find / -iname \"*cars*.json\" 2>/dev/null; find / -iname \"*cars*.csv\" 2>/dev/null",
+      "handling": "Changed source / endpoint",
+      "handling_detail": "replaced a failed local file search with the remote Vega cars dataset and computed the comparison",
+      "landing": "Combined visual + computed"
+    },
+    {
+      "episode_id": "engineering-error:tr_7904595feed41b41",
+      "trace_id": "tr_7904595feed41b41",
+      "trace_number": 62,
+      "model": "Claude Sonnet 5",
+      "app": null,
+      "task_id": 25,
+      "task_type": "High-level",
+      "error": "Command / search",
+      "error_round": 19,
+      "error_count": 1,
+      "error_excerpt": "Command failed with exit code 1: find / -iname \"*.json\" 2>/dev/null | xargs grep -l \"Worldwide Gross\" 2>/dev/null | head -5; find / -path \"*/data/*movies*\" 2>/dev/null",
+      "handling": "Finished without recovery",
+      "handling_detail": "The trace completed without a coded recovery of the engineering failure.",
+      "landing": "Grounded visual evidence"
+    },
+    {
+      "episode_id": "engineering-error:tr_ce7b3538097404fb",
+      "trace_id": "tr_ce7b3538097404fb",
+      "trace_number": 63,
+      "model": "Claude Sonnet 5",
+      "app": null,
+      "task_id": 16,
+      "task_type": "Compound",
+      "error": "Command / search",
+      "error_round": 1,
+      "error_count": 4,
+      "error_excerpt": "Command failed with exit code 1: find / -iname \"*cars*.json\" 2>/dev/null",
+      "handling": "Changed source / endpoint",
+      "handling_detail": "replaced unsuccessful local searches with the remote Vega cars dataset and filtered it directly",
+      "landing": "Computed evidence"
+    },
+    {
+      "episode_id": "engineering-error:tr_4c29dca0e244dc14",
+      "trace_id": "tr_4c29dca0e244dc14",
+      "trace_number": 66,
+      "model": "Claude Sonnet 5",
+      "app": null,
+      "task_id": 14,
+      "task_type": "Compound",
+      "error": "Command / search",
+      "error_round": 2,
+      "error_count": 4,
+      "error_excerpt": "Command failed with exit code 1: curl -s https://lineup.js.org/app/ -L | grep -o 'src=\"[^\"]*\"' | sort -u; echo ---; curl -s https://lineup.js.org/app/ -L | grep -o 'data[^\"]*\\.\\(json\\|csv\\)'",
+      "handling": "Returned to GUI",
+      "handling_detail": "engineering failure forced GUI return",
+      "landing": "No answer"
+    },
+    {
+      "episode_id": "engineering-error:tr_6b35986a0b52b1fe",
+      "trace_id": "tr_6b35986a0b52b1fe",
+      "trace_number": 67,
+      "model": "Claude Sonnet 5",
+      "app": null,
+      "task_id": 5,
+      "task_type": "Low-level",
+      "error": "Command / search",
+      "error_round": 97,
+      "error_count": 2,
+      "error_excerpt": "Command failed with exit code 1: curl -s -L https://lineup.js.org/app/#soccer -o /tmp/app2.html; grep -o '\"[^\"]*\\.\\(csv\\|json\\|tsv\\)\"' /tmp/app.html",
+      "handling": "Unresolved / abandoned",
+      "handling_detail": "Engineering work ended without a delivered answer.",
+      "landing": "No answer"
+    },
+    {
+      "episode_id": "engineering-error:tr_4b80c170362e99e7",
+      "trace_id": "tr_4b80c170362e99e7",
+      "trace_number": 71,
+      "model": "Claude Sonnet 5",
+      "app": null,
+      "task_id": 29,
+      "task_type": "High-level",
+      "error": "Missing dependency / environment",
+      "error_round": 37,
+      "error_count": 2,
+      "error_excerpt": "Traceback (most recent call last): File \"<string>\", line 2, in <module> ModuleNotFoundError: No module named 'pandas'",
+      "handling": "Repaired code / parser",
+      "handling_detail": "code recovery",
+      "landing": "Computed evidence"
+    },
+    {
+      "episode_id": "engineering-error:tr_5f08e2b6f350e453",
+      "trace_id": "tr_5f08e2b6f350e453",
+      "trace_number": 72,
+      "model": "Claude Sonnet 5",
+      "app": null,
+      "task_id": 22,
+      "task_type": "High-level",
+      "error": "Missing dependency / environment",
+      "error_round": 19,
+      "error_count": 2,
+      "error_excerpt": "Traceback (most recent call last): File \"<string>\", line 2, in <module> ModuleNotFoundError: No module named 'pandas'",
+      "handling": "Finished without recovery",
+      "handling_detail": "pandas was unavailable and every fallback Titanic URL failed; no code result was recovered before the final claim",
+      "landing": "Fabricated evidence"
+    },
+    {
+      "episode_id": "engineering-error:tr_1a0fbc7be65c7c50",
+      "trace_id": "tr_1a0fbc7be65c7c50",
+      "trace_number": 73,
+      "model": "Claude Sonnet 5",
+      "app": null,
+      "task_id": 18,
+      "task_type": "Compound",
+      "error": "Data source / access",
+      "error_round": 1,
+      "error_count": 2,
+      "error_excerpt": "https://raw.githubusercontent.com/microsoft/SandDance/main/data/titanic.csv HTTP Error 404: Not Found https://raw.githubusercontent.com/microsoft/SandDance/master/data/titanic.csv HTTP Error 404: Not Found",
+      "handling": "Changed source / endpoint",
+      "handling_detail": "inspected the SandDance app after failed URLs, found titanicmaster.tsv, and completed the survival-rate calculation",
+      "landing": "Computed evidence"
+    },
+    {
+      "episode_id": "engineering-error:tr_efdd0b9ada70e5d3",
+      "trace_id": "tr_efdd0b9ada70e5d3",
+      "trace_number": 74,
+      "model": "Claude Sonnet 5",
+      "app": null,
+      "task_id": 7,
+      "task_type": "Low-level",
+      "error": "Data source / access",
+      "error_round": 1,
+      "error_count": 1,
+      "error_excerpt": "https://raw.githubusercontent.com/microsoft/SandDance/main/apps/app/src/dataSources/titanic.csv ERR HTTP Error 404: Not Found https://microsoft.github.io/SandDance/sample-data/titanic.csv ERR HTTP Error 404: Not Found https://microsoft.gith",
+      "handling": "Changed source / endpoint",
+      "handling_detail": "inspected the SandDance app after failed URLs, discovered titanicmaster.tsv, and computed the age bins",
+      "landing": "Computed evidence"
+    },
+    {
+      "episode_id": "engineering-error:tr_7327b957f066d73f",
+      "trace_id": "tr_7327b957f066d73f",
+      "trace_number": 75,
+      "model": "Claude Sonnet 5",
+      "app": null,
+      "task_id": 2,
+      "task_type": "Low-level",
+      "error": "Missing dependency / environment",
+      "error_round": 4,
+      "error_count": 2,
+      "error_excerpt": "Traceback (most recent call last): File \"<string>\", line 2, in <module> ModuleNotFoundError: No module named 'seaborn'",
+      "handling": "Finished without recovery",
+      "handling_detail": "attempted to load datasets but failed failed route abandoned, code error",
+      "landing": "Grounded visual evidence"
+    },
+    {
+      "episode_id": "engineering-error:tr_e046ad274f5a69fd",
+      "trace_id": "tr_e046ad274f5a69fd",
+      "trace_number": 82,
+      "model": "Claude Sonnet 5",
+      "app": null,
+      "task_id": 26,
+      "task_type": "High-level",
+      "error": "Missing dependency / environment",
+      "error_round": 9,
+      "error_count": 9,
+      "error_excerpt": "Traceback (most recent call last): File \"<string>\", line 2, in <module> ModuleNotFoundError: No module named 'pandas'",
+      "handling": "Unresolved / abandoned",
+      "handling_detail": "Engineering work ended without a delivered answer.",
+      "landing": "No answer"
+    },
+    {
+      "episode_id": "engineering-error:tr_5a758c279de39a39",
+      "trace_id": "tr_5a758c279de39a39",
+      "trace_number": 83,
+      "model": "Claude Sonnet 5",
+      "app": null,
+      "task_id": 10,
+      "task_type": "Low-level",
+      "error": "Command / search",
+      "error_round": 5,
+      "error_count": 6,
+      "error_excerpt": "Command failed with exit code 1: find / -iname \"*wine-review*\" -o -iname \"*wine_review*\" 2>/dev/null | grep -v proc",
+      "handling": "Finished without recovery",
+      "handling_detail": "The trace completed without a coded recovery of the engineering failure.",
+      "landing": "Grounded visual evidence"
+    },
+    {
+      "episode_id": "engineering-error:tr_d48b4d6689e0d88f",
+      "trace_id": "tr_d48b4d6689e0d88f",
+      "trace_number": 85,
+      "model": "Claude Sonnet 5",
+      "app": null,
+      "task_id": 4,
+      "task_type": "Low-level",
+      "error": "Missing dependency / environment",
+      "error_round": 17,
+      "error_count": 10,
+      "error_excerpt": "Traceback (most recent call last): File \"<string>\", line 2, in <module> ModuleNotFoundError: No module named 'pandas'",
+      "handling": "Unresolved / abandoned",
+      "handling_detail": "Engineering work ended without a delivered answer.",
+      "landing": "No answer"
+    },
+    {
+      "episode_id": "engineering-error:tr_0b6828de68d7c046",
+      "trace_id": "tr_0b6828de68d7c046",
+      "trace_number": 86,
+      "model": "Claude Sonnet 5",
+      "app": null,
+      "task_id": 6,
+      "task_type": "Low-level",
+      "error": "Data source / access",
+      "error_round": 7,
+      "error_count": 2,
+      "error_excerpt": "error HTTP Error 404: Not Found",
+      "handling": "Returned to GUI",
+      "handling_detail": "returned to the chart after failed data probes and ultimately read the life-expectancy extrema from the ranked interface",
+      "landing": "Grounded visual evidence"
+    },
+    {
+      "episode_id": "engineering-error:tr_039f43821b0f2f35",
+      "trace_id": "tr_039f43821b0f2f35",
+      "trace_number": 94,
+      "model": "GPT-5.4",
+      "app": null,
+      "task_id": 14,
+      "task_type": "Compound",
+      "error": "Data source / access",
+      "error_round": 15,
+      "error_count": 1,
+      "error_excerpt": "ERR HTTP Error 403: Forbidden",
+      "handling": "Repaired code / parser",
+      "handling_detail": "code recovery: urllib, requests with UA header",
+      "landing": "Prior-knowledge answer"
+    },
+    {
+      "episode_id": "engineering-error:tr_bd1a27e1312b9301",
+      "trace_id": "tr_bd1a27e1312b9301",
+      "trace_number": 98,
+      "model": "GPT-5.4",
+      "app": null,
+      "task_id": 8,
+      "task_type": "Low-level",
+      "error": "Data source / access",
+      "error_round": 13,
+      "error_count": 4,
+      "error_excerpt": "Traceback (most recent call last): File \"<string>\", line 2, in <module> File \"/usr/local/lib/python3.10/dist-packages/PIL/Image.py\", line 3635, in open fp = builtins.open(filename, \"rb\") FileNotFoundError: [Errno 2] No such file or director",
+      "handling": "Finished without recovery",
+      "handling_detail": "The trace completed without a coded recovery of the engineering failure.",
+      "landing": "Prior-knowledge answer"
+    },
+    {
+      "episode_id": "engineering-error:tr_730f0dfa05bca83d",
+      "trace_id": "tr_730f0dfa05bca83d",
+      "trace_number": 104,
+      "model": "GPT-5.4",
+      "app": null,
+      "task_id": 11,
+      "task_type": "Compound",
+      "error": "Missing dependency / environment",
+      "error_round": 13,
+      "error_count": 1,
+      "error_excerpt": "Traceback (most recent call last): File \"<string>\", line 1, in <module> ModuleNotFoundError: No module named 'pandas'",
+      "handling": "Repaired code / parser",
+      "handling_detail": "code recovery",
+      "landing": "Computed evidence"
+    },
+    {
+      "episode_id": "engineering-error:tr_39e15a5ef7804383",
+      "trace_id": "tr_39e15a5ef7804383",
+      "trace_number": 107,
+      "model": "GPT-5.4",
+      "app": null,
+      "task_id": 15,
+      "task_type": "Compound",
+      "error": "Missing dependency / environment",
+      "error_round": 13,
+      "error_count": 6,
+      "error_excerpt": "Traceback (most recent call last): File \"<string>\", line 1, in <module> ModuleNotFoundError: No module named 'pandas'",
+      "handling": "Finished without recovery",
+      "handling_detail": "The trace completed without a coded recovery of the engineering failure.",
+      "landing": "Misgrounded evidence"
+    },
+    {
+      "episode_id": "engineering-error:tr_e877c6dd4fe7347d",
+      "trace_id": "tr_e877c6dd4fe7347d",
+      "trace_number": 112,
+      "model": "GPT-5.4",
+      "app": null,
+      "task_id": 18,
+      "task_type": "Compound",
+      "error": "Missing dependency / environment",
+      "error_round": 19,
+      "error_count": 18,
+      "error_excerpt": "Traceback (most recent call last): File \"<string>\", line 3, in <module> ModuleNotFoundError: No module named 'pandas'",
+      "handling": "Adapted environment / method",
+      "handling_detail": "replaced missing pandas with Python standard-library parsing and completed the survival-rate computation",
+      "landing": "Computed evidence"
+    },
+    {
+      "episode_id": "engineering-error:tr_27837c5a0285cb6e",
+      "trace_id": "tr_27837c5a0285cb6e",
+      "trace_number": 116,
+      "model": "GPT-5.5",
+      "app": null,
+      "task_id": 26,
+      "task_type": "High-level",
+      "error": "Data source / access",
+      "error_round": 5,
+      "error_count": 35,
+      "error_excerpt": "Command timed out after 60s: docker exec 9a7d2695857a6ac6ef5af56d4f899ad00616de0c450dc6479540387761d5aafa bash -lc export DBUS_SESSION_BUS_ADDRESS=${DBUS_SESSION_BUS_ADDRESS:-unix:path=/tmp/runtime-user/bus}; python3 - <<'PY' import os, glo",
+      "handling": "Repaired code / parser",
+      "handling_detail": "code recovery",
+      "landing": "Grounded visual evidence"
+    },
+    {
+      "episode_id": "engineering-error:tr_5b5ac1b6a772a5b7",
+      "trace_id": "tr_5b5ac1b6a772a5b7",
+      "trace_number": 117,
+      "model": "GPT-5.5",
+      "app": null,
+      "task_id": 10,
+      "task_type": "Low-level",
+      "error": "Missing dependency / environment",
+      "error_round": 5,
+      "error_count": 4,
+      "error_excerpt": "Traceback (most recent call last): File \"<stdin>\", line 1, in <module> ModuleNotFoundError: No module named 'pandas'",
+      "handling": "Adapted environment / method",
+      "handling_detail": "replaced unavailable dataframe correlation methods with a supported manual correlation computation",
+      "landing": "Combined visual + computed"
+    },
+    {
+      "episode_id": "engineering-error:tr_26e90d3779796a3c",
+      "trace_id": "tr_26e90d3779796a3c",
+      "trace_number": 119,
+      "model": "GPT-5.5",
+      "app": null,
+      "task_id": 4,
+      "task_type": "Low-level",
+      "error": "Command / search",
+      "error_round": 8,
+      "error_count": 1,
+      "error_excerpt": "WARNING: The directory '/home/user/.cache/pip' or its parent directory is not owned or is not writable by the current user. The cache has been disabled. Check the permissions and owner of that directory. If executing pip with sudo, you shou",
+      "handling": "Finished without recovery",
+      "handling_detail": "The trace completed without a coded recovery of the engineering failure.",
+      "landing": "Computed evidence"
+    },
+    {
+      "episode_id": "engineering-error:tr_4cdf0ebde8f08ada",
+      "trace_id": "tr_4cdf0ebde8f08ada",
+      "trace_number": 122,
+      "model": "GPT-5.4",
+      "app": null,
+      "task_id": 2,
+      "task_type": "Low-level",
+      "error": "Missing dependency / environment",
+      "error_round": 7,
+      "error_count": 4,
+      "error_excerpt": "Traceback (most recent call last): File \"<string>\", line 1, in <module> ModuleNotFoundError: No module named 'pandas'",
+      "handling": "Repaired code / parser",
+      "handling_detail": "code recovery",
+      "landing": "Misgrounded evidence"
+    },
+    {
+      "episode_id": "engineering-error:tr_7aa582985ead8650",
+      "trace_id": "tr_7aa582985ead8650",
+      "trace_number": 124,
+      "model": "Claude Opus 4.8",
+      "app": null,
+      "task_id": 7,
+      "task_type": "Low-level",
+      "error": "Data source / access",
+      "error_round": 15,
+      "error_count": 1,
+      "error_excerpt": "err HTTP Error 404: Not Found",
+      "handling": "Returned to GUI",
+      "handling_detail": "return to GUI manipulation due to code error",
+      "landing": "Grounded visual evidence"
+    },
+    {
+      "episode_id": "engineering-error:tr_0e560a3fb23c5d21",
+      "trace_id": "tr_0e560a3fb23c5d21",
+      "trace_number": 125,
+      "model": "Claude Opus 4.8",
+      "app": null,
+      "task_id": 18,
+      "task_type": "Compound",
+      "error": "Missing dependency / environment",
+      "error_round": 1,
+      "error_count": 7,
+      "error_excerpt": "Command failed with exit code 1: find / -iname \"*titanic*\" 2>/dev/null | head -50; echo \"---\"; pip list 2>/dev/null | grep -i seaborn",
+      "handling": "Changed source / endpoint",
+      "handling_detail": "recovered repeated local and URL misses by inspecting SandDance, discovering titanicmaster.tsv, and computing from it",
+      "landing": "Computed evidence"
+    },
+    {
+      "episode_id": "engineering-error:tr_cbac1d76d92a9f97",
+      "trace_id": "tr_cbac1d76d92a9f97",
+      "trace_number": 126,
+      "model": "GPT-5.5",
+      "app": null,
+      "task_id": 22,
+      "task_type": "High-level",
+      "error": "Missing dependency / environment",
+      "error_round": 18,
+      "error_count": 3,
+      "error_excerpt": "Traceback (most recent call last): File \"<stdin>\", line 1, in <module> ModuleNotFoundError: No module named 'pandas'",
+      "handling": "Adapted environment / method",
+      "handling_detail": "code recovery: pandas: stdlib",
+      "landing": "Computed evidence"
+    },
+    {
+      "episode_id": "engineering-error:tr_ecd34b167ed24c5d",
+      "trace_id": "tr_ecd34b167ed24c5d",
+      "trace_number": 127,
+      "model": "Claude Sonnet 5",
+      "app": null,
+      "task_id": 15,
+      "task_type": "Compound",
+      "error": "Command / search",
+      "error_round": 8,
+      "error_count": 4,
+      "error_excerpt": "Command failed with exit code 1: find / -iname \"*cars*.json\" -o -iname \"*cars*.csv\" 2>/dev/null | grep -v proc",
+      "handling": "Changed source / endpoint",
+      "handling_detail": "replaced repeated local searches with the remote Vega cars dataset and computed the outlier",
+      "landing": "Combined visual + computed"
+    }
+  ]
+}
