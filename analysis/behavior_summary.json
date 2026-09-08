@@ -3,16 +3,16 @@
   "classifier_version": "behavior-summary-v1",
   "source": {
     "dataset": "webva-agent-behaviors-trial1",
-    "generated_at": "2026-09-08T13:33:07.445159+00:00",
-    "workbook_filename": "Trace Coding (1) - code recovery updated.xlsx",
-    "workbook_sha256": "6b9282c2cab2d300041e308fc1751cde52862877af5baa63e2dab5dcdb60cfd7",
+    "generated_at": "2026-09-08T16:11:10.258973+00:00",
+    "workbook_filename": "Trace Coding (1).xlsx",
+    "workbook_sha256": "6b4efe758a47d524c3445c4920839a2c7403a8deef794f1725f4c767c391d2cd",
     "sheet": "Coded Agent Traces Trial 1"
   },
   "counts": {
     "traces": 120,
     "models": 4,
     "themes": 5,
-    "behaviors": 34,
+    "behaviors": 32,
     "episodes": 477
   },
   "definitions": {
@@ -155,42 +155,8 @@
       "episode_count": 117,
       "behaviors": [
         {
-          "code": "Cycling input routes",
-          "episode_count": 1,
-          "models": [
-            {
-              "model": "GPT-5.4",
-              "episode_count": 0,
-              "episode_share_percent": 0.0,
-              "trace_count": 0,
-              "trace_prevalence_percent": 0.0
-            },
-            {
-              "model": "GPT-5.5",
-              "episode_count": 0,
-              "episode_share_percent": 0.0,
-              "trace_count": 0,
-              "trace_prevalence_percent": 0.0
-            },
-            {
-              "model": "Claude Opus 4.8",
-              "episode_count": 1,
-              "episode_share_percent": 0.8696,
-              "trace_count": 1,
-              "trace_prevalence_percent": 3.3333
-            },
-            {
-              "model": "Claude Sonnet 5",
-              "episode_count": 0,
-              "episode_share_percent": 0.0,
-              "trace_count": 0,
-              "trace_prevalence_percent": 0.0
-            }
-          ]
-        },
-        {
           "code": "GUI self-correction",
-          "episode_count": 11,
+          "episode_count": 12,
           "models": [
             {
               "model": "GPT-5.4",
@@ -208,10 +174,10 @@
             },
             {
               "model": "Claude Opus 4.8",
-              "episode_count": 4,
-              "episode_share_percent": 3.4783,
-              "trace_count": 4,
-              "trace_prevalence_percent": 13.3333
+              "episode_count": 5,
+              "episode_share_percent": 4.3478,
+              "trace_count": 5,
+              "trace_prevalence_percent": 16.6667
             },
             {
               "model": "Claude Sonnet 5",
@@ -253,40 +219,6 @@
               "episode_share_percent": 1.4815,
               "trace_count": 2,
               "trace_prevalence_percent": 6.6667
-            }
-          ]
-        },
-        {
-          "code": "Interactive visual interpretation",
-          "episode_count": 1,
-          "models": [
-            {
-              "model": "GPT-5.4",
-              "episode_count": 1,
-              "episode_share_percent": 0.9804,
-              "trace_count": 1,
-              "trace_prevalence_percent": 3.3333
-            },
-            {
-              "model": "GPT-5.5",
-              "episode_count": 0,
-              "episode_share_percent": 0.0,
-              "trace_count": 0,
-              "trace_prevalence_percent": 0.0
-            },
-            {
-              "model": "Claude Opus 4.8",
-              "episode_count": 0,
-              "episode_share_percent": 0.0,
-              "trace_count": 0,
-              "trace_prevalence_percent": 0.0
-            },
-            {
-              "model": "Claude Sonnet 5",
-              "episode_count": 0,
-              "episode_share_percent": 0.0,
-              "trace_count": 0,
-              "trace_prevalence_percent": 0.0
             }
           ]
         },
@@ -394,14 +326,14 @@
         },
         {
           "code": "Visual inspection and construction",
-          "episode_count": 47,
+          "episode_count": 48,
           "models": [
             {
               "model": "GPT-5.4",
-              "episode_count": 11,
-              "episode_share_percent": 10.7843,
-              "trace_count": 11,
-              "trace_prevalence_percent": 36.6667
+              "episode_count": 12,
+              "episode_share_percent": 11.7647,
+              "trace_count": 12,
+              "trace_prevalence_percent": 40.0
             },
             {
               "model": "GPT-5.5",

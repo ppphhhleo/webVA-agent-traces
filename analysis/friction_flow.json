@@ -1,11 +1,11 @@
 {
   "schema_version": "3.0",
   "classifier_version": "gui-friction-flow-v3-handling-families",
-  "generated_at": "2026-09-08T13:33:07.600300+00:00",
+  "generated_at": "2026-09-08T16:11:10.471864+00:00",
   "source": {
     "dataset": "webva-agent-behaviors-trial1",
-    "workbook_filename": "Trace Coding (1) - code recovery updated.xlsx",
-    "workbook_sha256": "6b9282c2cab2d300041e308fc1751cde52862877af5baa63e2dab5dcdb60cfd7",
+    "workbook_filename": "Trace Coding (1).xlsx",
+    "workbook_sha256": "6b4efe758a47d524c3445c4920839a2c7403a8deef794f1725f4c767c391d2cd",
     "sheet": "Coded Agent Traces Trial 1"
   },
   "method": {
@@ -633,7 +633,7 @@
       "response": "Retry / recover in GUI",
       "response_round": 4,
       "response_annotation_id": "agent-trial1-0061",
-      "first_mechanism": "Alternative input route",
+      "first_mechanism": "Self-recovery",
       "pathway": "GUI recovery",
       "handling": "Recovered in GUI",
       "landing": "Grounded visual evidence"
