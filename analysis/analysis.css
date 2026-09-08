@@ -107,10 +107,10 @@
 
 .behavior-task-legend { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px 14px; color: var(--ink); font-size: 9px; font-weight: 700; }
 .behavior-task-legend span { display: inline-flex; align-items: center; gap: 6px; }
-.behavior-task-legend i { width: 11px; height: 11px; border: 1px solid rgba(20,42,44,.2); }
-.behavior-task-legend .task-low { background: #e69f00; }
-.behavior-task-legend .task-compound { background: #56b4e9; }
-.behavior-task-legend .task-high { background: #009e73; }
+.behavior-task-legend i { --series-color: #356873; width: 13px; height: 13px; border: 1px solid rgba(20,42,44,.28); }
+.behavior-task-legend i.task-low, .behavior-segment.task-low { background: var(--series-color); }
+.behavior-task-legend i.task-compound, .behavior-segment.task-compound { background-color: color-mix(in srgb, var(--series-color) 72%, white); background-image: repeating-linear-gradient(135deg, transparent 0 3px, rgba(255,255,255,.78) 3px 5px); }
+.behavior-task-legend i.task-high, .behavior-segment.task-high { background-color: color-mix(in srgb, var(--series-color) 24%, white); background-image: radial-gradient(circle, var(--series-color) 1.25px, transparent 1.45px); background-size: 5px 5px; }
 .behavior-matrix-shell { overflow-x: auto; overscroll-behavior-inline: contain; }
 .behavior-matrix { min-width: 960px; }
 .behavior-matrix-head, .behavior-row { display: grid; grid-template-columns: minmax(280px, 1.55fr) repeat(4, minmax(135px, 1fr)); }
@@ -129,7 +129,7 @@
 .behavior-label { display: flex; align-items: center; padding: 7px 12px; color: var(--ink); font-size: 9px; line-height: 1.3; }
 .behavior-cell { position: relative; min-width: 0; overflow: hidden; border-left: 1px solid var(--line); background: repeating-linear-gradient(90deg, #fbfaf5 0, #fbfaf5 calc(33.333% - 1px), #e1e5e1 calc(33.333% - 1px), #e1e5e1 33.333%); }
 .behavior-stack { position: absolute; inset: 5px 0 5px 0; display: flex; padding: 0; }
-.behavior-segment { display: block; height: 100%; min-width: 0; opacity: .78; }
+.behavior-segment { display: block; height: 100%; min-width: 0; }
 .behavior-segment + .behavior-segment { box-shadow: -1px 0 0 rgba(255,255,255,.9); }
 .behavior-value { position: relative; z-index: 1; height: 100%; display: flex; align-items: center; justify-content: flex-end; gap: 6px; padding: 6px 8px; pointer-events: none; }
 .behavior-value::before { content: ""; position: absolute; z-index: -1; inset: 4px 4px 4px auto; width: 58px; background: rgba(255,253,248,.9); }

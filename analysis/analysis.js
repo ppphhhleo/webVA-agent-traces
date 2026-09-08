@@ -6,10 +6,10 @@ const MODEL_COLORS = {
 };
 const MODEL_ORDER = ["GPT-5.4", "GPT-5.5", "Claude Opus 4.8", "Claude Sonnet 5"];
 const TASK_TYPE_ORDER = ["Low-level", "Compound", "High-level"];
-const TASK_TYPE_COLORS = {
-  "Low-level": "#e69f00",
-  "Compound": "#56b4e9",
-  "High-level": "#009e73",
+const TASK_TYPE_CLASSES = {
+  "Low-level": "task-low",
+  "Compound": "task-compound",
+  "High-level": "task-high",
 };
 const BEHAVIOR_THEME_ORDER = [
   "Interpreting the task",
@@ -440,9 +440,9 @@ function renderBehaviorMatrix() {
           .join("; ");
         const label = `${model}: present in ${traceCount} of ${modelRecord.trace_count} traces (${prevalence.toFixed(1)}%). ${taskBreakdown}.`;
         return `
-          <div class="behavior-cell${traceCount ? "" : " is-zero"}" role="cell" aria-label="${escapeHtml(label)}" title="${escapeHtml(label)}">
+          <div class="behavior-cell${traceCount ? "" : " is-zero"}" role="cell" aria-label="${escapeHtml(label)}" title="${escapeHtml(label)}" style="--series-color:${colorFor(model)}">
             <span class="behavior-stack" aria-hidden="true">
-              ${taskMetrics.map((record) => `<i class="behavior-segment" style="width:${record.share.toFixed(2)}%;background:${TASK_TYPE_COLORS[record.taskType]}"></i>`).join("")}
+              ${taskMetrics.map((record) => `<i class="behavior-segment ${TASK_TYPE_CLASSES[record.taskType]}" style="width:${record.share.toFixed(2)}%"></i>`).join("")}
             </span>
             <span class="behavior-value"><b>${traceCount}/${modelRecord.trace_count}</b><small>${prevalence.toFixed(1)}%</small></span>
           </div>`;
