@@ -19,7 +19,7 @@
 .analysis-totals dd { margin: 5px 0 0; font: 500 21px var(--mono); }
 
 .analysis-card, .summary-card { border: 1px solid var(--line-strong); background: var(--surface); }
-.performance-card, .work-share-card, .friction-card { margin-bottom: 24px; }
+.performance-card, .work-share-card, .behavior-card, .friction-card { margin-bottom: 24px; }
 .distribution-card { margin-top: 24px; }
 .report-header { display: flex; align-items: end; justify-content: space-between; gap: 24px; padding: 20px 22px 15px; border-bottom: 1px solid var(--line); }
 .report-header h2 { margin: 5px 0 0; }
@@ -104,6 +104,32 @@
 .signature-grid article > p { margin: 10px 0 12px; color: var(--muted); font-size: 11px; line-height: 1.55; }
 .signature-grid article > a, .signature-grid .trace-links a { display: inline-block; color: var(--ink); font: 500 8px/1.4 var(--mono); text-decoration-color: var(--signature-color); text-decoration-thickness: 2px; text-underline-offset: 3px; }
 .signature-grid .trace-links { display: flex; flex-wrap: wrap; gap: 5px 12px; margin: 0; }
+
+.behavior-header-note { max-width: 320px; margin: 0; color: var(--muted); font-size: 10px; line-height: 1.5; text-align: right; }
+.behavior-header-note strong { color: var(--ink); }
+.behavior-matrix-shell { overflow-x: auto; overscroll-behavior-inline: contain; }
+.behavior-matrix { min-width: 960px; }
+.behavior-matrix-head, .behavior-row { display: grid; grid-template-columns: minmax(280px, 1.55fr) repeat(4, minmax(135px, 1fr)); }
+.behavior-matrix-head { min-height: 55px; border-bottom: 1px solid var(--line-strong); background: #f8f6ef; }
+.behavior-axis-head, .behavior-model-head { display: flex; flex-direction: column; justify-content: center; padding: 10px 12px; }
+.behavior-axis-head { color: var(--muted); font-size: 8px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.behavior-model-head { border-left: 1px solid var(--line); }
+.behavior-model-head span { display: flex; align-items: center; gap: 7px; font-size: 10px; font-weight: 700; }
+.behavior-model-head i { width: 9px; height: 9px; flex: 0 0 auto; border-radius: 50%; background: var(--series-color); }
+.behavior-model-head small { margin: 4px 0 0 16px; color: var(--muted); font: 7px var(--mono); }
+.behavior-theme h3 { margin: 0; padding: 8px 12px 7px; border-bottom: 1px solid var(--line); border-top: 2px solid var(--line-strong); background: #eeeee7; font-size: 10px; letter-spacing: .025em; }
+.behavior-theme:first-of-type h3 { border-top: 0; }
+.behavior-theme h3 small { margin-left: 7px; color: var(--muted); font: 7px var(--mono); }
+.behavior-row { min-height: 35px; border-bottom: 1px solid #e2e7e4; }
+.behavior-row:last-child { border-bottom-color: var(--line); }
+.behavior-label { display: flex; align-items: center; padding: 7px 12px; color: var(--ink); font-size: 9px; line-height: 1.3; }
+.behavior-cell { position: relative; min-width: 0; overflow: hidden; border-left: 1px solid var(--line); background: #fbfaf5; }
+.behavior-fill { position: absolute; inset: 5px auto 5px 0; width: var(--behavior-share); min-width: 0; border-right: 2px solid var(--series-color); background: color-mix(in srgb, var(--series-color) 22%, transparent); }
+.behavior-cell span { position: relative; z-index: 1; height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 5px; padding: 6px 9px; }
+.behavior-cell b { color: var(--ink); font: 500 8px var(--mono); }
+.behavior-cell small { color: var(--muted); font: 7px var(--mono); white-space: nowrap; }
+.behavior-cell.is-zero { background: #f6f4ed; }
+.behavior-cell.is-zero b, .behavior-cell.is-zero small { color: #9aa5a1; }
 
 .friction-header { align-items: center; }
 .friction-totals { display: grid; grid-template-columns: repeat(3, minmax(108px, 1fr)); margin: 0; border: 1px solid var(--line); }
@@ -274,6 +300,7 @@ tbody tr:last-child td { border-bottom: 0; }
   .friction-header { align-items: stretch; }
   .friction-totals { width: 100%; }
   .evidence-header-note { max-width: 560px; text-align: left; }
+  .behavior-header-note { max-width: 560px; text-align: left; }
   .evidence-mark-key { width: 100%; margin-left: 0; padding-top: 2px; }
   .evidence-quadrants > header { grid-template-columns: 1fr; gap: 7px; }
 }

@@ -6,6 +6,13 @@ const MODEL_COLORS = {
 };
 const MODEL_ORDER = ["GPT-5.4", "GPT-5.5", "Claude Opus 4.8", "Claude Sonnet 5"];
 const TASK_TYPE_ORDER = ["Low-level", "Compound", "High-level"];
+const BEHAVIOR_THEME_ORDER = [
+  "Interpreting the task",
+  "Working on the screen",
+  "Switching channels",
+  "Working off the screen",
+  "Delivering the answers",
+];
 const FRICTION_COLORS = {
   "Misgrounded manipulation": "#e69f00",
   "Repetition loop": "#56b4e9",
@@ -27,7 +34,7 @@ const HANDLING_COLORS = {
   "Unresolved / abandoned": "#666666",
 };
 
-const state = { traces: [], friction: null, evidence: null, evidenceModel: "", activeModels: new Set(), taskType: "" };
+const state = { traces: [], friction: null, evidence: null, behaviors: null, evidenceModel: "", activeModels: new Set(), taskType: "" };
 const svg = document.querySelector("#scatterplot");
 const tooltip = document.querySelector("#plot-tooltip");
 const legend = document.querySelector("#model-legend");
@@ -35,6 +42,7 @@ const taskFilter = document.querySelector("#task-type-filter");
 const performanceBody = document.querySelector("#performance-summary");
 const workShareChart = document.querySelector("#work-share-chart");
 const switchDelayChart = document.querySelector("#switch-delay-chart");
+const behaviorMatrix = document.querySelector("#behavior-matrix");
 const frictionSvg = document.querySelector("#friction-alluvial");
 const alluvialTooltip = document.querySelector("#alluvial-tooltip");
 const evidenceSvg = document.querySelector("#evidence-plot");
@@ -365,6 +373,62 @@ function renderBehavioralSignatures() {
   document.querySelector("#signature-gpt55").textContent = `It averages ${gpt55.offscreen.toFixed(1)}% of working rounds off screen, starts there in ${gpt55.startsOffscreen} of ${gpt55.count} traces, and has a mean switch latency of ${gpt55.latency.toFixed(1)}%. A characteristic run searches bundles, opens Chrome remote debugging, and parses recovered data in code.`;
   document.querySelector("#signature-opus").textContent = `Its off-screen share changes from ${taskTypeOffscreen(opus, "Low-level").toFixed(1)}% on low-level tasks to ${taskTypeOffscreen(opus, "Compound").toFixed(1)}% on compound tasks, while its overall mean switch latency is ${opus.latency.toFixed(1)}%. It often begins visually, then moves to Python or shell when exact aggregation is useful.`;
   document.querySelector("#signature-sonnet").textContent = `It keeps ${(100 - sonnet.offscreen).toFixed(1)}% of working rounds on screen and has a mean switch latency of ${sonnet.latency.toFixed(1)}%, compared with ${opus.latency.toFixed(1)}% for Opus. Its traces average ${sonnet.rounds.toFixed(1)} rounds, with ${sonnet.unfinished} unfinished.`;
+}
+
+function renderBehaviorMatrix() {
+  const data = state.behaviors;
+  if (!data?.annotations?.length || !data?.taxonomy?.length) return;
+
+  const models = MODEL_ORDER.filter((model) => data.trace_index.some((trace) => trace.model === model));
+  const traceCounts = new Map(models.map((model) => [
+    model,
+    new Set(data.trace_index.filter((trace) => trace.model === model).map((trace) => trace.trace_id)).size,
+  ]));
+  const modelAnnotationCounts = new Map(models.map((model) => [
+    model,
+    data.annotations.filter((annotation) => annotation.model === model).length,
+  ]));
+  const metrics = new Map();
+  data.annotations.forEach((annotation) => {
+    const key = `${annotation.model}\u0000${annotation.code}`;
+    if (!metrics.has(key)) metrics.set(key, { frequency: 0, traces: new Set() });
+    const metric = metrics.get(key);
+    metric.frequency += 1;
+    metric.traces.add(annotation.trace_id);
+  });
+
+  const taxonomy = [...data.taxonomy].sort((a, b) =>
+    BEHAVIOR_THEME_ORDER.indexOf(a.theme) - BEHAVIOR_THEME_ORDER.indexOf(b.theme)
+  );
+  const header = `
+    <div class="behavior-matrix-head" role="row">
+      <div class="behavior-axis-head" role="columnheader">Behavior code</div>
+      ${models.map((model) => `
+        <div class="behavior-model-head" role="columnheader" style="--series-color:${colorFor(model)}">
+          <span><i></i>${escapeHtml(model)}</span>
+          <small>${traceCounts.get(model)} traces · ${modelAnnotationCounts.get(model)} codes</small>
+        </div>`).join("")}
+    </div>`;
+  const rows = taxonomy.map((theme) => {
+    const themeRows = theme.codes.map(({ code }) => {
+      const cells = models.map((model) => {
+        const metric = metrics.get(`${model}\u0000${code}`) || { frequency: 0, traces: new Set() };
+        const traceTotal = traceCounts.get(model) || 0;
+        const prevalence = traceTotal ? (metric.traces.size / traceTotal) * 100 : 0;
+        const annotationTotal = modelAnnotationCounts.get(model) || 0;
+        const composition = annotationTotal ? (metric.frequency / annotationTotal) * 100 : 0;
+        const label = `${model}: ${prevalence.toFixed(1)}% of traces (${metric.traces.size} of ${traceTotal}); ${metric.frequency} coded occurrences; ${composition.toFixed(1)}% of this model's annotations.`;
+        return `
+          <div class="behavior-cell${metric.frequency ? "" : " is-zero"}" role="cell" aria-label="${escapeHtml(label)}" title="${escapeHtml(label)}" style="--series-color:${colorFor(model)};--behavior-share:${prevalence.toFixed(2)}%">
+            <i class="behavior-fill" aria-hidden="true"></i>
+            <span><b>${prevalence.toFixed(1)}%</b><small>n=${metric.frequency}</small></span>
+          </div>`;
+      }).join("");
+      return `<div class="behavior-row" role="row"><div class="behavior-label" role="rowheader">${escapeHtml(code)}</div>${cells}</div>`;
+    }).join("");
+    return `<section class="behavior-theme" role="rowgroup"><h3>${escapeHtml(theme.theme)} <small>${theme.annotation_count} coded occurrences</small></h3>${themeRows}</section>`;
+  }).join("");
+  behaviorMatrix.innerHTML = header + rows;
 }
 
 function frictionColor(stage, label, episodes = []) {
@@ -873,18 +937,21 @@ function renderEvidencePlot() {
 
 async function init() {
   try {
-    const [response, frictionResponse, evidenceResponse] = await Promise.all([
+    const [response, frictionResponse, evidenceResponse, behaviorResponse] = await Promise.all([
       fetch("data.json?v=4"),
       fetch("friction_flow.json?v=5"),
       fetch("evidence_visibility.json?v=2"),
+      fetch("../data/annotations/agent_behaviors_trial1.json?v=3"),
     ]);
     if (!response.ok) throw new Error(`Analysis data request failed (${response.status})`);
     if (!frictionResponse.ok) throw new Error(`Friction data request failed (${frictionResponse.status})`);
     if (!evidenceResponse.ok) throw new Error(`Evidence data request failed (${evidenceResponse.status})`);
-    const [data, frictionData, evidenceData] = await Promise.all([response.json(), frictionResponse.json(), evidenceResponse.json()]);
+    if (!behaviorResponse.ok) throw new Error(`Behavior annotation request failed (${behaviorResponse.status})`);
+    const [data, frictionData, evidenceData, behaviorData] = await Promise.all([response.json(), frictionResponse.json(), evidenceResponse.json(), behaviorResponse.json()]);
     state.traces = data.traces || [];
     state.friction = frictionData;
     state.evidence = evidenceData;
+    state.behaviors = behaviorData;
     state.activeModels = new Set(state.traces.map((trace) => trace.model));
     const taskTypes = [...new Set(state.traces.map((trace) => trace.task_type).filter(Boolean))].sort();
     taskTypes.forEach((type) => taskFilter.add(new Option(type, type)));
@@ -896,6 +963,7 @@ async function init() {
     renderWorkShareChart();
     renderSwitchDelayChart();
     renderBehavioralSignatures();
+    renderBehaviorMatrix();
     renderFrictionSummary();
     renderFrictionAlluvial();
     renderEvidenceLegend();

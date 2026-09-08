@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="../styles.css" />
-    <link rel="stylesheet" href="analysis.css?v=24" />
+    <link rel="stylesheet" href="analysis.css?v=25" />
   </head>
   <body>
     <div class="app-shell">
@@ -117,6 +117,20 @@
               </article>
             </div>
           </section>
+        </section>
+
+        <section class="analysis-card behavior-card" aria-labelledby="behavior-title">
+          <header class="chart-header">
+            <div>
+              <p class="eyebrow">Coded behavior overview</p>
+              <h2 id="behavior-title">Behavior prevalence and frequency</h2>
+            </div>
+            <p class="behavior-header-note">Bar length and percentage show trace prevalence; <strong>n</strong> reports coded occurrences.</p>
+          </header>
+          <div class="behavior-matrix-shell">
+            <div class="behavior-matrix" id="behavior-matrix" role="table" aria-labelledby="behavior-title behavior-description"></div>
+          </div>
+          <p class="chart-description" id="behavior-description">For each model and behavior, prevalence is the share of that model’s 30 traces containing at least one instance of the code. Frequency counts every coded occurrence, so it can exceed the number of affected traces when a behavior recurs. The matrix is derived reactively from the trial-one behavior annotation file.</p>
         </section>
 
         <section class="analysis-card friction-card" aria-labelledby="friction-title">
@@ -233,6 +247,6 @@
       </main>
     </div>
     <script src="../config.js"></script>
-    <script src="analysis.js?v=23" type="module"></script>
+    <script src="analysis.js?v=24" type="module"></script>
   </body>
 </html>
