@@ -3,16 +3,16 @@
   "classifier_version": "behavior-summary-v2-task-type-prevalence",
   "source": {
     "dataset": "webva-agent-behaviors-trial1",
-    "generated_at": "2026-09-08T17:03:03.393395+00:00",
+    "generated_at": "2026-09-08T21:30:18.993857+00:00",
     "workbook_filename": "Trace Coding (1).xlsx",
-    "workbook_sha256": "9836d5b2cdc71a531cd12aaa58df8963c2cf4f69c1e9ad3e5d11f68d1064f51b",
+    "workbook_sha256": "820358edec3e215ad1451b76dd8a1c14a0b269573ee6afdb37a76a76bc8b3e99",
     "sheet": "Coded Agent Traces Trial 1"
   },
   "counts": {
     "traces": 120,
     "models": 4,
     "themes": 5,
-    "behaviors": 32,
+    "behaviors": 31,
     "episodes": 477
   },
   "definitions": {
@@ -220,7 +220,7 @@
         },
         {
           "code": "Silent operationalization",
-          "episode_count": 6,
+          "episode_count": 7,
           "models": [
             {
               "model": "GPT-5.4",
@@ -251,16 +251,16 @@
             },
             {
               "model": "GPT-5.5",
-              "episode_count": 2,
-              "episode_share_percent": 1.6,
-              "trace_count": 2,
-              "trace_prevalence_percent": 6.6667,
+              "episode_count": 3,
+              "episode_share_percent": 2.4,
+              "trace_count": 3,
+              "trace_prevalence_percent": 10.0,
               "task_types": [
                 {
                   "task_type": "Low-level",
-                  "trace_count": 0,
-                  "share_of_model_traces_percent": 0.0,
-                  "prevalence_within_task_type_percent": 0.0
+                  "trace_count": 1,
+                  "share_of_model_traces_percent": 3.3333,
+                  "prevalence_within_task_type_percent": 10.0
                 },
                 {
                   "task_type": "Compound",
@@ -327,120 +327,6 @@
                   "trace_count": 1,
                   "share_of_model_traces_percent": 3.3333,
                   "prevalence_within_task_type_percent": 10.0
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "code": "Task scope misread",
-          "episode_count": 1,
-          "models": [
-            {
-              "model": "GPT-5.4",
-              "episode_count": 0,
-              "episode_share_percent": 0.0,
-              "trace_count": 0,
-              "trace_prevalence_percent": 0.0,
-              "task_types": [
-                {
-                  "task_type": "Low-level",
-                  "trace_count": 0,
-                  "share_of_model_traces_percent": 0.0,
-                  "prevalence_within_task_type_percent": 0.0
-                },
-                {
-                  "task_type": "Compound",
-                  "trace_count": 0,
-                  "share_of_model_traces_percent": 0.0,
-                  "prevalence_within_task_type_percent": 0.0
-                },
-                {
-                  "task_type": "High-level",
-                  "trace_count": 0,
-                  "share_of_model_traces_percent": 0.0,
-                  "prevalence_within_task_type_percent": 0.0
-                }
-              ]
-            },
-            {
-              "model": "GPT-5.5",
-              "episode_count": 1,
-              "episode_share_percent": 0.8,
-              "trace_count": 1,
-              "trace_prevalence_percent": 3.3333,
-              "task_types": [
-                {
-                  "task_type": "Low-level",
-                  "trace_count": 1,
-                  "share_of_model_traces_percent": 3.3333,
-                  "prevalence_within_task_type_percent": 10.0
-                },
-                {
-                  "task_type": "Compound",
-                  "trace_count": 0,
-                  "share_of_model_traces_percent": 0.0,
-                  "prevalence_within_task_type_percent": 0.0
-                },
-                {
-                  "task_type": "High-level",
-                  "trace_count": 0,
-                  "share_of_model_traces_percent": 0.0,
-                  "prevalence_within_task_type_percent": 0.0
-                }
-              ]
-            },
-            {
-              "model": "Claude Opus 4.8",
-              "episode_count": 0,
-              "episode_share_percent": 0.0,
-              "trace_count": 0,
-              "trace_prevalence_percent": 0.0,
-              "task_types": [
-                {
-                  "task_type": "Low-level",
-                  "trace_count": 0,
-                  "share_of_model_traces_percent": 0.0,
-                  "prevalence_within_task_type_percent": 0.0
-                },
-                {
-                  "task_type": "Compound",
-                  "trace_count": 0,
-                  "share_of_model_traces_percent": 0.0,
-                  "prevalence_within_task_type_percent": 0.0
-                },
-                {
-                  "task_type": "High-level",
-                  "trace_count": 0,
-                  "share_of_model_traces_percent": 0.0,
-                  "prevalence_within_task_type_percent": 0.0
-                }
-              ]
-            },
-            {
-              "model": "Claude Sonnet 5",
-              "episode_count": 0,
-              "episode_share_percent": 0.0,
-              "trace_count": 0,
-              "trace_prevalence_percent": 0.0,
-              "task_types": [
-                {
-                  "task_type": "Low-level",
-                  "trace_count": 0,
-                  "share_of_model_traces_percent": 0.0,
-                  "prevalence_within_task_type_percent": 0.0
-                },
-                {
-                  "task_type": "Compound",
-                  "trace_count": 0,
-                  "share_of_model_traces_percent": 0.0,
-                  "prevalence_within_task_type_percent": 0.0
-                },
-                {
-                  "task_type": "High-level",
-                  "trace_count": 0,
-                  "share_of_model_traces_percent": 0.0,
-                  "prevalence_within_task_type_percent": 0.0
                 }
               ]
             }

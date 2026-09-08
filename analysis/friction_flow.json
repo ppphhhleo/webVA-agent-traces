@@ -1,11 +1,11 @@
 {
   "schema_version": "3.0",
   "classifier_version": "gui-friction-flow-v3-handling-families",
-  "generated_at": "2026-09-08T17:03:21.439451+00:00",
+  "generated_at": "2026-09-08T21:30:30.861592+00:00",
   "source": {
     "dataset": "webva-agent-behaviors-trial1",
     "workbook_filename": "Trace Coding (1).xlsx",
-    "workbook_sha256": "9836d5b2cdc71a531cd12aaa58df8963c2cf4f69c1e9ad3e5d11f68d1064f51b",
+    "workbook_sha256": "820358edec3e215ad1451b76dd8a1c14a0b269573ee6afdb37a76a76bc8b3e99",
     "sheet": "Coded Agent Traces Trial 1"
   },
   "method": {
