@@ -53,24 +53,26 @@ const CODE_HANDLING_COLORS = {
   "Unresolved / abandoned": "#666666",
 };
 const CODE_HANDLING_GROUPS = {
-  "Repaired code / parser": "Recovered through code",
-  "Changed source / endpoint": "Recovered through code",
-  "Adapted environment / method": "Recovered through code",
+  "Repaired code / parser": "Fixed code or parser",
+  "Changed source / endpoint": "Changed data source",
+  "Adapted environment / method": "Adapted environment or method",
   "Returned to GUI": "Returned to GUI",
-  "Finished without recovery": "Finished without recovery",
-  "Unresolved / abandoned": "Unresolved / abandoned",
+  "Finished without recovery": "No successful recovery",
+  "Unresolved / abandoned": "No successful recovery",
 };
 const CODE_HANDLING_GROUP_ORDER = [
-  "Recovered through code",
+  "Fixed code or parser",
+  "Changed data source",
+  "Adapted environment or method",
   "Returned to GUI",
-  "Finished without recovery",
-  "Unresolved / abandoned",
+  "No successful recovery",
 ];
 const CODE_HANDLING_GROUP_COLORS = {
-  "Recovered through code": "#0072b2",
+  "Fixed code or parser": "#0072b2",
+  "Changed data source": "#56b4e9",
+  "Adapted environment or method": "#cc79a7",
   "Returned to GUI": "#009e73",
-  "Finished without recovery": "#e69f00",
-  "Unresolved / abandoned": "#666666",
+  "No successful recovery": "#666666",
 };
 const CODE_LANDING_GROUPS = {
   "Grounded visual evidence": "Evidence-backed answer",
@@ -746,8 +748,13 @@ function renderCodeErrorSummary() {
   document.querySelector("#code-error-unrecovered").textContent = `${unrecovered} · ${(unrecovered / total * 100).toFixed(0)}%`;
   const evidenceBacked = data.episodes.filter((record) =>
     CODE_LANDING_GROUPS[record.landing] === "Evidence-backed answer").length;
-  document.querySelector("#code-error-callout").innerHTML = `<strong>${recovered} of ${total} traces recovered through engineering changes.</strong>
-    Another ${returned} returned to the GUI, while ${unrecovered} did not successfully recover. Despite the failures, ${evidenceBacked} traces ended with an evidence-backed answer.`;
+  const handlingCounts = data.stage_counts?.handling || {};
+  const repaired = handlingCounts["Repaired code / parser"] || 0;
+  const changedSource = handlingCounts["Changed source / endpoint"] || 0;
+  const adaptedMethod = handlingCounts["Adapted environment / method"] || 0;
+  document.querySelector("#code-error-callout").innerHTML = `<strong>${recovered} of ${total} traces recovered through engineering changes:</strong>
+    ${repaired} fixed code or a parser, ${changedSource} changed the data source, and ${adaptedMethod} adapted the environment or method.
+    Another ${returned} returned to the GUI; ${unrecovered} did not successfully recover. In total, ${evidenceBacked} traces ended with an evidence-backed answer.`;
 }
 
 function simplifiedCodeErrorRecords() {

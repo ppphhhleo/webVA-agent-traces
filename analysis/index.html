@@ -178,7 +178,7 @@
             </div>
             <dl class="friction-totals" aria-label="Coding-error summary">
               <div><dt>Error-bearing traces</dt><dd id="code-error-traces">—</dd></div>
-              <div><dt>Recovered through code</dt><dd id="code-error-recovered">—</dd></div>
+              <div><dt>Engineering recovery</dt><dd id="code-error-recovered">—</dd></div>
               <div><dt>Returned to the GUI</dt><dd id="code-error-returned">—</dd></div>
               <div><dt>No successful recovery</dt><dd id="code-error-unrecovered">—</dd></div>
             </dl>
@@ -194,7 +194,7 @@
                 <p class="eyebrow">Model comparison</p>
                 <h3 id="code-error-model-title">Recovery outcomes by model</h3>
               </div>
-              <p>Cells show trace count and within-model percentage among traces containing an explicit shell or Python failure. Detailed engineering mechanisms remain available on hover.</p>
+              <p>Cells show trace count and within-model percentage among traces containing an explicit shell or Python failure. Recovery routes distinguish code repair, source changes, method adaptation, and a return to the GUI.</p>
             </header>
             <div class="friction-model-shell">
               <table class="friction-model-table" id="code-error-model-table"></table>
@@ -222,7 +222,7 @@
               <strong>This exposes the risk of finishing after engineering recovery fails.</strong>
             </a>
           </div>
-          <p class="chart-description" id="code-error-description">Each error-bearing trace contributes one flow, so repeated failures in long trajectories do not receive extra weight. The overview groups detailed recovery mechanisms into four outcomes and final evidence into three outcomes. Hover a ribbon or node for the underlying categories, counts, and trace IDs.</p>
+          <p class="chart-description" id="code-error-description">Each error-bearing trace contributes one flow, so repeated failures in long trajectories do not receive extra weight. Successful engineering recovery is separated into fixing code or parsers, changing data sources, and adapting the environment or method; unsuccessful routes remain grouped to keep the flow readable. Hover a ribbon or node for counts, trace IDs, and the underlying unresolved outcome.</p>
         </section>
 
         <section class="analysis-card evidence-card" aria-labelledby="evidence-title">
@@ -318,6 +318,6 @@
       </main>
     </div>
     <script src="../config.js"></script>
-    <script src="analysis.js?v=34" type="module"></script>
+    <script src="analysis.js?v=35" type="module"></script>
   </body>
 </html>
