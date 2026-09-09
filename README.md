@@ -64,6 +64,20 @@ the audited behavior annotations with:
 python3 scripts/build_code_error_flow.py
 ```
 
+The command writes two versioned, plot-ready sources:
+
+- `analysis/code_error_flow.json` contains provenance, category definitions,
+  stage orders, aggregate links, and the underlying trace-level `episodes`.
+- `analysis/code_error_flow.csv` is a flat companion table with one row per
+  error-bearing trace for analysis in Python, R, or a spreadsheet.
+
+The `/analysis/` engineering-friction flow is calculated at runtime from the
+JSON `episodes`; the included `links` and `stage_counts` are reproducible
+derivatives for validation rather than hand-authored plot values. A trace is
+the unit of analysis, so repeated failures in one long trajectory do not
+inflate the flow. The `trace_id`, `task_id`, `task_type`, and `model` fields
+support joins to the other analysis datasets and model/task breakdowns.
+
 For an offline rebuild, pass a directory containing one `<trace_id>.json` file
 per public trace with `--trace-dir /path/to/traces`.
 

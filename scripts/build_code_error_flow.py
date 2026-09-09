@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import csv
 import json
 import re
 from collections import Counter, defaultdict
@@ -216,6 +217,12 @@ def main() -> None:
         default=root / "data" / "annotations" / "agent_behaviors_trial1.json",
     )
     parser.add_argument("--output", type=Path, default=root / "analysis" / "code_error_flow.json")
+    parser.add_argument(
+        "--csv-output",
+        type=Path,
+        default=root / "analysis" / "code_error_flow.csv",
+        help="Write a flat, one-row-per-error-bearing-trace companion dataset.",
+    )
     parser.add_argument("--trace-dir", type=Path)
     parser.add_argument("--workers", type=int, default=8)
     parser.add_argument(
@@ -327,7 +334,33 @@ def main() -> None:
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(output, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-    print(json.dumps({"counts": output["counts"], "stages": stage_counts}, indent=2))
+    csv_fields = [
+        "episode_id",
+        "trace_id",
+        "trace_number",
+        "model",
+        "app",
+        "task_id",
+        "task_type",
+        "error",
+        "error_round",
+        "error_count",
+        "error_excerpt",
+        "handling",
+        "handling_detail",
+        "landing",
+    ]
+    args.csv_output.parent.mkdir(parents=True, exist_ok=True)
+    with args.csv_output.open("w", encoding="utf-8", newline="") as csv_file:
+        writer = csv.DictWriter(csv_file, fieldnames=csv_fields, lineterminator="\n")
+        writer.writeheader()
+        writer.writerows(records)
+    print(json.dumps({
+        "counts": output["counts"],
+        "stages": stage_counts,
+        "json_output": str(args.output),
+        "csv_output": str(args.csv_output),
+    }, indent=2))
 
 
 if __name__ == "__main__":

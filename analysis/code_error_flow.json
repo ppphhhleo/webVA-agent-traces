@@ -1,11 +1,11 @@
 {
   "schema_version": "1.0",
   "classifier_version": "engineering-error-flow-v1-trace-consolidated",
-  "generated_at": "2026-09-08T21:30:56.088592+00:00",
+  "generated_at": "2026-09-09T13:23:14.123849+00:00",
   "source": {
     "dataset": "webva-agent-behaviors-trial1",
-    "workbook_filename": "Trace Coding (1).xlsx",
-    "workbook_sha256": "820358edec3e215ad1451b76dd8a1c14a0b269573ee6afdb37a76a76bc8b3e99",
+    "workbook_filename": "Trace Coding (1) - prior knowledge injection updated.xlsx",
+    "workbook_sha256": "1723f3028dfe82183e5677eb1921883371dfe2a7c631476ddb4f4416397f813c",
     "sheet": "Coded Agent Traces Trial 1"
   },
   "method": {
