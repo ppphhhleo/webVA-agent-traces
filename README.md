@@ -140,6 +140,18 @@ python3 scripts/build_gaia_public.py \
   --output-dir /path/to/public-gaia
 ```
 
+By default, the sample preserves the level distribution of the shared task pool.
+For a level-balanced 30-task sample, request exact quotas:
+
+```bash
+python3 scripts/build_gaia_public.py \
+  --source-root /path/to/ohindex_gaia_targetmodels \
+  --viewer-root /path/to/gaia_viewer \
+  --output-dir /path/to/public-gaia \
+  --tasks-per-model 30 \
+  --level-quotas 1=10,2=10,3=10
+```
+
 The same sample can be materialized with its full gated benchmark content for authenticated review only:
 
 ```bash

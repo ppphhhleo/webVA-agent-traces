@@ -80,6 +80,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--viewer-root", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--tasks-per-model", type=int, default=30)
+    parser.add_argument(
+        "--level-quotas",
+        default="",
+        metavar="LEVEL=N,...",
+        help="Use exact GAIA-level quotas instead of proportional sampling (for example, 1=10,2=10,3=10).",
+    )
     parser.add_argument("--seed", type=int, default=20260906)
     return parser.parse_args()
 
@@ -106,6 +112,42 @@ def allocate_quotas(counts: dict[str, int], total: int) -> dict[str, int]:
                     break
         if not changed:
             raise ValueError("Unable to allocate the requested sample across GAIA levels")
+    return quotas
+
+
+def parse_level_quotas(spec: str, counts: dict[str, int], total: int) -> dict[str, int]:
+    quotas: dict[str, int] = {}
+    for item in spec.split(","):
+        item = item.strip()
+        if not item:
+            continue
+        try:
+            level, raw_quota = item.split("=", 1)
+            quota = int(raw_quota)
+        except (ValueError, TypeError) as exc:
+            raise ValueError(f"Invalid level quota {item!r}; expected LEVEL=N") from exc
+        level = level.strip()
+        if not level or quota < 0 or level in quotas:
+            raise ValueError(f"Invalid level quota {item!r}")
+        quotas[level] = quota
+
+    if sum(quotas.values()) != total:
+        raise ValueError(
+            f"Exact level quotas sum to {sum(quotas.values())}, but --tasks-per-model is {total}"
+        )
+    missing = set(counts) - set(quotas)
+    extra = set(quotas) - set(counts)
+    if missing or extra:
+        raise ValueError(
+            f"Exact level quotas must match available levels; missing={sorted(missing)}, extra={sorted(extra)}"
+        )
+    insufficient = {
+        level: {"requested": quota, "available": counts[level]}
+        for level, quota in quotas.items()
+        if quota > counts[level]
+    }
+    if insufficient:
+        raise ValueError(f"Insufficient shared tasks for exact level quotas: {insufficient}")
     return quotas
 
 
@@ -205,7 +247,11 @@ def main() -> None:
     for task_id in common_tasks:
         tasks_by_level[task_metadata[task_id]["level"]].append(task_id)
     level_counts = {level: len(task_ids) for level, task_ids in tasks_by_level.items()}
-    quotas = allocate_quotas(level_counts, args.tasks_per_model)
+    quotas = (
+        parse_level_quotas(args.level_quotas, level_counts, args.tasks_per_model)
+        if args.level_quotas
+        else allocate_quotas(level_counts, args.tasks_per_model)
+    )
 
     rng = random.Random(args.seed)
     selected_task_ids = []
