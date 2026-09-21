@@ -43,7 +43,6 @@ const styles = `
 
   main section { scroll-margin-top: 20px; }
   .section { padding: 70px 0; border-bottom: 1px solid var(--line); }
-  .section.compact { padding-top: 54px; padding-bottom: 54px; }
   .section-head { max-width: 760px; margin-bottom: 28px; }
   .section-head.centered { margin-right: auto; margin-left: auto; text-align: center; }
   .teaser .section-head { max-width: 1000px; }
@@ -57,12 +56,6 @@ const styles = `
   .figure figcaption b { color: var(--ink); }
   .teaser .figure { box-shadow: 0 8px 24px rgba(25, 54, 58, .07); }
 
-  .intro-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 44px; align-items: start; }
-  .intro-copy h2 { margin: 0; font-size: 34px; line-height: 1.17; }
-  .intro-copy > p { color: #435356; }
-  .plain-list { padding: 0; margin: 24px 0; list-style: none; border-top: 1px solid var(--line); }
-  .plain-list li { padding: 10px 0; border-bottom: 1px solid var(--line); color: #425255; }
-  .plain-list strong { color: var(--ink); }
   .text-link { color: var(--teal-dark); font-weight: 700; text-decoration-thickness: 1px; text-underline-offset: 3px; }
 
   .findings-title { padding-bottom: 26px; }
@@ -120,7 +113,7 @@ const styles = `
 
   @media (max-width: 820px) {
     .hero { padding-top: 48px; }
-    .intro-grid, .figure-pair { grid-template-columns: 1fr; }
+    .figure-pair { grid-template-columns: 1fr; }
     .examples, .examples.two { grid-template-columns: 1fr; }
     .stat-row { grid-template-columns: repeat(2, 1fr); }
     .stat-row div:nth-child(2) { border-right: 0; }
@@ -170,13 +163,6 @@ const markup = `
       <div class="wrap">
         <header class="section-head centered"><p class="eyebrow">The central problem</p><h2 id="teaser-title">Same question, different analytical paths</h2><p>A human works through the visible interface. Agents mix GUI actions with code, bypass the interface, or substitute prior knowledge. The conclusions may all sound plausible, while their evidence differs sharply.</p></header>
         ${pdfPreview("assets/project/agent-traces-teaser-l.png", "Different analytical paths through the same wine visualization task.")}
-      </div>
-    </section>
-
-    <section class="section compact" id="study">
-      <div class="wrap intro-grid">
-        <div class="intro-copy"><p class="eyebrow">Study design</p><h2>We compare the process, not only the answer.</h2><p>Agents and people completed the same 30 tasks in the same controlled desktop. TraLens records screenshots, actions, reasoning, tool outputs, and submitted answers as replayable trajectories.</p><ul class="plain-list"><li><strong>WebVA agents:</strong> 4 models × 30 tasks</li><li><strong>Human analysts:</strong> 4 participants × 30 tasks</li><li><strong>General web:</strong> 4 models × 30 matched GAIA tasks</li></ul><a class="text-link" href="traces/">Browse the 120 WebVA agent traces →</a></div>
-        ${figure("assets/project/study-setup.png", "Study design comparing agent, human, and general-web trajectories.", "Study", "A matched trajectory corpus across visual-analytics and general-web tasks.")}
       </div>
     </section>
 
