@@ -92,10 +92,6 @@ const styles = `
   .example span { margin-bottom: 7px; color: var(--teal-dark); font-size: 12px; font-weight: 800; text-transform: uppercase; }
   .example strong { font-size: 14px; line-height: 1.45; }
   .example small { margin-top: 10px; color: var(--muted); }
-  .metric-row { display: flex; gap: 12px; margin-top: 22px; }
-  .metric-row div { flex: 1; padding: 13px; background: var(--paper); border-left: 3px solid #87b7c4; }
-  .metric-row b { display: block; font-family: var(--mono); font-size: 20px; }
-  .metric-row span { color: var(--muted); font-size: 12px; }
   .profile-grid { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 18px; border: 1px solid var(--line); }
   .profile-grid div { padding: 14px; border-right: 1px solid var(--line); }
   .profile-grid div:last-child { border-right: 0; }
@@ -151,7 +147,6 @@ const styles = `
     .stat-row, .profile-grid, .principles, .resource-grid { grid-template-columns: 1fr; }
     .stat-row div, .profile-grid div, .principles article, .resource-grid a { border-right: 0; border-bottom: 1px solid var(--line); }
     .stat-row div:last-child, .profile-grid div:last-child, .principles article:last-child, .resource-grid a:last-child { border-bottom: 0; }
-    .metric-row { flex-direction: column; }
     footer { flex-direction: column; }
   }
 
@@ -198,7 +193,7 @@ const markup = `
 
         <article class="finding">
           ${findingHead("02", "RQ1 · Friction", "Agents often displaced friction instead of resolving it")}
-          <div class="finding-copy"><p>GUI failures led to recovery in the interface, shifts to code, mixed strategies, or unresolved endings. Moving off screen introduced a second failure surface: dependencies, data access, parsing, and command errors.</p><div class="metric-row"><div><b>46</b><span>GUI-friction episodes</span></div><div><b>49</b><span>error-bearing traces</span></div><div><b>28%</b><span>GUI episodes unrepaired</span></div></div></div>
+          <div class="finding-copy"><p>Across <strong>46 GUI-friction episodes</strong>, failures led to recovery in the interface, shifts to code, mixed strategies, or unresolved endings; <strong>28% finished without GUI repair or remained unresolved</strong>. Moving off screen introduced a second failure surface: <strong>49 traces contained engineering errors</strong> involving dependencies, data access, parsing, or commands.</p></div>
           ${figure("assets/project/friction-flows.png", "Flows from GUI and engineering breakdowns to responses and evidence.", "Breakdown → response → evidence", "An agent may recover the answer without repairing the failed interface.")}
           <div class="examples">${example("tr_7aa582985ead8650", "Opus 4.8 · SandDance", "A failed dropdown leads to a broken code bypass, then a return to successful GUI work.", "Cross-channel recovery")}${example("tr_730f0dfa05bca83d", "GPT‑5.4 · USGS", "After a misgrounded manipulation, it computes the result without repairing the view.", "Answer recovered; view unrepaired")}${example("tr_424243bfa9d320a5", "GPT‑5.5 · Gapminder", "Changes dependencies and data sources before recomputing a grounded result.", "Engineering recovery")}</div>
         </article>
