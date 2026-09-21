@@ -1,6 +1,12 @@
 # WebVA Agent Traces
 
-A public, read-only browser for selected agent interaction traces from web visual analytics tasks.
+Project site and public research artifacts for **Do AI Agents Really Conduct Visual Analytics? Tracing Hidden Trajectories Behind Successful Answers**.
+
+The root route follows the paper's structure and presents the study, headline findings, representative trajectories, design implications, and links to the underlying resources:
+
+- `/traces/` — round-by-round WebVA trajectory browser
+- `/analysis/` — interactive cross-trace analysis
+- `/gaia/` — paired general-web trajectory sample
 
 The repository contains only the static viewer. Sanitized trajectory JSON and screenshots are stored separately in Amazon S3 and loaded at runtime. Updating this viewer therefore updates the presentation of every existing trace without regenerating trace-specific HTML.
 
@@ -28,7 +34,7 @@ Run a static HTTP server from the repository root:
 python3 -m http.server 8080
 ```
 
-Then open `http://127.0.0.1:8080`.
+Then open `http://127.0.0.1:8080`. Existing root links containing `#trace=…` redirect to the dedicated `/traces/` viewer.
 
 The S3 data location is configured in `config.js`.
 

@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="A public collection of agent interaction traces for web visual analytics tasks." />
+    <title>WebVA Agent Traces</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='29' fill='%23f5f2e9' stroke='%230e7c73' stroke-width='3'/%3E%3Ccircle cx='22' cy='23' r='5' fill='%230e7c73'/%3E%3Ccircle cx='43' cy='30' r='5' fill='%230e7c73'/%3E%3Ccircle cx='28' cy='44' r='5' fill='%230e7c73'/%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../styles.css?v=4" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="site-header">
+        <a class="brand" href="../" aria-label="WebVA project home">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span>
+            <strong>WebVA</strong>
+            <small>Agent Traces</small>
+          </span>
+        </a>
+        <nav class="site-nav" aria-label="Primary navigation">
+          <a href="../">Project</a>
+          <a href="../analysis/">Analysis</a>
+          <a href="../gaia/">GAIA</a>
+          <a class="github-link" href="https://github.com/ppphhhleo/webVA-agent-traces" target="_blank" rel="noreferrer">View source <span aria-hidden="true">↗</span></a>
+        </nav>
+      </header>
+
+      <main class="workspace">
+        <aside class="catalog-panel" aria-label="Trace catalog">
+          <div class="catalog-heading">
+            <div>
+              <p class="eyebrow">Collection</p>
+              <h1>Trace index</h1>
+            </div>
+            <span class="trace-count" id="trace-count">—</span>
+          </div>
+
+          <label class="search-field">
+            <span class="sr-only">Search traces</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg>
+            <input id="search" type="search" placeholder="Trace, task, prompt…" autocomplete="off" />
+          </label>
+
+          <div class="filter-row">
+            <label>
+              <span>Model</span>
+              <select id="model-filter"><option value="">All models</option></select>
+            </label>
+            <label>
+              <span>Task</span>
+              <select id="task-filter"><option value="">All tasks</option></select>
+            </label>
+          </div>
+
+          <div class="catalog-status" id="catalog-status">Loading trace catalog…</div>
+          <ol class="trace-list" id="trace-list" aria-live="polite"></ol>
+        </aside>
+
+        <section class="viewer-panel" id="viewer-panel" aria-live="polite">
+          <div class="viewer-empty" id="viewer-empty">
+            <span class="empty-orbit" aria-hidden="true"><i></i></span>
+            <p class="eyebrow">Replay workspace</p>
+            <h2>Select a trace to begin</h2>
+            <p>Choose a trace from the index to inspect its observed screens, model rationale, requested actions, and raw execution outputs.</p>
+          </div>
+
+          <div class="viewer-content" id="viewer-content" hidden>
+            <header class="trace-header">
+              <div class="trace-identifiers">
+                <span class="number-badge" id="trace-number">Trace —</span>
+                <span class="model-badge" id="trace-model">Model</span>
+                <span class="task-badge" id="trace-task">Task —</span>
+                <span class="type-badge" id="trace-type">Task type</span>
+              </div>
+              <div class="trace-meta">
+                <dl class="trace-stats" aria-label="Trace metrics">
+                  <div><dt>Acting time</dt><dd id="acting-time">—</dd></div>
+                  <div><dt>Input tokens</dt><dd id="input-tokens">—</dd></div>
+                  <div><dt>Output tokens</dt><dd id="output-tokens">—</dd></div>
+                  <div><dt>Check score</dt><dd id="check-score">—</dd></div>
+                </dl>
+                <button class="copy-id" id="copy-id" type="button" title="Copy trace ID">
+                  <span id="trace-id">tr_…</span>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2"></rect><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path></svg>
+                </button>
+              </div>
+            </header>
+
+            <div class="prompt-grid">
+              <section>
+                <p class="eyebrow">Task prompt</p>
+                <p id="task-prompt"></p>
+              </section>
+              <section>
+                <p class="eyebrow">System prompt</p>
+                <p id="system-prompt">Not recorded.</p>
+              </section>
+            </div>
+
+            <div class="episode-card">
+              <header class="episode-header">
+                <div>
+                  <p class="eyebrow" id="round-position">Round — of —</p>
+                  <div class="round-heading-row">
+                    <h2 id="round-title">Observed screen</h2>
+                    <span class="round-error-badge" id="round-error-badge" hidden>Error</span>
+                  </div>
+                </div>
+                <span class="mode-summary" aria-label="Working mode ratio" title="GUI includes screenshots, waits, clicks, typing, scrolling, dragging, and pointer movement. Off-screen includes Shell, Python, and file operations. Final-answer and other non-work rounds are excluded from the ratio.">
+                  <span class="mode-summary-title">Work mode</span>
+                  <span class="mode-stat mode-gui"><i></i><b id="gui-ratio">GUI —</b></span>
+                  <span class="mode-stat mode-offscreen"><i></i><b id="offscreen-ratio">Off-screen —</b></span>
+                  <span class="neutral-stat" id="neutral-rounds" hidden></span>
+                </span>
+              </header>
+
+              <div class="episode-grid">
+                <div class="screen-column">
+                  <div class="screen-stage">
+                    <div class="screen-loading" id="screen-loading"><span></span>Loading screenshot…</div>
+                    <img id="screen-image" alt="Observed agent screen" />
+                    <div class="screen-unavailable" id="screen-unavailable" hidden>
+                      <strong>No screenshot for this round</strong>
+                      <span>The model output and action record are still available below.</span>
+                    </div>
+                    <span class="action-cursor" id="action-cursor" hidden></span>
+                  </div>
+
+                  <div class="playback-bar">
+                    <div class="transport-controls">
+                      <button type="button" id="previous-round">← Prev</button>
+                      <button type="button" class="play-button" id="play-rounds"><span>▶</span> Play</button>
+                      <button type="button" id="next-round">Next →</button>
+                    </div>
+                    <label class="progress-control">
+                      <span class="sr-only">Replay round. Track colors indicate GUI versus off-screen work.</span>
+                      <input class="round-slider" id="round-slider" type="range" min="0" max="0" value="0" />
+                    </label>
+                    <div class="speed-control" role="group" aria-label="Playback speed">
+                      <button type="button" data-speed="1600">0.5×</button>
+                      <button type="button" data-speed="850" class="active">1×</button>
+                      <button type="button" data-speed="425">2×</button>
+                      <button type="button" data-speed="210">4×</button>
+                    </div>
+                  </div>
+
+                  <div class="round-details">
+                    <section class="rationale-panel">
+                      <p class="eyebrow">Captured rationale</p>
+                      <p id="round-rationale">—</p>
+                    </section>
+                    <section class="action-panel">
+                      <div class="details-heading">
+                        <p class="eyebrow">Requested action</p>
+                        <span id="execution-status">Recorded</span>
+                      </div>
+                      <h3 id="action-name">—</h3>
+                      <pre id="action-details"></pre>
+                      <div class="execution-output-block">
+                        <p class="eyebrow">Execution output</p>
+                        <pre id="execution-output">—</pre>
+                      </div>
+                    </section>
+                  </div>
+
+                  <details class="raw-output">
+                    <summary>Raw execution output <span>Public model and tool output for this round</span></summary>
+                    <pre id="raw-output"></pre>
+                  </details>
+                </div>
+
+                <aside class="replay-sidebar">
+                  <div class="rounds-panel">
+                    <div class="rounds-title"><span>Rounds</span><b id="round-total">— total</b></div>
+                    <ol id="round-list"></ol>
+                  </div>
+                  <section class="final-answer sidebar-final-answer">
+                    <p class="eyebrow">Final answer</p>
+                    <div id="final-answer"></div>
+                  </section>
+                </aside>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="../config.js"></script>
+    <script src="../app.js?v=3" type="module"></script>
+  </body>
+</html>
