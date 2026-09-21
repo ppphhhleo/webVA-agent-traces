@@ -70,6 +70,7 @@ const styles = `
   .figure img { width: 100%; height: auto; object-fit: contain; background: var(--panel); }
   .figure figcaption { display: flex; gap: 12px; padding: 12px 15px; color: var(--muted); background: var(--panel); border-top: 1px solid var(--line); font-size: 13px; }
   .figure figcaption b { color: var(--ink); }
+  .teaser .figure, .finding > .figure { width: min(92%, 960px); margin-right: auto; margin-left: auto; }
   .teaser .figure { box-shadow: 0 8px 24px rgba(25, 54, 58, .07); }
 
   .text-link { color: var(--teal-dark); font-weight: 700; text-decoration-thickness: 1px; text-underline-offset: 3px; }
@@ -129,6 +130,7 @@ const styles = `
     .site-nav .github-link { display: none; }
     .hero { padding-top: 48px; }
     .figure-pair { grid-template-columns: 1fr; }
+    .teaser .figure, .finding > .figure { width: 100%; }
     .examples, .examples.two { grid-template-columns: 1fr; }
     .stat-row { grid-template-columns: repeat(2, 1fr); }
     .stat-row div:nth-child(2) { border-right: 0; }
