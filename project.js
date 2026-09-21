@@ -32,18 +32,6 @@ const styles = `
   .skip-link { position: fixed; left: 12px; top: -80px; z-index: 100; padding: 8px 12px; background: #fff; border: 1px solid var(--ink); }
   .skip-link:focus { top: 12px; }
 
-  .site-nav {
-    position: sticky; top: 0; z-index: 20; display: flex; align-items: center; justify-content: space-between;
-    min-height: 58px; padding: 0 max(24px, calc((100vw - 1080px) / 2)); background: rgba(255,253,248,.97);
-    border-bottom: 1px solid var(--line); backdrop-filter: blur(10px);
-  }
-  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 750; letter-spacing: -.02em; }
-  .brand-mark { position: relative; width: 26px; height: 26px; border: 1.5px solid var(--teal); border-radius: 50%; }
-  .brand-mark i { position: absolute; width: 4px; height: 4px; border-radius: 50%; background: var(--teal); }
-  .brand-mark i:nth-child(1) { left: 6px; top: 8px; }
-  .brand-mark i:nth-child(2) { right: 6px; top: 6px; }
-  .brand-mark i:nth-child(3) { left: 11px; bottom: 5px; }
-
   .wrap { width: min(1040px, calc(100% - 40px)); margin: 0 auto; }
   .hero-shell { background: var(--paper); border-bottom: 1px solid var(--line); }
   .hero { max-width: 1220px; margin: 0 auto; padding: 62px 20px 52px; text-align: center; }
@@ -53,7 +41,7 @@ const styles = `
   .subtitle { margin: 10px 0 0; color: #415154; font-size: clamp(18px, 2vw, 23px); }
   .abstract { max-width: 790px; margin: 24px auto 0; color: #394b4e; font-size: 17px; line-height: 1.72; }
 
-  main section { scroll-margin-top: 78px; }
+  main section { scroll-margin-top: 20px; }
   .section { padding: 70px 0; border-bottom: 1px solid var(--line); }
   .section.compact { padding-top: 54px; padding-bottom: 54px; }
   .section-head { max-width: 760px; margin-bottom: 28px; }
@@ -134,7 +122,6 @@ const styles = `
   dialog button { position: absolute; right: 12px; top: 10px; padding: 5px 9px; background: #fff; border: 1px solid var(--line); cursor: pointer; }
 
   @media (max-width: 820px) {
-    .site-nav { padding: 0 20px; }
     .hero { padding-top: 48px; }
     .intro-grid, .figure-pair { grid-template-columns: 1fr; }
     .examples, .examples.two { grid-template-columns: 1fr; }
@@ -173,10 +160,6 @@ const styles = `
 
 const markup = `
   <a class="skip-link" href="#main">Skip to content</a>
-  <header class="site-nav">
-    <a class="brand" href="#top" aria-label="Project home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><span>TraLens</span></a>
-  </header>
-
   <main id="main">
     <div class="hero-shell" id="top">
       <section class="hero">
