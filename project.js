@@ -84,6 +84,10 @@ const styles = `
   .finding-head h3 { margin: 0; font-size: clamp(26px, 3vw, 36px); line-height: 1.18; }
   .finding-copy { max-width: 850px; margin-left: 70px; color: #405154; font-size: 17px; }
   .finding-copy p { margin: 0; }
+  .finding-list { margin: 0; padding-left: 1.2em; }
+  .finding-list li { margin: 0 0 12px; padding-left: 5px; line-height: 1.55; }
+  .finding-list li:last-child { margin-bottom: 0; }
+  .finding-list strong { color: var(--ink); }
   .stat-row { display: grid; grid-template-columns: repeat(4, 1fr); margin: 28px 0; border: 1px solid var(--line); background: var(--panel); }
   .stat-row div { padding: 15px; border-right: 1px solid var(--line); }
   .stat-row div:last-child { border-right: 0; }
@@ -231,8 +235,7 @@ const markup = `
 
         <article class="finding">
           ${findingHead("05", "RQ3 · Humans and agents", "Humans and agents treated the interface as different epistemic resources")}
-          <div class="finding-copy"><p>People stayed in the interface, learned its affordances through exploration, and used prior expectations as revisable hypotheses. Agents more often converted uncertainty into computation, a named target, or recalled data.</p><div class="metric-row"><div><b>94.0%</b><span>human mean score</span></div><div><b>67/120</b><span>agent traces with off-screen work</span></div><div><b>37/120</b><span>with prior-knowledge injection</span></div></div></div>
-          ${figure("assets/project/human-agent-comparison.png", "Aggregated replay comparison of human and agent trajectories.", "Same tasks, different practices", "People construct and inspect evidence in the shared interface; agents branch more readily into computation and recalled knowledge.")}
+          <div class="finding-copy"><ul class="finding-list"><li><strong>Humans stayed in the interface,</strong> learned its affordances through exploration, and treated prior expectations as revisable hypotheses.</li><li><strong>Human analysts achieved a 94.0% mean score</strong> across the matched visual-analysis tasks.</li><li><strong>Agents worked off screen in 67 of 120 traces,</strong> branching into code, shell, files, or web resources beyond the shared view.</li><li><strong>Agents injected prior knowledge in 37 of 120 traces,</strong> sometimes introducing recalled targets or data not established in the visualization.</li></ul></div>
         </article>
       </div>
     </section>
