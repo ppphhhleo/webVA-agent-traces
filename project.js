@@ -53,7 +53,7 @@ const styles = `
   .hero { max-width: 1220px; margin: 0 auto; padding: 62px 20px 52px; text-align: center; }
   .eyebrow { margin: 0 0 10px; color: var(--teal-dark); font-size: 12px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
   h1, h2, h3 { font-family: var(--serif); }
-  h1 { max-width: none; margin: 0 auto; font-size: clamp(34px, 4.2vw, 48px); line-height: 1.12; letter-spacing: -.025em; }
+  h1 { max-width: none; margin: 0 auto; font-size: clamp(31px, 3.6vw, 42px); line-height: 1.14; letter-spacing: -.022em; }
   .subtitle { margin: 10px 0 0; color: #415154; font-size: clamp(18px, 2vw, 23px); }
   .abstract { max-width: 790px; margin: 24px auto 0; color: #394b4e; font-size: 17px; line-height: 1.72; }
 
@@ -62,7 +62,7 @@ const styles = `
   .section-head { max-width: 760px; margin-bottom: 28px; }
   .section-head.centered { margin-right: auto; margin-left: auto; text-align: center; }
   .teaser .section-head { max-width: 1000px; }
-  .section-head h2 { margin: 0; font-size: clamp(28px, 3.2vw, 38px); line-height: 1.16; letter-spacing: -.018em; }
+  .section-head h2 { margin: 0; font-size: clamp(25px, 2.7vw, 33px); line-height: 1.18; letter-spacing: -.016em; }
   .section-head p:last-child { margin: 13px 0 0; color: var(--muted); font-size: 17px; }
 
   .figure { margin: 0; background: var(--panel); border: 1px solid var(--line); }
@@ -78,7 +78,7 @@ const styles = `
   .finding { padding: 64px 0; border-top: 1px solid var(--line); }
   .finding-head { display: grid; grid-template-columns: 52px minmax(0, 760px); gap: 18px; align-items: start; margin-bottom: 26px; }
   .finding-number { padding-top: 5px; color: var(--teal-dark); font-family: var(--mono); font-size: 15px; }
-  .finding-head h3 { margin: 0; font-size: clamp(26px, 3vw, 36px); line-height: 1.18; }
+  .finding-head h3 { margin: 0; font-size: clamp(23px, 2.5vw, 30px); line-height: 1.2; }
   .finding-copy { max-width: 850px; margin-left: 70px; color: #405154; font-size: 17px; }
   .finding-copy p { margin: 0; }
   .finding-list { margin: 0; padding-left: 1.2em; }
@@ -147,7 +147,7 @@ const styles = `
 
   @media (max-width: 560px) {
     .wrap { width: min(100% - 28px, 1040px); }
-    h1 { font-size: 34px; white-space: normal !important; overflow-wrap: anywhere; }
+    h1 { font-size: 30px; white-space: normal !important; overflow-wrap: anywhere; }
     .hero { padding: 42px 16px 38px; }
     .section { padding: 50px 0; }
     .finding { padding: 48px 0; }
