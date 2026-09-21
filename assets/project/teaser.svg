@@ -1,5 +1,5 @@
 <svg xmlns:xlink="http://www.w3.org/1999/xlink" id="teaser-figure" viewBox="0 0 1800 1280" role="img" aria-labelledby="figure-title figure-description" xmlns="http://www.w3.org/2000/svg">
-        <title id="figure-title">One visual question, four analytical paths</title>
+        <title id="figure-title">Same visual question, different analytical paths</title>
         <desc id="figure-description">A human works entirely in the Embedding Atlas interface, one agent mixes interface and code, another computes entirely off screen, and a third agent substitutes prior knowledge after app inspection fails. All produce plausible conclusions, but their evidence differs in visibility and faithfulness.</desc>
 
         <defs>
@@ -46,7 +46,7 @@
         <rect width="1800" height="1280" fill="#f5f2e9" />
 
         <text x="70" y="70" class="small-caps" fill="#0e7c73">VISIBLE ANALYTICS, INVISIBLE WORK</text>
-        <text x="70" y="123" class="svg-serif ink" font-size="52" font-weight="600">One visual question, four analytical paths</text>
+        <text x="70" y="123" class="svg-serif ink" font-size="52" font-weight="600">Same visual question, different analytical paths</text>
         <text x="70" y="158" class="svg-sans muted" font-size="18">The conclusions sound compatible. What differs is how—and whether—the analyst can inspect their evidentiary basis.</text>
 
         <rect x="70" y="177" width="1660" height="52" rx="7" fill="#fffdf8" stroke="#a9bcb5" />

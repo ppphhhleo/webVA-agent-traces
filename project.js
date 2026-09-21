@@ -214,8 +214,8 @@ const markup = `
 
     <section class="section teaser" aria-labelledby="teaser-title">
       <div class="wrap">
-        <header class="section-head centered"><p class="eyebrow">The central problem</p><h2 id="teaser-title">One question, four analytical paths</h2><p>A human works through the visible interface. Agents mix GUI actions with code, bypass the interface, or substitute prior knowledge. The conclusions may all sound plausible, while their evidence differs sharply.</p></header>
-        ${figure("assets/project/teaser.svg", "Four analytical paths through the same wine visualization task.", "Teaser", "Same task and interface, but unequal paths and evidence.")}
+        <header class="section-head centered"><p class="eyebrow">The central problem</p><h2 id="teaser-title">Same question, different analytical paths</h2><p>A human works through the visible interface. Agents mix GUI actions with code, bypass the interface, or substitute prior knowledge. The conclusions may all sound plausible, while their evidence differs sharply.</p></header>
+        ${figure("assets/project/teaser.svg", "Different analytical paths through the same wine visualization task.", "Teaser", "Same task and interface, but unequal paths and evidence.")}
       </div>
     </section>
 
