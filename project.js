@@ -83,7 +83,7 @@ const styles = `
   .stat-row span { color: var(--muted); font-size: 12px; font-weight: 700; text-transform: uppercase; }
   .stat-row b { color: var(--teal-dark); font-family: var(--mono); font-size: 21px; }
   .stat-row small { color: var(--muted); font-size: 12px; }
-  .figure-pair { display: grid; grid-template-columns: 1.15fr .85fr; gap: 18px; margin-top: 28px; }
+  .figure-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 28px; }
   .examples { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 18px; }
   .examples.two { grid-template-columns: repeat(2, 1fr); }
   .example { display: block; min-height: 126px; padding: 15px; background: var(--panel); border: 1px solid var(--line); text-decoration: none; }
