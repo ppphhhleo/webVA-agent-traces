@@ -192,13 +192,7 @@ const markup = `
         <header class="section-head findings-title"><p class="eyebrow">Findings</p><h2>Similar outcomes, different analytical trajectories</h2><p>The results follow the paper's three questions: how agents conduct visual analytics, what changes beyond visual analytics, and how agent practices differ from human analysis.</p></header>
 
         <article class="finding">
-          ${findingHead("01", "RQ1.1 · Performance and cost", "Similar scores concealed unequal effort")}
-          <div class="finding-copy"><p>GPT‑5.5 and Opus 4.8 both scored 95%, but Sonnet 5 used almost twice their tokens and many more rounds while scoring lower. GPT‑5.4 was least expensive and shortest, but also least accurate.</p></div>
-          <div class="stat-row"><div><span>GPT‑5.4</span><b>72.7%</b><small>66.2k tokens · 12.7 rounds</small></div><div><span>GPT‑5.5</span><b>95.0%</b><small>159.7k · 16.7 rounds</small></div><div><span>Opus 4.8</span><b>95.0%</b><small>163.8k · 17.9 rounds</small></div><div><span>Sonnet 5</span><b>81.7%</b><small>307.5k · 33.8 rounds</small></div></div>
-        </article>
-
-        <article class="finding">
-          ${findingHead("02", "RQ1.2 · Behavioral signatures", "Four models, four ways of working")}
+          ${findingHead("01", "RQ1.1 · Behavioral signatures", "Four models, four ways of working")}
           <div class="finding-copy"><ul class="finding-list"><li><strong>GPT‑5.4 — GUI-first but brittle:</strong> it kept 88.5% of working rounds on screen, yet frequently misgrounded interface actions.</li><li><strong>GPT‑5.5 — code-first and infrastructure-oriented:</strong> it conducted 66.2% of working rounds off screen, often inspecting bundles, APIs, and browser state before computing answers.</li><li><strong>Opus 4.8 — late, decisive escalation:</strong> it stayed mostly in the interface and moved off screen later, using code selectively to verify or finish the analysis.</li><li><strong>Sonnet 5 — persistent cross-channel grinding:</strong> despite nearly the same overall on/off-screen split as Opus, it moved off screen earlier and continued for far more rounds.</li></ul></div>
           <div class="figure-pair">${figure("assets/project/working-round-share.png", "On-screen and off-screen working-round shares by model and task type.", "Where", "Mean share of working rounds on versus off screen.")}${figure("assets/project/offscreen-onset.png", "How early each model begins off-screen work.", "When", "Normalized onset of off-screen work.")}</div>
           ${figure("assets/project/behavior-trace-prevalence.svg", "Prevalence of coded agent behaviors by model and task type.", "Behavior signatures", "Trace prevalence of on-screen work, channel switching, off-screen work, answer delivery, and task interpretation.")}
@@ -206,14 +200,14 @@ const markup = `
         </article>
 
         <article class="finding">
-          ${findingHead("03", "RQ1.3 · Friction handling", "Agents often displaced friction instead of resolving it")}
+          ${findingHead("02", "RQ1.2 · Friction handling", "Agents often displaced friction instead of resolving it")}
           <div class="finding-copy"><p>Across <strong>46 GUI-friction episodes</strong>, failures led to recovery in the interface, shifts to code, mixed strategies, or unresolved endings; <strong>28% finished without GUI repair or remained unresolved</strong>. Moving off screen introduced a second failure surface: <strong>49 traces contained engineering errors</strong> involving dependencies, data access, parsing, or commands.</p></div>
           ${figure("assets/project/engineering-friction-flow.svg", "Engineering errors flowing through recovery responses to evidence outcomes.", "Engineering friction", "Dependency, access, parsing, and command errors lead to several recovery routes and evidence outcomes.")}
           <div class="examples">${example("tr_7aa582985ead8650", "Opus 4.8 · SandDance", "A failed dropdown leads to a broken code bypass, then a return to successful GUI work.", "Cross-channel recovery")}${example("tr_730f0dfa05bca83d", "GPT‑5.4 · USGS", "After a misgrounded manipulation, it computes the result without repairing the view.", "Answer recovered; view unrepaired")}${example("tr_424243bfa9d320a5", "GPT‑5.5 · Gapminder", "Changes dependencies and data sources before recomputing a grounded result.", "Engineering recovery")}</div>
         </article>
 
         <article class="finding">
-          ${findingHead("04", "RQ1.4 · Evidence grounding", "Visible work was neither necessary nor sufficient for trustworthy evidence")}
+          ${findingHead("03", "RQ1.3 · Evidence grounding", "Visible work was neither necessary nor sufficient for trustworthy evidence")}
           <div class="finding-copy"><p>Some claims were visibly grounded in the interface. Others were grounded in computation but hard for a collaborator to inspect. The riskiest cases combined visible activity with misgrounded or fabricated evidence.</p></div>
           ${figure("assets/project/evidence-visibility-both.svg", "Action visibility plotted against evidence grounding by agent and task type.", "Visibility × grounding", "Each dot is one trajectory; the two panels summarize differences by agent and task type.")}
           <div class="profile-grid"><div><b>Visible + grounded</b><span>Readily inspectable evidence.</span></div><div><b>Hidden + grounded</b><span>Supported, but costly to audit.</span></div><div><b>Visible + ungrounded</b><span>Activity without support.</span></div><div><b>Hidden + ungrounded</b><span>Neither process nor evidence is reliable.</span></div></div>
@@ -221,13 +215,13 @@ const markup = `
         </article>
 
         <article class="finding">
-          ${findingHead("05", "RQ2 · General web", "Tool switching is common on the web, but in VA it can replace the analysis")}
+          ${findingHead("04", "RQ2 · General web", "Tool switching is common on the web, but in VA it can replace the analysis")}
           <div class="finding-copy"><p>In 120 matched GAIA trajectories, search and shell dominated while direct GUI manipulation represented only 1.8% of calls. On general-web tasks, an off-screen route changes information retrieval. In visual analytics, it can change how evidence is produced, interpreted, and shared.</p><p style="margin-top:18px"><a class="text-link" href="gaia/">Review GAIA traces →</a></p></div>
         </article>
 
         <article class="finding">
-          ${findingHead("06", "RQ3 · Humans and agents", "Humans worked through the interface; agents often worked around it")}
-          <div class="finding-copy"><ul class="finding-list"><li><strong>Humans used the interface as a shared epistemic workspace:</strong> they explored its affordances, compared visible evidence, and revised prior expectations as hypotheses.</li><li><strong>Agents often treated the interface as a launch point:</strong> 67 of 120 traces moved into code, shell, files, or web resources, and 37 injected prior knowledge not established in the visualization.</li><li><strong>Answer correctness did not guarantee inspectability:</strong> hidden computation could support a valid claim, while extensive visible activity could still end in misgrounded or fabricated evidence.</li><li><strong>The design need is epistemic control, not only operational control.</strong> Pausing, prompting, or restarting an agent controls its operation; epistemic control means determining whether its result is valid, inspecting what supports it, and detecting when apparent progress is misleading.</li></ul></div>
+          ${findingHead("05", "RQ3 · Humans and agents", "Humans worked through the interface; agents often worked around it")}
+          <div class="finding-copy"><ul class="finding-list"><li><strong>Humans used the interface as a shared epistemic workspace:</strong> they explored its affordances, compared visible evidence, and revised prior expectations as hypotheses.</li><li><strong>Agents often treated the interface as a launch point:</strong> 67 of 120 traces moved into code, shell, files, or web resources, and 37 injected prior knowledge not established in the visualization.</li><li><strong>Similar answers had unequal inspectability:</strong> humans built conclusions from evidence visible in the shared interface. Agents could reach correct answers through hidden computation—or produce unsupported claims despite extensive visible activity.</li><li><strong>Agent collaboration requires epistemic—not merely operational—control:</strong> humans could inspect and revise the evidence supporting their own conclusions. Collaborators therefore need equivalent ways to examine, validate, and challenge an agent’s reasoning—not only pause, prompt, or restart it.</li></ul></div>
         </article>
       </div>
     </section>
