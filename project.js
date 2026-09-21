@@ -158,7 +158,6 @@ const styles = `
     .stat-row div:last-child, .profile-grid div:last-child, .principles article:last-child, .resource-grid a:last-child { border-bottom: 0; }
     .site-header { grid-template-columns: 1fr; gap: 8px; }
     .site-nav { justify-content: flex-start; flex-wrap: wrap; column-gap: 22px; row-gap: 6px; }
-    .site-nav a[href="gaia/"] { display: none; }
   }
 
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }

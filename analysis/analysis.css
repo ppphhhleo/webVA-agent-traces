@@ -7,7 +7,6 @@
   --mode-off: #347db2;
 }
 
-.nav-current { color: var(--teal) !important; font-weight: 700; }
 .analysis-page { width: min(1440px, 100%); margin: 0 auto; padding: 52px clamp(22px, 5vw, 76px) 72px; }
 .analysis-hero { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 40px; align-items: end; margin-bottom: 30px; }
 .analysis-hero h1 { max-width: 760px; margin: 7px 0 10px; font: 600 clamp(38px, 4.6vw, 62px)/.98 var(--serif); letter-spacing: -.035em; }

@@ -50,7 +50,8 @@ button, select { cursor: pointer; }
 .brand-mark i:nth-child(3) { left: 10px; bottom: 4px; }
 .site-nav { display: flex; align-items: center; gap: 18px; }
 .site-nav a { color: var(--ink); text-decoration: none; font-size: 13px; }
-.site-nav > a:not(.github-link):hover { color: var(--teal); }
+.site-nav a:hover, .site-nav a:focus-visible, .site-nav .nav-current { color: var(--teal-dark); }
+.site-nav .nav-current { font-weight: 700; }
 .github-link { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--line-strong); font-size: 13px; padding-bottom: 2px; }
 .github-link:hover { color: var(--teal); border-color: var(--teal); }
 
@@ -246,7 +247,9 @@ pre { white-space: pre-wrap; word-break: break-word; }
 }
 
 @media (max-width: 760px) {
-  .site-header { grid-template-columns: 1fr auto; padding: 0 16px; }
+  .site-header { height: auto; min-height: 64px; grid-template-columns: 1fr auto; padding: 10px 16px; }
+  .site-nav { gap: 12px; }
+  .site-nav .github-link { display: none; }
   .header-note { display: none; }
   .workspace { display: block; }
   .catalog-panel { position: static; width: 100%; height: auto; border-right: 0; border-bottom: 1px solid var(--line); }
@@ -262,6 +265,11 @@ pre { white-space: pre-wrap; word-break: break-word; }
   .prompt-grid section + section, .round-details section + section { border-left: 0; border-top: 1px solid var(--line); }
   .screen-stage { min-height: 260px; height: 62vw; }
   .copy-id { max-width: 125px; overflow: hidden; }
+}
+
+@media (max-width: 600px) {
+  .site-header { grid-template-columns: 1fr; gap: 8px; }
+  .site-nav { justify-content: flex-start; flex-wrap: wrap; column-gap: 22px; row-gap: 6px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
