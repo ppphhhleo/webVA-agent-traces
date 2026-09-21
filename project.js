@@ -84,6 +84,7 @@ const styles = `
   .stat-row b { color: var(--teal-dark); font-family: var(--mono); font-size: 21px; }
   .stat-row small { color: var(--muted); font-size: 12px; }
   .figure-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 28px; }
+  .figure-pair + .figure { margin-top: 18px; }
   .examples { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 18px; }
   .examples.two { grid-template-columns: repeat(2, 1fr); }
   .example { display: block; min-height: 126px; padding: 15px; background: var(--panel); border: 1px solid var(--line); text-decoration: none; }
@@ -188,20 +189,21 @@ const markup = `
           <div class="finding-copy"><p>GPT‑5.5 and Opus 4.8 both scored 95%, yet GPT‑5.5 conducted most work off screen while Opus stayed mostly in the interface. GPT‑5.4 was the most visible. Sonnet 5 was the most expensive and persistent.</p></div>
           <div class="stat-row"><div><span>GPT‑5.4</span><b>72.7%</b><small>66.2k tokens · 12.7 rounds</small></div><div><span>GPT‑5.5</span><b>95.0%</b><small>159.7k · 16.7 rounds</small></div><div><span>Opus 4.8</span><b>95.0%</b><small>163.8k · 17.9 rounds</small></div><div><span>Sonnet 5</span><b>81.7%</b><small>307.5k · 33.8 rounds</small></div></div>
           <div class="figure-pair">${figure("assets/project/working-round-share.png", "On-screen and off-screen working-round shares by model and task type.", "Where", "Mean share of working rounds on versus off screen.")}${figure("assets/project/offscreen-onset.png", "How early each model begins off-screen work.", "When", "Normalized onset of off-screen work.")}</div>
+          ${figure("assets/project/behavior-trace-prevalence.svg", "Prevalence of coded agent behaviors by model and task type.", "Behavior signatures", "Trace prevalence of on-screen work, channel switching, off-screen work, answer delivery, and task interpretation.")}
           <div class="examples two">${example("tr_759cc42b6b434d91", "GPT‑5.5 · LineUp", "Inspects bundles and browser state, then analyzes the recovered data in code.", "Off-screen substitution")}${example("tr_aee13c5d7b73c83c", "Opus 4.8 · LIT", "Repairs the visual route, then independently checks the result with code.", "Visual repair + computed verification")}</div>
         </article>
 
         <article class="finding">
           ${findingHead("02", "RQ1 · Friction", "Agents often displaced friction instead of resolving it")}
           <div class="finding-copy"><p>Across <strong>46 GUI-friction episodes</strong>, failures led to recovery in the interface, shifts to code, mixed strategies, or unresolved endings; <strong>28% finished without GUI repair or remained unresolved</strong>. Moving off screen introduced a second failure surface: <strong>49 traces contained engineering errors</strong> involving dependencies, data access, parsing, or commands.</p></div>
-          ${figure("assets/project/friction-flows.png", "Flows from GUI and engineering breakdowns to responses and evidence.", "Breakdown → response → evidence", "An agent may recover the answer without repairing the failed interface.")}
+          ${figure("assets/project/engineering-friction-flow.svg", "Engineering errors flowing through recovery responses to evidence outcomes.", "Engineering friction", "Dependency, access, parsing, and command errors lead to several recovery routes and evidence outcomes.")}
           <div class="examples">${example("tr_7aa582985ead8650", "Opus 4.8 · SandDance", "A failed dropdown leads to a broken code bypass, then a return to successful GUI work.", "Cross-channel recovery")}${example("tr_730f0dfa05bca83d", "GPT‑5.4 · USGS", "After a misgrounded manipulation, it computes the result without repairing the view.", "Answer recovered; view unrepaired")}${example("tr_424243bfa9d320a5", "GPT‑5.5 · Gapminder", "Changes dependencies and data sources before recomputing a grounded result.", "Engineering recovery")}</div>
         </article>
 
         <article class="finding">
           ${findingHead("03", "RQ1 · Evidence", "Visible work was neither necessary nor sufficient for trustworthy evidence")}
           <div class="finding-copy"><p>Some claims were visibly grounded in the interface. Others were grounded in computation but hard for a collaborator to inspect. The riskiest cases combined visible activity with misgrounded or fabricated evidence.</p></div>
-          ${figure("assets/project/evidence-visibility.png", "Action visibility plotted against evidence grounding for each trajectory.", "Visibility × grounding", "Each dot is one trajectory; group means reveal distinct auditability profiles.")}
+          ${figure("assets/project/evidence-visibility-both.svg", "Action visibility plotted against evidence grounding by agent and task type.", "Visibility × grounding", "Each dot is one trajectory; the two panels summarize differences by agent and task type.")}
           <div class="profile-grid"><div><b>Visible + grounded</b><span>Readily inspectable evidence.</span></div><div><b>Hidden + grounded</b><span>Supported, but costly to audit.</span></div><div><b>Visible + ungrounded</b><span>Activity without support.</span></div><div><b>Hidden + ungrounded</b><span>Neither process nor evidence is reliable.</span></div></div>
           <div class="examples">${example("tr_ac736c74cc47e0c9", "Grounded visual", "The claim is read from a visible Gapminder tooltip.", "Cheap to inspect")}${example("tr_c953e1cb79849f1f", "Computed evidence", "The result comes from code without in-app reconciliation.", "Grounded, but opaque")}${example("tr_475d111272ead831", "Visible but fabricated", "Repeated Vitessce clicks never repair the target, yet the answer claims a comparison.", "Misplaced trust")}</div>
         </article>
