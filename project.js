@@ -226,7 +226,7 @@ const markup = `
         </article>
 
         <article class="finding">
-          ${findingHead("06", "RQ3 · Humans and agents", "Humans and agents treated the interface as different epistemic resources")}
+          ${findingHead("06", "RQ3 · Humans and agents", "Humans worked through the interface; agents often worked around it")}
           <div class="finding-copy"><ul class="finding-list"><li><strong>Humans used the interface as a shared epistemic workspace:</strong> they explored its affordances, compared visible evidence, and revised prior expectations as hypotheses.</li><li><strong>Agents often treated the interface as a launch point:</strong> 67 of 120 traces moved into code, shell, files, or web resources, and 37 injected prior knowledge not established in the visualization.</li><li><strong>Answer correctness did not guarantee inspectability:</strong> hidden computation could support a valid claim, while extensive visible activity could still end in misgrounded or fabricated evidence.</li><li><strong>The design need is epistemic control, not only operational control.</strong> Pausing, prompting, or restarting an agent controls its operation; epistemic control means determining whether its result is valid, inspecting what supports it, and detecting when apparent progress is misleading.</li></ul></div>
         </article>
       </div>
