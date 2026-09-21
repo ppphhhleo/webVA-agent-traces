@@ -25,7 +25,7 @@ const styles = `
 
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-  body { margin: 0; color: var(--ink); background: var(--paper-soft); font-family: var(--sans); font-size: 16px; line-height: 1.62; }
+  body { margin: 0; color: var(--ink); background: var(--paper-soft); font-family: var(--sans); font-size: 15px; line-height: 1.6; }
   img { display: block; max-width: 100%; }
   a { color: inherit; }
   button { font: inherit; }
@@ -53,17 +53,17 @@ const styles = `
   .hero { max-width: 1220px; margin: 0 auto; padding: 62px 20px 52px; text-align: center; }
   .eyebrow { margin: 0 0 10px; color: var(--teal-dark); font-size: 12px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
   h1, h2, h3 { font-family: var(--serif); }
-  h1 { max-width: none; margin: 0 auto; font-size: clamp(31px, 3.6vw, 42px); line-height: 1.14; letter-spacing: -.022em; }
-  .subtitle { margin: 10px 0 0; color: #415154; font-size: clamp(18px, 2vw, 23px); }
-  .abstract { max-width: 790px; margin: 24px auto 0; color: #394b4e; font-size: 17px; line-height: 1.72; }
+  h1 { max-width: none; margin: 0 auto; font-size: clamp(30px, 3.4vw, 40px); line-height: 1.14; letter-spacing: -.022em; }
+  .subtitle { margin: 10px 0 0; color: #415154; font-size: clamp(17px, 1.8vw, 21px); }
+  .abstract { max-width: 790px; margin: 24px auto 0; color: #394b4e; font-size: 16px; line-height: 1.68; }
 
   main section { scroll-margin-top: 20px; }
   .section { padding: 70px 0; border-bottom: 1px solid var(--line); }
   .section-head { max-width: 760px; margin-bottom: 28px; }
   .section-head.centered { margin-right: auto; margin-left: auto; text-align: center; }
   .teaser .section-head { max-width: 1000px; }
-  .section-head h2 { margin: 0; font-size: clamp(25px, 2.7vw, 33px); line-height: 1.18; letter-spacing: -.016em; }
-  .section-head p:last-child { margin: 13px 0 0; color: var(--muted); font-size: 17px; }
+  .section-head h2 { margin: 0; font-size: clamp(24px, 2.5vw, 31px); line-height: 1.18; letter-spacing: -.016em; }
+  .section-head p:last-child { margin: 13px 0 0; color: var(--muted); font-size: 16px; }
 
   .figure { margin: 0; background: var(--panel); border: 1px solid var(--line); }
   .figure-button { width: 100%; padding: 0; cursor: zoom-in; background: var(--panel); border: 0; }
@@ -78,8 +78,8 @@ const styles = `
   .finding { padding: 64px 0; border-top: 1px solid var(--line); }
   .finding-head { display: grid; grid-template-columns: 52px minmax(0, 760px); gap: 18px; align-items: start; margin-bottom: 26px; }
   .finding-number { padding-top: 5px; color: var(--teal-dark); font-family: var(--mono); font-size: 15px; }
-  .finding-head h3 { margin: 0; font-size: clamp(23px, 2.5vw, 30px); line-height: 1.2; }
-  .finding-copy { max-width: 850px; margin-left: 70px; color: #405154; font-size: 17px; }
+  .finding-head h3 { margin: 0; font-size: clamp(22px, 2.3vw, 28px); line-height: 1.2; }
+  .finding-copy { max-width: 850px; margin-left: 70px; color: #405154; font-size: 16px; }
   .finding-copy p { margin: 0; }
   .finding-list { margin: 0; padding-left: 1.2em; }
   .finding-list li { margin: 0 0 12px; padding-left: 5px; line-height: 1.55; }
@@ -147,12 +147,12 @@ const styles = `
 
   @media (max-width: 560px) {
     .wrap { width: min(100% - 28px, 1040px); }
-    h1 { font-size: 30px; white-space: normal !important; overflow-wrap: anywhere; }
+    h1 { font-size: 28px; white-space: normal !important; overflow-wrap: anywhere; }
     .hero { padding: 42px 16px 38px; }
     .section { padding: 50px 0; }
     .finding { padding: 48px 0; }
     .finding-head { grid-template-columns: 36px 1fr; gap: 10px; }
-    .finding-copy { margin-left: 46px; font-size: 16px; }
+    .finding-copy { margin-left: 46px; font-size: 15px; }
     .stat-row, .profile-grid, .principles, .resource-grid { grid-template-columns: 1fr; }
     .stat-row div, .profile-grid div, .principles article, .resource-grid a { border-right: 0; border-bottom: 1px solid var(--line); }
     .stat-row div:last-child, .profile-grid div:last-child, .principles article:last-child, .resource-grid a:last-child { border-bottom: 0; }
@@ -193,21 +193,21 @@ const markup = `
         <article class="finding">
           ${findingHead("01", "RQ1.1 · Behavioral signatures", "Four models, four ways of working")}
           <div class="finding-copy"><ul class="finding-list"><li><strong>GPT‑5.4 — GUI-first but brittle:</strong> it kept 88.5% of working rounds on screen, yet frequently misgrounded interface actions.</li><li><strong>GPT‑5.5 — code-first and infrastructure-oriented:</strong> it conducted 66.2% of working rounds off screen, often inspecting bundles, APIs, and browser state before computing answers.</li><li><strong>Opus 4.8 — late, decisive escalation:</strong> it stayed mostly in the interface and moved off screen later, using code selectively to verify or finish the analysis.</li><li><strong>Sonnet 5 — persistent cross-channel grinding:</strong> despite nearly the same overall on/off-screen split as Opus, it moved off screen earlier and continued for far more rounds.</li></ul></div>
-          ${figure("assets/project/behavior-trace-prevalence.svg", "Prevalence of coded agent behaviors by model and task type.", "Behavior signatures", "Trace prevalence of on-screen work, channel switching, off-screen work, answer delivery, and task interpretation.")}
+          ${figure("assets/project/behavior-trace-prevalence-preview.png", "assets/project/behavior-trace-prevalence.svg", 1200, 1148, "Prevalence of coded agent behaviors by model and task type.", "Behavior signatures", "Trace prevalence of on-screen work, channel switching, off-screen work, answer delivery, and task interpretation.")}
           <div class="examples two">${example("tr_759cc42b6b434d91", "GPT‑5.5 · LineUp", "Inspects bundles and browser state, then analyzes the recovered data in code.", "Off-screen substitution")}${example("tr_aee13c5d7b73c83c", "Opus 4.8 · LIT", "Repairs the visual route, then independently checks the result with code.", "Visual repair + computed verification")}</div>
         </article>
 
         <article class="finding">
           ${findingHead("02", "RQ1.2 · Friction handling", "Agents often displaced friction instead of resolving it")}
           <div class="finding-copy"><p>Across <strong>46 GUI-friction episodes</strong>, failures led to recovery in the interface, shifts to code, mixed strategies, or unresolved endings; <strong>28% finished without GUI repair or remained unresolved</strong>. Moving off screen introduced a second failure surface: <strong>49 traces contained engineering errors</strong> involving dependencies, data access, parsing, or commands.</p></div>
-          ${figure("assets/project/engineering-friction-flow.svg", "Engineering errors flowing through recovery responses to evidence outcomes.", "Engineering friction", "Dependency, access, parsing, and command errors lead to several recovery routes and evidence outcomes.")}
+          ${figure("assets/project/engineering-friction-flow-preview.png", "assets/project/engineering-friction-flow.svg", 1200, 436, "Engineering errors flowing through recovery responses to evidence outcomes.", "Engineering friction", "Dependency, access, parsing, and command errors lead to several recovery routes and evidence outcomes.")}
           <div class="examples">${example("tr_7aa582985ead8650", "Opus 4.8 · SandDance", "A failed dropdown leads to a broken code bypass, then a return to successful GUI work.", "Cross-channel recovery")}${example("tr_730f0dfa05bca83d", "GPT‑5.4 · USGS", "After a misgrounded manipulation, it computes the result without repairing the view.", "Answer recovered; view unrepaired")}${example("tr_424243bfa9d320a5", "GPT‑5.5 · Gapminder", "Changes dependencies and data sources before recomputing a grounded result.", "Engineering recovery")}</div>
         </article>
 
         <article class="finding">
           ${findingHead("03", "RQ1.3 · Evidence grounding", "Visible work was neither necessary nor sufficient for trustworthy evidence")}
           <div class="finding-copy"><p>Some claims were visibly grounded in the interface. Others were grounded in computation but hard for a collaborator to inspect. The riskiest cases combined visible activity with misgrounded or fabricated evidence.</p></div>
-          ${figure("assets/project/evidence-visibility-both.svg", "Action visibility plotted against evidence grounding by agent and task type.", "Visibility × grounding", "Each dot is one trajectory; the two panels summarize differences by agent and task type.")}
+          ${figure("assets/project/evidence-visibility-both-preview.png", "assets/project/evidence-visibility-both.svg", 1200, 654, "Action visibility plotted against evidence grounding by agent and task type.", "Visibility × grounding", "Each dot is one trajectory; the two panels summarize differences by agent and task type.")}
           <div class="profile-grid"><div><b>Visible + grounded</b><span>Readily inspectable evidence.</span></div><div><b>Hidden + grounded</b><span>Supported, but costly to audit.</span></div><div><b>Visible + ungrounded</b><span>Activity without support.</span></div><div><b>Hidden + ungrounded</b><span>Neither process nor evidence is reliable.</span></div></div>
           <div class="examples">${example("tr_ac736c74cc47e0c9", "Grounded visual", "The claim is read from a visible Gapminder tooltip.", "Cheap to inspect")}${example("tr_c953e1cb79849f1f", "Computed evidence", "The result comes from code without in-app reconciliation.", "Grounded, but opaque")}${example("tr_475d111272ead831", "Visible but fabricated", "Repeated Vitessce clicks never repair the target, yet the answer claims a comparison.", "Misplaced trust")}</div>
         </article>
@@ -232,12 +232,12 @@ const markup = `
   <dialog id="lightbox" aria-label="Expanded figure"><button type="button" aria-label="Close figure">Close ×</button><img alt=""></dialog>
 `;
 
-function figure(src, alt, label, caption) {
-  return `<figure class="figure"><button class="figure-button" type="button" data-figure="${src}" data-alt="${alt}" aria-label="Expand figure"><img src="${src}" alt="${alt}" loading="lazy"></button><figcaption><b>${label}</b><span>${caption}</span></figcaption></figure>`;
+function figure(previewSrc, fullSrc, width, height, alt, label, caption) {
+  return `<figure class="figure"><button class="figure-button" type="button" data-figure="${fullSrc}" data-alt="${alt}" aria-label="Expand figure"><img src="${previewSrc}" width="${width}" height="${height}" alt="${alt}" loading="lazy" decoding="async" fetchpriority="low"></button><figcaption><b>${label}</b><span>${caption}</span></figcaption></figure>`;
 }
 
 function pdfPreview(previewSrc, alt) {
-  return `<figure class="figure"><button class="figure-button" type="button" data-figure="${previewSrc}" data-alt="${alt}" aria-label="Expand figure"><img src="${previewSrc}" alt="${alt}" loading="eager"></button></figure>`;
+  return `<figure class="figure"><button class="figure-button" type="button" data-figure="${previewSrc}" data-alt="${alt}" aria-label="Expand figure"><img src="${previewSrc}" width="1467" height="810" alt="${alt}" loading="eager" decoding="async" fetchpriority="high"></button></figure>`;
 }
 
 function findingHead(number, kicker, title) {
