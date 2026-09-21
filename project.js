@@ -7,9 +7,10 @@ const styles = `
   :root {
     --ink: #17272a;
     --muted: #667477;
-    --line: #d8e1e3;
-    --blue-wash: #eef7fa;
-    --blue-soft: #f7fbfc;
+    --line: #d8d1c3;
+    --paper: #f7f3e9;
+    --paper-soft: #fbf8f1;
+    --panel: #fffdf8;
     --teal: #087b78;
     --teal-dark: #075f5d;
     --blue: #2a79ad;
@@ -24,7 +25,7 @@ const styles = `
 
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-  body { margin: 0; color: var(--ink); background: #fff; font-family: var(--sans); font-size: 16px; line-height: 1.62; }
+  body { margin: 0; color: var(--ink); background: var(--paper-soft); font-family: var(--sans); font-size: 16px; line-height: 1.62; }
   img { display: block; max-width: 100%; }
   a { color: inherit; }
   button { font: inherit; }
@@ -33,7 +34,7 @@ const styles = `
 
   .site-nav {
     position: sticky; top: 0; z-index: 20; display: flex; align-items: center; justify-content: space-between;
-    min-height: 58px; padding: 0 max(24px, calc((100vw - 1080px) / 2)); background: rgba(255,255,255,.97);
+    min-height: 58px; padding: 0 max(24px, calc((100vw - 1080px) / 2)); background: rgba(255,253,248,.97);
     border-bottom: 1px solid var(--line); backdrop-filter: blur(10px);
   }
   .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 750; letter-spacing: -.02em; }
@@ -42,25 +43,15 @@ const styles = `
   .brand-mark i:nth-child(1) { left: 6px; top: 8px; }
   .brand-mark i:nth-child(2) { right: 6px; top: 6px; }
   .brand-mark i:nth-child(3) { left: 11px; bottom: 5px; }
-  .nav-links { display: flex; align-items: center; gap: 22px; }
-  .nav-links a { color: #445356; font-size: 14px; font-weight: 600; text-decoration: none; }
-  .nav-links a:hover, .nav-links a:focus-visible { color: var(--teal-dark); }
-  .nav-source { padding: 7px 11px; color: var(--teal-dark) !important; border: 1px solid #9dc6c4; border-radius: 4px; }
-  .nav-toggle { display: none; width: 38px; height: 34px; padding: 8px; background: #fff; border: 1px solid var(--line); }
-  .nav-toggle span { display: block; height: 1px; margin: 5px 0; background: var(--ink); }
 
   .wrap { width: min(1040px, calc(100% - 40px)); margin: 0 auto; }
-  .hero-shell { background: var(--blue-wash); border-bottom: 1px solid #dce8ea; }
+  .hero-shell { background: var(--paper); border-bottom: 1px solid var(--line); }
   .hero { max-width: 930px; margin: 0 auto; padding: 62px 20px 52px; text-align: center; }
   .eyebrow { margin: 0 0 10px; color: var(--teal-dark); font-size: 12px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
   h1, h2, h3 { font-family: var(--serif); }
   h1 { max-width: 880px; margin: 0 auto; font-size: clamp(34px, 4.2vw, 48px); line-height: 1.12; letter-spacing: -.025em; }
   .subtitle { margin: 10px 0 0; color: #415154; font-size: clamp(18px, 2vw, 23px); }
   .abstract { max-width: 790px; margin: 24px auto 0; color: #394b4e; font-size: 17px; line-height: 1.72; }
-  .hero-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 25px; }
-  .button { display: inline-flex; align-items: center; justify-content: center; min-height: 40px; padding: 8px 16px; border: 1px solid #88b8b6; border-radius: 4px; color: var(--teal-dark); background: #fff; font-size: 14px; font-weight: 700; text-decoration: none; }
-  .button.primary { color: #fff; background: var(--teal-dark); border-color: var(--teal-dark); }
-  .button:hover, .button:focus-visible { outline: 2px solid #a9d4d1; outline-offset: 2px; }
   .study-counts { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 26px; margin: 28px 0 0; padding: 18px 0 0; border-top: 1px solid #cfe0e3; }
   .study-counts div { min-width: 110px; }
   .study-counts b { display: block; color: var(--ink); font-family: var(--mono); font-size: 21px; }
@@ -74,10 +65,10 @@ const styles = `
   .section-head h2 { margin: 0; font-size: clamp(28px, 3.2vw, 38px); line-height: 1.16; letter-spacing: -.018em; }
   .section-head p:last-child { margin: 13px 0 0; color: var(--muted); font-size: 17px; }
 
-  .figure { margin: 0; background: #fff; border: 1px solid var(--line); }
-  .figure-button { width: 100%; padding: 0; cursor: zoom-in; background: #fff; border: 0; }
-  .figure img { width: 100%; height: auto; object-fit: contain; background: #fff; }
-  .figure figcaption { display: flex; gap: 12px; padding: 12px 15px; color: var(--muted); background: #fff; border-top: 1px solid var(--line); font-size: 13px; }
+  .figure { margin: 0; background: var(--panel); border: 1px solid var(--line); }
+  .figure-button { width: 100%; padding: 0; cursor: zoom-in; background: var(--panel); border: 0; }
+  .figure img { width: 100%; height: auto; object-fit: contain; background: var(--panel); }
+  .figure figcaption { display: flex; gap: 12px; padding: 12px 15px; color: var(--muted); background: var(--panel); border-top: 1px solid var(--line); font-size: 13px; }
   .figure figcaption b { color: var(--ink); }
   .teaser .figure { box-shadow: 0 8px 24px rgba(25, 54, 58, .07); }
 
@@ -96,7 +87,7 @@ const styles = `
   .finding-head h3 { margin: 0; font-size: clamp(26px, 3vw, 36px); line-height: 1.18; }
   .finding-copy { max-width: 850px; margin-left: 70px; color: #405154; font-size: 17px; }
   .finding-copy p { margin: 0; }
-  .stat-row { display: grid; grid-template-columns: repeat(4, 1fr); margin: 28px 0; border: 1px solid var(--line); background: #fff; }
+  .stat-row { display: grid; grid-template-columns: repeat(4, 1fr); margin: 28px 0; border: 1px solid var(--line); background: var(--panel); }
   .stat-row div { padding: 15px; border-right: 1px solid var(--line); }
   .stat-row div:last-child { border-right: 0; }
   .stat-row span, .stat-row small { display: block; }
@@ -106,14 +97,14 @@ const styles = `
   .figure-pair { display: grid; grid-template-columns: 1.15fr .85fr; gap: 18px; margin-top: 28px; }
   .examples { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 18px; }
   .examples.two { grid-template-columns: repeat(2, 1fr); }
-  .example { display: block; min-height: 126px; padding: 15px; background: #fff; border: 1px solid var(--line); text-decoration: none; }
+  .example { display: block; min-height: 126px; padding: 15px; background: var(--panel); border: 1px solid var(--line); text-decoration: none; }
   .example:hover, .example:focus-visible { border-color: #6da7a4; outline: 2px solid #d6ecea; }
   .example span, .example small { display: block; }
   .example span { margin-bottom: 7px; color: var(--teal-dark); font-size: 12px; font-weight: 800; text-transform: uppercase; }
   .example strong { font-size: 14px; line-height: 1.45; }
   .example small { margin-top: 10px; color: var(--muted); }
   .metric-row { display: flex; gap: 12px; margin-top: 22px; }
-  .metric-row div { flex: 1; padding: 13px; background: var(--blue-soft); border-left: 3px solid #87b7c4; }
+  .metric-row div { flex: 1; padding: 13px; background: var(--paper); border-left: 3px solid #87b7c4; }
   .metric-row b { display: block; font-family: var(--mono); font-size: 20px; }
   .metric-row span { color: var(--muted); font-size: 12px; }
   .profile-grid { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 18px; border: 1px solid var(--line); }
@@ -123,8 +114,8 @@ const styles = `
   .profile-grid b { font-size: 14px; }
   .profile-grid span { margin-top: 4px; color: var(--muted); font-size: 12px; }
 
-  .design { background: var(--blue-soft); }
-  .principles { display: grid; grid-template-columns: repeat(2, 1fr); border: 1px solid var(--line); background: #fff; }
+  .design { background: var(--paper); }
+  .principles { display: grid; grid-template-columns: repeat(2, 1fr); border: 1px solid var(--line); background: var(--panel); }
   .principles article { padding: 22px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
   .principles article:nth-child(even) { border-right: 0; }
   .principles article:nth-last-child(-n+2) { border-bottom: 0; }
@@ -133,15 +124,15 @@ const styles = `
   .principles p { margin: 0; color: var(--muted); font-size: 14px; }
 
   .resource-grid { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--line); }
-  .resource-grid a { min-height: 205px; padding: 20px; background: #fff; border-right: 1px solid var(--line); text-decoration: none; }
+  .resource-grid a { min-height: 205px; padding: 20px; background: var(--panel); border-right: 1px solid var(--line); text-decoration: none; }
   .resource-grid a:last-child { border-right: 0; }
-  .resource-grid a:hover, .resource-grid a:focus-visible { background: var(--blue-soft); }
+  .resource-grid a:hover, .resource-grid a:focus-visible { background: var(--paper); }
   .resource-grid span { color: var(--teal-dark); font-family: var(--mono); font-size: 12px; }
   .resource-grid h3 { margin: 8px 0; font-size: 20px; }
   .resource-grid p { color: var(--muted); font-size: 13px; }
   .resource-grid b { color: var(--teal-dark); font-size: 13px; }
 
-  footer { display: flex; justify-content: space-between; gap: 28px; padding: 30px max(24px, calc((100vw - 1040px) / 2)); color: var(--muted); background: #fff; border-top: 1px solid var(--line); font-size: 13px; }
+  footer { display: flex; justify-content: space-between; gap: 28px; padding: 30px max(24px, calc((100vw - 1040px) / 2)); color: var(--muted); background: var(--panel); border-top: 1px solid var(--line); font-size: 13px; }
   footer strong { color: var(--ink); }
   footer nav { display: flex; gap: 16px; }
 
@@ -152,11 +143,6 @@ const styles = `
 
   @media (max-width: 820px) {
     .site-nav { padding: 0 20px; }
-    .nav-toggle { display: block; }
-    .nav-links { position: absolute; left: 0; right: 0; top: 58px; display: none; flex-direction: column; align-items: stretch; gap: 0; padding: 10px 20px 18px; background: #fff; border-bottom: 1px solid var(--line); }
-    .nav-links.open { display: flex; }
-    .nav-links a { padding: 10px 0; }
-    .nav-source { border: 0; padding: 10px 0; }
     .hero { padding-top: 48px; }
     .intro-grid, .figure-pair { grid-template-columns: 1fr; }
     .examples, .examples.two { grid-template-columns: 1fr; }
@@ -175,7 +161,6 @@ const styles = `
     .wrap { width: min(100% - 28px, 1040px); }
     h1 { font-size: 34px; }
     .hero { padding: 42px 16px 38px; }
-    .hero-actions { flex-direction: column; }
     .section { padding: 50px 0; }
     .finding { padding: 48px 0; }
     .finding-head { grid-template-columns: 36px 1fr; gap: 10px; }
@@ -194,10 +179,6 @@ const markup = `
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-nav">
     <a class="brand" href="#top" aria-label="Project home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><span>TraLens</span></a>
-    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Open navigation"><span></span><span></span></button>
-    <nav class="nav-links" id="nav-links" aria-label="Primary navigation">
-      <a href="#study">Study</a><a href="#findings">Findings</a><a href="#design">Design</a><a href="analysis/">Analysis</a><a href="traces/">Traces</a><a class="nav-source" href="https://github.com/ppphhhleo/webVA-agent-traces" target="_blank" rel="noreferrer">Source ↗</a>
-    </nav>
   </header>
 
   <main id="main">
@@ -207,7 +188,6 @@ const markup = `
         <h1>Do AI Agents Really Conduct Visual Analytics?</h1>
         <p class="subtitle">Tracing hidden trajectories behind successful answers</p>
         <p class="abstract">Correct answers can conceal analyses that barely engage with the visualization. We compare complete agent and human trajectories to study how answers are produced, where interaction breaks down, and what evidence remains inspectable.</p>
-        <div class="hero-actions"><a class="button primary" href="traces/">Explore trajectories</a><a class="button" href="analysis/">Interactive analysis</a><a class="button" href="https://github.com/ppphhhleo/webVA-agent-traces" target="_blank" rel="noreferrer">Code and data</a></div>
         <div class="study-counts" aria-label="Study summary"><div><b>360</b><span>trajectories</span></div><div><b>30</b><span>VA tasks</span></div><div><b>8</b><span>interfaces</span></div><div><b>4 + 4</b><span>models + people</span></div></div>
       </section>
     </div>
@@ -215,7 +195,7 @@ const markup = `
     <section class="section teaser" aria-labelledby="teaser-title">
       <div class="wrap">
         <header class="section-head centered"><p class="eyebrow">The central problem</p><h2 id="teaser-title">Same question, different analytical paths</h2><p>A human works through the visible interface. Agents mix GUI actions with code, bypass the interface, or substitute prior knowledge. The conclusions may all sound plausible, while their evidence differs sharply.</p></header>
-        ${figure("assets/project/teaser.svg", "Different analytical paths through the same wine visualization task.", "Teaser", "Same task and interface, but unequal paths and evidence.")}
+        ${pdfPreview("assets/project/agent-traces-teaser-l.png", "assets/project/agent-traces-teaser-l.pdf", "Different analytical paths through the same wine visualization task.", "Teaser", "Same task and interface, but unequal paths and evidence.")}
       </div>
     </section>
 
@@ -255,7 +235,7 @@ const markup = `
 
         <article class="finding">
           ${findingHead("04", "RQ2 · General web", "Tool switching is common on the web, but in VA it can replace the analysis")}
-          <div class="finding-copy"><p>In 120 matched GAIA trajectories, search and shell dominated while direct GUI manipulation represented only 1.8% of calls. On general-web tasks, an off-screen route changes information retrieval. In visual analytics, it can change how evidence is produced, interpreted, and shared.</p><p style="margin-top:18px"><a class="button" href="gaia/">Review GAIA traces</a></p></div>
+          <div class="finding-copy"><p>In 120 matched GAIA trajectories, search and shell dominated while direct GUI manipulation represented only 1.8% of calls. On general-web tasks, an off-screen route changes information retrieval. In visual analytics, it can change how evidence is produced, interpreted, and shared.</p><p style="margin-top:18px"><a class="text-link" href="gaia/">Review GAIA traces →</a></p></div>
         </article>
 
         <article class="finding">
@@ -283,6 +263,10 @@ function figure(src, alt, label, caption) {
   return `<figure class="figure"><button class="figure-button" type="button" data-figure="${src}" data-alt="${alt}" aria-label="Expand figure"><img src="${src}" alt="${alt}" loading="lazy"></button><figcaption><b>${label}</b><span>${caption}</span></figcaption></figure>`;
 }
 
+function pdfPreview(previewSrc, pdfSrc, alt, label, caption) {
+  return `<figure class="figure"><button class="figure-button" type="button" data-figure="${previewSrc}" data-alt="${alt}" aria-label="Expand figure"><img src="${previewSrc}" alt="${alt}" loading="eager"></button><figcaption><b>${label}</b><span>${caption}</span><a class="text-link" href="${pdfSrc}" target="_blank" rel="noreferrer">PDF ↗</a></figcaption></figure>`;
+}
+
 function findingHead(number, kicker, title) {
   return `<header class="finding-head"><span class="finding-number">${number}</span><div><p class="eyebrow">${kicker}</p><h3>${title}</h3></div></header>`;
 }
@@ -293,19 +277,6 @@ function example(traceId, label, description, kind) {
 
 document.head.insertAdjacentHTML("beforeend", `<style>${styles}</style>`);
 document.body.innerHTML = markup;
-
-const navToggle = document.querySelector(".nav-toggle");
-const navLinks = document.querySelector(".nav-links");
-navToggle?.addEventListener("click", () => {
-  const open = navLinks.classList.toggle("open");
-  navToggle.setAttribute("aria-expanded", String(open));
-});
-navLinks?.addEventListener("click", event => {
-  if (event.target.closest("a")) {
-    navLinks.classList.remove("open");
-    navToggle?.setAttribute("aria-expanded", "false");
-  }
-});
 
 const lightbox = document.querySelector("#lightbox");
 const lightboxImage = lightbox?.querySelector("img");
