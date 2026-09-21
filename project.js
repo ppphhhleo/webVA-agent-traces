@@ -52,10 +52,6 @@ const styles = `
   h1 { max-width: none; margin: 0 auto; font-size: clamp(34px, 4.2vw, 48px); line-height: 1.12; letter-spacing: -.025em; }
   .subtitle { margin: 10px 0 0; color: #415154; font-size: clamp(18px, 2vw, 23px); }
   .abstract { max-width: 790px; margin: 24px auto 0; color: #394b4e; font-size: 17px; line-height: 1.72; }
-  .study-counts { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 26px; margin: 28px 0 0; padding: 18px 0 0; border-top: 1px solid #cfe0e3; }
-  .study-counts div { min-width: 110px; }
-  .study-counts b { display: block; color: var(--ink); font-family: var(--mono); font-size: 21px; }
-  .study-counts span { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .06em; }
 
   main section { scroll-margin-top: 78px; }
   .section { padding: 70px 0; border-bottom: 1px solid var(--line); }
@@ -192,8 +188,7 @@ const markup = `
         <p class="eyebrow">Agentic visual analytics</p>
         <h1>Do AI Agents Really Conduct Visual Analytics?</h1>
         <p class="subtitle">Tracing hidden trajectories behind successful answers</p>
-        <p class="abstract">Correct answers can conceal analyses that barely engage with the visualization. We compare complete agent and human trajectories to study how answers are produced, where interaction breaks down, and what evidence remains inspectable.</p>
-        <div class="study-counts" aria-label="Study summary"><div><b>360</b><span>trajectories</span></div><div><b>30</b><span>VA tasks</span></div><div><b>8</b><span>interfaces</span></div><div><b>4 + 4</b><span>models + people</span></div></div>
+        <p class="abstract">Correct answers can conceal analyses that barely engage with the visualization. Across 360 trajectories, we compare four agents and four people on 30 tasks spanning eight visual-analytics applications, alongside matched general-web traces. We study how answers are produced, where interaction breaks down, and what evidence remains inspectable.</p>
       </section>
     </div>
 
