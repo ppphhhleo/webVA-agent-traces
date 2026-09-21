@@ -32,6 +32,22 @@ const styles = `
   .skip-link { position: fixed; left: 12px; top: -80px; z-index: 100; padding: 8px 12px; background: #fff; border: 1px solid var(--ink); }
   .skip-link:focus { top: 12px; }
 
+  .site-header { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 20px; height: 64px; padding: 0 24px; background: #fcfaf5; border-bottom: 1px solid var(--line); }
+  .brand { display: flex; gap: 11px; align-items: center; color: inherit; text-decoration: none; }
+  .brand > span:last-child { display: flex; flex-direction: column; line-height: 1.05; }
+  .brand strong { font-family: var(--serif); font-size: 23px; letter-spacing: -.02em; }
+  .brand small { margin-top: 5px; color: var(--muted); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; }
+  .brand-mark { position: relative; display: block; width: 30px; height: 30px; border: 1px solid var(--teal); border-radius: 50%; }
+  .brand-mark i { position: absolute; width: 6px; height: 6px; background: var(--teal); border-radius: 50%; }
+  .brand-mark i:nth-child(1) { left: 6px; top: 7px; }
+  .brand-mark i:nth-child(2) { right: 5px; top: 11px; }
+  .brand-mark i:nth-child(3) { left: 10px; bottom: 4px; }
+  .site-nav { display: flex; align-items: center; gap: 18px; }
+  .site-nav a { color: var(--ink); font-size: 13px; text-decoration: none; }
+  .site-nav a:hover, .site-nav a:focus-visible, .site-nav .nav-current { color: var(--teal-dark); }
+  .site-nav .nav-current { font-weight: 700; }
+  .github-link { padding-bottom: 2px; border-bottom: 1px solid var(--line); }
+
   .wrap { width: min(1040px, calc(100% - 40px)); margin: 0 auto; }
   .hero-shell { background: var(--paper); border-bottom: 1px solid var(--line); }
   .hero { max-width: 1220px; margin: 0 auto; padding: 62px 20px 52px; text-align: center; }
@@ -102,16 +118,15 @@ const styles = `
   .principles h3 { margin: 4px 0 6px; font-size: 21px; }
   .principles p { margin: 0; color: var(--muted); font-size: 14px; }
 
-  footer { display: flex; justify-content: space-between; gap: 28px; padding: 30px max(24px, calc((100vw - 1040px) / 2)); color: var(--muted); background: var(--panel); border-top: 1px solid var(--line); font-size: 13px; }
-  footer strong { color: var(--ink); }
-  footer nav { display: flex; gap: 16px; }
-
   dialog { width: min(94vw, 1500px); max-height: 94vh; padding: 42px 16px 16px; border: 1px solid #829496; background: #fff; }
   dialog::backdrop { background: rgba(15, 35, 38, .78); }
   dialog img { width: 100%; max-height: 82vh; object-fit: contain; background: #fff; }
   dialog button { position: absolute; right: 12px; top: 10px; padding: 5px 9px; background: #fff; border: 1px solid var(--line); cursor: pointer; }
 
   @media (max-width: 820px) {
+    .site-header { height: auto; min-height: 64px; padding: 10px 16px; }
+    .site-nav { gap: 12px; }
+    .site-nav .github-link { display: none; }
     .hero { padding-top: 48px; }
     .figure-pair { grid-template-columns: 1fr; }
     .examples, .examples.two { grid-template-columns: 1fr; }
@@ -132,7 +147,7 @@ const styles = `
 
   @media (max-width: 560px) {
     .wrap { width: min(100% - 28px, 1040px); }
-    h1 { font-size: 34px; }
+    h1 { font-size: 34px; white-space: normal !important; overflow-wrap: anywhere; }
     .hero { padding: 42px 16px 38px; }
     .section { padding: 50px 0; }
     .finding { padding: 48px 0; }
@@ -141,7 +156,9 @@ const styles = `
     .stat-row, .profile-grid, .principles, .resource-grid { grid-template-columns: 1fr; }
     .stat-row div, .profile-grid div, .principles article, .resource-grid a { border-right: 0; border-bottom: 1px solid var(--line); }
     .stat-row div:last-child, .profile-grid div:last-child, .principles article:last-child, .resource-grid a:last-child { border-bottom: 0; }
-    footer { flex-direction: column; }
+    .site-header { grid-template-columns: 1fr; gap: 8px; }
+    .site-nav { justify-content: flex-start; flex-wrap: wrap; column-gap: 22px; row-gap: 6px; }
+    .site-nav a[href="gaia/"] { display: none; }
   }
 
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
@@ -149,6 +166,10 @@ const styles = `
 
 const markup = `
   <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <a class="brand" href="./" aria-label="WebVA project home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><span><strong>WebVA</strong><small>Agent Traces</small></span></a>
+    <nav class="site-nav" aria-label="Primary navigation"><a class="nav-current" href="./" aria-current="page">Project</a><a href="analysis/">Analysis</a><a href="traces/">All traces</a><a href="gaia/">GAIA</a><a class="github-link" href="https://github.com/ppphhhleo/webVA-agent-traces" target="_blank" rel="noreferrer">View source <span aria-hidden="true">↗</span></a></nav>
+  </header>
   <main id="main">
     <div class="hero-shell" id="top">
       <section class="hero">
@@ -171,23 +192,28 @@ const markup = `
         <header class="section-head findings-title"><p class="eyebrow">Findings</p><h2>Similar outcomes, different analytical trajectories</h2><p>The results follow the paper's three questions: how agents conduct visual analytics, what changes beyond visual analytics, and how agent practices differ from human analysis.</p></header>
 
         <article class="finding">
-          ${findingHead("01", "RQ1 · Analytical routes", "High task scores masked different ways of working")}
-          <div class="finding-copy"><p>GPT‑5.5 and Opus 4.8 both scored 95%, yet GPT‑5.5 conducted most work off screen while Opus stayed mostly in the interface. GPT‑5.4 was the most visible. Sonnet 5 was the most expensive and persistent.</p></div>
+          ${findingHead("01", "RQ1.1 · Performance and cost", "Similar scores concealed unequal effort")}
+          <div class="finding-copy"><p>GPT‑5.5 and Opus 4.8 both scored 95%, but Sonnet 5 used almost twice their tokens and many more rounds while scoring lower. GPT‑5.4 was least expensive and shortest, but also least accurate.</p></div>
           <div class="stat-row"><div><span>GPT‑5.4</span><b>72.7%</b><small>66.2k tokens · 12.7 rounds</small></div><div><span>GPT‑5.5</span><b>95.0%</b><small>159.7k · 16.7 rounds</small></div><div><span>Opus 4.8</span><b>95.0%</b><small>163.8k · 17.9 rounds</small></div><div><span>Sonnet 5</span><b>81.7%</b><small>307.5k · 33.8 rounds</small></div></div>
+        </article>
+
+        <article class="finding">
+          ${findingHead("02", "RQ1.2 · Behavioral signatures", "Four models, four ways of working")}
+          <div class="finding-copy"><ul class="finding-list"><li><strong>GPT‑5.4 — GUI-first but brittle:</strong> it kept 88.5% of working rounds on screen, yet frequently misgrounded interface actions.</li><li><strong>GPT‑5.5 — code-first and infrastructure-oriented:</strong> it conducted 66.2% of working rounds off screen, often inspecting bundles, APIs, and browser state before computing answers.</li><li><strong>Opus 4.8 — late, decisive escalation:</strong> it stayed mostly in the interface and moved off screen later, using code selectively to verify or finish the analysis.</li><li><strong>Sonnet 5 — persistent cross-channel grinding:</strong> despite nearly the same overall on/off-screen split as Opus, it moved off screen earlier and continued for far more rounds.</li></ul></div>
           <div class="figure-pair">${figure("assets/project/working-round-share.png", "On-screen and off-screen working-round shares by model and task type.", "Where", "Mean share of working rounds on versus off screen.")}${figure("assets/project/offscreen-onset.png", "How early each model begins off-screen work.", "When", "Normalized onset of off-screen work.")}</div>
           ${figure("assets/project/behavior-trace-prevalence.svg", "Prevalence of coded agent behaviors by model and task type.", "Behavior signatures", "Trace prevalence of on-screen work, channel switching, off-screen work, answer delivery, and task interpretation.")}
           <div class="examples two">${example("tr_759cc42b6b434d91", "GPT‑5.5 · LineUp", "Inspects bundles and browser state, then analyzes the recovered data in code.", "Off-screen substitution")}${example("tr_aee13c5d7b73c83c", "Opus 4.8 · LIT", "Repairs the visual route, then independently checks the result with code.", "Visual repair + computed verification")}</div>
         </article>
 
         <article class="finding">
-          ${findingHead("02", "RQ1 · Friction", "Agents often displaced friction instead of resolving it")}
+          ${findingHead("03", "RQ1.3 · Friction handling", "Agents often displaced friction instead of resolving it")}
           <div class="finding-copy"><p>Across <strong>46 GUI-friction episodes</strong>, failures led to recovery in the interface, shifts to code, mixed strategies, or unresolved endings; <strong>28% finished without GUI repair or remained unresolved</strong>. Moving off screen introduced a second failure surface: <strong>49 traces contained engineering errors</strong> involving dependencies, data access, parsing, or commands.</p></div>
           ${figure("assets/project/engineering-friction-flow.svg", "Engineering errors flowing through recovery responses to evidence outcomes.", "Engineering friction", "Dependency, access, parsing, and command errors lead to several recovery routes and evidence outcomes.")}
           <div class="examples">${example("tr_7aa582985ead8650", "Opus 4.8 · SandDance", "A failed dropdown leads to a broken code bypass, then a return to successful GUI work.", "Cross-channel recovery")}${example("tr_730f0dfa05bca83d", "GPT‑5.4 · USGS", "After a misgrounded manipulation, it computes the result without repairing the view.", "Answer recovered; view unrepaired")}${example("tr_424243bfa9d320a5", "GPT‑5.5 · Gapminder", "Changes dependencies and data sources before recomputing a grounded result.", "Engineering recovery")}</div>
         </article>
 
         <article class="finding">
-          ${findingHead("03", "RQ1 · Evidence", "Visible work was neither necessary nor sufficient for trustworthy evidence")}
+          ${findingHead("04", "RQ1.4 · Evidence grounding", "Visible work was neither necessary nor sufficient for trustworthy evidence")}
           <div class="finding-copy"><p>Some claims were visibly grounded in the interface. Others were grounded in computation but hard for a collaborator to inspect. The riskiest cases combined visible activity with misgrounded or fabricated evidence.</p></div>
           ${figure("assets/project/evidence-visibility-both.svg", "Action visibility plotted against evidence grounding by agent and task type.", "Visibility × grounding", "Each dot is one trajectory; the two panels summarize differences by agent and task type.")}
           <div class="profile-grid"><div><b>Visible + grounded</b><span>Readily inspectable evidence.</span></div><div><b>Hidden + grounded</b><span>Supported, but costly to audit.</span></div><div><b>Visible + ungrounded</b><span>Activity without support.</span></div><div><b>Hidden + ungrounded</b><span>Neither process nor evidence is reliable.</span></div></div>
@@ -195,12 +221,12 @@ const markup = `
         </article>
 
         <article class="finding">
-          ${findingHead("04", "RQ2 · General web", "Tool switching is common on the web, but in VA it can replace the analysis")}
+          ${findingHead("05", "RQ2 · General web", "Tool switching is common on the web, but in VA it can replace the analysis")}
           <div class="finding-copy"><p>In 120 matched GAIA trajectories, search and shell dominated while direct GUI manipulation represented only 1.8% of calls. On general-web tasks, an off-screen route changes information retrieval. In visual analytics, it can change how evidence is produced, interpreted, and shared.</p><p style="margin-top:18px"><a class="text-link" href="gaia/">Review GAIA traces →</a></p></div>
         </article>
 
         <article class="finding">
-          ${findingHead("05", "RQ3 · Humans and agents", "Humans and agents treated the interface as different epistemic resources")}
+          ${findingHead("06", "RQ3 · Humans and agents", "Humans and agents treated the interface as different epistemic resources")}
           <div class="finding-copy"><ul class="finding-list"><li><strong>Humans used the interface as a shared epistemic workspace:</strong> they explored its affordances, compared visible evidence, and revised prior expectations as hypotheses.</li><li><strong>Agents often treated the interface as a launch point:</strong> 67 of 120 traces moved into code, shell, files, or web resources, and 37 injected prior knowledge not established in the visualization.</li><li><strong>Answer correctness did not guarantee inspectability:</strong> hidden computation could support a valid claim, while extensive visible activity could still end in misgrounded or fabricated evidence.</li><li><strong>The design need is epistemic control, not only operational control.</strong> Pausing, prompting, or restarting an agent controls its operation; epistemic control means determining whether its result is valid, inspecting what supports it, and detecting when apparent progress is misleading.</li></ul></div>
         </article>
       </div>
@@ -211,8 +237,6 @@ const markup = `
     </section>
 
   </main>
-
-  <footer><p><strong>Do AI Agents Really Conduct Visual Analytics?</strong><br>Tracing hidden trajectories behind successful answers.</p><nav><a href="#top">Top</a><a href="traces/">Traces</a><a href="analysis/">Analysis</a><a href="gaia/">GAIA</a></nav></footer>
   <dialog id="lightbox" aria-label="Expanded figure"><button type="button" aria-label="Close figure">Close ×</button><img alt=""></dialog>
 `;
 
