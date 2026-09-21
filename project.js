@@ -120,15 +120,6 @@ const styles = `
   .principles h3 { margin: 4px 0 6px; font-size: 21px; }
   .principles p { margin: 0; color: var(--muted); font-size: 14px; }
 
-  .resource-grid { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--line); }
-  .resource-grid a { min-height: 205px; padding: 20px; background: var(--panel); border-right: 1px solid var(--line); text-decoration: none; }
-  .resource-grid a:last-child { border-right: 0; }
-  .resource-grid a:hover, .resource-grid a:focus-visible { background: var(--paper); }
-  .resource-grid span { color: var(--teal-dark); font-family: var(--mono); font-size: 12px; }
-  .resource-grid h3 { margin: 8px 0; font-size: 20px; }
-  .resource-grid p { color: var(--muted); font-size: 13px; }
-  .resource-grid b { color: var(--teal-dark); font-size: 13px; }
-
   footer { display: flex; justify-content: space-between; gap: 28px; padding: 30px max(24px, calc((100vw - 1040px) / 2)); color: var(--muted); background: var(--panel); border-top: 1px solid var(--line); font-size: 13px; }
   footer strong { color: var(--ink); }
   footer nav { display: flex; gap: 16px; }
@@ -250,9 +241,6 @@ const markup = `
       <div class="wrap"><header class="section-head"><p class="eyebrow">Design opportunities</p><h2>Build shared analytical workspaces, not parallel private ones</h2><p>Reliable collaboration requires more than placing a person and an agent in the same interface.</p></header><div class="principles"><article><span>01</span><h3>Make intent steerable</h3><p>Expose scope, assumptions, and goals before they harden into actions.</p></article><article><span>02</span><h3>Reconcile work visually</h3><p>Translate off-screen computation back into editable filters, views, and provenance.</p></article><article><span>03</span><h3>Make evidence mutually legible</h3><p>Show mappings, uncertainty, and assumptions behind visual and computed claims.</p></article><article><span>04</span><h3>Support analytical branches</h3><p>Let people compare, merge, revise, or reject complementary paths before delivery.</p></article></div></div>
     </section>
 
-    <section class="section" id="resources">
-      <div class="wrap"><header class="section-head"><p class="eyebrow">Resources</p><h2>Inspect the evidence behind the study</h2></header><div class="resource-grid"><a href="traces/"><span>01</span><h3>Trace browser</h3><p>Replay 120 WebVA agent trajectories round by round.</p><b>Open traces →</b></a><a href="analysis/"><span>02</span><h3>Interactive analysis</h3><p>Explore performance, friction, visibility, and grounding.</p><b>Open analysis →</b></a><a href="gaia/"><span>03</span><h3>General-web traces</h3><p>Review the matched GAIA comparison sample.</p><b>Open GAIA →</b></a><a href="https://github.com/ppphhhleo/webVA-agent-traces" target="_blank" rel="noreferrer"><span>04</span><h3>Code and data</h3><p>Access derived data, plot files, and build scripts.</p><b>View repository ↗</b></a></div></div>
-    </section>
   </main>
 
   <footer><p><strong>Do AI Agents Really Conduct Visual Analytics?</strong><br>Tracing hidden trajectories behind successful answers.</p><nav><a href="#top">Top</a><a href="traces/">Traces</a><a href="analysis/">Analysis</a><a href="gaia/">GAIA</a></nav></footer>
