@@ -195,7 +195,7 @@ const markup = `
     <section class="section teaser" aria-labelledby="teaser-title">
       <div class="wrap">
         <header class="section-head centered"><p class="eyebrow">The central problem</p><h2 id="teaser-title">Same question, different analytical paths</h2><p>A human works through the visible interface. Agents mix GUI actions with code, bypass the interface, or substitute prior knowledge. The conclusions may all sound plausible, while their evidence differs sharply.</p></header>
-        ${pdfPreview("assets/project/agent-traces-teaser-l.png", "assets/project/agent-traces-teaser-l.pdf", "Different analytical paths through the same wine visualization task.", "Teaser", "Same task and interface, but unequal paths and evidence.")}
+        ${pdfPreview("assets/project/agent-traces-teaser-l.png", "Different analytical paths through the same wine visualization task.")}
       </div>
     </section>
 
@@ -263,8 +263,8 @@ function figure(src, alt, label, caption) {
   return `<figure class="figure"><button class="figure-button" type="button" data-figure="${src}" data-alt="${alt}" aria-label="Expand figure"><img src="${src}" alt="${alt}" loading="lazy"></button><figcaption><b>${label}</b><span>${caption}</span></figcaption></figure>`;
 }
 
-function pdfPreview(previewSrc, pdfSrc, alt, label, caption) {
-  return `<figure class="figure"><button class="figure-button" type="button" data-figure="${previewSrc}" data-alt="${alt}" aria-label="Expand figure"><img src="${previewSrc}" alt="${alt}" loading="eager"></button><figcaption><b>${label}</b><span>${caption}</span><a class="text-link" href="${pdfSrc}" target="_blank" rel="noreferrer">PDF ↗</a></figcaption></figure>`;
+function pdfPreview(previewSrc, alt) {
+  return `<figure class="figure"><button class="figure-button" type="button" data-figure="${previewSrc}" data-alt="${alt}" aria-label="Expand figure"><img src="${previewSrc}" alt="${alt}" loading="eager"></button></figure>`;
 }
 
 function findingHead(number, kicker, title) {
