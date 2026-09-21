@@ -161,7 +161,7 @@ const markup = `
         <p class="eyebrow">Agentic visual analytics</p>
         <h1>Do AI Agents Really Conduct Visual Analytics?</h1>
         <p class="subtitle">Tracing hidden trajectories behind successful answers</p>
-        <p class="abstract">Correct answers can conceal analyses that barely engage with the visualization. Across 360 trajectories, we compare four agents and four people on 30 tasks spanning eight visual-analytics applications, alongside matched general-web traces. We study how answers are produced, where interaction breaks down, and what evidence remains inspectable.</p>
+        <p class="abstract">AI agents are increasingly used to conduct visual analytics (VA) tasks, yet existing studies report task success and overlook the open-ended, multi-step process behind it. It remains unclear whether a correct answer reflects reliable, well-grounded VA. To examine this, we collected 240 agent and human trajectories on 30 VA tasks, plus 120 public general-web agent traces, and developed TraLens, a toolkit for analyzing the corpus. In total, the corpus contains 10.2 hours of activity and 6,607 agent actions. Our analysis reveals surprising agent behaviors hidden beneath their success rates: agents often ignore the VA tool, drifting off to read raw data and compute in code, and sometimes fabricate evidence. Such behavior departs from reliable VA exploration, where visual insights inform each next step and ground the conclusion, and undermines the human–agent paradigm in which humans oversee agents and intervene when needed. These findings underscore the need for shared VA workspaces that expose agent activity and support human steering.</p>
       </section>
     </div>
 
